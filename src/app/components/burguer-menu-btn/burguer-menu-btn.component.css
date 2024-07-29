@@ -9,6 +9,12 @@
 
   margin: -20px;
 }
+
+.ham4.active{
+  .line {
+    stroke:#3b6192;
+  }
+}
 .hamRotate.active {
   transform: rotate(45deg);
 }
@@ -33,4 +39,5 @@
   stroke:#FBFBFB;
   stroke-width:5.5;
   stroke-linecap:round;
+  transition: all 0.3s;
 }
