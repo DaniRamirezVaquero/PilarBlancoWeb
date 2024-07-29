@@ -1,14 +1,16 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { PlayBtnComponent } from '../play-btn/play-btn.component';
+import { PlayBtnComponent } from '../../components/play-btn/play-btn.component';
 import { SideNavService } from '../../services/side-nav.service';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-principal',
   standalone: true,
   imports: [
     PlayBtnComponent,
-    CommonModule
+    CommonModule,
+    RouterLink
   ],
   templateUrl: './principal.component.html',
   styleUrl: './principal.component.css'

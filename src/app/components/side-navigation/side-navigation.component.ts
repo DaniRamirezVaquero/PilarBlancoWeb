@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { BurguerMenuBtnComponent } from '../burguer-menu-btn/burguer-menu-btn.component';
 import { SideNavService } from '../../services/side-nav.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-side-navigation',
@@ -9,7 +10,8 @@ import { SideNavService } from '../../services/side-nav.service';
   imports: [
     RouterLink,
     RouterLinkActive,
-    BurguerMenuBtnComponent
+    BurguerMenuBtnComponent,
+    CommonModule
   ],
   templateUrl: './side-navigation.component.html',
   styleUrl: './side-navigation.component.css'
