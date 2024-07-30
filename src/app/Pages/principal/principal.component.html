@@ -1,18 +1,21 @@
 <div class="bg-[url('assets/images/Fondo2.jpg')] bg-no-repeat bg-cover bg-[65%_50%] w-screen h-dvh p-8 md:p-12 flex justify-center lg:items-end sm:justify-start overflow-x-hidden">
-  <div class="grid grid-rows-3 h-full transition-transform duration-500" [ngClass]="{'translate-x-[460px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
+  <div class="grid grid-rows-3 h-full">
     <div></div>
-    <div class="text-white w-min flex flex-col justify-center">
-      <div class="lato-light text-6xl">
+    <div class="text-white w-min flex flex-col justify-center md:ml-40 transition-all duration-500"
+    [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[300px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
+      <div class="lato-light text-6xl lg:text-7xl">
         <h1>
           <p>PILAR</p>
           <p>BLANCO</p>
         </h1>
       </div>
       <div class="bg-sky-300 w-full min-h-1 rounded-full my-6"></div>
-      <p class=" font-sans font-semibold text-lg">ACTRIZ</p>
+      <p class="font-sans font-semibold text-lg lg:text-xl">ACTRIZ</p>
     </div>
-    <div class="flex items-end">
+    <div class="flex items-end transition-all duration-500"
+    [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[460px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
       <app-play-btn [routerLink]="['/video']"/>
     </div>
   </div>
 </div>
+
