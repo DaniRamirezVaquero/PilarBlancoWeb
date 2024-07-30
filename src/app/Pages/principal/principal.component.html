@@ -1,8 +1,9 @@
-<div class="bg-[url('assets/images/Fondo2.jpg')] bg-no-repeat bg-cover bg-[65%_50%] w-screen h-dvh p-8 md:p-12 flex justify-center lg:items-end sm:justify-start overflow-x-hidden">
+<div
+  class="bg-[url('assets/images/Fondo2.jpg')] bg-no-repeat bg-cover bg-[65%_50%] w-screen h-dvh p-8 md:p-12 flex justify-center lg:items-end sm:justify-start overflow-x-hidden">
   <div class="grid grid-rows-3 h-full">
     <div></div>
     <div class="text-white w-min flex flex-col justify-center md:ml-40 transition-all duration-500"
-    [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[300px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
+      [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[300px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
       <div class="lato-light text-6xl lg:text-7xl">
         <h1>
           <p>PILAR</p>
@@ -13,9 +14,26 @@
       <p class="font-sans font-semibold text-lg lg:text-xl">ACTRIZ</p>
     </div>
     <div class="flex items-end transition-all duration-500"
-    [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[460px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
-      <app-play-btn [routerLink]="['/video']"/>
+      [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[460px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
+      <app-play-btn (click)="toggleShowReel()"/>
     </div>
   </div>
 </div>
 
+@if (showReel) {
+  <div class="absolute top-0 left-0 z-[100] w-screen h-dvh bg-black bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-80
+flex items-center justify-center">
+
+  <svg class="absolute top-8 right-8 text-sky-300 hover:text-sky-500 stroke-current cursor-pointer" width="30" height="30" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg" (click)="toggleShowReel()">
+    <path d="M2.24536 32.3148L32.2454 2.3148" stroke-width="4.5" stroke-linecap="round" />
+    <path d="M32.2454 32.3148L2.24537 2.3148" stroke-width="4.5" stroke-linecap="round" />
+  </svg>
+
+  <div class="w-full max-w-[70%]">
+    <div class="relative pb-[56.25%] h-0 overflow-hidden">
+      <iframe id="player" title="vimeo-player" src="https://player.vimeo.com/video/786041466?h=5428a890c9"
+        class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+}
