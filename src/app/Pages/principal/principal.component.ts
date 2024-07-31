@@ -19,6 +19,7 @@ export class PrincipalComponent implements OnInit {
 
   sideNavIsOpen: boolean = false;
   subscription: any;
+  showReel: boolean = false;
 
   constructor() { }
 
@@ -28,5 +29,9 @@ export class PrincipalComponent implements OnInit {
     this.sideNavService.isOpen$.subscribe(isOpen => {
       this.sideNavIsOpen = isOpen;
     });
+  }
+
+  toggleShowReel() {
+    this.showReel = !this.showReel;
   }
 }
