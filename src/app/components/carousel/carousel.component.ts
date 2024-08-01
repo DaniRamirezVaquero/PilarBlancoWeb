@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-carousel',
@@ -31,6 +31,8 @@ export class CarouselComponent implements OnInit, OnDestroy {
   direction: 'forward' | 'backward' = 'forward';
   isPlaying: boolean = true;
   interactionTimeout: any;
+  touchStartX: number = 0;
+  touchEndX: number = 0;
 
   ngOnInit() {
     this.startAutoplay();
@@ -41,6 +43,9 @@ export class CarouselComponent implements OnInit, OnDestroy {
   }
 
   startAutoplay() {
+    if (this.autoplayInterval) {
+      return; // Si ya hay un intervalo en ejecución, no iniciar uno nuevo
+    }
     this.autoplayInterval = setInterval(() => {
       if (this.direction === 'forward') {
         this.next(false); // Indica que no es una acción del usuario
@@ -54,6 +59,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
   stopAutoplay() {
     if (this.autoplayInterval) {
       clearInterval(this.autoplayInterval);
+      this.autoplayInterval = null; // Asegurarse de que el intervalo se reinicie
       this.isPlaying = false;
     }
   }
@@ -72,7 +78,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
     }
     this.interactionTimeout = setTimeout(() => {
       this.startAutoplay();
-    }, 10000); // Reanuda el autoplay después de 510segundos de inactividad
+    }, 10000); // Reanuda el autoplay después de 10 segundos de inactividad
   }
 
   next(userInitiated: boolean = true) {
@@ -102,6 +108,27 @@ export class CarouselComponent implements OnInit, OnDestroy {
     } else {
       this.firstImage = true;
       this.direction = 'forward';
+    }
+  }
+
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].screenX;
+  }
+
+  @HostListener('touchend', ['$event'])
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.handleSwipe();
+  }
+
+  handleSwipe() {
+    const swipeThreshold = 50; // Umbral mínimo para considerar un deslizamiento
+    if (this.touchEndX < this.touchStartX - swipeThreshold) {
+      this.next(true); // Deslizar hacia la izquierda
+    }
+    if (this.touchEndX > this.touchStartX + swipeThreshold) {
+      this.prev(true); // Deslizar hacia la derecha
     }
   }
 }

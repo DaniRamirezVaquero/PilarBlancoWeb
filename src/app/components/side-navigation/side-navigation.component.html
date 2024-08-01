@@ -1,7 +1,7 @@
 <app-burguer-menu-btn class="top-8 left-8 w-16 sm:top-8 sm:left-8 md:top-12 md:left-10 lg:w-20 z-50"
   (click)="toggleSideNav()" [ngClass]="isOpen ? 'fixed' : 'absolute'" />
 
-<aside id="sideNav" class="fixed z-40 top-0 -left-[460px] w-[460px] h-screen bg-gray-200 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-40 border-r border-orange-500 flex items-center
+<aside id="sideNav" class="fixed z-40 top-0 -left-[460px] w-[460px] h-dvh bg-gray-200 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-40 border-r border-orange-500 flex items-center
   transition-all duration-500">
   <div class="flex flex-col gap-y-10 text-3xl lato-regular ml-16 text-zinc-900">
     <a href="#" [routerLink]="['/principal']" routerLinkActive="text-orange-500" (click)="toggleSideNav()"
