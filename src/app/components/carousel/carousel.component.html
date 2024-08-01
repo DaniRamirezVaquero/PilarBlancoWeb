@@ -1,0 +1,60 @@
+<div class="flex justify-center relative">
+  <div class="relative w-full md:w-2/3 lg:w-1/3 xl:w-2/5 2xl:w-2/6 h-full ">
+    <div class="flex transition-transform duration-500" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+      <div *ngFor="let image of images; let i = index" class="flex-shrink-0 w-full h-full relative">
+        <img [src]="image" alt="carousel image"
+          class="object-cover w-full h-full aspect-foto rounded transition-all duration-200 relative"
+          [class.opacity-100]="i === currentIndex" [class.opacity-50]="i === currentIndex - 1 || i === currentIndex + 1"
+          [class.opacity-0]="i < currentIndex - 1 || i > currentIndex + 1" [class.translate-y-0]="i === currentIndex"
+          [class.translate-y-20]="i === currentIndex - 1 || i === currentIndex + 1"
+          [class.scale-90]="i === currentIndex - 1 || i === currentIndex + 1" [class.z-20]="i === currentIndex"
+          [class.z-10]="i === currentIndex - 1 || i === currentIndex + 1"
+          [class.z-0]="i < currentIndex - 1 || i > currentIndex + 1" [class.-translate-x-20]="i === currentIndex + 1"
+          [class.translate-x-20]="i === currentIndex - 1" [class.shadow-xl]="i === currentIndex">
+      </div>
+    </div>
+
+    <button (click)="prev()"
+      class="absolute top-1/2 -left-16 text-[#E4754E] hover:text-[#b35a3a] opacity-0 md:opacity-100"
+      [ngClass]="{'hidden': currentIndex === 0}">
+      <svg class="fill-current w-6 h-6" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M9.78521 28.3153L38.4935 48.1903C38.8249 48.4195 39.2126 48.5537 39.6147 48.5784C40.0168 48.6031 40.418 48.5174 40.7749 48.3304C41.1318 48.1434 41.4307 47.8624 41.6393 47.5177C41.8479 47.1731 41.9583 46.7779 41.9584 46.375V6.625C41.9587 6.22193 41.8486 5.82647 41.6402 5.48149C41.4317 5.1365 41.1328 4.85515 40.7759 4.66792C40.4189 4.48068 40.0176 4.39472 39.6152 4.41933C39.2129 4.44394 38.825 4.5782 38.4935 4.80755L9.78521 24.6825C9.49274 24.8867 9.25388 25.1584 9.08895 25.4746C8.92402 25.7909 8.83789 26.1422 8.83789 26.4989C8.83789 26.8556 8.92402 27.2069 9.08895 27.5232C9.25388 27.8394 9.49274 28.1111 9.78521 28.3153Z" />
+      </svg>
+    </button>
+
+    <button (click)="next()"
+      class="absolute top-1/2 -right-16 text-[#E4754E] hover:text-[#b35a3a] opacity-0 md:opacity-100"
+      [ngClass]="{'hidden': currentIndex === images.length - 1}">
+      <svg class="fill-current w-6 h-6" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M43.2148 24.6847L14.5065 4.80974C14.1751 4.5805 13.7874 4.44626 13.3853 4.42155C12.9832 4.39685 12.582 4.48263 12.2251 4.6696C11.8682 4.85656 11.5693 5.1376 11.3607 5.48227C11.1521 5.82693 11.0417 6.22211 11.0416 6.62499L11.0416 46.375C11.0413 46.7781 11.1514 47.1735 11.3598 47.5185C11.5683 47.8635 11.8672 48.1449 12.2241 48.3321C12.5811 48.5193 12.9824 48.6053 13.3848 48.5807C13.7871 48.5561 14.175 48.4218 14.5065 48.1925L43.2148 28.3175C43.5073 28.1133 43.7461 27.8416 43.911 27.5254C44.076 27.2091 44.1621 26.8578 44.1621 26.5011C44.1621 26.1444 44.076 25.7931 43.911 25.4768C43.7461 25.1606 43.5073 24.8889 43.2148 24.6847Z" />
+      </svg>
+    </button>
+
+  </div>
+
+  <!-- <button (click)="prev()" class="absolute -bottom-[45px] transform -translate-x-10 text-[#E4754E] hover:text-[#b35a3a]"
+    [ngClass]="{'hidden': currentIndex === 0}">
+    <svg class="fill-current w-6 h-6" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M9.78521 28.3153L38.4935 48.1903C38.8249 48.4195 39.2126 48.5537 39.6147 48.5784C40.0168 48.6031 40.418 48.5174 40.7749 48.3304C41.1318 48.1434 41.4307 47.8624 41.6393 47.5177C41.8479 47.1731 41.9583 46.7779 41.9584 46.375V6.625C41.9587 6.22193 41.8486 5.82647 41.6402 5.48149C41.4317 5.1365 41.1328 4.85515 40.7759 4.66792C40.4189 4.48068 40.0176 4.39472 39.6152 4.41933C39.2129 4.44394 38.825 4.5782 38.4935 4.80755L9.78521 24.6825C9.49274 24.8867 9.25388 25.1584 9.08895 25.4746C8.92402 25.7909 8.83789 26.1422 8.83789 26.4989C8.83789 26.8556 8.92402 27.2069 9.08895 27.5232C9.25388 27.8394 9.49274 28.1111 9.78521 28.3153Z" />
+    </svg>
+  </button>
+
+  <button (click)="next()" class="absolute -bottom-[45px] transform translate-x-10 text-[#E4754E] hover:text-[#b35a3a]"
+    [ngClass]="{'hidden': currentIndex === images.length - 1}">
+    <svg class="fill-current w-6 h-6" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M43.2148 24.6847L14.5065 4.80974C14.1751 4.5805 13.7874 4.44626 13.3853 4.42155C12.9832 4.39685 12.582 4.48263 12.2251 4.6696C11.8682 4.85656 11.5693 5.1376 11.3607 5.48227C11.1521 5.82693 11.0417 6.22211 11.0416 6.62499L11.0416 46.375C11.0413 46.7781 11.1514 47.1735 11.3598 47.5185C11.5683 47.8635 11.8672 48.1449 12.2241 48.3321C12.5811 48.5193 12.9824 48.6053 13.3848 48.5807C13.7871 48.5561 14.175 48.4218 14.5065 48.1925L43.2148 28.3175C43.5073 28.1133 43.7461 27.8416 43.911 27.5254C44.076 27.2091 44.1621 26.8578 44.1621 26.5011C44.1621 26.1444 44.076 25.7931 43.911 25.4768C43.7461 25.1606 43.5073 24.8889 43.2148 24.6847Z" />
+    </svg>
+  </button> -->
+
+  <button class="absolute -bottom-[60px]" (click)="toggleAutoplay()">
+    @if (isPlaying) {
+    <i class='bx bx-pause bx-lg text-[#E4754E] hover:text-[#b35a3a]'></i>
+    } @else {
+    <i class='bx bx-play bx-lg text-[#E4754E] hover:text-[#b35a3a]'></i>
+    }
+  </button>
+</div>

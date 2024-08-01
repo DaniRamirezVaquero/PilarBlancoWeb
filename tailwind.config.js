@@ -3,6 +3,12 @@ module.exports = {
   content: [
     "./src/**/*.{html,ts}",
   ],
+  variants: {
+    extend: {
+      scale: ['group-hover'],
+      opacity: ['group-hover'],
+    },
+  },
   theme: {
 
   },
