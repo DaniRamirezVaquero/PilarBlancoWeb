@@ -1,0 +1,133 @@
+<div class="flex flex-col w-min relative items-center gap-2">
+  <p
+    class="text-center font-semibold text-zinc-800 absolute w-full top-[45px] text-sm md:top-[52px] md:text-base xl:top-[60px]">
+    {{tape}} <i class="fas fa-music"></i></p>
+
+  <svg viewBox="3 5 61 45" class="w-min h-[210px] md:h-[250px] xl:h-[280px]">
+    <defs>
+      <filter id="shadow">
+        <feDropShadow dx="0" dy="-0.3" stdDeviation="0.2" />
+      </filter>
+    </defs>
+    <defs>
+      <filter id="shadow-2">
+        <feDropShadow dx="0" dy="0" stdDeviation="0.3" />
+      </filter>
+    </defs>
+    <path d="M5 10,
+             Q5 8, 7 8,
+             L60 8,
+             Q62 8, 62 10,
+             L62 45,
+             Q62 47, 60 47,
+             L7 47,
+             Q5 47, 5 45
+             L5 10" fill="#87B3D0" />
+    <path d="M10 15,
+             Q10 13, 12 13,
+             L55 13,
+             Q57 13, 57 15,
+             L57 35,
+             Q57 37, 55 37,
+             L13 37,
+             Q10 37, 10 35,
+             L10 15" fill="#c4c4c4" class="shadow-2" />
+    <path d="M15 47,
+             L18 40,
+             L50 40,
+             L53 47,
+             L15 47" fill="#0d3047" class="shadow" />
+    <path d="M10 20,
+             L57 20,
+             L57 25,
+             L10 25" fill="#f97316" />
+    <circle cx="8" cy="11" r="1" fill="#0d3047" />
+    <circle cx="59" cy="11" r="1" fill="#0d3047" />
+    <circle cx="8" cy="44" r="1" fill="#0d3047" />
+    <circle cx="59" cy="44" r="1" fill="#0d3047" />
+    <circle cx="23" cy="44" r="1" fill="#adcade" />
+    <circle cx="45" cy="44" r="1" fill="#adcade" />
+    <rect x="28" y="42" rx="0" ry="0" width="1.5" height="1.5" />
+    <rect x="38" y="42" rx="0" ry="0" width="1.5" height="1.5" />
+    <rect x="15" y="20" rx="6" width="37" height="12" class="mid-rect" />
+    <rect x="27" y="24" width="13" height="6" />
+    <!-- 	middle circles-->
+    <circle cx="21" cy="26" r="4.5" fill="#adcade" />
+    <circle cx="46" cy="26" r="4.5" fill="#adcade" />
+    <circle cx="21" cy="26" r="3.5" fill="#8a8a8a" />
+    <circle cx="46" cy="26" r="3.5" fill="#8a8a8a" />
+    <!-- 	animation will happen here -->
+    <g class="first-g" [class.spin]="spinning">
+      <path d="M19 23,
+               L23 29" stroke="#adcade" stroke-width=".4" />
+      <path d="M23 23,
+               L19 29" stroke="#adcade" stroke-width=".4" />
+      <path d="M17 26,
+               L25 26" stroke="#adcade" stroke-width=".4" />
+      <circle cx="21" cy="26" r="2" fill="#8a8a8a" />
+    </g>
+    <g class="second-g" [class.spin]="spinning">
+      <path d="M48 23,
+               L44 29" stroke="#adcade" stroke-width=".4" />
+      <path d="M44 23,
+               L48 29" stroke="#adcade" stroke-width=".4" />
+      <path d="M42 26,
+               L50 26" stroke="#adcade" stroke-width=".4" />
+      <circle cx="46" cy="26" r="2" fill="#8a8a8a" />
+    </g>
+    <!-- 	Lip -->
+    <path d="M5 45,
+             L4 43,
+             L4 35,
+             L5 33" fill="#0d3047" />
+    <path d="M62 45,
+             L63 43,
+             L63 35,
+             L62 33" fill="#0d3047" />
+  </svg>
+
+  <input type="range" min="0" max="100" [value]="progress" (input)="onProgressChange($event)"
+    class="range range-xs [--range-shdw:#87B3D0] w-10/12" />
+
+  <div class="flex justify-between items-center w-10/12 mt-2">
+
+    <button class="previous btn btn-ghost text-[#87B3D0] hover:text-[#0d3047] transition-colors"
+      (click)="previousBtn()">
+      <i class="fas fa-step-backward text-current"></i>
+    </button>
+
+    @if (audio.paused) {
+      <div [class.tooltip]="playTooltip" class="tooltip-open tooltip-bottom tooltip-secondary" data-tip="Pulsa para reproducir">
+        <button class="play btn btn-ghost text-[#87B3D0] hover:text-[#0d3047] transition-colors" (click)="playTape(); hiddePlayTooltip();">
+          <i class="fas fa-play text-current"></i>
+        </button>
+      </div>
+    } @else {
+    <button class="pause btn btn-ghost text-[#87B3D0] hover:text-[#0d3047] transition-colors" (click)="pauseBtn()">
+      <i class="fas fa-pause text-current"></i>
+    </button>
+    }
+
+    <div [class.tooltip]="otherTooltip" class="tooltip-open tooltip-bottom tooltip-secondary" data-tip="Hay más demos!">
+      <button class="next btn btn-ghost text-[#87B3D0] hover:text-[#0d3047] transition-colors" (click)="nextBtn(); hiddeOtherTooltip()">
+        <i class="fas fa-step-forward text-current"></i>
+      </button>
+    </div>
+
+    <div class="flex justify-between items-center gap-2">
+      <div class="w-10">
+        @if (audio.volume > 0.5) {
+          <i class="fa-solid fa-volume-high text-[#eb904f]"></i>
+        } @else if (audio.volume <= 0.7 && audio.volume !== 0) {
+          <i class="fa-solid fa-volume-low text-[#eb904f]"></i>
+        } @else {
+          <i class="fa-solid fa-volume-off text-[#eb904f]"></i>
+        }
+      </div>
+
+      <input type="range" min="0" max="1" step="0.01" class="range range-xs [--range-shdw:#eb904f] w-12"
+        (input)="onVolumeChange($event)" [value]="audio.volume" />
+    </div>
+  </div>
+
+</div>

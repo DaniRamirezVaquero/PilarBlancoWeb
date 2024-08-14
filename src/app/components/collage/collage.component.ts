@@ -40,6 +40,12 @@ export class CollageComponent {
     'assets/images/collage/FOTO (27).webp',
     'assets/images/collage/FOTO (28).webp',
     'assets/images/collage/FOTO (29).webp',
+    'assets/images/collage/FOTO (30).webp',
+    'assets/images/collage/FOTO (31).webp',
+    'assets/images/collage/FOTO (32).webp',
+    'assets/images/collage/FOTO (33).webp',
+    'assets/images/collage/FOTO (34).webp',
+    'assets/images/collage/FOTO (35).webp',
   ];
 
   titulos = [
@@ -71,7 +77,14 @@ export class CollageComponent {
     {index: 26, titulo: 'CROMA 11'},
     {index: 27, titulo: 'ABRO LOS OJOS SUEÑO CONTIGO'},
     {index: 28, titulo: 'PABLO ESCOLAR'},
-    {index: 29, titulo: 'SIN NOTICIAS DE GURB'}
+    {index: 29, titulo: 'SIN NOTICIAS DE GURB'},
+    {index: 30, titulo: 'SERIE RABIA'},
+    {index: 31, titulo: 'ALICE'},
+    {index: 32, titulo: 'ESPACIO ALZHEIMER ANDALUCÍA'},
+    {index: 33, titulo: 'ESPACIO ALZHEIMER ANDALUCÍA'},
+    {index: 34, titulo: 'ESPACIO ALZHEIMER ANDALUCÍA'},
+    {index: 35, titulo: 'DARKINSIDE'},
+
   ]
 
   imageGroups: string[][] = [];
@@ -82,7 +95,7 @@ export class CollageComponent {
   constructor(private ngZone: NgZone) {}
 
   ngOnInit(): void {
-    this.imageGroups = this.chunkArray(this.images, 7);
+    this.imageGroups = this.chunkArray(this.images, 9);
     this.ngZone.runOutsideAngular(() => this.animateTitle());
   }
 
