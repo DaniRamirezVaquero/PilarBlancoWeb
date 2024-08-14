@@ -1,0 +1,47 @@
+rect {
+  fill: #87B3D0;
+}
+
+.mid-rect {
+  fill: #0d3047;
+}
+
+.shadow {
+  filter: url(#shadow);
+}
+
+.shadow-2 {
+  filter: url(#shadow-2);
+}
+
+.spin {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: rotate-wheel 8s infinite linear;
+}
+
+@keyframes rotate-wheel {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.info {
+  position: relative;
+  width: 450px;
+  height: 10vh;
+  text-align: center;
+  font-size: 18px;
+}
+
+
+i {
+  font-size: 28px;
+}
+
+i.fa-music {
+  font-size: 15px;
+}

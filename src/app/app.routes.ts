@@ -2,10 +2,11 @@ import { Routes } from '@angular/router';
 import { PrincipalComponent } from './Pages/principal/principal.component';
 import { VideoPageComponent } from './Pages/video-page/video-page.component';
 import { GalleryPageComponent } from './Pages/gallery-page/gallery-page.component';
+import { VoicePageComponent } from './Pages/voice-page/voice-page.component';
 
 export const routes: Routes = [
   {
-    path: 'principal', component: PrincipalComponent
+    path: 'main', component: PrincipalComponent
   },
   {
     path: 'video', component: VideoPageComponent
@@ -14,6 +15,9 @@ export const routes: Routes = [
     path: 'gallery', component: GalleryPageComponent
   },
   {
-    path: '', redirectTo: '/principal', pathMatch: 'full'
+    path: 'voice', component: VoicePageComponent
+  },
+  {
+    path: '', redirectTo: '/main', pathMatch: 'full'
   }
 ];
