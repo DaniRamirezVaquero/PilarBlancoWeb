@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { environment } from '../../../environments/environment.development';
 
 
 
@@ -47,7 +48,9 @@ export class ContactPageComponent {
             recaptchaToken
           };
 
-          this.http.post('http://localhost:3000/api/send-email', formData).subscribe(
+          const apiUrl = environment.production ? 'https://tu-dominio.com/api/send-email' : 'http://localhost:3000/api/send-email';
+
+          this.http.post(apiUrl, formData).subscribe(
             (response: any) => {
               console.log(response.message);
               this.errorMessage = null; // Limpiar el mensaje de error en caso de éxito
