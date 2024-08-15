@@ -48,7 +48,7 @@ export class ContactPageComponent {
             recaptchaToken
           };
 
-          const apiUrl = environment.production ? 'https://tu-dominio.com/api/send-email' : 'http://localhost:3000/api/send-email';
+          const apiUrl = environment.production ? 'https://pilarblanco.es/api/send-email' : 'http://localhost:3000/api/send-email';
 
           this.http.post(apiUrl, formData).subscribe(
             (response: any) => {
