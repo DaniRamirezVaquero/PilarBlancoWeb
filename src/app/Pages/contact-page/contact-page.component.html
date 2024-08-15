@@ -1,0 +1,99 @@
+<div class="bg-gradient-to-tr from-zinc-400 via-neutral-500 to-neutral-600 w-screen py-24 lg:py-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden
+    flex flex-col gap-10">
+  <div>
+    <h2 class="lato-regular text-xl sm:text-2xl md:text-4xl text-white">Conecta conmigo</h2>
+    <div class="w-full h-0.5 rounded-full bg-orange-500 mt-2"></div>
+  </div>
+  <div class="flex justify-center">
+
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()"
+      class="w-3/5 rounded-box p-6 bg-zinc-100 form-control items-center gap-6 shadow-lg transition-all duration-300">
+      <div class="flex flex-col gap-2 w-full">
+        <label class="input input-primary input-ghost flex items-center gap-2 text-zinc-800 w-full">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
+            <path
+              d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+          </svg>
+          <input type="text" formControlName="name" class="grow" placeholder="Nombre" required />
+        </label>
+        <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="text-error text-left">
+          <small *ngIf="name?.hasError('required')">El nombre es requerido.</small>
+          <small *ngIf="name?.hasError('minlength')">El nombre debe tener al menos 3 caracteres.</small>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2 w-full">
+        <label class="input input-primary input-ghost flex items-center gap-2 text-zinc-800 w-full">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
+            <path
+              d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
+            <path
+              d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
+          </svg>
+          <input type="email" formControlName="email" class="grow" placeholder="Email" required />
+        </label>
+        <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-error text-left">
+          <small *ngIf="email?.hasError('required')">El email es requerido.</small>
+          <small *ngIf="email?.hasError('email')">El email no es válido.</small>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2 w-full">
+        <textarea formControlName="message" class="textarea textarea-primary textarea-ghost w-full text-zinc-800"
+          rows="4" placeholder="Mensaje" required></textarea>
+        <div *ngIf="message?.invalid && (message?.dirty || message?.touched)" class="text-error text-left">
+          <small *ngIf="message?.hasError('required')">El mensaje es requerido.</small>
+          <small *ngIf="message?.hasError('minlength')">El mensaje debe tener al menos 10 caracteres.</small>
+        </div>
+      </div>
+
+      <div class="w-full flex flex-col items-center">
+
+        <input type="hidden" name="recaptchaToken" id="recaptchaToken">
+        <button type="submit" class="btn btn-secondary w-24 disabled:bg-secondary/75 disabled:cursor-not-allowed"
+          [disabled]="contactForm.invalid">
+          @if (loading) {
+            <span class="loading loading-spinner"></span>
+          } @else if (success) {
+            Enviado!
+          } @else {
+            Enviar
+          }
+        </button>
+        <div *ngIf="errorMessage" class="text-error text-center mt-4">
+          {{ errorMessage }}
+        </div>
+        <div *ngIf="success" class="text-success text-center mt-4">
+          El mensaje ha sido enviado. Te responderé lo antes posible.
+        </div>
+      </div>
+    </form>
+
+    <script src="https://www.google.com/recaptcha/api.js?render=6LevbScqAAAAAAxWX_syCEhEXzudSqMPtqfcmHb0"></script>
+    <script>
+      grecaptcha.ready(function () {
+        grecaptcha.execute('6LevbScqAAAAAAxWX_syCEhEXzudSqMPtqfcmHb0', { action: 'submit' }).then(function (token) {
+          document.getElementById('recaptchaToken').value = token;
+        });
+      });
+    </script>
+  </div>
+
+  <div>
+    <h2 class="lato-regular text-xl sm:text-2xl md:text-4xl text-white">Representate</h2>
+    <div class="w-full h-0.5 rounded-full bg-orange-500 mt-2"></div>
+  </div>
+
+  <div class="flex flex-col items-center gap-3">
+    <a href="https://okagencia.com/ficha.php?idactor=2133&gr=aa" target="_blank">
+      <div class="avatar shadow-lg transition-transform hover:scale-105 cursor-pointer">
+        <div class="w-56 rounded-xl">
+          <img src="assets/images/okagencia.jpg" />
+        </div>
+      </div>
+    </a>
+    <a href="mailto:Info@okagencia.com"
+      class="font-semibold text-zinc-200 hover:text-zinc-100 transition-colors">Info&#64;okagencia.com</a>
+  </div>
+
+</div>
