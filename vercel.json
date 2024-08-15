@@ -6,10 +6,10 @@
       "use": "@vercel/node"
     },
     {
-      "src": "angular-app/package.json",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist/angular-app"
+        "distDir": "dist"
       }
     }
   ],
@@ -20,7 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/angular-app/$1"
+      "dest": "/dist/$1"
     }
   ]
 }
