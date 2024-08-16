@@ -27,14 +27,13 @@ export class AppComponent {
   constructor(private router: Router) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
-        console.log('NavigationEnd:', val.url); // Log the URL
         this.updateVisibility(val.url);
       }
     });
   }
 
   private updateVisibility(url: string): void {
-    this.showFooter = url !== '/main';
+    this.showFooter = url !== '/home';
     this.showCaptcha = url === '/contact';
   }
 }

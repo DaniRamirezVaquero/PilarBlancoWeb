@@ -1,9 +1,9 @@
 <app-burguer-menu-btn class="top-8 left-8 w-16 sm:top-8 sm:left-8 md:top-12 md:left-10 lg:w-20 z-50"
   (click)="toggleSideNav()" [ngClass]="isOpen ? 'fixed' : 'absolute'" />
 
-<aside id="sideNav" class="fixed z-40 top-0 -left-[460px] w-[460px] h-dvh bg-gray-200 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-40 border-r border-orange-500 flex items-center
+<aside id="sideNav" class="fixed z-40 top-0 -left-[460px] w-[460px] h-dvh bg-gray-200 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-40 border-r border-orange-500 flex lg:items-center
   transition-all duration-500">
-  <div class="flex flex-col gap-y-10 text-3xl lato-regular ml-16 text-zinc-900">
+  <div class="flex flex-col gap-y-6 md:gap-y-8 xl:gap-y-10 text-xl md:text-2xl lg:text-3xl lato-regular ml-16 text-zinc-900 mt-24 md:mt-28 lg:mt-0">
     <a href="#" [routerLink]="['/main']" routerLinkActive="text-orange-500" (click)="toggleSideNav()"
       class="hover:drop-shadow-md hover:text-sky-300 transition-colors duration-300">Inicio</a>
     <a href="#" [routerLink]="['/video']" routerLinkActive="text-orange-500" (click)="toggleSideNav()"
@@ -12,9 +12,9 @@
       class="hover:drop-shadow-md hover:text-sky-300 transition-colors duration-300">Galería</a>
     <a href="#" [routerLink]="['/voice']" routerLinkActive="text-orange-500" (click)="toggleSideNav()"
       class="hover:drop-shadow-md hover:text-sky-300 transition-colors duration-300">Voz</a>
-    <a href="#" [routerLink]="['/routePath']" routerLinkActive="text-orange-500" (click)="toggleSideNav()"
-      class="hover:drop-shadow-md hover:text-sky-300 transition-colors duration-300">Bio</a>
-    <a href="#" [routerLink]="['/routePath']" routerLinkActive="text-orange-500" (click)="toggleSideNav()"
+    <a href="#" [routerLink]="['/bio']" routerLinkActive="text-orange-500" (click)="toggleSideNav()"
+      class="hover:drop-shadow-md hover:text-sky-300 transition-colors duration-300">Trayectoria</a>
+    <a href="#" [routerLink]="['/curriculum']" routerLinkActive="text-orange-500" (click)="toggleSideNav()"
       class="hover:drop-shadow-md hover:text-sky-300 transition-colors duration-300">CV</a>
     <a href="#" [routerLink]="['/contact']" routerLinkActive="text-orange-500" (click)="toggleSideNav()"
       class="hover:drop-shadow-md hover:text-sky-300 transition-colors duration-300">Contacto</a>
