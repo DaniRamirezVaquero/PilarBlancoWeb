@@ -17,19 +17,19 @@ export class CassetteComponent implements OnInit, OnDestroy {
   tapes: Tape[] = [
     {
       tapeName: 'Demo Publicidad',
-      url: "assets/tapes/Demo2.mp3"
+      url: "assets/tapes/DemoPubli.mp3"
     },
     {
       tapeName: "Demo 1",
       url: "assets/tapes/Demo1.mp3"
     },
     {
-      tapeName: "Demo 3",
-      url: "assets/tapes/Demo3.mp3"
+      tapeName: "Demo 2",
+      url: "assets/tapes/Demo2.mp3"
     },
     {
-      tapeName: "Demo 4",
-      url: "assets/tapes/Demo4.mp3"
+      tapeName: "Demo 3",
+      url: "assets/tapes/Demo3.mp3"
     }
   ];
 
