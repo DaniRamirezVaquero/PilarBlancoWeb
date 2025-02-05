@@ -67,27 +67,36 @@ export class CassetteComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
+    this.audio.addEventListener('ended', this.onTrackEnded.bind(this));
   }
 
   ngOnDestroy() {
     this.audio.removeEventListener('timeupdate', this.updateProgress.bind(this));
+    this.audio.removeEventListener('ended', this.onTrackEnded.bind(this));
     clearInterval(this.intervalId);
+  }
+
+  onTrackEnded() {
+    this.nextTape();
+    this.playTape();
   }
 
   playTape(): void {
     this.audio.play();
     this.spin();
-    this.audio.loop = true;
-    this.intervalId = setInterval(() => this.updateProgress(), 1000);
+    this.audio.loop = false;
+    this.intervalId = setInterval(() => this.updateProgress(), 500);
   }
 
 
   hiddePlayTooltip(): void {
-    this.playTooltip = false;
+    if (this.playTooltip) {
+      this.playTooltip = false;
 
-    setTimeout(() => {
-      this.showOtherTooltip();
-    },3000)
+      setTimeout(() => {
+        this.showOtherTooltip();
+      }, 4000)
+    }
   }
 
   showOtherTooltip(): void {
@@ -150,6 +159,7 @@ export class CassetteComponent implements OnInit, OnDestroy {
     this.pauseBtn();
     this.audio = new Audio(this.tapes[newTapeIndex].url);
     this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
+    this.audio.addEventListener('ended', this.onTrackEnded.bind(this)); // Agregar evento ended
     this.audio.volume = this.volumen;
 
     if (this.wasPlaying) {
@@ -170,6 +180,7 @@ export class CassetteComponent implements OnInit, OnDestroy {
     this.pauseBtn();
     this.audio = new Audio(this.tapes[newTapeIndex].url);
     this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
+    this.audio.addEventListener('ended', this.onTrackEnded.bind(this)); // Agregar evento ended
     this.audio.volume = this.volumen;
 
     if (this.wasPlaying) {
