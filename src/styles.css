@@ -68,3 +68,8 @@
   font-weight: 900;
   font-style: italic;
 }
+
+/* Ocultar la insignia de reCAPTCHA globalmente */
+.grecaptcha-badge {
+  visibility: hidden !important;
+}

@@ -50,6 +50,16 @@
       <div class="w-full flex flex-col items-center">
 
         <input type="hidden" name="recaptchaToken" id="recaptchaToken">
+
+        <!-- Aviso requerido por Google cuando se oculta la insignia de reCAPTCHA -->
+        <div class="text-xs text-zinc-600 text-center mb-4">
+          Este sitio está protegido por reCAPTCHA y se aplican la
+          <a href="https://policies.google.com/privacy" target="_blank" class="text-blue-600 hover:underline">Política de Privacidad</a>
+          y los
+          <a href="https://policies.google.com/terms" target="_blank" class="text-blue-600 hover:underline">Términos de Servicio</a>
+          de Google.
+        </div>
+
         <button type="submit" class="btn btn-secondary md:w-24 w-full disabled:bg-secondary/75 disabled:cursor-not-allowed transition-all duration-300"
           [disabled]="contactForm.invalid">
           @if (loading) {
@@ -68,18 +78,9 @@
         </div>
       </div>
     </form>
-
-    <script src="https://www.google.com/recaptcha/api.js?render=6LevbScqAAAAAAxWX_syCEhEXzudSqMPtqfcmHb0"></script>
-    <script>
-      grecaptcha.ready(function () {
-        grecaptcha.execute('6LevbScqAAAAAAxWX_syCEhEXzudSqMPtqfcmHb0', { action: 'submit' }).then(function (token) {
-          document.getElementById('recaptchaToken').value = token;
-        });
-      });
-    </script>
   </div>
 
-  <div>
+  <!-- <div >
     <h2 class="lato-regular text-xl sm:text-2xl md:text-4xl text-white">Representante</h2>
     <div class="w-full h-0.5 rounded-full bg-orange-500 mt-2"></div>
   </div>
@@ -94,6 +95,6 @@
     </a>
     <a href="mailto:Info@okagencia.com"
       class="font-semibold text-zinc-200 hover:text-zinc-100 transition-colors">Info&#64;okagencia.com</a>
-  </div>
+  </div> -->
 
 </div>

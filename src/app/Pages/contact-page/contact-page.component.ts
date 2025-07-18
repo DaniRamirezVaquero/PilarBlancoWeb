@@ -4,6 +4,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment.development';
 
+declare global {
+  interface Window {
+    grecaptcha: any;
+  }
+}
+
+declare var grecaptcha: any;
+
 
 
 @Component({
