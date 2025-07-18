@@ -24,6 +24,22 @@ export class CarouselComponent implements OnInit, OnDestroy {
     'assets/images/carousel/Pilar Blanco WEB_11.webp',
     'assets/images/carousel/Pilar Blanco WEB_12.webp'
   ];
+
+  imageDescriptions: string[] = [
+    'Pilar Blanco, actriz profesional - Retrato artístico 1',
+    'Pilar Blanco, actriz especializada en cine y televisión - Retrato 2',
+    'Foto profesional de Pilar Blanco para casting - Imagen 3',
+    'Retrato actoral de Pilar Blanco - Imagen profesional 4',
+    'Pilar Blanco, actriz de teatro y doblaje - Foto artística 5',
+    'Imagen profesional de Pilar Blanco para portfolio - Retrato 6',
+    'Pilar Blanco, actriz con experiencia en audiovisual - Foto 7',
+    'Retrato profesional de la actriz Pilar Blanco - Imagen 8',
+    'Pilar Blanco, especialista en interpretación - Foto artística 9',
+    'Imagen de portfolio de Pilar Blanco, actriz - Retrato 10',
+    'Foto profesional de Pilar Blanco para casting - Imagen 11',
+    'Retrato final de Pilar Blanco, actriz profesional - Imagen 12'
+  ];
+
   currentIndex: number = 0;
   firstImage: boolean = true;
   lastImage: boolean = false;
@@ -33,6 +49,10 @@ export class CarouselComponent implements OnInit, OnDestroy {
   interactionTimeout: any;
   touchStartX: number = 0;
   touchEndX: number = 0;
+
+  getImageAlt(index: number): string {
+    return this.imageDescriptions[index] || `Pilar Blanco, actriz profesional - Imagen ${index + 1}`;
+  }
 
   ngOnInit() {
     this.startAutoplay();

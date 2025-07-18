@@ -3,26 +3,31 @@
   <div class="flex flex-col gap-8">
     <div>
       <div class="mb-6">
-        <h2 class="lato-regular text-xl sm:text-2xl md:text-4xl text-white">Doblaje</h2>
+        <h1 class="lato-regular text-xl sm:text-2xl md:text-4xl text-white">Doblaje</h1>
         <div class="w-full h-0.5 rounded-full bg-orange-500 mt-2"></div>
       </div>
-      <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 lg:gap-20 lg:mb-12">
+      <section class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 lg:gap-20 lg:mb-12"
+        aria-label="Videos de doblaje de Pilar Blanco">
 
         <div class="shadow-md w-full max-w-[1280px]">
           <div class="relative pb-[56.25%] h-0 overflow-hidden">
-            <iframe title="vimeo-player" src="https://player.vimeo.com/video/715325007?h=030a97a869"
-              class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen></iframe>
+            <iframe title="Pilar Blanco doblaje - Trabajo de voz profesional 1"
+              src="https://player.vimeo.com/video/715325007?h=030a97a869"
+              class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen
+              loading="lazy"></iframe>
           </div>
         </div>
 
         <div class="shadow-md w-full max-w-[1280px]">
           <div class="relative pb-[56.25%] h-0 overflow-hidden">
-            <iframe title="vimeo-player" src="https://player.vimeo.com/video/994004071?h=93da72042a"
-              class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen></iframe>
+            <iframe title="Pilar Blanco doblaje - Demo de voz profesional 2"
+              src="https://player.vimeo.com/video/994004071?h=93da72042a"
+              class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen
+              loading="lazy"></iframe>
           </div>
         </div>
 
-      </div>
+      </section>
     </div>
 
     <div>
@@ -30,9 +35,9 @@
         <h2 class="lato-regular text-xl sm:text-2xl md:text-4xl text-white">Locución</h2>
         <div class="w-full h-0.5 rounded-full bg-orange-500 mt-2"></div>
       </div>
-      <div class="flex items-center justify-around w-full">
+      <section class="flex items-center justify-around w-full" aria-label="Reproductor de demos de locución de Pilar Blanco">
         <app-cassette></app-cassette>
-      </div>
+      </section>
     </div>
   </div>
 </div>

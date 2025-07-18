@@ -5,13 +5,13 @@
     <div class="text-white w-min flex flex-col justify-center md:ml-40 transition-all duration-500"
       [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[300px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
       <div class="lato-light text-6xl lg:text-7xl">
-        <h1>
-          <p>PILAR</p>
-          <p>BLANCO</p>
+        <h1 itemscope itemtype="https://schema.org/Person">
+          <span itemprop="name">PILAR</span>
+          <span itemprop="name">BLANCO</span>
         </h1>
       </div>
       <div class="bg-sky-300 w-full min-h-1 rounded-full my-6"></div>
-      <p class="font-sans font-semibold text-lg lg:text-xl">ACTRIZ</p>
+      <p class="font-sans font-semibold text-lg lg:text-xl" itemprop="jobTitle">ACTRIZ</p>
     </div>
     <div class="flex items-end transition-all duration-500"
       [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[460px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
@@ -31,8 +31,10 @@ flex items-center justify-center">
 
   <div class="w-full max-w-[70%]">
     <div class="relative pb-[56.25%] h-0 overflow-hidden">
-      <iframe id="player" title="vimeo-player" src="https://player.vimeo.com/video/786041466?h=5428a890c9"
-        class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen></iframe>
+      <iframe id="player" title="Reel de Pilar Blanco - Video principal de la actriz"
+        src="https://player.vimeo.com/video/786041466?h=5428a890c9"
+        class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen
+        loading="lazy"></iframe>
     </div>
   </div>
 </div>

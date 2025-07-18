@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://pilarblanco.com/sitemap.xml
+
+# Directivas adicionales
+Disallow: /assets/CV.pdf
+Disallow: /assets/tapes/
+Disallow: /backend/
+
+# Crawl delay
+Crawl-delay: 1

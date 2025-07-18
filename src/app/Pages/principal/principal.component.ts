@@ -1,16 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { PlayBtnComponent } from '../../components/play-btn/play-btn.component';
 import { SideNavService } from '../../services/side-nav.service';
+import { SeoService } from '../../services/seo.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-principal',
   standalone: true,
   imports: [
     PlayBtnComponent,
-    CommonModule,
-    RouterLink
+    CommonModule
   ],
   templateUrl: './principal.component.html',
   styleUrl: './principal.component.css'
@@ -21,13 +20,22 @@ export class PrincipalComponent implements OnInit {
   subscription: any;
   showReel: boolean = false;
 
-  constructor() { }
+  constructor(private seoService: SeoService) { }
 
   sideNavService = inject(SideNavService);
 
   ngOnInit(): void {
     this.sideNavService.isOpen$.subscribe(isOpen => {
       this.sideNavIsOpen = isOpen;
+    });
+
+    // SEO Configuration
+    this.seoService.updatePageSeo({
+      title: 'Pilar Blanco - Actriz Profesional | Portfolio Artístico',
+      description: 'Bienvenido al portfolio de Pilar Blanco, actriz profesional con más de 30 años de experiencia en cine, televisión, teatro y doblaje. Descubre su reel y trayectoria artística.',
+      keywords: 'Pilar Blanco, actriz, cine, televisión, teatro, doblaje, locución, portfolio, reel, España, Metronomoteatro, Ray Gitano, Rabia',
+      ogImage: 'https://pilarblanco.com/assets/images/pilar-blanco-home.jpg',
+      canonicalUrl: 'https://pilarblanco.com/'
     });
   }
 

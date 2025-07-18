@@ -72,4 +72,18 @@
 /* Ocultar la insignia de reCAPTCHA globalmente */
 .grecaptcha-badge {
   visibility: hidden !important;
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* Más específico para casos donde reCAPTCHA añade estilos dinámicos */
+iframe[src*="recaptcha"],
+div[data-sitekey],
+.grecaptcha-badge,
+[data-callback="onSubmit"] {
+  visibility: hidden !important;
+  display: none !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
 }

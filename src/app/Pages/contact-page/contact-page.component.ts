@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment.development';
+import { SeoService } from '../../services/seo.service';
 
 declare global {
   interface Window {
@@ -25,18 +26,28 @@ declare var grecaptcha: any;
   templateUrl: './contact-page.component.html',
   styleUrl: './contact-page.component.css'
 })
-export class ContactPageComponent {
+export class ContactPageComponent implements OnInit {
   contactForm: FormGroup;
   errorMessage: string | null = null;
   loading: boolean = false;
   success: boolean = false;
 
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private seoService: SeoService) {
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       message: ['', [Validators.required, Validators.minLength(10)]]
+    });
+  }
+
+  ngOnInit(): void {
+    this.seoService.updatePageSeo({
+      title: 'Contacto - Pilar Blanco | Ponte en Contacto con la Actriz',
+      description: 'Contacta con Pilar Blanco para propuestas profesionales, casting o consultas. Formulario de contacto directo para proyectos de cine, televisión y teatro.',
+      keywords: 'Pilar Blanco contacto, contactar actriz, casting, propuestas profesionales, formulario contacto, email actriz',
+      ogImage: 'https://pilarblanco.com/assets/images/pilar-blanco-contact.jpg',
+      canonicalUrl: 'https://pilarblanco.com/contact'
     });
   }
 
