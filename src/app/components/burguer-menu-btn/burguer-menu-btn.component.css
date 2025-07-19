@@ -1,43 +1,54 @@
 .ham {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: transform 400ms;
+  transition: transform 400ms ease-out;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
   margin: -20px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
-.ham4.active{
+.ham:hover {
+  transform: scale(1.1);
+}
+
+.ham4.active {
   .line {
-    stroke:#3b6192;
+    stroke: #87B3D0; /* primary color */
   }
 }
+
 .hamRotate.active {
-  transform: rotate(45deg);
+  transform: rotate(45deg) scale(1.1);
 }
 
 .ham4 .top {
   stroke-dasharray: 40 121;
 }
+
 .ham4 .bottom {
   stroke-dasharray: 40 121;
 }
+
 .ham4.active .top {
   stroke-dashoffset: -68px;
 }
+
 .ham4.active .bottom {
   stroke-dashoffset: -68px;
 }
 
-
 .line {
-  fill:none;
-  transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
-  stroke:#FBFBFB;
-  stroke-width:5.5;
-  stroke-linecap:round;
-  transition: all 0.3s;
+  fill: none;
+  transition: stroke-dasharray 400ms ease-out, stroke-dashoffset 400ms ease-out, stroke 300ms ease-out;
+  stroke: #FBFBFB;
+  stroke-width: 5.5;
+  stroke-linecap: round;
+}
+
+/* Efecto hover para las líneas */
+.ham:hover .line {
+  stroke: #87B3D0; /* primary color */
 }
