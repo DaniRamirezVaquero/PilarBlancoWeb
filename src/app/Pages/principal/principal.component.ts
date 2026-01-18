@@ -23,6 +23,7 @@ export class PrincipalComponent implements OnInit {
   constructor(private elementRef: ElementRef) { }
 
   sideNavService = inject(SideNavService);
+  seoService = inject(SeoService);
 
   ngOnInit(): void {
     this.sideNavService.isOpen$.subscribe(isOpen => {
