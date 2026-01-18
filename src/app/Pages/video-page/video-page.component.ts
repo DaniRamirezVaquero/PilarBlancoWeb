@@ -1,24 +1,65 @@
-import { Component, OnInit } from '@angular/core';
-import { SeoService } from '../../services/seo.service';
+import { Component, inject } from '@angular/core';
+import { NgFor } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
+interface Scene {
+  videoId: string;
+  hash: string;
+  title: string;
+  projectName: string;
+  visible: boolean;
+}
 
 @Component({
   selector: 'app-video-page',
   standalone: true,
-  imports: [],
+  imports: [NgFor],
   templateUrl: './video-page.component.html',
   styleUrl: './video-page.component.css'
 })
-export class VideoPageComponent implements OnInit {
+export class VideoPageComponent {
+  private sanitizer = inject(DomSanitizer);
 
-  constructor(private seoService: SeoService) { }
+  scenes: Scene[] = [
+    {
+      videoId: '989002249',
+      hash: '87574a8f82',
+      title: 'Escena de Pilar Blanco - Actuación dramática 1',
+      projectName: 'Pecadores de la Pradera',
+      visible: true
+    },
+    {
+      videoId: '1102753806',
+      hash: '7fb8fd176a',
+      title: 'Escena de Pilar Blanco - Actuación dramática 2',
+      projectName: 'Aquella Fotografía',
+      visible: true
+    },
+    {
+      videoId: '782842299',
+      hash: '03d9fc9437',
+      title: 'Escena de Pilar Blanco - Actuación en cine 2',
+      projectName: 'Proyecto 3',
+      visible: false
+    },
+    {
+      videoId: '715326695',
+      hash: '65d780d64c',
+      title: 'Escena de Pilar Blanco - Actuación profesional 3',
+      projectName: 'El Mix',
+      visible: true
+    },
+    {
+      videoId: '992051712',
+      hash: '629cbcb15e',
+      title: 'Escena de Pilar Blanco - Trabajo audiovisual 4',
+      projectName: 'Proyecto 5',
+      visible: false
+    }
+  ];
 
-  ngOnInit(): void {
-    this.seoService.updatePageSeo({
-      title: 'Videos - Pilar Blanco | Reel y Escenas de Actuación',
-      description: 'Descubre el reel de actuación de Pilar Blanco y sus mejores escenas en cine y televisión. Videos profesionales que muestran su versatilidad como actriz.',
-      keywords: 'Pilar Blanco videos, reel actuación, escenas cine, televisión, portfolio video, actriz profesional, demo reel',
-      ogImage: 'https://pilarblanco.com/assets/images/pilar-blanco-video.jpg',
-      canonicalUrl: 'https://pilarblanco.com/video'
-    });
+  getSafeUrl(videoId: string, hash: string): SafeResourceUrl {
+    const url = `https://player.vimeo.com/video/${videoId}?h=${hash}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

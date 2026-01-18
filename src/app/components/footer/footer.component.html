@@ -1,3 +1,20 @@
-<footer class="w-full h-28 flex items-center justify-center bg-zinc-800 px-16">
-  <p class="text-gray-500 font-semibold text-sm md:text-base">© 2024 PILAR BLANCO - Todos los derechos reservados</p>
+<footer class="relative w-full h-32 flex items-center justify-center
+               bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900
+               border-t border-sky-300/20 px-16 overflow-hidden">
+
+  <!-- Efecto de partículas de fondo -->
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute top-4 left-1/4 w-1 h-1 bg-sky-300 rounded-full animate-pulse"></div>
+    <div class="absolute bottom-4 right-1/3 w-1 h-1 bg-orange-400 rounded-full animate-pulse animation-delay-200"></div>
+    <div class="absolute top-1/2 left-3/4 w-0.5 h-0.5 bg-sky-400 rounded-full animate-pulse animation-delay-400"></div>
+  </div>
+
+  <!-- Línea decorativa superior -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r
+              from-transparent via-sky-300/50 to-transparent"></div>
+
+  <p class="relative z-10 text-gray-400 lato-light text-sm md:text-base tracking-wide
+           hover:text-primary transition-colors duration-300">
+    © 2026 <span class="lato-bold text-white">PILAR BLANCO</span> - Todos los derechos reservados
+  </p>
 </footer>

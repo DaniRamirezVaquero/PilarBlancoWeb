@@ -1,19 +1,37 @@
 <div
-  class="bg-[url('assets/images/Fondo2.jpg')] bg-no-repeat bg-cover bg-[65%_50%] w-screen h-dvh p-8 md:p-12 flex justify-center lg:items-end sm:justify-start overflow-x-hidden">
-  <div class="grid grid-rows-3 h-full">
+  class="hero-container relative bg-[url('assets/images/Fondo2.jpg')] bg-no-repeat bg-cover bg-[65%_50%] w-screen h-dvh p-8 md:p-12 flex justify-center lg:items-end sm:justify-start overflow-x-hidden">
+
+  <!-- Overlay con gradiente sutil -->
+  <div class="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/20"></div>
+
+  <div class="relative z-10 grid grid-rows-3 h-full">
     <div></div>
-    <div class="text-white w-min flex flex-col justify-center md:ml-40 transition-all duration-500"
+
+    <!-- Contenido principal mejorado -->
+    <div class="text-white w-min flex flex-col justify-center md:ml-40 transition-all duration-700 ease-out"
       [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[300px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
-      <div class="lato-light text-6xl lg:text-7xl">
-        <h1 itemscope itemtype="https://schema.org/Person" class="flex flex-col xl:flex-row xl:gap-4">
-          <span itemprop="name">PILAR</span>
-          <span itemprop="name">BLANCO</span>
+
+      <!-- Nombre con efecto interactivo -->
+      <div class="interactive-name lato-light text-6xl lg:text-8xl leading-tight tracking-wide tilt-3d">
+        <h1 class="relative">
+          <p class="drop-shadow-2xl animate-fade-in-up dynamic-text-glow">PILAR</p>
+          <p class="drop-shadow-2xl animate-fade-in-up animation-delay-200 dynamic-text-glow">BLANCO</p>
         </h1>
       </div>
-      <div class="bg-sky-300 w-full min-h-1 rounded-full my-6"></div>
-      <p class="font-sans font-semibold text-lg lg:text-xl" itemprop="jobTitle">ACTRIZ</p>
+
+      <!-- Línea decorativa mejorada -->
+      <div class="relative my-8">
+        <div class="bg-primary w-full h-1 rounded-full
+                    shadow-lg shadow-primary/30"></div>
+      </div>
+
+      <!-- Profesión con estilo elegante -->
+      <p class="font-sans font-semibold text-xl lg:text-2xl tracking-[0.3em] drop-shadow-lg
+               animate-fade-in-up animation-delay-400">ACTRIZ</p>
     </div>
-    <div class="flex items-end transition-all duration-500"
+
+    <!-- Botón de play mejorado -->
+    <div class="flex items-end transition-all duration-700 ease-out float-animation"
       [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[460px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
       <app-play-btn (click)="toggleShowReel()"/>
     </div>
@@ -21,21 +39,26 @@
 </div>
 
 @if (showReel) {
-  <div class="absolute top-0 left-0 z-[100] w-screen h-dvh bg-black bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-80
-flex items-center justify-center">
+  <div class="fixed top-0 left-0 z-[100] w-screen h-dvh
+              bg-gradient-to-br from-black/90 via-black/80 to-black/90
+              backdrop-filter backdrop-blur-xl
+              flex items-center justify-center animate-fade-in">
 
-  <svg class="absolute top-8 right-8 text-sky-300 hover:text-sky-500 stroke-current cursor-pointer" width="30" height="30" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg" (click)="toggleShowReel()">
-    <path d="M2.24536 32.3148L32.2454 2.3148" stroke-width="4.5" stroke-linecap="round" />
-    <path d="M32.2454 32.3148L2.24537 2.3148" stroke-width="4.5" stroke-linecap="round" />
-  </svg>
+    <!-- Botón de cerrar simplificado -->
+    <svg class="absolute top-8 right-8 text-primary hover:text-info
+                transition-all duration-300 cursor-pointer hover:scale-110"
+         width="30" height="30" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg"
+         (click)="toggleShowReel()">
+      <path d="M2.24536 32.3148L32.2454 2.3148" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
+      <path d="M32.2454 32.3148L2.24537 2.3148" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
+    </svg>
 
-  <div class="w-full max-w-[70%]">
-    <div class="relative pb-[56.25%] h-0 overflow-hidden">
-      <iframe id="player" title="Reel de Pilar Blanco - Video principal de la actriz"
-        src="https://player.vimeo.com/video/786041466?h=5428a890c9"
-        class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen
-        loading="lazy"></iframe>
+    <!-- Contenedor del video simplificado -->
+    <div class="w-full max-w-[80%] lg:max-w-[70%]">
+      <div class="relative pb-[56.25%] h-0 overflow-hidden animate-scale-in">
+        <iframe id="player" title="vimeo-player" src="https://player.vimeo.com/video/786041466?h=5428a890c9"
+          class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
-</div>
 }

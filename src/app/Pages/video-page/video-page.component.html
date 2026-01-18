@@ -27,42 +27,10 @@
       <section class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 lg:gap-20 lg:mb-12"
         aria-label="Escenas de actuación de Pilar Blanco">
 
-        <div class="shadow-md w-full max-w-[1280px]">
+        <div *ngFor="let scene of scenes" [hidden]="!scene.visible" class="shadow-md w-full max-w-[1280px]">
           <div class="relative pb-[56.25%] h-0 overflow-hidden">
-            <iframe title="Escena de Pilar Blanco - Actuación dramática 1"
-              src="https://player.vimeo.com/video/989002249?h=87574a8f82"
-              class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
-
-        <div class="shadow-md w-full max-w-[1280px]">
-          <div class="relative pb-[56.25%] h-0 overflow-hidden">
-            <iframe title="Escena de Pilar Blanco - Actuación dramática 2"
-              src="https://player.vimeo.com/video/1102753806?h=7fb8fd176a"
-              class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
-
-        <div class="shadow-md w-full max-w-[1280px]">
-          <div class="relative pb-[56.25%] h-0 overflow-hidden">
-            <iframe title="Escena de Pilar Blanco - Actuación en cine 2"
-              src="https://player.vimeo.com/video/782842299?h=03d9fc9437"
-              class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
-
-        <div class="shadow-md w-full max-w-[1280px]">
-          <div class="relative pb-[56.25%] h-0 overflow-hidden">
-            <iframe title="Escena de Pilar Blanco - Actuación profesional 3"
-              src="https://player.vimeo.com/video/715326695?h=65d780d64c"
-              class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
-
-        <div class="shadow-md w-full max-w-[1280px]">
-          <div class="relative pb-[56.25%] h-0 overflow-hidden">
-            <iframe title="Escena de Pilar Blanco - Trabajo audiovisual 4"
-              src="https://player.vimeo.com/video/992051712?h=629cbcb15e"
+            <iframe [title]="scene.title"
+              [src]="getSafeUrl(scene.videoId, scene.hash)"
               class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen loading="lazy"></iframe>
           </div>
         </div>

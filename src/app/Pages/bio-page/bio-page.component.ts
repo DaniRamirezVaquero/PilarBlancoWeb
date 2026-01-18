@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { DownloadBioBtnComponent } from '../../components/download-bio-btn/download-bio-btn.component';
 import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-bio-page',
   standalone: true,
-  imports: [],
+  imports: [DownloadBioBtnComponent],
   templateUrl: './bio-page.component.html',
   styleUrl: './bio-page.component.css'
 })
