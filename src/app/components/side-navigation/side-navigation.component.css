@@ -41,7 +41,7 @@ aside {
   .active-nav-link {
     @apply text-accent font-bold;
   }
-  
+
   .active-nav-link::before {
     @apply w-1.5;
   }
