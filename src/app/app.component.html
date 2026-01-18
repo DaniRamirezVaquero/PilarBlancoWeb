@@ -1,12 +1,12 @@
 <div class="relative min-h-screen">
   <app-side-navigation></app-side-navigation>
   <app-header class="absolute left-0 top-0 z-30"></app-header>
-  
+
   <!-- Contenido principal con transición -->
   <main class="transition-all duration-700 ease-out">
     <router-outlet></router-outlet>
   </main>
-  
+
   @if (showFooter) {
     <app-footer class="animate-fade-in"></app-footer>
   }
