@@ -1,0 +1,48 @@
+/* Estilos mejorados para side navigation */
+
+/* Desktop - mantiene el efecto original */
+aside {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Mobile - fondo opaco neutral */
+@media (max-width: 768px) {
+  aside {
+    background: #e5e7eb;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+  }
+}
+
+/* Animación de delay para las partículas */
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+/* Estilo para el enlace activo con línea vertical */
+.active-nav-link {
+  @apply text-accent font-bold drop-shadow-lg relative;
+}
+
+.active-nav-link::before {
+  content: '';
+  @apply absolute -left-16 w-1 h-full bg-accent rounded-r;
+}
+
+/* En mobile, agregar más contraste */
+@media (max-width: 768px) {
+  .active-nav-link {
+    @apply text-accent font-bold;
+  }
+  
+  .active-nav-link::before {
+    @apply w-1.5;
+  }
+}
