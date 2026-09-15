@@ -8,17 +8,16 @@ import { SeoService } from './seo/seo.service';
 import { filter } from 'rxjs';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    HeaderComponent,
-    SideNavigationComponent,
-    FooterComponent,
-    CaptchaComponent
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    imports: [
+        RouterOutlet,
+        HeaderComponent,
+        SideNavigationComponent,
+        FooterComponent,
+        CaptchaComponent
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
 export class AppComponent implements AfterViewInit {
   title = 'PilarBlancoWeb';

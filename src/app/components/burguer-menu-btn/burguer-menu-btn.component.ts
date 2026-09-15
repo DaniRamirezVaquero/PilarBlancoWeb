@@ -3,19 +3,18 @@ import { SideNavService } from '../../services/side-nav.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-burguer-menu-btn',
-  standalone: true,
-  imports: [
-    CommonModule
-  ],
-  templateUrl: './burguer-menu-btn.component.html',
-  styleUrl: './burguer-menu-btn.component.css',
-  host: {
-    role: 'button',
-    tabindex: '0',
-    '[attr.aria-label]': 'sideNavIsOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"',
-    '[attr.aria-expanded]': 'sideNavIsOpen',
-  }
+    selector: 'app-burguer-menu-btn',
+    imports: [
+        CommonModule
+    ],
+    templateUrl: './burguer-menu-btn.component.html',
+    styleUrl: './burguer-menu-btn.component.css',
+    host: {
+        role: 'button',
+        tabindex: '0',
+        '[attr.aria-label]': 'sideNavIsOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"',
+        '[attr.aria-expanded]': 'sideNavIsOpen',
+    }
 })
 export class BurguerMenuBtnComponent implements OnInit {
 

@@ -1,21 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 
-
-
 @Component({
-  selector: 'app-contact-page',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    HttpClientModule
-  ],
-  templateUrl: './contact-page.component.html',
-  styleUrl: './contact-page.component.css'
+    selector: 'app-contact-page',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule
+    ],
+    templateUrl: './contact-page.component.html',
+    styleUrl: './contact-page.component.css'
 })
 export class ContactPageComponent {
   contactForm: FormGroup;
@@ -36,10 +32,11 @@ export class ContactPageComponent {
     if (this.contactForm.valid) {
       this.loading = true;
       grecaptcha.ready(() => {
-        grecaptcha.execute('6LevbScqAAAAAAxWX_syCEhEXzudSqMPtqfcmHb0', { action: 'submit' }).then((token: string) => {
+        grecaptcha.execute(environment.recaptcha.siteKey, { action: 'submit' }).then((token: string) => {
           const recaptchaToken = token;
           if (!recaptchaToken) {
             console.log('Por favor, completa el reCAPTCHA');
+            this.loading = false;
             return;
           }
 
@@ -50,15 +47,15 @@ export class ContactPageComponent {
 
           const apiUrl = environment.apiUrl;
 
-          this.http.post(apiUrl, formData).subscribe(
-            (response: any) => {
+          this.http.post<{ message?: string }>(apiUrl, formData).subscribe({
+            next: (response) => {
               console.log(response.message);
-              this.errorMessage = null; // Limpiar el mensaje de error en caso de éxito
+              this.errorMessage = null;
               this.contactForm.reset();
               this.loading = false;
               this.success = true;
             },
-            (error: any) => {
+            error: (error: { status?: number }) => {
               if (error.status === 429) {
                 this.errorMessage = 'Por favor, espera 5 minutos antes de enviar otro correo.';
               } else {
@@ -68,7 +65,7 @@ export class ContactPageComponent {
               this.loading = false;
               this.success = false;
             }
-          );
+          });
         });
       });
     } else {

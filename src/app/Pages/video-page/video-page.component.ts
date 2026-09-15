@@ -11,11 +11,10 @@ interface Scene {
 }
 
 @Component({
-  selector: 'app-video-page',
-  standalone: true,
-  imports: [NgFor],
-  templateUrl: './video-page.component.html',
-  styleUrl: './video-page.component.css'
+    selector: 'app-video-page',
+    imports: [NgFor],
+    templateUrl: './video-page.component.html',
+    styleUrl: './video-page.component.css'
 })
 export class VideoPageComponent {
   private sanitizer = inject(DomSanitizer);

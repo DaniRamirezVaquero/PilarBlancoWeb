@@ -5,15 +5,14 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-principal',
-  standalone: true,
-  imports: [
-    PlayBtnComponent,
-    CommonModule,
-    RouterLink
-  ],
-  templateUrl: './principal.component.html',
-  styleUrl: './principal.component.css'
+    selector: 'app-principal',
+    imports: [
+        PlayBtnComponent,
+        CommonModule,
+        RouterLink
+    ],
+    templateUrl: './principal.component.html',
+    styleUrl: './principal.component.css'
 })
 export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
 

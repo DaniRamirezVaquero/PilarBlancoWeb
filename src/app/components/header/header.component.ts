@@ -3,14 +3,13 @@ import { BurguerMenuBtnComponent } from '../burguer-menu-btn/burguer-menu-btn.co
 import { SocialsComponent } from '../socials/socials.component';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [
-    BurguerMenuBtnComponent,
-    SocialsComponent
-  ],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+    selector: 'app-header',
+    imports: [
+        BurguerMenuBtnComponent,
+        SocialsComponent
+    ],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.css'
 })
 export class HeaderComponent {
 

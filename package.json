@@ -2,7 +2,7 @@
   "name": "pilar-blanco-web",
   "version": "0.0.0",
   "engines": {
-    "node": "20.x"
+    "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
   },
   "scripts": {
     "ng": "ng",
@@ -13,33 +13,28 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^17.3.0",
-    "@angular/common": "^17.3.0",
-    "@angular/compiler": "^17.3.0",
-    "@angular/core": "^17.3.0",
-    "@angular/forms": "^17.3.0",
-    "@angular/platform-browser": "^17.3.0",
-    "@angular/platform-browser-dynamic": "^17.3.0",
-    "@angular/platform-server": "^17.3.12",
-    "@angular/router": "^17.3.0",
-    "@angular/ssr": "^17.3.8",
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "ng-recaptcha": "^13.2.1",
-    "nodemailer": "^6.9.14",
-    "pilar-blanco-web": "file:",
+    "@angular/animations": "^20.3.31",
+    "@angular/common": "^20.3.31",
+    "@angular/compiler": "^20.3.31",
+    "@angular/core": "^20.3.31",
+    "@angular/forms": "^20.3.31",
+    "@angular/platform-browser": "^20.3.31",
+    "@angular/platform-browser-dynamic": "^20.3.31",
+    "@angular/platform-server": "^20.3.31",
+    "@angular/router": "^20.3.31",
+    "@angular/ssr": "^20.3.37",
+    "nodemailer": "^10.0.10",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.3"
+    "zone.js": "~0.15.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.3.8",
-    "@angular/cli": "^17.3.8",
-    "@angular/compiler-cli": "^17.3.0",
+    "@angular-devkit/build-angular": "^20.3.37",
+    "@angular/cli": "^20.3.37",
+    "@angular/compiler-cli": "^20.3.31",
+    "@types/grecaptcha": "^3.0.9",
     "@types/jasmine": "~5.1.0",
-    "@types/node": "^20.19.43",
+    "@types/node": "^24.13.4",
     "daisyui": "^4.12.10",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
@@ -48,6 +43,13 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "tailwindcss": "^3.4.7",
-    "typescript": "~5.4.2"
+    "typescript": "~5.8.3"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "esbuild@0.28.1": true,
+    "fsevents@2.3.3": true,
+    "lmdb@3.4.2": true,
+    "msgpackr-extract@3.0.4": true
   }
 }

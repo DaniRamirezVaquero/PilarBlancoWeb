@@ -2,11 +2,10 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, Inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
 
 @Component({
-  selector: 'app-collage',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './collage.component.html',
-  styleUrl: './collage.component.css'
+    selector: 'app-collage',
+    imports: [CommonModule],
+    templateUrl: './collage.component.html',
+    styleUrl: './collage.component.css'
 })
 export class CollageComponent implements OnInit {
 

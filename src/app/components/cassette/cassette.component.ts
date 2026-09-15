@@ -7,11 +7,10 @@ interface Tape {
 }
 
 @Component({
-  selector: 'app-cassette',
-  standalone: true,
-  imports: [],
-  templateUrl: './cassette.component.html',
-  styleUrls: ['./cassette.component.css']
+    selector: 'app-cassette',
+    imports: [],
+    templateUrl: './cassette.component.html',
+    styleUrls: ['./cassette.component.css']
 })
 export class CassetteComponent implements OnInit, OnDestroy {
 
