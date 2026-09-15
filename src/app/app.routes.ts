@@ -6,28 +6,43 @@ import { VoicePageComponent } from './Pages/voice-page/voice-page.component';
 import { ContactPageComponent } from './Pages/contact-page/contact-page.component';
 import { BioPageComponent } from './Pages/bio-page/bio-page.component';
 import { CVPageComponent } from './Pages/cv-page/cv-page.component';
+import { SEO_PAGES } from './seo/seo.data';
 
 export const routes: Routes = [
   {
-    path: 'home', component: PrincipalComponent
+    path: 'home',
+    component: PrincipalComponent,
+    title: SEO_PAGES['/home'].title,
   },
   {
-    path: 'video', component: VideoPageComponent
+    path: 'video',
+    component: VideoPageComponent,
+    title: SEO_PAGES['/video'].title,
   },
   {
-    path: 'gallery', component: GalleryPageComponent
+    path: 'gallery',
+    component: GalleryPageComponent,
+    title: SEO_PAGES['/gallery'].title,
   },
   {
-    path: 'voice', component: VoicePageComponent
+    path: 'voice',
+    component: VoicePageComponent,
+    title: SEO_PAGES['/voice'].title,
   },
   {
-    path: 'bio', component: BioPageComponent
+    path: 'bio',
+    component: BioPageComponent,
+    title: SEO_PAGES['/bio'].title,
   },
   {
-    path: 'curriculum', component: CVPageComponent
+    path: 'curriculum',
+    component: CVPageComponent,
+    title: SEO_PAGES['/curriculum'].title,
   },
   {
-    path: 'contact', component: ContactPageComponent
+    path: 'contact',
+    component: ContactPageComponent,
+    title: SEO_PAGES['/contact'].title,
   },
   {
     path: '', redirectTo: '/home', pathMatch: 'full'

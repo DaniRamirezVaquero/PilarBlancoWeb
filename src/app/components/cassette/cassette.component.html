@@ -96,7 +96,7 @@
       <i class="fas fa-step-backward text-current"></i>
     </button>
 
-    @if (audio.paused) {
+    @if (audio?.paused) {
       <div [class.tooltip]="playTooltip" class="tooltip-open tooltip-bottom tooltip-secondary" data-tip="Pulsa para reproducir">
         <button class="play btn btn-ghost text-[#87B3D0] hover:text-[#0d3047] transition-colors" (click)="playTape(); hiddePlayTooltip();">
           <i class="fas fa-play text-current"></i>
@@ -116,9 +116,9 @@
 
     <div class="flex justify-between items-center gap-2">
       <div class="w-10">
-        @if (audio.volume > 0.5) {
+        @if ((audio?.volume ?? 0) > 0.5) {
           <i class="fa-solid fa-volume-high text-[#eb904f]"></i>
-        } @else if (audio.volume <= 0.7 && audio.volume !== 0) {
+        } @else if ((audio?.volume ?? 0) > 0 && (audio?.volume ?? 0) <= 0.7) {
           <i class="fa-solid fa-volume-low text-[#eb904f]"></i>
         } @else {
           <i class="fa-solid fa-volume-off text-[#eb904f]"></i>
@@ -126,7 +126,7 @@
       </div>
 
       <input type="range" min="0" max="1" step="0.01" class="range range-xs [--range-shdw:#eb904f] w-12"
-        (input)="onVolumeChange($event)" [value]="audio.volume" />
+        (input)="onVolumeChange($event)" [value]="audio?.volume ?? volumen" />
     </div>
   </div>
 

@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, NgZone } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-collage',
@@ -8,7 +8,7 @@ import { Component, NgZone } from '@angular/core';
   templateUrl: './collage.component.html',
   styleUrl: './collage.component.css'
 })
-export class CollageComponent {
+export class CollageComponent implements OnInit {
 
   images: string[] = [
     'assets/images/collage/FOTO (1).webp',
@@ -92,11 +92,16 @@ export class CollageComponent {
   targetPosition = { x: 0, y: 0 };
   lerpSpeed = 0.1;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(
+    private ngZone: NgZone,
+    @Inject(PLATFORM_ID) private platformId: object,
+  ) {}
 
   ngOnInit(): void {
     this.imageGroups = this.chunkArray(this.images, 9);
-    this.ngZone.runOutsideAngular(() => this.animateTitle());
+    if (isPlatformBrowser(this.platformId)) {
+      this.ngZone.runOutsideAngular(() => this.animateTitle());
+    }
   }
 
   updateTitlePosition(event: MouseEvent) {
@@ -113,8 +118,10 @@ export class CollageComponent {
 
 
   getAltText(imagePath: string): string {
-    const fileName = imagePath.split('/').pop();
-    return fileName ? fileName.split('.').slice(0, -1).join('.') : '';
+    const title = this.getTitle(imagePath);
+    return title
+      ? `Pilar Blanco, actriz, en el proyecto ${title}`
+      : 'Pilar Blanco, actriz, en un fotograma de proyecto';
   }
 
   getTitle(imagePath: string): string {

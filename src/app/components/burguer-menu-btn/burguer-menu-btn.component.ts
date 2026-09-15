@@ -9,7 +9,13 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ],
   templateUrl: './burguer-menu-btn.component.html',
-  styleUrl: './burguer-menu-btn.component.css'
+  styleUrl: './burguer-menu-btn.component.css',
+  host: {
+    role: 'button',
+    tabindex: '0',
+    '[attr.aria-label]': 'sideNavIsOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"',
+    '[attr.aria-expanded]': 'sideNavIsOpen',
+  }
 })
 export class BurguerMenuBtnComponent implements OnInit {
 

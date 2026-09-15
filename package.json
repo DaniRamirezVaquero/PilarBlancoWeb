@@ -1,6 +1,9 @@
 {
   "name": "pilar-blanco-web",
   "version": "0.0.0",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -17,7 +20,9 @@
     "@angular/forms": "^17.3.0",
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
+    "@angular/platform-server": "^17.3.12",
     "@angular/router": "^17.3.0",
+    "@angular/ssr": "^17.3.8",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -34,6 +39,7 @@
     "@angular/cli": "^17.3.8",
     "@angular/compiler-cli": "^17.3.0",
     "@types/jasmine": "~5.1.0",
+    "@types/node": "^20.19.43",
     "daisyui": "^4.12.10",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",

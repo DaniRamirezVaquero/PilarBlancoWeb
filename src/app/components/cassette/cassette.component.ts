@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 interface Tape {
   tapeName: string;
@@ -33,15 +34,15 @@ export class CassetteComponent implements OnInit, OnDestroy {
     }
   ];
 
-  audio: HTMLAudioElement;
-  previousButton: HTMLElement | null;
-  playButton: HTMLElement | null;
-  pauseButton: HTMLElement | null;
-  nextButton: HTMLElement | null;
-  firstG: HTMLElement | null;
-  secondG: HTMLElement | null;
+  audio: HTMLAudioElement | null = null;
+  previousButton: HTMLElement | null = null;
+  playButton: HTMLElement | null = null;
+  pauseButton: HTMLElement | null = null;
+  nextButton: HTMLElement | null = null;
+  firstG: HTMLElement | null = null;
+  secondG: HTMLElement | null = null;
   tape: string | null = this.tapes[0].tapeName;
-  popUp: HTMLElement | null;
+  popUp: HTMLElement | null = null;
   currentTapeIndex: number = 0;
 
   spinning: boolean = false;
@@ -53,28 +54,33 @@ export class CassetteComponent implements OnInit, OnDestroy {
   playTooltip: boolean = true;
   otherTooltip: boolean = false;
 
-  constructor() {
-    this.audio = new Audio(this.tapes[0].url);
-    this.audio.volume = this.volumen;
-    this.previousButton = document.querySelector('.previous');
-    this.playButton = document.querySelector('.play');
-    this.pauseButton = document.querySelector('.pause');
-    this.nextButton = document.querySelector('.next');
-    this.firstG = document.querySelector(".first-g");
-    this.secondG = document.querySelector(".second-g");
-    this.popUp = document.querySelector('.alert');
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.audio = new Audio(this.tapes[0].url);
+      this.audio.volume = this.volumen;
+      this.previousButton = document.querySelector('.previous');
+      this.playButton = document.querySelector('.play');
+      this.pauseButton = document.querySelector('.pause');
+      this.nextButton = document.querySelector('.next');
+      this.firstG = document.querySelector(".first-g");
+      this.secondG = document.querySelector(".second-g");
+      this.popUp = document.querySelector('.alert');
+    }
   }
 
   ngOnInit() {
-    this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
+    this.audio?.addEventListener('timeupdate', this.updateProgress.bind(this));
   }
 
   ngOnDestroy() {
-    this.audio.removeEventListener('timeupdate', this.updateProgress.bind(this));
+    this.audio?.removeEventListener('timeupdate', this.updateProgress.bind(this));
     clearInterval(this.intervalId);
   }
 
   playTape(): void {
+    if (!this.audio) {
+      return;
+    }
     this.audio.play();
     this.spin();
     this.audio.loop = true;
@@ -99,7 +105,7 @@ export class CassetteComponent implements OnInit, OnDestroy {
   }
 
   pauseBtn(): void {
-    this.audio.pause();
+    this.audio?.pause();
     this.stopSpin();
     clearInterval(this.intervalId);
   }
@@ -140,7 +146,7 @@ export class CassetteComponent implements OnInit, OnDestroy {
 
   nextTape(): number {
     let newTapeIndex = this.currentTapeIndex + 1;
-    this.wasPlaying = !this.audio.paused;
+    this.wasPlaying = !this.audio?.paused;
     if (newTapeIndex >= this.tapes.length) {
       newTapeIndex = 0; // Volver a la primera pista
     }
@@ -148,9 +154,11 @@ export class CassetteComponent implements OnInit, OnDestroy {
       this.tape = this.tapes[newTapeIndex].tapeName;
     }
     this.pauseBtn();
-    this.audio = new Audio(this.tapes[newTapeIndex].url);
-    this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
-    this.audio.volume = this.volumen;
+    if (isPlatformBrowser(this.platformId)) {
+      this.audio = new Audio(this.tapes[newTapeIndex].url);
+      this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
+      this.audio.volume = this.volumen;
+    }
 
     if (this.wasPlaying) {
       this.playTape();
@@ -160,7 +168,7 @@ export class CassetteComponent implements OnInit, OnDestroy {
 
   previousTape(): number {
     let newTapeIndex = this.currentTapeIndex - 1;
-    this.wasPlaying = !this.audio.paused;
+    this.wasPlaying = !this.audio?.paused;
     if (newTapeIndex < 0) {
       newTapeIndex = this.tapes.length - 1; // Volver a la última pista
     }
@@ -168,9 +176,11 @@ export class CassetteComponent implements OnInit, OnDestroy {
       this.tape = this.tapes[newTapeIndex].tapeName;
     }
     this.pauseBtn();
-    this.audio = new Audio(this.tapes[newTapeIndex].url);
-    this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
-    this.audio.volume = this.volumen;
+    if (isPlatformBrowser(this.platformId)) {
+      this.audio = new Audio(this.tapes[newTapeIndex].url);
+      this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
+      this.audio.volume = this.volumen;
+    }
 
     if (this.wasPlaying) {
       this.playTape();
@@ -179,12 +189,15 @@ export class CassetteComponent implements OnInit, OnDestroy {
   }
 
   updateProgress(): void {
-    if (this.audio.duration) {
+    if (this.audio?.duration) {
       this.progress = (this.audio.currentTime / this.audio.duration) * 100;
     }
   }
 
   onProgressChange(event: Event): void {
+    if (!this.audio) {
+      return;
+    }
     const input = event.target as HTMLInputElement;
     const newTime = (input.valueAsNumber / 100) * this.audio.duration;
     this.audio.currentTime = newTime;
@@ -192,7 +205,9 @@ export class CassetteComponent implements OnInit, OnDestroy {
 
   onVolumeChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.audio.volume = input.valueAsNumber;
+    if (this.audio) {
+      this.audio.volume = input.valueAsNumber;
+    }
     this.volumen = input.valueAsNumber;
   }
 }

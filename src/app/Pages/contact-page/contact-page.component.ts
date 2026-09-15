@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 
 
@@ -48,7 +48,7 @@ export class ContactPageComponent {
             recaptchaToken
           };
 
-          const apiUrl = environment.production ? 'https://pilarblanco.es/api/send-email' : 'http://localhost:3000/api/send-email';
+          const apiUrl = environment.apiUrl;
 
           this.http.post(apiUrl, formData).subscribe(
             (response: any) => {

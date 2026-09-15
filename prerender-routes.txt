@@ -1,0 +1,7 @@
+/home
+/video
+/gallery
+/voice
+/bio
+/curriculum
+/contact
