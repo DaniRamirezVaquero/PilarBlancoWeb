@@ -20,11 +20,11 @@ module.exports = {
       },
       {
         "mytheme-portada": {
-          "primary": "#4F86B5",
-          "secondary": "#16344D",
-          "accent": "#1E6BB5",
-          "neutral": "#ced7e0",
-          "base-100": "#3b4045",
+          "primary": "#8FA9C7",
+          "secondary": "#22364D",
+          "accent": "#A67B64",
+          "neutral": "#D5DBE4",
+          "base-100": "#3B424A",
           "info": "#38bdf8",
           "success": "#4ade80",
           "warning": "#fcd34d",
