@@ -2,8 +2,10 @@
   <div class="relative w-full md:w-2/3 lg:w-1/3 xl:w-2/5 2xl:w-2/6 h-full ">
     <div class="flex transition-transform duration-500" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
       <div *ngFor="let image of images; let i = index" class="flex-shrink-0 w-full h-full relative">
-        <img [src]="image" alt="carousel image"
+        <img [src]="image.src" [alt]="image.alt"
           class="object-cover w-full h-full aspect-foto rounded transition-all duration-200 relative"
+          [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+          width="720" height="1280"
           [class.opacity-100]="i === currentIndex" [class.opacity-50]="i === currentIndex - 1 || i === currentIndex + 1"
           [class.opacity-0]="i < currentIndex - 1 || i > currentIndex + 1" [class.translate-y-0]="i === currentIndex"
           [class.translate-y-20]="i === currentIndex - 1 || i === currentIndex + 1"
@@ -14,7 +16,7 @@
       </div>
     </div>
 
-    <button (click)="prev()"
+    <button type="button" (click)="prev()" aria-label="Foto anterior del book de Pilar Blanco"
       class="absolute top-1/2 -left-16 text-[#E4754E] hover:text-[#b35a3a] opacity-0 md:opacity-100"
       [ngClass]="{'hidden': currentIndex === 0}">
       <svg class="fill-current w-6 h-6" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,7 +25,7 @@
       </svg>
     </button>
 
-    <button (click)="next()"
+    <button type="button" (click)="next()" aria-label="Foto siguiente del book de Pilar Blanco"
       class="absolute top-1/2 -right-16 text-[#E4754E] hover:text-[#b35a3a] opacity-0 md:opacity-100"
       [ngClass]="{'hidden': currentIndex === images.length - 1}">
       <svg class="fill-current w-6 h-6" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,7 +52,8 @@
     </svg>
   </button> -->
 
-  <button class="absolute -bottom-[60px]" (click)="toggleAutoplay()">
+  <button type="button" class="absolute -bottom-[60px]" (click)="toggleAutoplay()"
+    [attr.aria-label]="isPlaying ? 'Pausar book fotográfico' : 'Reproducir book fotográfico'">
     @if (isPlaying) {
     <i class='bx bx-pause bx-lg text-[#E4754E] hover:text-[#b35a3a]'></i>
     } @else {
