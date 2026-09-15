@@ -1,26 +1,74 @@
 <!doctype html>
-<html lang="en">
+<html lang="es" data-theme="mytheme">
 
 <head>
   <meta charset="utf-8">
-  <title>Pilar Blanco</title>
+  <title>Pilar Blanco | Actriz</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="Pilar Blanco, actriz de cine, televisión, teatro y doblaje. Reel, galería, currículum y contacto para castings y agencias.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Pilar Blanco">
+  <link rel="canonical" href="https://pilarblanco.es/home">
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Pilar Blanco">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Pilar Blanco | Actriz">
+  <meta property="og:description"
+    content="Pilar Blanco, actriz de cine, televisión, teatro y doblaje. Reel, galería, currículum y contacto para castings y agencias.">
+  <meta property="og:url" content="https://pilarblanco.es/home">
+  <meta property="og:image" content="https://pilarblanco.es/assets/images/og-pilar-blanco.webp">
+  <meta property="og:image:alt" content="Retrato de Pilar Blanco, actriz">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pilar Blanco | Actriz">
+  <meta name="twitter:description"
+    content="Pilar Blanco, actriz de cine, televisión, teatro y doblaje. Reel, galería, currículum y contacto para castings y agencias.">
+  <meta name="twitter:image" content="https://pilarblanco.es/assets/images/og-pilar-blanco.webp">
+  <meta name="twitter:image:alt" content="Retrato de Pilar Blanco, actriz">
   <link rel="icon" type="image/x-icon" href="./favicon.ico">
+  <style>
+    html, body {
+      margin: 0;
+      background-color: #5c5c5c;
+    }
+    app-root {
+      display: block;
+      min-height: 100dvh;
+      opacity: 0;
+    }
+    app-root.app-ready {
+      opacity: 1;
+      transition: opacity 0.35s ease;
+    }
+    @media (scripting: none) {
+      app-root { opacity: 1; }
+    }
+  </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap"
     rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/4d9bce4b44.js" crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/2ed51bcb87.js" crossorigin="anonymous"></script>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <script>
+    (function () {
+      var covers = ['assets/images/Fondo2.jpg', 'assets/images/Portada.jpg'];
+      var index = Math.floor(Date.now() / (30 * 60 * 1000)) % covers.length;
+      var link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = covers[index];
+      document.head.appendChild(link);
+    })();
+  </script>
 </head>
 
 <body class="overflow-x-hidden">
   <app-root></app-root>
+  <script src="https://kit.fontawesome.com/4d9bce4b44.js" crossorigin="anonymous" defer></script>
+  <script src="https://kit.fontawesome.com/2ed51bcb87.js" crossorigin="anonymous" defer></script>
 </body>
 
 </html>
