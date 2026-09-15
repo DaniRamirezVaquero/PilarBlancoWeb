@@ -1,14 +1,23 @@
-<div class="bg-gradient-to-tr from-zinc-400 via-neutral-500 to-neutral-600 w-screen py-24 lg:py-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden">
+<div
+  class="bg-gradient-to-tr from-zinc-400 via-neutral-500 to-neutral-600 w-screen py-24 lg:py-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden">
 
   <div class="flex flex-col gap-4 sm:gap-6 md:gap-8">
     <div>
       <h1 class="lato-regular text-xl sm:text-2xl md:text-4xl text-white">Galería</h1>
-      <div class="w-full h-0.5 rounded-full bg-orange-500 mt-2"></div>
+      <div class="w-full h-0.5 rounded-full bg-accent transition-colors duration-[1200ms] mt-2"></div>
     </div>
     <app-carousel></app-carousel>
+    <div class="flex justify-center mt-20 md:mt-24">
+      <a class="btn btn-sm md:btn-md btn-accent gap-2 border-none text-white"
+        href="assets/downloads/pilar-blanco-galeria-fotos.zip" download="Pilar Blanco - Galeria fotos.zip"
+        aria-label="Descargar el pack de fotos del carrusel en calidad completa">
+        Descargar fotos
+        <i class="fa-solid fa-download fa-lg" aria-hidden="true"></i>
+      </a>
+    </div>
     <div class="mt-16 lg:mt-20">
       <h2 class="lato-regular text-xl sm:text-2xl md:text-4xl text-white">Proyectos</h2>
-      <div class="w-full h-0.5 rounded-full bg-orange-500 mt-2"></div>
+      <div class="w-full h-0.5 rounded-full bg-accent transition-colors duration-[1200ms] mt-2"></div>
     </div>
     <app-collage></app-collage>
   </div>
