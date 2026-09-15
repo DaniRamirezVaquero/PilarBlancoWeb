@@ -1,10 +1,27 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 
 interface CarouselImage {
   src: string;
+  srcset: string;
   alt: string;
 }
+
+interface CarouselSlide extends CarouselImage {
+  id: string;
+}
+
+/** Construye el src y el srcset responsivo (900w/1400w) para una foto del carrusel. */
+function photo(name: string, alt: string): CarouselImage {
+  const base = `assets/images/carousel/${name}`;
+  return {
+    src: `${base}-900.webp`,
+    srcset: `${base}-900.webp 900w, ${base}-1400.webp 1400w`,
+    alt
+  };
+}
+
+const SLIDE_MS = 500;
 
 @Component({
     selector: 'app-carousel',
@@ -14,33 +31,42 @@ interface CarouselImage {
 })
 export class CarouselComponent implements OnInit, OnDestroy {
 
-  images: CarouselImage[] = [
-    { src: 'assets/images/carousel/Pilar Blanco WEB_1.webp', alt: 'Pilar Blanco, actriz, de pie con camiseta negra en book fotográfico' },
-    { src: 'assets/images/carousel/Pilar Blanco WEB_2.webp', alt: 'Pilar Blanco, actriz, en retrato de book fotográfico' },
-    { src: 'assets/images/carousel/Pilar Blanco WEB_3.webp', alt: 'Pilar Blanco, actriz, posando en sesión de book' },
-    { src: 'assets/images/carousel/Pilar Blanco WEB_4.webp', alt: 'Pilar Blanco, actriz, sentada en un taburete con ropa negra' },
-    { src: 'assets/images/carousel/Pilar Blanco WEB_5.webp', alt: 'Pilar Blanco, actriz, en retrato artístico de galería' },
-    { src: 'assets/images/carousel/Pilar Blanco WEB_6.webp', alt: 'Pilar Blanco, actriz, de pie con camisa blanca y vaqueros' },
-    { src: 'assets/images/carousel/Pilar Blanco WEB_7.webp', alt: 'Pilar Blanco, actriz, en fotografía de book promocional' },
-    { src: 'assets/images/carousel/Pilar Blanco WEB_8.webp', alt: 'Pilar Blanco, actriz, en retrato de carácter' },
-    { src: 'assets/images/carousel/Pilar Blanco WEB_9.webp', alt: 'Pilar Blanco, actriz, en sesión fotográfica de galería' },
-    { src: 'assets/images/carousel/Pilar Blanco WEB_10.webp', alt: 'Pilar Blanco, actriz, en retrato de book en color' },
-    { src: 'assets/images/carousel/Pilar Blanco WEB_11.webp', alt: 'Pilar Blanco, actriz, en fotografía de galería web' },
-    { src: 'assets/images/carousel/Pilar Blanco WEB_12.webp', alt: 'Pilar Blanco, actriz, sentada en un baúl en book fotográfico' }
+  private readonly photos: CarouselImage[] = [
+    photo('Pilar Blanco WEB_1', 'Pilar Blanco, actriz, de pie con camiseta negra en book fotográfico'),
+    photo('Pilar Blanco WEB_2', 'Pilar Blanco, actriz, en retrato de book fotográfico'),
+    photo('Pilar Blanco WEB_3', 'Pilar Blanco, actriz, posando en sesión de book'),
+    photo('Pilar Blanco WEB_4', 'Pilar Blanco, actriz, sentada en un taburete con ropa negra'),
+    photo('Pilar Blanco WEB_5', 'Pilar Blanco, actriz, en retrato artístico de galería'),
+    photo('Pilar Blanco WEB_6', 'Pilar Blanco, actriz, de pie con camisa blanca y vaqueros'),
+    photo('Pilar Blanco WEB_7', 'Pilar Blanco, actriz, en fotografía de book promocional'),
+    photo('Pilar Blanco WEB_8', 'Pilar Blanco, actriz, en retrato de carácter'),
+    photo('Pilar Blanco WEB_9', 'Pilar Blanco, actriz, en sesión fotográfica de galería'),
+    photo('Pilar Blanco WEB_10', 'Pilar Blanco, actriz, en retrato de book en color'),
+    photo('Pilar Blanco WEB_11', 'Pilar Blanco, actriz, en fotografía de galería web'),
+    photo('Pilar Blanco WEB_12', 'Pilar Blanco, actriz, sentada en un baúl en book fotográfico')
   ];
-  currentIndex: number = 0;
-  firstImage: boolean = true;
-  lastImage: boolean = false;
-  autoplayInterval: any;
-  direction: 'forward' | 'backward' = 'forward';
-  isPlaying: boolean = true;
-  interactionTimeout: any;
-  touchStartX: number = 0;
-  touchEndX: number = 0;
-  private readonly isBrowser: boolean;
 
-  constructor(@Inject(PLATFORM_ID) platformId: object) {
+  slides: CarouselSlide[] = [];
+  /** Índice 1 = primera foto real; 0 y el último son clones para el loop infinito. */
+  currentIndex = 1;
+  enableTransition = true;
+  autoplayInterval: ReturnType<typeof setInterval> | null = null;
+  isPlaying = true;
+  interactionTimeout: ReturnType<typeof setTimeout> | null = null;
+  touchStartX = 0;
+  touchEndX = 0;
+  private wrapTimeout: ReturnType<typeof setTimeout> | null = null;
+  private isWrapping = false;
+  private readonly isBrowser: boolean;
+  private readonly lastRealIndex: number;
+
+  constructor(
+    @Inject(PLATFORM_ID) platformId: object,
+    private cdr: ChangeDetectorRef
+  ) {
     this.isBrowser = isPlatformBrowser(platformId);
+    this.slides = this.buildLoopSlides(this.photos);
+    this.lastRealIndex = this.photos.length;
   }
 
   ngOnInit() {
@@ -53,6 +79,14 @@ export class CarouselComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.stopAutoplay();
+    this.clearWrapTimeout();
+    if (this.interactionTimeout) {
+      clearTimeout(this.interactionTimeout);
+    }
+  }
+
+  trackSlide(_index: number, slide: CarouselSlide): string {
+    return slide.id;
   }
 
   startAutoplay() {
@@ -60,22 +94,18 @@ export class CarouselComponent implements OnInit, OnDestroy {
       return;
     }
     if (this.autoplayInterval) {
-      return; // Si ya hay un intervalo en ejecución, no iniciar uno nuevo
+      return;
     }
     this.autoplayInterval = setInterval(() => {
-      if (this.direction === 'forward') {
-        this.next(false); // Indica que no es una acción del usuario
-      } else {
-        this.prev(false); // Indica que no es una acción del usuario
-      }
-    }, 3000); // Cambia de imagen cada 3 segundos
+      this.next(false);
+    }, 3000);
     this.isPlaying = true;
   }
 
   stopAutoplay() {
     if (this.autoplayInterval) {
       clearInterval(this.autoplayInterval);
-      this.autoplayInterval = null; // Asegurarse de que el intervalo se reinicie
+      this.autoplayInterval = null;
       this.isPlaying = false;
     }
   }
@@ -97,36 +127,34 @@ export class CarouselComponent implements OnInit, OnDestroy {
     }
     this.interactionTimeout = setTimeout(() => {
       this.startAutoplay();
-    }, 10000); // Reanuda el autoplay después de 10 segundos de inactividad
+    }, 10000);
   }
 
   next(userInitiated: boolean = true) {
+    if (this.isWrapping) {
+      return;
+    }
     if (userInitiated) {
       this.stopAutoplay();
       this.resetInteractionTimeout();
     }
-    if (this.currentIndex < this.images.length - 1) {
-      this.currentIndex++;
-      this.firstImage = false;
-      this.lastImage = false;
-    } else {
-      this.lastImage = true;
-      this.direction = 'backward';
+    this.currentIndex++;
+    if (this.currentIndex === this.slides.length - 1) {
+      this.queueWrapSnap(1);
     }
   }
 
   prev(userInitiated: boolean = true) {
+    if (this.isWrapping) {
+      return;
+    }
     if (userInitiated) {
       this.stopAutoplay();
       this.resetInteractionTimeout();
     }
-    if (this.currentIndex > 0) {
-      this.currentIndex--;
-      this.firstImage = false;
-      this.lastImage = false;
-    } else {
-      this.firstImage = true;
-      this.direction = 'forward';
+    this.currentIndex--;
+    if (this.currentIndex === 0) {
+      this.queueWrapSnap(this.lastRealIndex);
     }
   }
 
@@ -142,12 +170,53 @@ export class CarouselComponent implements OnInit, OnDestroy {
   }
 
   handleSwipe() {
-    const swipeThreshold = 50; // Umbral mínimo para considerar un deslizamiento
+    const swipeThreshold = 50;
     if (this.touchEndX < this.touchStartX - swipeThreshold) {
-      this.next(true); // Deslizar hacia la izquierda
+      this.next(true);
     }
     if (this.touchEndX > this.touchStartX + swipeThreshold) {
-      this.prev(true); // Deslizar hacia la derecha
+      this.prev(true);
+    }
+  }
+
+  private buildLoopSlides(photos: CarouselImage[]): CarouselSlide[] {
+    if (photos.length === 0) {
+      return [];
+    }
+    const first = photos[0];
+    const last = photos[photos.length - 1];
+    return [
+      { ...last, id: 'clone-last' },
+      ...photos.map((item, index) => ({ ...item, id: `photo-${index}` })),
+      { ...first, id: 'clone-first' }
+    ];
+  }
+
+  private queueWrapSnap(realIndex: number) {
+    this.isWrapping = true;
+    this.clearWrapTimeout();
+    this.wrapTimeout = setTimeout(() => {
+      this.snapTo(realIndex);
+    }, SLIDE_MS);
+  }
+
+  private snapTo(index: number) {
+    this.enableTransition = false;
+    this.currentIndex = index;
+    this.cdr.detectChanges();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        this.enableTransition = true;
+        this.isWrapping = false;
+        this.cdr.markForCheck();
+      });
+    });
+  }
+
+  private clearWrapTimeout() {
+    if (this.wrapTimeout) {
+      clearTimeout(this.wrapTimeout);
+      this.wrapTimeout = null;
     }
   }
 }
