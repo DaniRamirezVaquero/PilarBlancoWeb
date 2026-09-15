@@ -9,6 +9,10 @@ import { Component, Inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
 })
 export class CollageComponent implements OnInit {
 
+  // Los ficheros "-900" son versiones recomprimidas/redimensionadas (~900px de
+  // ancho) de los originales: la rejilla nunca muestra más de un 25% del
+  // viewport por foto, así que no hace falta servir los .webp originales
+  // (algunos superaban los 700 KB).
   images: string[] = [
     'assets/images/collage/FOTO (1).webp',
     'assets/images/collage/FOTO (2).webp',
@@ -45,7 +49,7 @@ export class CollageComponent implements OnInit {
     'assets/images/collage/FOTO (33).webp',
     'assets/images/collage/FOTO (34).webp',
     'assets/images/collage/FOTO (35).webp',
-  ];
+  ].map(src => src.replace(/\.webp$/, '-900.webp'));
 
   titulos = [
     {index: 1, titulo: 'VIOLENCIAS PERIFÉRICAS'},
