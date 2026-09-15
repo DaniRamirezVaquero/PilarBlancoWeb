@@ -1,8 +1,17 @@
 <div
-  class="hero-container relative bg-[url('assets/images/Fondo2.jpg')] bg-no-repeat bg-cover bg-[65%_50%] w-screen h-dvh p-8 md:p-12 flex justify-center lg:items-end sm:justify-start overflow-x-hidden">
+  class="hero-container relative w-screen h-dvh p-8 md:p-12 flex justify-center lg:items-end sm:justify-start overflow-x-hidden">
+
+  <div class="absolute inset-0 z-0" aria-hidden="true"
+       [class.hero-covers-animated]="coversAnimated">
+    @for (cover of covers; track cover; let i = $index) {
+      <div class="hero-cover absolute inset-0 bg-no-repeat bg-cover bg-[65%_50%]"
+           [class.is-active]="currentCoverIndex === i"
+           [style.background-image]="'url(\'' + cover + '\')'"></div>
+    }
+  </div>
 
   <!-- Overlay con gradiente sutil -->
-  <div class="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/20"></div>
+  <div class="absolute inset-0 z-[1] bg-gradient-to-r from-black/30 via-transparent to-black/20"></div>
 
   <div class="relative z-10 grid grid-rows-3 h-full">
     <div></div>
@@ -14,8 +23,8 @@
       <!-- Nombre con efecto interactivo -->
       <div class="interactive-name lato-light text-6xl lg:text-8xl leading-tight tracking-wide tilt-3d">
         <h1 class="relative">
-          <p class="drop-shadow-2xl animate-fade-in-up dynamic-text-glow">PILAR</p>
-          <p class="drop-shadow-2xl animate-fade-in-up animation-delay-200 dynamic-text-glow">BLANCO</p>
+          <span class="block drop-shadow-2xl animate-fade-in-up dynamic-text-glow">PILAR </span>
+          <span class="block drop-shadow-2xl animate-fade-in-up animation-delay-200 dynamic-text-glow">BLANCO</span>
         </h1>
       </div>
 
@@ -56,8 +65,12 @@
     <!-- Contenedor del video simplificado -->
     <div class="w-full max-w-[80%] lg:max-w-[70%]">
       <div class="relative pb-[56.25%] h-0 overflow-hidden animate-scale-in">
-        <iframe id="player" title="vimeo-player" src="https://player.vimeo.com/video/786041466?h=5428a890c9"
-          class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen></iframe>
+        <iframe id="player" title="Reel de actuación de Pilar Blanco"
+          src="https://player.vimeo.com/video/1208363473?h=3205afba43"
+          class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+          allowfullscreen></iframe>
       </div>
     </div>
   </div>

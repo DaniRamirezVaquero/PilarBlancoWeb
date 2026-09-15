@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, AfterViewInit, ElementRef, HostListener } from '@angular/core';
 import { PlayBtnComponent } from '../../components/play-btn/play-btn.component';
 import { SideNavService } from '../../services/side-nav.service';
 import { CommonModule } from '@angular/common';
@@ -15,11 +15,22 @@ import { RouterLink } from '@angular/router';
   templateUrl: './principal.component.html',
   styleUrl: './principal.component.css'
 })
-export class PrincipalComponent implements OnInit {
+export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   sideNavIsOpen: boolean = false;
   subscription: any;
   showReel: boolean = false;
+
+  readonly covers: string[] = [
+    'assets/images/Fondo2.jpg',
+    'assets/images/Portada.jpg'
+  ];
+  currentCoverIndex = 0;
+  coversAnimated = false;
+
+  private readonly coverIntervalMs = 30 * 60 * 1000;
+  private coverTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  private coverIntervalId: ReturnType<typeof setInterval> | null = null;
 
   constructor(private elementRef: ElementRef) { }
 
@@ -29,6 +40,52 @@ export class PrincipalComponent implements OnInit {
     this.sideNavService.isOpen$.subscribe(isOpen => {
       this.sideNavIsOpen = isOpen;
     });
+
+    this.currentCoverIndex = Math.floor(Date.now() / this.coverIntervalMs) % this.covers.length;
+    if (typeof Image !== 'undefined') {
+      this.preloadCovers();
+      this.scheduleCoverRotation();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (typeof requestAnimationFrame === 'undefined') {
+      return;
+    }
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        this.coversAnimated = true;
+      });
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.coverTimeoutId) {
+      clearTimeout(this.coverTimeoutId);
+    }
+    if (this.coverIntervalId) {
+      clearInterval(this.coverIntervalId);
+    }
+  }
+
+  private preloadCovers(): void {
+    this.covers.forEach(src => {
+      const image = new Image();
+      image.src = src;
+    });
+  }
+
+  private scheduleCoverRotation(): void {
+    const remainingMs = this.coverIntervalMs - (Date.now() % this.coverIntervalMs);
+
+    this.coverTimeoutId = setTimeout(() => {
+      this.advanceCover();
+      this.coverIntervalId = setInterval(() => this.advanceCover(), this.coverIntervalMs);
+    }, remainingMs);
+  }
+
+  private advanceCover(): void {
+    this.currentCoverIndex = (this.currentCoverIndex + 1) % this.covers.length;
   }
 
   toggleShowReel() {

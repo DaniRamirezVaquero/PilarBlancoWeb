@@ -1,0 +1,16 @@
+.hero-container {
+  background-color: #5c5c5c;
+}
+
+.hero-cover {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero-cover.is-active {
+  opacity: 1;
+}
+
+.hero-covers-animated .hero-cover {
+  transition: opacity 2s ease-in-out;
+}
