@@ -80,11 +80,6 @@ export class SeoService {
         value: 165,
         unitCode: 'CMT',
       },
-      memberOf: {
-        '@type': 'Organization',
-        name: 'OK Agencia',
-        url: 'https://okagencia.com/ficha.php?idactor=2133&gr=aa',
-      },
       contactPoint: {
         '@type': 'ContactPoint',
         contactType: 'professional',

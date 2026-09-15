@@ -3,7 +3,6 @@ import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { SideNavigationComponent } from './components/side-navigation/side-navigation.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { CaptchaComponent } from './components/captcha/captcha.component';
 import { SeoService } from './seo/seo.service';
 import { filter } from 'rxjs';
 
@@ -13,8 +12,7 @@ import { filter } from 'rxjs';
         RouterOutlet,
         HeaderComponent,
         SideNavigationComponent,
-        FooterComponent,
-        CaptchaComponent
+        FooterComponent
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
@@ -25,7 +23,6 @@ export class AppComponent implements AfterViewInit {
   @HostBinding('class.app-ready') appReady = typeof requestAnimationFrame === 'undefined';
 
   showFooter: boolean = true;
-  showCaptcha: boolean = false;
 
   private readonly seo = inject(SeoService);
 
@@ -50,6 +47,5 @@ export class AppComponent implements AfterViewInit {
 
   private updateVisibility(url: string): void {
     this.showFooter = url !== '/home';
-    this.showCaptcha = url === '/contact';
   }
 }

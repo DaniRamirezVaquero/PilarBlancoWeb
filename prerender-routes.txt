@@ -4,4 +4,3 @@
 /voice
 /bio
 /curriculum
-/contact

@@ -54,13 +54,6 @@ export const SEO_PAGES: Record<string, SeoPage> = {
       'Currículum artístico de Pilar Blanco: cine, televisión, teatro, cortometrajes, doblaje y formación.',
     breadcrumb: 'Currículum',
   },
-  '/contact': {
-    path: '/contact',
-    title: 'Contacto de Pilar Blanco | Actriz',
-    description:
-      'Contacta con Pilar Blanco o su representante en OK Agencia para castings, agencias y proyectos audiovisuales.',
-    breadcrumb: 'Contacto',
-  },
 };
 
 export const PERSON_KNOWS_ABOUT = [
@@ -75,7 +68,6 @@ export const PERSON_KNOWS_ABOUT = [
 export const PERSON_SAME_AS = [
   'https://www.instagram.com/pilarblanco.actriz/',
   'https://vimeo.com/user18148957',
-  'https://okagencia.com/ficha.php?idactor=2133&gr=aa',
 ];
 
 export const PERSON_DESCRIPTION =

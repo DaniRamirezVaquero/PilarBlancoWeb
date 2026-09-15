@@ -44,6 +44,3 @@ Material Nuevo
 # System files
 .DS_Store
 Thumbs.db
-
-# Backend
-/backend/node_modules
