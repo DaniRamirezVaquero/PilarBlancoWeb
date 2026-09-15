@@ -5,16 +5,15 @@ import { SideNavService } from '../../services/side-nav.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-side-navigation',
-  standalone: true,
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    BurguerMenuBtnComponent,
-    CommonModule
-  ],
-  templateUrl: './side-navigation.component.html',
-  styleUrl: './side-navigation.component.css'
+    selector: 'app-side-navigation',
+    imports: [
+        RouterLink,
+        RouterLinkActive,
+        BurguerMenuBtnComponent,
+        CommonModule
+    ],
+    templateUrl: './side-navigation.component.html',
+    styleUrl: './side-navigation.component.css'
 })
 export class SideNavigationComponent {
 
