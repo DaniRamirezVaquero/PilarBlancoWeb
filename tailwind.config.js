@@ -9,9 +9,22 @@ module.exports = {
         mytheme: {
           "primary": "#87B3D0",
           "secondary": "#1e3a4d",
-          "accent": "#f97316",
+          "accent": "#E4754E",
           "neutral": "#e5e7eb",
           "base-100": "#374151",
+          "info": "#38bdf8",
+          "success": "#4ade80",
+          "warning": "#fcd34d",
+          "error": "#f87171",
+        },
+      },
+      {
+        "mytheme-portada": {
+          "primary": "#4F86B5",
+          "secondary": "#16344D",
+          "accent": "#1E6BB5",
+          "neutral": "#ced7e0",
+          "base-100": "#3b4045",
           "info": "#38bdf8",
           "success": "#4ade80",
           "warning": "#fcd34d",

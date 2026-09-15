@@ -4,6 +4,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { SideNavigationComponent } from './components/side-navigation/side-navigation.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SeoService } from './seo/seo.service';
+import { HeroThemeService } from './services/hero-theme.service';
 import { filter } from 'rxjs';
 
 @Component({
@@ -25,6 +26,8 @@ export class AppComponent implements AfterViewInit {
   showFooter: boolean = true;
 
   private readonly seo = inject(SeoService);
+  /** Arranca el temporizador de cover/tema; el commit visual solo ocurre en /home. */
+  private readonly _heroTheme = inject(HeroThemeService);
 
   constructor(private router: Router) {
     this.seo.updateForUrl(this.router.url);

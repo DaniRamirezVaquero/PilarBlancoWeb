@@ -1,9 +1,9 @@
 rect {
-  fill: #87B3D0;
+  fill: oklch(var(--p));
 }
 
 .mid-rect {
-  fill: #0d3047;
+  fill: oklch(var(--s));
 }
 
 .shadow {

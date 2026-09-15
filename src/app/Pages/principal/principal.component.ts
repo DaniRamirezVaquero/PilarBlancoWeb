@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, OnDestroy, AfterViewInit, ElementRef, HostListener } from '@angular/core';
 import { PlayBtnComponent } from '../../components/play-btn/play-btn.component';
 import { SideNavService } from '../../services/side-nav.service';
+import { HeroThemeService } from '../../services/hero-theme.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -20,16 +21,18 @@ export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
   subscription: any;
   showReel: boolean = false;
 
-  readonly covers: string[] = [
-    'assets/images/Fondo2.jpg',
-    'assets/images/Portada.jpg'
-  ];
-  currentCoverIndex = 0;
+  readonly heroTheme = inject(HeroThemeService);
+  readonly heroWidths: readonly number[] = [960, 1920, 3200];
   coversAnimated = false;
 
-  private readonly coverIntervalMs = 30 * 60 * 1000;
-  private coverTimeoutId: ReturnType<typeof setTimeout> | null = null;
-  private coverIntervalId: ReturnType<typeof setInterval> | null = null;
+  /**
+   * La cubierta inactiva no se descarga en el critical path: se marca como
+   * lista tras un idle callback para no competir por ancho de banda con el
+   * LCP, mucho antes de que la rotación (cada 30 min) la necesite.
+   */
+  secondaryCoverReady = false;
+
+  private idleCallbackId: number | null = null;
 
   constructor(private elementRef: ElementRef) { }
 
@@ -40,10 +43,8 @@ export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sideNavIsOpen = isOpen;
     });
 
-    this.currentCoverIndex = Math.floor(Date.now() / this.coverIntervalMs) % this.covers.length;
-    if (typeof Image !== 'undefined') {
-      this.preloadCovers();
-      this.scheduleCoverRotation();
+    if (typeof window !== 'undefined') {
+      this.scheduleSecondaryCoverPreload();
     }
   }
 
@@ -59,32 +60,33 @@ export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.coverTimeoutId) {
-      clearTimeout(this.coverTimeoutId);
-    }
-    if (this.coverIntervalId) {
-      clearInterval(this.coverIntervalId);
+    if (this.idleCallbackId !== null && typeof (window as any).cancelIdleCallback === 'function') {
+      (window as any).cancelIdleCallback(this.idleCallbackId);
     }
   }
 
-  private preloadCovers(): void {
-    this.covers.forEach(src => {
-      const image = new Image();
-      image.src = src;
-    });
+  /** Devuelve el srcset responsivo (960/1920/3200w) para una cubierta del hero. */
+  coverSrcset(key: string): string {
+    return this.heroWidths
+      .map(width => `assets/images/hero/${key}-${width}.webp ${width}w`)
+      .join(', ');
   }
 
-  private scheduleCoverRotation(): void {
-    const remainingMs = this.coverIntervalMs - (Date.now() % this.coverIntervalMs);
-
-    this.coverTimeoutId = setTimeout(() => {
-      this.advanceCover();
-      this.coverIntervalId = setInterval(() => this.advanceCover(), this.coverIntervalMs);
-    }, remainingMs);
+  /** Fallback para navegadores sin soporte de srcset. */
+  coverSrc(key: string): string {
+    return `assets/images/hero/${key}-1920.webp`;
   }
 
-  private advanceCover(): void {
-    this.currentCoverIndex = (this.currentCoverIndex + 1) % this.covers.length;
+  private scheduleSecondaryCoverPreload(): void {
+    const markReady = () => {
+      this.secondaryCoverReady = true;
+    };
+    const win = window as any;
+    if (typeof win.requestIdleCallback === 'function') {
+      this.idleCallbackId = win.requestIdleCallback(markReady, { timeout: 800 });
+    } else {
+      setTimeout(markReady, 300);
+    }
   }
 
   toggleShowReel() {

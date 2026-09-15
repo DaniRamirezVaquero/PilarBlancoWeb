@@ -15,7 +15,7 @@
 
 .ham4.active {
   .line {
-    stroke: #87B3D0; /* primary color */
+    stroke: oklch(var(--p));
   }
 }
 
@@ -49,5 +49,5 @@
 
 /* Efecto hover para las líneas */
 .ham:hover .line {
-  stroke: #87B3D0; /* primary color */
+  stroke: oklch(var(--p));
 }

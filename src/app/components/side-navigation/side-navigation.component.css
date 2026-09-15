@@ -28,7 +28,7 @@ aside {
 
 /* Estilo para el enlace activo con línea vertical */
 .active-nav-link {
-  @apply text-accent font-bold drop-shadow-lg relative;
+  @apply text-accent font-bold drop-shadow-lg relative transition-colors duration-[1200ms];
 }
 
 .active-nav-link::before {

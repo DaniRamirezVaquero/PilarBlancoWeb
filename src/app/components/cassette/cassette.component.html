@@ -1,7 +1,7 @@
 <div class="flex flex-col w-min relative items-center gap-2">
   <p
     class="text-center font-semibold text-zinc-800 absolute w-full top-[45px] text-sm md:top-[52px] md:text-base xl:top-[60px]">
-    {{tape}} <i class="fas fa-music"></i></p>
+    {{tape}} <i class="fa-solid fa-music"></i></p>
 
   <svg viewBox="3 5 61 45" class="w-min h-[210px] md:h-[250px] xl:h-[280px]">
     <defs>
@@ -22,7 +22,7 @@
              Q62 47, 60 47,
              L7 47,
              Q5 47, 5 45
-             L5 10" fill="#87B3D0" />
+             L5 10" fill="oklch(var(--p))" />
     <path d="M10 15,
              Q10 13, 12 13,
              L55 13,
@@ -40,7 +40,7 @@
     <path d="M10 20,
              L57 20,
              L57 25,
-             L10 25" fill="#f97316" />
+             L10 25" fill="oklch(var(--a))" />
     <circle cx="8" cy="11" r="1" fill="#0d3047" />
     <circle cx="59" cy="11" r="1" fill="#0d3047" />
     <circle cx="8" cy="44" r="1" fill="#0d3047" />
@@ -86,46 +86,54 @@
              L62 33" fill="#0d3047" />
   </svg>
 
-  <input type="range" min="0" max="100" [value]="progress" (input)="onProgressChange($event)"
-    class="range range-xs [--range-shdw:#87B3D0] w-10/12" />
+  <label class="sr-only" for="cassette-progress">Progreso de la pista</label>
+  <input id="cassette-progress" type="range" min="0" max="100" [value]="progress" (input)="onProgressChange($event)"
+    [attr.aria-valuetext]="(progress | number:'1.0-0') + '%'"
+    class="range range-xs [--range-shdw:oklch(var(--p))] w-10/12" />
 
   <div class="flex justify-between items-center w-10/12 mt-2">
 
-    <button class="previous btn btn-ghost text-[#87B3D0] hover:text-[#0d3047] transition-colors"
-      (click)="previousBtn()">
-      <i class="fas fa-step-backward text-current"></i>
+    <button class="previous btn btn-ghost text-primary hover:text-secondary transition-colors"
+      aria-label="Pista anterior" (click)="previousBtn()">
+      <i class="fa-solid fa-backward-step text-current" aria-hidden="true"></i>
     </button>
 
-    @if (audio?.paused) {
+    @if (!isPlaying) {
       <div [class.tooltip]="playTooltip" class="tooltip-open tooltip-bottom tooltip-secondary" data-tip="Pulsa para reproducir">
-        <button class="play btn btn-ghost text-[#87B3D0] hover:text-[#0d3047] transition-colors" (click)="playTape(); hiddePlayTooltip();">
-          <i class="fas fa-play text-current"></i>
+        <button class="play btn btn-ghost text-primary hover:text-secondary transition-colors"
+          aria-label="Reproducir" (click)="playTape(); hiddePlayTooltip();">
+          <i class="fa-solid fa-play text-current" aria-hidden="true"></i>
         </button>
       </div>
     } @else {
-    <button class="pause btn btn-ghost text-[#87B3D0] hover:text-[#0d3047] transition-colors" (click)="pauseBtn()">
-      <i class="fas fa-pause text-current"></i>
+    <button class="pause btn btn-ghost text-primary hover:text-secondary transition-colors"
+      aria-label="Pausar" (click)="pauseBtn()">
+      <i class="fa-solid fa-pause text-current" aria-hidden="true"></i>
     </button>
     }
 
     <div [class.tooltip]="otherTooltip" class="tooltip-open tooltip-bottom tooltip-secondary" data-tip="Hay más demos!">
-      <button class="next btn btn-ghost text-[#87B3D0] hover:text-[#0d3047] transition-colors" (click)="nextBtn(); hiddeOtherTooltip()">
-        <i class="fas fa-step-forward text-current"></i>
+      <button class="next btn btn-ghost text-primary hover:text-secondary transition-colors"
+        aria-label="Siguiente pista" (click)="nextBtn(); hiddeOtherTooltip()">
+        <i class="fa-solid fa-forward-step text-current" aria-hidden="true"></i>
       </button>
     </div>
 
     <div class="flex justify-between items-center gap-2">
       <div class="w-10">
-        @if ((audio?.volume ?? 0) > 0.5) {
-          <i class="fa-solid fa-volume-high text-[#eb904f]"></i>
-        } @else if ((audio?.volume ?? 0) > 0 && (audio?.volume ?? 0) <= 0.7) {
-          <i class="fa-solid fa-volume-low text-[#eb904f]"></i>
+        @if ((audio?.volume ?? volumen) > 0.5) {
+          <i class="fa-solid fa-volume-high text-[#eb904f]" aria-hidden="true"></i>
+        } @else if ((audio?.volume ?? volumen) > 0 && (audio?.volume ?? volumen) <= 0.7) {
+          <i class="fa-solid fa-volume-low text-[#eb904f]" aria-hidden="true"></i>
         } @else {
-          <i class="fa-solid fa-volume-off text-[#eb904f]"></i>
+          <i class="fa-solid fa-volume-off text-[#eb904f]" aria-hidden="true"></i>
         }
       </div>
 
-      <input type="range" min="0" max="1" step="0.01" class="range range-xs [--range-shdw:#eb904f] w-12"
+      <label class="sr-only" for="cassette-volume">Volumen</label>
+      <input id="cassette-volume" type="range" min="0" max="1" step="0.01" class="range range-xs [--range-shdw:#eb904f] w-12"
+        aria-label="Volumen"
+        [attr.aria-valuetext]="((audio?.volume ?? volumen) * 100 | number:'1.0-0') + '%'"
         (input)="onVolumeChange($event)" [value]="audio?.volume ?? volumen" />
     </div>
   </div>

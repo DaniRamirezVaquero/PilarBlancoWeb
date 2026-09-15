@@ -47,19 +47,40 @@
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap"
     rel="stylesheet">
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <!-- Un único set de iconos (Font Awesome Free 6, solid+brands) cargado sin bloquear el render. -->
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"
+        media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css">
+  </noscript>
   <script>
     (function () {
-      var covers = ['assets/images/Fondo2.jpg', 'assets/images/Portada.jpg'];
+      var covers = ['fondo2', 'portada'];
+      var themes = { fondo2: 'mytheme', portada: 'mytheme-portada' };
       var index = Math.floor(Date.now() / (30 * 60 * 1000)) % covers.length;
+      document.documentElement.setAttribute('data-theme', themes[covers[index]]);
+
+      // Solo /home pinta el hero: en cualquier otra ruta no precargamos nada.
+      if (location.pathname !== '/' && location.pathname !== '/home') {
+        return;
+      }
+      var key = covers[index];
       var link = document.createElement('link');
       link.rel = 'preload';
       link.as = 'image';
-      link.href = covers[index];
+      link.type = 'image/webp';
+      link.href = 'assets/images/hero/' + key + '-1920.webp';
+      link.imageSrcset = [
+        'assets/images/hero/' + key + '-960.webp 960w',
+        'assets/images/hero/' + key + '-1920.webp 1920w',
+        'assets/images/hero/' + key + '-3200.webp 3200w'
+      ].join(', ');
+      link.imageSizes = '100vw';
       document.head.appendChild(link);
     })();
   </script>
@@ -67,8 +88,6 @@
 
 <body class="overflow-x-hidden">
   <app-root></app-root>
-  <script src="https://kit.fontawesome.com/4d9bce4b44.js" crossorigin="anonymous" defer></script>
-  <script src="https://kit.fontawesome.com/2ed51bcb87.js" crossorigin="anonymous" defer></script>
 </body>
 
 </html>
