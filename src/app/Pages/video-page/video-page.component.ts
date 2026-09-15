@@ -22,39 +22,25 @@ export class VideoPageComponent {
 
   scenes: Scene[] = [
     {
+      videoId: '1209481513',
+      hash: '87a2889eae',
+      title: 'Videobook Express de Pilar Blanco',
+      projectName: 'Videobook Express',
+      visible: true
+    },
+    {
+      videoId: '786041466',
+      hash: '5428a890c9',
+      title: 'Reel de actuación de Pilar Blanco',
+      projectName: 'Reel',
+      visible: true
+    },
+    {
       videoId: '989002249',
       hash: '87574a8f82',
-      title: 'Escena de Pilar Blanco - Actuación dramática 1',
+      title: 'Escena de Pilar Blanco - Pecadores de la Pradera',
       projectName: 'Pecadores de la Pradera',
       visible: true
-    },
-    {
-      videoId: '1102753806',
-      hash: '7fb8fd176a',
-      title: 'Escena de Pilar Blanco - Actuación dramática 2',
-      projectName: 'Aquella Fotografía',
-      visible: true
-    },
-    {
-      videoId: '782842299',
-      hash: '03d9fc9437',
-      title: 'Escena de Pilar Blanco - Actuación en cine 2',
-      projectName: 'Proyecto 3',
-      visible: false
-    },
-    {
-      videoId: '715326695',
-      hash: '65d780d64c',
-      title: 'Escena de Pilar Blanco - Actuación profesional 3',
-      projectName: 'El Mix',
-      visible: true
-    },
-    {
-      videoId: '992051712',
-      hash: '629cbcb15e',
-      title: 'Escena de Pilar Blanco - Trabajo audiovisual 4',
-      projectName: 'Proyecto 5',
-      visible: false
     }
   ];
 
