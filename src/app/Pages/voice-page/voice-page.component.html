@@ -4,24 +4,22 @@
     <div>
       <div class="mb-6">
         <h1 class="lato-regular text-xl sm:text-2xl md:text-4xl text-white">Doblaje y locución</h1>
-        <div class="w-full h-0.5 rounded-full bg-orange-500 mt-2"></div>
+        <div class="w-full h-0.5 rounded-full bg-accent transition-colors duration-[1200ms] mt-2"></div>
       </div>
         <h2 class="lato-regular text-lg sm:text-xl md:text-2xl text-white mb-3">Doblaje</h2>
-        <div class="w-full h-0.5 rounded-full bg-orange-500 mb-4"></div>
+        <div class="w-full h-0.5 rounded-full bg-accent transition-colors duration-[1200ms] mb-4"></div>
       <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 lg:gap-20 lg:mb-12">
 
         <div class="shadow-md w-full max-w-[1280px]">
-          <div class="relative pb-[56.25%] h-0 overflow-hidden">
-            <iframe title="Demo de doblaje de Pilar Blanco" src="https://player.vimeo.com/video/715325007?h=030a97a869"
-              class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen></iframe>
-          </div>
+          <app-vimeo-facade videoId="715325007" hash="030a97a869"
+            poster="https://i.vimeocdn.com/video/1441720619-5fd0a1f74b3eb2e2f9de40ac3b35bb8d9f6f493d80d97b69fb95e982e9fe18ff-d_1920?region=us"
+            title="Demo de doblaje de Pilar Blanco" [priority]="true" />
         </div>
 
         <div class="shadow-md w-full max-w-[1280px]">
-          <div class="relative pb-[56.25%] h-0 overflow-hidden">
-            <iframe title="Demo de doblaje de Pilar Blanco" src="https://player.vimeo.com/video/994004071?h=93da72042a"
-              class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0" allowfullscreen></iframe>
-          </div>
+          <app-vimeo-facade videoId="994004071" hash="93da72042a"
+            poster="https://i.vimeocdn.com/video/1910003369-91899f3ad7db92b17e227f1bc2c828c30015f204277ec6f55bbab8d968e48de8-d_1920?region=us"
+            title="Demo de doblaje de Pilar Blanco" />
         </div>
 
       </div>
@@ -30,7 +28,7 @@
     <div>
       <div class="mb-6">
         <h2 class="lato-regular text-xl sm:text-2xl md:text-4xl text-white">Locución</h2>
-        <div class="w-full h-0.5 rounded-full bg-orange-500 mt-2"></div>
+        <div class="w-full h-0.5 rounded-full bg-accent transition-colors duration-[1200ms] mt-2"></div>
       </div>
       <div class="flex items-center justify-around w-full">
         <app-cassette></app-cassette>
