@@ -1,0 +1,72 @@
+.email-popover {
+  padding: 0.85rem 0.9rem 0.75rem;
+  border-radius: 1rem;
+}
+
+.email-popover-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.45rem;
+}
+
+.email-popover-address {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  color: #f4f4f5;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.email-popover-copy {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.email-popover-copy:hover,
+.email-popover-copy:focus-visible {
+  background: rgba(255, 255, 255, 0.28);
+  color: #fff;
+  outline: none;
+}
+
+.email-popover-copy-icon {
+  font-size: 0.8rem;
+}
+
+.email-popover-action {
+  display: block;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 0;
+  border-radius: 0.65rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.email-popover-action:hover,
+.email-popover-action:focus-visible {
+  background: rgba(255, 255, 255, 0.28);
+  color: #fff;
+  outline: none;
+}

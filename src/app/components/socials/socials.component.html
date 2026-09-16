@@ -23,15 +23,62 @@
                 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
   </a>
 
-  <a href="mailto:pilarblanco.actriz@gmail.com"
+  <a [href]="mailtoUrl"
      aria-label="Enviar un email a Pilar Blanco, actriz"
      class="group relative w-12 h-12 flex items-center justify-center rounded-full
-            glass-effect hover:scale-110 transition-all duration-300">
+            glass-effect hover:scale-110 transition-all duration-300 md:hidden">
     <app-icon name="envelope" size="lg" class="text-white group-hover:text-accent
               transition-all duration-300 drop-shadow-lg"></app-icon>
 
-    <!-- Efecto de brillo en hover -->
     <div class="absolute inset-0 rounded-full bg-gradient-to-r from-accent/0 via-accent/20 to-accent/0
                 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
   </a>
+
+  <div #emailMenu class="relative hidden md:block">
+    <button type="button"
+            (click)="toggleEmailMenu()"
+            [attr.aria-expanded]="emailOpen()"
+            aria-haspopup="dialog"
+            aria-controls="email-contact-menu"
+            aria-label="Contactar por email a Pilar Blanco, actriz"
+            class="group relative w-12 h-12 flex items-center justify-center rounded-full
+                   glass-effect hover:scale-110 transition-all duration-300"
+            [class.scale-110]="emailOpen()"
+            [class.ring-1]="emailOpen()"
+            [class.ring-white/40]="emailOpen()">
+      <app-icon name="envelope" size="lg"
+                class="group-hover:text-accent transition-all duration-300 drop-shadow-lg"
+                [class.text-accent]="emailOpen()"
+                [class.text-white]="!emailOpen()"></app-icon>
+
+      <!-- Efecto de brillo en hover -->
+      <div class="absolute inset-0 rounded-full bg-gradient-to-r from-accent/0 via-accent/20 to-accent/0
+                  opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+           [class.opacity-100]="emailOpen()"></div>
+    </button>
+
+    @if (emailOpen()) {
+      <div id="email-contact-menu"
+           role="dialog"
+           aria-label="Contacto por email"
+           class="email-popover glass-effect absolute right-0 top-[calc(100%+0.75rem)] z-50
+                  w-[min(16.5rem,calc(100vw-3rem))] origin-top-right animate-scale-in">
+        <div class="email-popover-row">
+          <p class="email-popover-address select-all" [attr.title]="email">{{ email }}</p>
+          <button type="button"
+                  (click)="copyEmail()"
+                  class="email-popover-copy"
+                  aria-live="polite"
+                  [attr.aria-label]="copied() ? 'Correo copiado' : 'Copiar correo'">
+            <app-icon [name]="copied() ? 'check' : 'copy'" class="email-popover-copy-icon"></app-icon>
+          </button>
+        </div>
+        <a [href]="gmailComposeUrl" target="_blank" rel="noopener noreferrer"
+           (click)="closeEmailMenu()"
+           class="email-popover-action">
+          Redactar en Gmail
+        </a>
+      </div>
+    }
+  </div>
 </div>
