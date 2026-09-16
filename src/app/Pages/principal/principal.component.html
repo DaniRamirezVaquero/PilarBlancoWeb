@@ -3,20 +3,15 @@
 
   <div class="absolute inset-0 z-0" aria-hidden="true"
        [class.hero-covers-animated]="coversAnimated">
-    @for (cover of heroTheme.covers; track cover; let i = $index) {
-      @if (i === heroTheme.currentCoverIndex() || secondaryCoverReady) {
-        <img
-          class="hero-cover absolute inset-0 h-full w-full object-cover object-[65%_50%]"
-          [class.is-active]="heroTheme.currentCoverIndex() === i"
-          [src]="coverSrc(cover)"
-          [srcset]="coverSrcset(cover)"
-          sizes="100vw"
-          [attr.fetchpriority]="i === heroTheme.currentCoverIndex() ? 'high' : 'low'"
-          [attr.loading]="i === heroTheme.currentCoverIndex() ? 'eager' : 'lazy'"
-          decoding="async"
-          alt="" />
-      }
-    }
+    <img
+      class="hero-cover is-active absolute inset-0 h-full w-full object-cover object-[65%_50%]"
+      [src]="coverSrc(heroTheme.currentCover())"
+      [srcset]="coverSrcset(heroTheme.currentCover())"
+      sizes="100vw"
+      fetchpriority="high"
+      loading="eager"
+      decoding="async"
+      alt="" />
   </div>
 
   <!-- Overlay con gradiente sutil -->

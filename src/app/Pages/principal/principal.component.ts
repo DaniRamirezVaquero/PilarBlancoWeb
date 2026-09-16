@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, AfterViewInit, ElementRef, HostListener } from '@angular/core';
+import { Component, inject, OnInit, AfterViewInit, ElementRef, HostListener } from '@angular/core';
 import { PlayBtnComponent } from '../../components/play-btn/play-btn.component';
 import { SideNavService } from '../../services/side-nav.service';
 import { HeroThemeService } from '../../services/hero-theme.service';
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
     templateUrl: './principal.component.html',
     styleUrl: './principal.component.css'
 })
-export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PrincipalComponent implements OnInit, AfterViewInit {
 
   sideNavIsOpen: boolean = false;
   subscription: any;
@@ -23,15 +23,6 @@ export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly heroWidths: readonly number[] = [960, 1920, 3200];
   coversAnimated = false;
 
-  /**
-   * La cubierta inactiva no se descarga en el critical path: se marca como
-   * lista tras un idle callback para no competir por ancho de banda con el
-   * LCP, mucho antes de que la rotación (cada 30 min) la necesite.
-   */
-  secondaryCoverReady = false;
-
-  private idleCallbackId: number | null = null;
-
   constructor(private elementRef: ElementRef) { }
 
   sideNavService = inject(SideNavService);
@@ -40,10 +31,6 @@ export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sideNavService.isOpen$.subscribe(isOpen => {
       this.sideNavIsOpen = isOpen;
     });
-
-    if (typeof window !== 'undefined') {
-      this.scheduleSecondaryCoverPreload();
-    }
   }
 
   ngAfterViewInit(): void {
@@ -57,12 +44,6 @@ export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.idleCallbackId !== null && typeof (window as any).cancelIdleCallback === 'function') {
-      (window as any).cancelIdleCallback(this.idleCallbackId);
-    }
-  }
-
   /** Devuelve el srcset responsivo (960/1920/3200w) para una cubierta del hero. */
   coverSrcset(key: string): string {
     return this.heroWidths
@@ -73,18 +54,6 @@ export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
   /** Fallback para navegadores sin soporte de srcset. */
   coverSrc(key: string): string {
     return `assets/images/hero/${key}-1920.webp`;
-  }
-
-  private scheduleSecondaryCoverPreload(): void {
-    const markReady = () => {
-      this.secondaryCoverReady = true;
-    };
-    const win = window as any;
-    if (typeof win.requestIdleCallback === 'function') {
-      this.idleCallbackId = win.requestIdleCallback(markReady, { timeout: 800 });
-    } else {
-      setTimeout(markReady, 300);
-    }
   }
 
   toggleShowReel() {

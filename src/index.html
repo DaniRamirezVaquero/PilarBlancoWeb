@@ -54,7 +54,28 @@
     (function () {
       var covers = ['fondo2', 'portada'];
       var themes = { fondo2: 'mytheme', portada: 'mytheme-portada' };
-      var index = Math.floor(Date.now() / (30 * 60 * 1000)) % covers.length;
+      var SESSION_KEY = 'hero-cover';
+      var LAST_KEY = 'hero-cover-last';
+
+      function read(storage, key) {
+        try { return storage.getItem(key); } catch (e) { return null; }
+      }
+      function write(storage, key, value) {
+        try { storage.setItem(key, value); } catch (e) {}
+      }
+
+      var index = 0;
+      var sessionCover = read(sessionStorage, SESSION_KEY);
+      if (sessionCover && covers.indexOf(sessionCover) !== -1) {
+        index = covers.indexOf(sessionCover);
+      } else {
+        var lastCover = read(localStorage, LAST_KEY);
+        if (lastCover && covers.indexOf(lastCover) !== -1) {
+          index = (covers.indexOf(lastCover) + 1) % covers.length;
+        }
+        write(sessionStorage, SESSION_KEY, covers[index]);
+        write(localStorage, LAST_KEY, covers[index]);
+      }
       document.documentElement.setAttribute('data-theme', themes[covers[index]]);
 
       // Solo /home pinta el hero: en cualquier otra ruta no precargamos nada.

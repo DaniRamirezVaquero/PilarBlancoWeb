@@ -27,7 +27,7 @@ export class AppComponent implements AfterViewInit {
   showFooter: boolean = true;
 
   private readonly seo = inject(SeoService);
-  /** Arranca el temporizador de cover/tema; el commit visual solo ocurre en /home. */
+  /** Fija cover/tema de esta pestaña; no rota mientras la sesión sigue abierta. */
   private readonly _heroTheme = inject(HeroThemeService);
   /** Web Analytics de Vercel: pageviews en cada navegación del router. */
   private readonly _analytics = inject(VercelAnalyticsService);
