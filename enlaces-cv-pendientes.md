@@ -11,5 +11,7 @@ Solo se enlazan vídeos que Pilar ha pasado. El resto de fichas (Wikipedia, Film
 - **Aquella Fotografía** — https://youtu.be/wqx6g6Ste-w
 - **Violencias Periféricas** — https://youtu.be/cqh2DzdLqPM
 - **Gloria y Candela** — https://youtu.be/5kZo-h2jVnM
+- **Una lamentable pérdida** — https://youtu.be/i4EMGcJ_XFI
+- **Más allá de lo común** — https://youtu.be/HWk-N5XTtBo
 - **Disonancias** — https://youtu.be/8tMNqP8Z86Q
 - **Ciel sans lune** — https://youtu.be/EeI-JCfGT-U
