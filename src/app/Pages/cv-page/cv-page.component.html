@@ -1,14 +1,128 @@
 <div
   class="bg-page w-screen py-24 lg:py-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden flex flex-col gap-6 md:gap-8 xl:gap-10 items-center">
-  <div class="w-full">
-    <h1 class="page-title">Currículum</h1>
-    <span class="page-title-dash" aria-hidden="true"></span>
+  <div class="w-full flex flex-wrap items-end justify-between gap-4 animate-[fade-in-up_1s_ease-out_backwards]">
+    <div>
+      <h1 class="page-title">Currículum</h1>
+      <span class="page-title-dash" aria-hidden="true"></span>
+    </div>
+    <app-download-cv-btn />
   </div>
-  <app-download-cv-btn />
-  <img src="assets/cv-1430.webp"
-    srcset="assets/cv-700.webp 700w, assets/cv-1430.webp 1430w"
-    sizes="(min-width: 896px) 896px, 100vw"
-    width="1430" height="2022"
-    fetchpriority="high" decoding="async"
-    alt="Currículum artístico de Pilar Blanco, actriz" class="max-w-4xl w-full shadow-md">
+
+  <article
+    class="w-full shadow-md grid grid-cols-1 lg:grid-cols-3 overflow-hidden animate-[fade-in_0.5s_ease-out_backwards]">
+    <div class="flex flex-col animate-[slide-in-left_0.6s_ease-out_200ms_backwards]">
+      <img src="assets/cv-photo-743.webp"
+        srcset="assets/cv-photo-400.webp 400w, assets/cv-photo-743.webp 743w"
+        sizes="(min-width: 1280px) calc((100vw - 32rem) / 3), (min-width: 1024px) calc((100vw - 16rem) / 3), calc(100vw - 4rem)"
+        width="743" height="1024"
+        class="w-full aspect-[3/4] object-cover object-top shadow-sm animate-[fade-in-up_1s_ease-out_500ms_backwards]"
+        fetchpriority="high" decoding="async"
+        alt="Pilar Blanco, actriz, retrato para book">
+      <div
+        class="bg-primary/10 flex-1 p-6 sm:p-8 flex flex-col gap-6 text-neutral-900 animate-[fade-in-up_1s_ease-out_650ms_backwards]">
+        <section>
+          <span
+            class="inline-block bg-white text-neutral-900 text-xs font-bold uppercase tracking-wide px-3 py-1 shadow-sm mb-3">Medidas</span>
+          <p class="lato-regular text-sm leading-relaxed">Altura: 165 cm</p>
+          <p class="lato-regular text-sm leading-relaxed">Talla: 40/M</p>
+        </section>
+        <section>
+          <span
+            class="inline-block bg-white text-neutral-900 text-xs font-bold uppercase tracking-wide px-3 py-1 shadow-sm mb-3">Contacto</span>
+          <a href="mailto:pilarblanco.actriz@gmail.com"
+            class="flex items-start gap-2 lato-regular text-sm leading-relaxed hover:text-accent transition-colors">
+            <app-icon name="envelope" class="mt-0.5 text-primary"></app-icon>
+            <span>pilarblanco.actriz@gmail.com</span>
+          </a>
+          <a href="https://pilarblanco.es" target="_blank" rel="noopener noreferrer"
+            class="flex items-start gap-2 lato-regular text-sm leading-relaxed mt-2 hover:text-accent transition-colors">
+            <app-icon name="globe" class="mt-0.5 text-primary"></app-icon>
+            <span>www.pilarblanco.es</span>
+          </a>
+        </section>
+        <section>
+          <span
+            class="inline-block bg-white text-neutral-900 text-xs font-bold uppercase tracking-wide px-3 py-1 shadow-sm mb-3">Formación</span>
+          <ul class="lato-regular text-sm leading-relaxed space-y-3">
+            <li>Creación Integral de una obra audiovisual | Fernando Colomo, Belén Sánchez Arévalo y Sinuhé Muñoz. Aisge-Netflix (120 horas)</li>
+            <li>Interpretación ante la cámara | Studio Atralla (Curso 23-24)</li>
+            <li>Los distintos planos | Macarena Astorga. Aisge-Netflix</li>
+            <li>Interpretación para la cámara | Antonio Hens y Yeandro Tamayo</li>
+            <li>Curso de locución y doblaje | Escuela Luisa Ezquerra</li>
+            <li>Técnica Chéjov | Sol Garré</li>
+            <li>Cabaret | Virginia Nölting</li>
+          </ul>
+        </section>
+        <section>
+          <span
+            class="inline-block bg-white text-neutral-900 text-xs font-bold uppercase tracking-wide px-3 py-1 shadow-sm mb-3">Idiomas</span>
+          <p class="lato-regular text-sm leading-relaxed">Español: Nativo</p>
+          <p class="lato-regular text-sm leading-relaxed">Inglés: Medio</p>
+          <p class="lato-regular text-sm leading-relaxed">Francés: Básico</p>
+        </section>
+      </div>
+    </div>
+
+    <div
+      class="lg:col-span-2 bg-white text-neutral-900 p-8 sm:p-10 lg:p-12 flex flex-col gap-6 animate-[slide-in-right_0.6s_ease-out_300ms_backwards]">
+      <header class="animate-[fade-in-up_1s_ease-out_550ms_backwards]">
+        <p class="caveat-regular text-accent text-6xl sm:text-7xl leading-none">Pilar</p>
+        <p class="lato-bold text-primary text-2xl sm:text-3xl tracking-[0.3em] mt-1">BLANCO</p>
+      </header>
+      <div
+        class="bg-primary/15 -mx-8 sm:-mx-10 lg:-mx-12 px-8 sm:px-10 lg:px-12 py-3 lato-bold uppercase tracking-widest text-neutral-900 animate-[fade-in-up_1s_ease-out_700ms_backwards]">
+        Actriz
+      </div>
+      <div class="flex flex-col gap-6 animate-[fade-in-up_1s_ease-out_850ms_backwards]">
+        <section>
+          <h2 class="section-title uppercase mb-2 !text-neutral-900">Largometrajes</h2>
+          <ul class="lato-regular text-sm sm:text-base leading-relaxed space-y-1">
+            <li>Quién llorará por mí . Paco Izquierdo</li>
+            <li>Entre Bestias . Samcreta</li>
+            <li>Cuarzo . Danidogfilms (en postpro)</li>
+            <li>El culpable, redención (en postpro)</li>
+            <li>Rey gitano . Juanma Bajo Ulloa</li>
+            <li>Por las nubes . Fernando Colomo (Mediometraje)</li>
+          </ul>
+        </section>
+        <section>
+          <h2 class="section-title uppercase mb-2 !text-neutral-900">Cortometrajes</h2>
+          <ul class="lato-regular text-sm sm:text-base leading-relaxed space-y-1">
+            <li>Aquella Fotografía . Sergio Barba</li>
+            <li>Violencias Periféricas . Davinia Burgos</li>
+            <li>El penúltimo error . Enrique García</li>
+            <li>Más allá de lo común . M. Márquez y A. Vera</li>
+            <li>Gloria y Candela . Alicia Arwgar</li>
+            <li>Una lamentable pérdida . Sonia Madrid</li>
+            <li>Apogéo . Francisco Cruzado</li>
+            <li>Disonancias . Fran Kapilla</li>
+            <li>Petit à Petit . Sara Sanort</li>
+            <li>Croma 11 . Pablo Matute</li>
+            <li>Cierro los ojos sueño contigo | Andrés Peña</li>
+            <li>Ciel sans lune | Alex Esteve (Video Musical)</li>
+            <li>Darkinside | Andrés Peña (Serie web)</li>
+          </ul>
+        </section>
+        <section>
+          <h2 class="section-title uppercase mb-2 !text-neutral-900">Televisión</h2>
+          <ul class="lato-regular text-sm sm:text-base leading-relaxed space-y-1">
+            <li>Rabia . Mediaset España</li>
+            <li>Arrayán . Canal Sur</li>
+            <li>Plaza Alta . Canal Sur</li>
+          </ul>
+        </section>
+        <section>
+          <h2 class="section-title uppercase mb-2 !text-neutral-900">Teatro</h2>
+          <ul class="lato-regular text-sm sm:text-base leading-relaxed space-y-1">
+            <li>Ópera Werther . Paul-Emile Fourny</li>
+            <li>Mulholand Drive La obra | Cristina Fernández</li>
+            <li>Lorca en carne viva | Teatro de la orilla</li>
+            <li>El debate . Musical Didáctico</li>
+            <li>Paseo por el siglo de oro . Musical Didáctico</li>
+            <li>Repris, El destrozo de mi cuerpo y memoria . Cía Metronomoteatro</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </article>
 </div>
