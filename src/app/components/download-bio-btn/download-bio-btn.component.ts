@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-download-bio-btn',
   standalone: true,
-  imports: [],
+  imports: [IconComponent],
   templateUrl: './download-bio-btn.component.html',
   styleUrl: './download-bio-btn.component.css'
 })

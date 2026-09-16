@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
     selector: 'app-download-cv-btn',
-    imports: [],
+    imports: [IconComponent],
     templateUrl: './download-cv-btn.component.html',
     styleUrl: './download-cv-btn.component.css'
 })

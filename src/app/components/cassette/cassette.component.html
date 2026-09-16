@@ -1,7 +1,7 @@
 <div class="flex flex-col w-min relative items-center gap-2">
   <p
     class="text-center font-semibold text-zinc-800 absolute w-full top-[45px] text-sm md:top-[52px] md:text-base xl:top-[60px]">
-    {{tape}} <i class="fa-solid fa-music"></i></p>
+    {{tape}} <app-icon name="music" class="music"></app-icon></p>
 
   <svg viewBox="3 5 61 45" class="w-min h-[210px] md:h-[250px] xl:h-[280px]">
     <defs>
@@ -95,38 +95,38 @@
 
     <button class="previous btn btn-ghost text-primary hover:text-secondary transition-colors"
       aria-label="Pista anterior" (click)="previousBtn()">
-      <i class="fa-solid fa-backward-step text-current" aria-hidden="true"></i>
+      <app-icon name="backward-step" class="text-current"></app-icon>
     </button>
 
     @if (!isPlaying) {
       <div [class.tooltip]="playTooltip" class="tooltip-open tooltip-bottom tooltip-secondary" data-tip="Pulsa para reproducir">
         <button class="play btn btn-ghost text-primary hover:text-secondary transition-colors"
           aria-label="Reproducir" (click)="playTape(); hiddePlayTooltip();">
-          <i class="fa-solid fa-play text-current" aria-hidden="true"></i>
+          <app-icon name="play" class="text-current"></app-icon>
         </button>
       </div>
     } @else {
     <button class="pause btn btn-ghost text-primary hover:text-secondary transition-colors"
       aria-label="Pausar" (click)="pauseBtn()">
-      <i class="fa-solid fa-pause text-current" aria-hidden="true"></i>
+      <app-icon name="pause" class="text-current"></app-icon>
     </button>
     }
 
     <div [class.tooltip]="otherTooltip" class="tooltip-open tooltip-bottom tooltip-secondary" data-tip="Hay más demos!">
       <button class="next btn btn-ghost text-primary hover:text-secondary transition-colors"
         aria-label="Siguiente pista" (click)="nextBtn(); hiddeOtherTooltip()">
-        <i class="fa-solid fa-forward-step text-current" aria-hidden="true"></i>
+        <app-icon name="forward-step" class="text-current"></app-icon>
       </button>
     </div>
 
     <div class="flex justify-between items-center gap-2">
       <div class="w-10">
         @if ((audio?.volume ?? volumen) > 0.5) {
-          <i class="fa-solid fa-volume-high text-accent" aria-hidden="true"></i>
+          <app-icon name="volume-high" class="text-accent"></app-icon>
         } @else if ((audio?.volume ?? volumen) > 0 && (audio?.volume ?? volumen) <= 0.7) {
-          <i class="fa-solid fa-volume-low text-accent" aria-hidden="true"></i>
+          <app-icon name="volume-low" class="text-accent"></app-icon>
         } @else {
-          <i class="fa-solid fa-volume-off text-accent" aria-hidden="true"></i>
+          <app-icon name="volume-off" class="text-accent"></app-icon>
         }
       </div>
 

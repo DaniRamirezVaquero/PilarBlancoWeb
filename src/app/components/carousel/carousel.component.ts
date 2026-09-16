@@ -1,5 +1,6 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef, Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { IconComponent } from '../icon/icon.component';
 
 interface CarouselImage {
   src: string;
@@ -25,7 +26,7 @@ const SLIDE_MS = 500;
 
 @Component({
     selector: 'app-carousel',
-    imports: [CommonModule],
+    imports: [CommonModule, IconComponent],
     templateUrl: './carousel.component.html',
     styleUrl: './carousel.component.css'
 })

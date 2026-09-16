@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { DecimalPipe, isPlatformBrowser } from '@angular/common';
+import { IconComponent } from '../icon/icon.component';
 
 interface Tape {
   tapeName: string;
@@ -8,7 +9,7 @@ interface Tape {
 
 @Component({
     selector: 'app-cassette',
-    imports: [DecimalPipe],
+    imports: [DecimalPipe, IconComponent],
     templateUrl: './cassette.component.html',
     styleUrls: ['./cassette.component.css']
 })

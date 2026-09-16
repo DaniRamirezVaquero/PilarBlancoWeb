@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
     selector: 'app-socials',
-    imports: [],
+    imports: [IconComponent],
     templateUrl: './socials.component.html',
     styleUrl: './socials.component.css'
 })
