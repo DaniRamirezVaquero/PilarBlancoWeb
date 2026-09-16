@@ -1,5 +1,6 @@
 import { Component, Input, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { IconComponent } from '../icon/icon.component';
 
 /**
  * Facade ligero para vídeos de Vimeo: solo pinta un póster estático (miniatura)
@@ -10,7 +11,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-vimeo-facade',
   standalone: true,
-  imports: [],
+  imports: [IconComponent],
   templateUrl: './vimeo-facade.component.html',
   styleUrl: './vimeo-facade.component.css'
 })

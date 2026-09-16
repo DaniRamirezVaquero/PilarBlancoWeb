@@ -38,10 +38,10 @@ rect {
 }
 
 
-i {
+app-icon {
   font-size: 28px;
 }
 
-i.fa-music {
+app-icon.music {
   font-size: 15px;
 }

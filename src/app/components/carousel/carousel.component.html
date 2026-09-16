@@ -39,9 +39,9 @@
   <button type="button" class="absolute -bottom-[60px]" (click)="toggleAutoplay()"
     [attr.aria-label]="isPlaying ? 'Pausar book fotográfico' : 'Reproducir book fotográfico'">
     @if (isPlaying) {
-    <i class='fa-solid fa-pause fa-2xl text-accent hover:brightness-90'></i>
+    <app-icon name="pause" size="2xl" class="text-accent hover:brightness-90"></app-icon>
     } @else {
-    <i class='fa-solid fa-play fa-2xl text-accent hover:brightness-90'></i>
+    <app-icon name="play" size="2xl" class="text-accent hover:brightness-90"></app-icon>
     }
   </button>
 </div>

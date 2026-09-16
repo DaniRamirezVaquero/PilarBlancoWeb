@@ -1,6 +1,7 @@
 <div class="flex flex-wrap py-0 px-1">
   <div *ngFor="let group of imageGroups; trackBy: trackByIndex" class="flex-[100%] max-w-[100%] sm:flex-[50%] sm:max-w-[50%] md:flex-[25%] md:max-w-[25%] py-0 px-1">
-    <div *ngFor="let image of group; trackBy: trackByIndex" class="relative group" (mousemove)="updateTitlePosition($event)">
+    <div *ngFor="let image of group; trackBy: trackByIndex" class="relative group"
+      (mouseenter)="onTitleEnter($event)" (mousemove)="updateTitlePosition($event)" (mouseleave)="onTitleLeave()">
       <img
         class="collage-img relative z-0 mt-2 align-middle w-full transition-transform duration-300 ease-in-out group-hover:scale-150 group-hover:z-10 rounded"
         [src]="image" [alt]="getAltText(image)" loading="lazy" decoding="async" width="600" height="800">

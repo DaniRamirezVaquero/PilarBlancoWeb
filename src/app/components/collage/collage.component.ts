@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, Inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 
 @Component({
     selector: 'app-collage',
@@ -7,7 +7,7 @@ import { Component, Inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
     templateUrl: './collage.component.html',
     styleUrl: './collage.component.css'
 })
-export class CollageComponent implements OnInit {
+export class CollageComponent implements OnInit, OnDestroy {
 
   // Los ficheros "-900" son versiones recomprimidas/redimensionadas (~900px de
   // ancho) de los originales: la rejilla nunca muestra más de un 25% del
@@ -95,6 +95,8 @@ export class CollageComponent implements OnInit {
   targetPosition = { x: 0, y: 0 };
   lerpSpeed = 0.1;
 
+  private rafId: number | null = null;
+
   constructor(
     private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platformId: object,
@@ -102,9 +104,19 @@ export class CollageComponent implements OnInit {
 
   ngOnInit(): void {
     this.imageGroups = this.chunkArray(this.images, 9);
-    if (isPlatformBrowser(this.platformId)) {
-      this.ngZone.runOutsideAngular(() => this.animateTitle());
-    }
+  }
+
+  ngOnDestroy(): void {
+    this.stopTitleFollow();
+  }
+
+  onTitleEnter(event: MouseEvent): void {
+    this.updateTitlePosition(event);
+    this.startTitleFollow();
+  }
+
+  onTitleLeave(): void {
+    this.stopTitleFollow();
   }
 
   updateTitlePosition(event: MouseEvent) {
@@ -113,10 +125,24 @@ export class CollageComponent implements OnInit {
     this.targetPosition.y = event.clientY - rect.top + 10;  // Ajuste para evitar que el título se superponga al cursor
   }
 
-  animateTitle() {
+  private startTitleFollow(): void {
+    if (!isPlatformBrowser(this.platformId) || this.rafId !== null) {
+      return;
+    }
+    this.ngZone.runOutsideAngular(() => this.animateTitle());
+  }
+
+  private stopTitleFollow(): void {
+    if (this.rafId !== null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+  }
+
+  private animateTitle() {
     this.titlePosition.x += (this.targetPosition.x - this.titlePosition.x) * this.lerpSpeed;
     this.titlePosition.y += (this.targetPosition.y - this.titlePosition.y) * this.lerpSpeed;
-    requestAnimationFrame(() => this.animateTitle());
+    this.rafId = requestAnimationFrame(() => this.animateTitle());
   }
 
 
