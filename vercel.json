@@ -10,24 +10,6 @@
       "source": "/",
       "destination": "/home",
       "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.pilarblanco.es" }],
-      "destination": "https://pilarblanco.es/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "pilarblanco.com" }],
-      "destination": "https://pilarblanco.es/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.pilarblanco.com" }],
-      "destination": "https://pilarblanco.es/:path*",
-      "permanent": true
     }
   ],
   "headers": [
