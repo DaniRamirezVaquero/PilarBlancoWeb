@@ -1,0 +1,6 @@
+.collage-img {
+  /* Evita layout/paint de las fotos fuera de pantalla; solo hay 35 y la
+     mayoría no son visibles al cargar la página. */
+  content-visibility: auto;
+  contain-intrinsic-size: 600px 800px;
+}

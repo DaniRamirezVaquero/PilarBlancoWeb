@@ -1,51 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostBinding, inject } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { SideNavigationComponent } from './components/side-navigation/side-navigation.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { CaptchaComponent } from './components/captcha/captcha.component';
-import { PerformanceService } from './services/performance.service';
+import { SeoService } from './seo/seo.service';
+import { HeroThemeService } from './services/hero-theme.service';
+import { filter } from 'rxjs';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    HeaderComponent,
-    SideNavigationComponent,
-    FooterComponent,
-    CaptchaComponent
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    imports: [
+        RouterOutlet,
+        HeaderComponent,
+        SideNavigationComponent,
+        FooterComponent
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
   title = 'PilarBlancoWeb';
 
-  showFooter: boolean = true;
-  showCaptcha: boolean = false;
+  @HostBinding('class.app-ready') appReady = typeof requestAnimationFrame === 'undefined';
 
-  constructor(
-    private router: Router,
-    private performanceService: PerformanceService
-  ) {
-    router.events.subscribe((val) => {
-      if (val instanceof NavigationEnd) {
-        this.updateVisibility(val.url);
-      }
-    });
+  showFooter: boolean = true;
+
+  private readonly seo = inject(SeoService);
+  /** Arranca el temporizador de cover/tema; el commit visual solo ocurre en /home. */
+  private readonly _heroTheme = inject(HeroThemeService);
+
+  constructor(private router: Router) {
+    this.seo.updateForUrl(this.router.url);
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        this.updateVisibility(event.urlAfterRedirects);
+        this.seo.updateForUrl(event.urlAfterRedirects);
+      });
   }
 
-  ngOnInit(): void {
-    // Inicializar servicios de performance
-    this.performanceService.measurePageLoadTime();
-    this.performanceService.preloadCriticalResources();
-    this.performanceService.optimizeImages();
-    this.performanceService.checkWebVitals();
+  ngAfterViewInit(): void {
+    if (this.appReady || typeof requestAnimationFrame === 'undefined') {
+      return;
+    }
+    requestAnimationFrame(() => {
+      this.appReady = true;
+    });
   }
 
   private updateVisibility(url: string): void {
     this.showFooter = url !== '/home';
-    this.showCaptcha = url === '/contact';
   }
 }

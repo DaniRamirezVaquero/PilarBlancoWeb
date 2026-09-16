@@ -1,4 +1,0 @@
-/* Ocultar la insignia de reCAPTCHA */
-::ng-deep .grecaptcha-badge {
-  visibility: hidden !important;
-}

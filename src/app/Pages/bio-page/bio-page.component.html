@@ -1,8 +1,81 @@
 <div
-  class="bg-gradient-to-tr from-zinc-400 via-neutral-500 to-neutral-600 w-screen py-24 lg:py-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden flex flex-col gap-6 md:gap-8 xl:gap-10 items-center">
-  <div class="w-full">
-    <h2 class="lato-regular text-xl sm:text-2xl md:text-4xl text-white">Sobre mí</h2>
-    <div class="w-full h-0.5 rounded-full bg-orange-500 mt-2"></div>
+  class="bg-page w-screen py-24 lg:py-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden flex flex-col gap-6 md:gap-8 xl:gap-10 items-center">
+  <div class="w-full animate-[fade-in-up_1s_ease-out_backwards]">
+    <h1 class="lato-regular text-xl sm:text-2xl md:text-4xl text-base-content">Sobre mí</h1>
+    <div class="w-full h-0.5 rounded-full bg-accent transition-colors duration-[1200ms] mt-2"></div>
   </div>
-<img src="assets/Biography.jpg" alt="biografía" class="max-w-4xl w-full shadow-md">
+  <article
+    class="max-w-4xl w-full shadow-md grid grid-cols-1 lg:grid-cols-2 overflow-hidden animate-[fade-in_0.5s_ease-out_backwards]">
+    <!-- Panel izquierdo: entra deslizándose desde la izquierda, como si se colocara la primera hoja -->
+    <div
+      class="bg-white text-neutral-900 p-8 sm:p-10 lg:p-12 flex flex-col gap-6 animate-[slide-in-left_0.6s_ease-out_200ms_backwards]">
+      <h2
+        class="playfair-display-medium text-5xl sm:text-6xl lg:text-7xl leading-none text-center animate-[fade-in-up_1s_ease-out_500ms_backwards]">
+        Pilar</h2>
+      <img src="assets/sobre-mi-1-1430.webp"
+        srcset="assets/sobre-mi-1-700.webp 700w, assets/sobre-mi-1-1430.webp 1430w"
+        sizes="(min-width: 1024px) 380px, (min-width: 640px) 600px, 100vw"
+        width="1430" height="1445"
+        class="w-full aspect-[3/2] object-cover object-top shadow-sm animate-[fade-in-up_1s_ease-out_650ms_backwards]"
+        fetchpriority="high" decoding="async"
+        alt="Pilar Blanco recibiendo maquillaje en el set de un rodaje">
+      <div class="animate-[fade-in-up_1s_ease-out_800ms_backwards]">
+        <h3 class="lato-bold text-lg sm:text-xl mb-3 text-center">Sobre mí</h3>
+        <p class="lato-regular text-sm sm:text-base leading-relaxed">
+          Inicié mi carrera profesional a finales de los años 80 en Metronomoteatro, un laboratorio de
+          investigación escénica, donde formé parte del elenco estable y participé en la creación de
+          montajes con un lenguaje distintivo, como <em>Repris</em>, que ganó el Premio Nacional de
+          Teatro de Vanguardia en 1991, y <em>Memoria</em>. También estuve involucrada en
+          <em>El destrozo de mi cuerpo</em>. Durante esta etapa, realicé mi primera incursión en
+          televisión en la serie <em>Plaza alta</em> y más tarde en <em>Arrayán</em>. Además, he
+          trabajado como locutora y redactora en el programa <em>A vivir que son dos días</em> de la
+          Cadena Ser Costa del Sol.
+        </p>
+        <p class="lato-regular text-sm sm:text-base leading-relaxed mt-4">
+          Formadora también de jóvenes ante la cámara, ha sido la combinación de mi formación en
+          dramática creativa y juego dramático con mi experiencia ante la cámara la que me ha
+          permitido desarrollar una sólida labor docente dirigida a niñas, niños y jóvenes, basada en
+          un método práctico, lúdico y respetuoso con los procesos individuales.
+        </p>
+      </div>
+    </div>
+
+    <!-- Panel derecho: entra deslizándose desde la derecha justo después del izquierdo -->
+    <div
+      class="bg-accent transition-colors duration-[1200ms] text-white p-8 sm:p-10 lg:p-12 flex flex-col gap-6 animate-[slide-in-right_0.6s_ease-out_300ms_backwards]">
+      <h2
+        class="playfair-display-medium text-5xl sm:text-6xl lg:text-7xl leading-none text-center animate-[fade-in-up_1s_ease-out_600ms_backwards]">
+        Blanco</h2>
+      <div class="animate-[fade-in-up_1s_ease-out_750ms_backwards]">
+        <h3 class="lato-bold text-lg sm:text-xl mb-3 text-center">Pasan Cosas...</h3>
+        <p class="lato-regular text-sm sm:text-base leading-relaxed">
+          Arrancó el año en Madrid con el estreno del largo <strong>Quién llorará por mí</strong>,
+          dirigido por Paco Izquierdo y ya en cines. En febrero llegó <strong>Entre bestias</strong> de
+          Samcreta, y en edición avanzan <strong>Cuarzo</strong> de Daniel Ortiz y
+          <strong>El culpable, redención</strong> de Jorge Porras.
+        </p>
+        <p class="lato-regular text-sm sm:text-base leading-relaxed mt-4">
+          Varios cortometrajes que he protagonizado están disponibles en abierto. Te invito a
+          descubrir piezas como <strong>Violencias Periféricas</strong> de Davinia Burgos,
+          <strong>Aquella fotografía</strong> de Sergio Barba y <strong>Gloria y Candela</strong> de
+          Alicia Arwgar.
+        </p>
+        <p class="lato-regular text-sm sm:text-base leading-relaxed mt-4">
+          Quizás te pueda interesar ver mi aparición en <strong>Rey gitano</strong> de Juanma Bajo
+          Ulloa como la Infanta Cristina, o disfrutar de Por las nubes dirigida por Fernando Colomo.
+        </p>
+        <p class="lato-regular text-sm sm:text-base leading-relaxed mt-4">
+          En publicidad, creo que merece la pena destacar los videos de la campaña
+          <strong>Espacio Alzheimer Andalucía</strong> por su formato de docudrama.
+        </p>
+      </div>
+      <img src="assets/sobre-mi-2-1430.webp"
+        srcset="assets/sobre-mi-2-700.webp 700w, assets/sobre-mi-2-1430.webp 1430w"
+        sizes="(min-width: 1024px) 260px, (min-width: 640px) 380px, 60vw"
+        width="1430" height="1490"
+        loading="lazy" decoding="async"
+        class="w-2/3 sm:w-3/5 ml-auto mt-auto aspect-square object-cover object-top shadow-sm animate-[fade-in-up_1s_ease-out_950ms_backwards]"
+        alt="Retrato de Pilar Blanco sonriendo">
+    </div>
+  </article>
 </div>

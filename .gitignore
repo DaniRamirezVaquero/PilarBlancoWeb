@@ -8,6 +8,7 @@
 
 # Node
 /node_modules
+/.tools/
 npm-debug.log
 yarn-error.log
 
@@ -30,6 +31,8 @@ yarn-error.log
 
 # Miscellaneous
 /.angular/cache
+/lighthouse-reports
+.impeccable/
 .sass-cache/
 /connect.lock
 /coverage
@@ -37,11 +40,9 @@ yarn-error.log
 testem.log
 /typings
 .env
+Material Nuevo
 
 
 # System files
 .DS_Store
 Thumbs.db
-
-# Backend
-/backend/node_modules

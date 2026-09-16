@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { DecimalPipe, isPlatformBrowser } from '@angular/common';
 
 interface Tape {
   tapeName: string;
@@ -6,42 +7,39 @@ interface Tape {
 }
 
 @Component({
-  selector: 'app-cassette',
-  standalone: true,
-  imports: [],
-  templateUrl: './cassette.component.html',
-  styleUrls: ['./cassette.component.css']
+    selector: 'app-cassette',
+    imports: [DecimalPipe],
+    templateUrl: './cassette.component.html',
+    styleUrls: ['./cassette.component.css']
 })
 export class CassetteComponent implements OnInit, OnDestroy {
 
   tapes: Tape[] = [
     {
       tapeName: 'Demo Publicidad',
-      url: "assets/tapes/DemoPubli.mp3"
+      url: "assets/tapes/Demo2.mp3"
     },
     {
       tapeName: "Demo 1",
       url: "assets/tapes/Demo1.mp3"
     },
     {
-      tapeName: "Demo 2",
-      url: "assets/tapes/Demo2.mp3"
-    },
-    {
       tapeName: "Demo 3",
       url: "assets/tapes/Demo3.mp3"
+    },
+    {
+      tapeName: "Demo 4",
+      url: "assets/tapes/Demo4.mp3"
     }
   ];
 
-  audio: HTMLAudioElement;
-  previousButton: HTMLElement | null;
-  playButton: HTMLElement | null;
-  pauseButton: HTMLElement | null;
-  nextButton: HTMLElement | null;
-  firstG: HTMLElement | null;
-  secondG: HTMLElement | null;
+  /**
+   * El audio no se instancia hasta que el usuario pulsa "play" (ver playTape()):
+   * crearlo en el constructor hacía que el navegador empezara a descargar el
+   * MP3 (~450 KB) solo por entrar en /voice, aunque nunca se reprodujera.
+   */
+  audio: HTMLAudioElement | null = null;
   tape: string | null = this.tapes[0].tapeName;
-  popUp: HTMLElement | null;
   currentTapeIndex: number = 0;
 
   spinning: boolean = false;
@@ -49,54 +47,56 @@ export class CassetteComponent implements OnInit, OnDestroy {
   intervalId: any;
   volumen: number = 0.4;
   wasPlaying: boolean = false;
+  isPlaying: boolean = false;
 
   playTooltip: boolean = true;
   otherTooltip: boolean = false;
 
-  constructor() {
-    this.audio = new Audio(this.tapes[0].url);
-    this.audio.volume = this.volumen;
-    this.previousButton = document.querySelector('.previous');
-    this.playButton = document.querySelector('.play');
-    this.pauseButton = document.querySelector('.pause');
-    this.nextButton = document.querySelector('.next');
-    this.firstG = document.querySelector(".first-g");
-    this.secondG = document.querySelector(".second-g");
-    this.popUp = document.querySelector('.alert');
-  }
+  constructor(@Inject(PLATFORM_ID) private platformId: object) { }
 
-  ngOnInit() {
-    this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
-    this.audio.addEventListener('ended', this.onTrackEnded.bind(this));
+  ngOnInit() { }
+
+  /** Crea (si falta) el elemento Audio de la pista actual y lo cablea. */
+  private ensureAudio(): HTMLAudioElement | null {
+    if (!isPlatformBrowser(this.platformId)) {
+      return null;
+    }
+    if (!this.audio) {
+      this.audio = new Audio();
+      this.audio.preload = 'none';
+      this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
+    }
+    this.audio.volume = this.volumen;
+    return this.audio;
   }
 
   ngOnDestroy() {
-    this.audio.removeEventListener('timeupdate', this.updateProgress.bind(this));
-    this.audio.removeEventListener('ended', this.onTrackEnded.bind(this));
+    this.audio?.removeEventListener('timeupdate', this.updateProgress.bind(this));
     clearInterval(this.intervalId);
   }
 
-  onTrackEnded() {
-    this.nextTape();
-    this.playTape();
-  }
-
   playTape(): void {
-    this.audio.play();
+    const audio = this.ensureAudio();
+    if (!audio) {
+      return;
+    }
+    if (!audio.src) {
+      audio.src = this.tapes[this.currentTapeIndex].url;
+    }
+    audio.loop = true;
+    audio.play();
+    this.isPlaying = true;
     this.spin();
-    this.audio.loop = false;
-    this.intervalId = setInterval(() => this.updateProgress(), 500);
+    this.intervalId = setInterval(() => this.updateProgress(), 1000);
   }
 
 
   hiddePlayTooltip(): void {
-    if (this.playTooltip) {
-      this.playTooltip = false;
+    this.playTooltip = false;
 
-      setTimeout(() => {
-        this.showOtherTooltip();
-      }, 4000)
-    }
+    setTimeout(() => {
+      this.showOtherTooltip();
+    },3000)
   }
 
   showOtherTooltip(): void {
@@ -108,7 +108,8 @@ export class CassetteComponent implements OnInit, OnDestroy {
   }
 
   pauseBtn(): void {
-    this.audio.pause();
+    this.audio?.pause();
+    this.isPlaying = false;
     this.stopSpin();
     clearInterval(this.intervalId);
   }
@@ -149,53 +150,50 @@ export class CassetteComponent implements OnInit, OnDestroy {
 
   nextTape(): number {
     let newTapeIndex = this.currentTapeIndex + 1;
-    this.wasPlaying = !this.audio.paused;
     if (newTapeIndex >= this.tapes.length) {
       newTapeIndex = 0; // Volver a la primera pista
     }
-    if (this.tape) {
-      this.tape = this.tapes[newTapeIndex].tapeName;
-    }
-    this.pauseBtn();
-    this.audio = new Audio(this.tapes[newTapeIndex].url);
-    this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
-    this.audio.addEventListener('ended', this.onTrackEnded.bind(this)); // Agregar evento ended
-    this.audio.volume = this.volumen;
-
-    if (this.wasPlaying) {
-      this.playTape();
-    }
-    return this.currentTapeIndex = newTapeIndex;
+    this.switchTape(newTapeIndex);
+    return this.currentTapeIndex;
   }
 
   previousTape(): number {
     let newTapeIndex = this.currentTapeIndex - 1;
-    this.wasPlaying = !this.audio.paused;
     if (newTapeIndex < 0) {
       newTapeIndex = this.tapes.length - 1; // Volver a la última pista
     }
+    this.switchTape(newTapeIndex);
+    return this.currentTapeIndex;
+  }
+
+  /** Cambia de pista sin descargar audio si el usuario nunca ha pulsado play. */
+  private switchTape(newTapeIndex: number): void {
+    this.wasPlaying = this.isPlaying;
     if (this.tape) {
       this.tape = this.tapes[newTapeIndex].tapeName;
     }
     this.pauseBtn();
-    this.audio = new Audio(this.tapes[newTapeIndex].url);
-    this.audio.addEventListener('timeupdate', this.updateProgress.bind(this));
-    this.audio.addEventListener('ended', this.onTrackEnded.bind(this)); // Agregar evento ended
-    this.audio.volume = this.volumen;
+    this.currentTapeIndex = newTapeIndex;
+    if (this.audio) {
+      // Ya existía el elemento Audio (se había reproducido algo): reutilizarlo.
+      this.audio.src = this.tapes[newTapeIndex].url;
+    }
 
     if (this.wasPlaying) {
       this.playTape();
     }
-    return this.currentTapeIndex = newTapeIndex;
   }
 
   updateProgress(): void {
-    if (this.audio.duration) {
+    if (this.audio?.duration) {
       this.progress = (this.audio.currentTime / this.audio.duration) * 100;
     }
   }
 
   onProgressChange(event: Event): void {
+    if (!this.audio) {
+      return;
+    }
     const input = event.target as HTMLInputElement;
     const newTime = (input.valueAsNumber / 100) * this.audio.duration;
     this.audio.currentTime = newTime;
@@ -203,7 +201,9 @@ export class CassetteComponent implements OnInit, OnDestroy {
 
   onVolumeChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.audio.volume = input.valueAsNumber;
+    if (this.audio) {
+      this.audio.volume = input.valueAsNumber;
+    }
     this.volumen = input.valueAsNumber;
   }
 }

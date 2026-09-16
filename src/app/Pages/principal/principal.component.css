@@ -1,0 +1,27 @@
+.hero-container {
+  background-color: #5c5c5c;
+}
+
+.hero-cover {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero-cover.is-active {
+  opacity: 1;
+}
+
+.hero-covers-animated .hero-cover {
+  transition: opacity 2s ease-in-out;
+}
+
+.dynamic-text-glow {
+  background-image: linear-gradient(
+    90deg,
+    transparent 10%,
+    oklch(var(--p) / 0.8) 45%,
+    oklch(var(--p)) 50%,
+    oklch(var(--p) / 0.8) 55%,
+    transparent 90%
+  );
+}

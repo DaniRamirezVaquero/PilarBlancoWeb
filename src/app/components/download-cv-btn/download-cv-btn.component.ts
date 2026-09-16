@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-download-cv-btn',
-  standalone: true,
-  imports: [],
-  templateUrl: './download-cv-btn.component.html',
-  styleUrl: './download-cv-btn.component.css'
+    selector: 'app-download-cv-btn',
+    imports: [],
+    templateUrl: './download-cv-btn.component.html',
+    styleUrl: './download-cv-btn.component.css'
 })
 export class DownloadCvBtnComponent {
 

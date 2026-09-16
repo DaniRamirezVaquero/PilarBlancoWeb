@@ -1,0 +1,24 @@
+<div class="relative pb-[56.25%] h-0 overflow-hidden bg-zinc-900">
+  @if (!loaded()) {
+    <button type="button" class="group absolute inset-0 z-10 h-full w-full cursor-pointer"
+      [attr.aria-label]="'Reproducir ' + title" (click)="load()">
+      <img [src]="poster" alt="" class="absolute inset-0 h-full w-full object-cover"
+        [attr.loading]="priority ? 'eager' : 'lazy'"
+        [attr.fetchpriority]="priority ? 'high' : 'low'"
+        decoding="async" />
+      <span class="absolute inset-0 bg-black/30 transition-colors duration-300 group-hover:bg-black/10"></span>
+      <span class="absolute inset-0 flex items-center justify-center">
+        <span class="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 shadow-xl
+                     transition-transform duration-300 group-hover:scale-110">
+          <i class="fa-solid fa-play text-2xl text-zinc-900" aria-hidden="true"></i>
+        </span>
+      </span>
+    </button>
+  } @else {
+    <iframe [title]="title" [src]="safeUrl"
+      class="absolute top-0 left-0 z-10 h-full w-full" frameborder="0"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+      allowfullscreen></iframe>
+  }
+</div>

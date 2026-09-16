@@ -1,7 +1,7 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
-import { environment } from './environments/environment.development';
+import { environment } from './environments/environment';
 import { enableProdMode } from '@angular/core';
 
 bootstrapApplication(AppComponent, appConfig)
@@ -9,7 +9,7 @@ bootstrapApplication(AppComponent, appConfig)
 
 if (environment.production) {
   enableProdMode();
-  if (window) {
+  if (typeof window !== 'undefined') {
     window.console.log = function () { };
   }
 }

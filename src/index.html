@@ -1,79 +1,89 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="mytheme">
 
 <head>
   <meta charset="utf-8">
-  <title>Pilar Blanco - Actriz Profesional | Portfolio Artístico</title>
+  <title>Pilar Blanco | Actriz</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Portfolio de Pilar Blanco, actriz profesional especializada en cine, televisión, teatro y doblaje. Descubre su trayectoria, galería de fotos y reel de actuación.">
-  <meta name="keywords" content="Pilar Blanco, actriz, cine, televisión, teatro, doblaje, locución, España, portfolio, reel, casting">
-  <meta name="author" content="Pilar Blanco">
+  <meta name="description"
+    content="Pilar Blanco, actriz de cine, televisión, teatro y doblaje. Reel, galería, currículum y contacto para castings y agencias.">
   <meta name="robots" content="index, follow">
-  <meta name="language" content="Spanish">
-  <meta name="geo.region" content="ES">
-  <meta name="geo.placename" content="España">
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://pilarblanco.com/">
-  <meta property="og:title" content="Pilar Blanco - Actriz Profesional | Portfolio Artístico">
-  <meta property="og:description" content="Portfolio de Pilar Blanco, actriz profesional especializada en cine, televisión, teatro y doblaje. Descubre su trayectoria, galería de fotos y reel de actuación.">
-  <meta property="og:image" content="https://pilarblanco.com/assets/images/pilar-blanco-og.jpg">
-  <meta property="og:site_name" content="Pilar Blanco - Actriz">
+  <meta name="author" content="Pilar Blanco">
+  <link rel="canonical" href="https://pilarblanco.es/home">
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Pilar Blanco">
   <meta property="og:locale" content="es_ES">
-
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://pilarblanco.com/">
-  <meta property="twitter:title" content="Pilar Blanco - Actriz Profesional | Portfolio Artístico">
-  <meta property="twitter:description" content="Portfolio de Pilar Blanco, actriz profesional especializada en cine, televisión, teatro y doblaje.">
-  <meta property="twitter:image" content="https://pilarblanco.com/assets/images/pilar-blanco-og.jpg">
-
-  <!-- Structured Data JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Pilar Blanco",
-    "jobTitle": "Actriz",
-    "description": "Actriz profesional especializada en cine, televisión, teatro y doblaje",
-    "url": "https://pilarblanco.com",
-    "image": "https://pilarblanco.com/assets/images/pilar-blanco-portrait.jpg",
-    "sameAs": [
-      "https://www.instagram.com/pilarblanco.actriz/",
-      "https://vimeo.com/user18148957"
-    ],
-    "knowsAbout": ["Actuación", "Doblaje", "Locución", "Teatro", "Cine", "Televisión"],
-    "alumniOf": {
-      "@type": "Organization",
-      "name": "Escuela de Interpretación"
-    },
-    "nationality": {
-      "@type": "Country",
-      "name": "España"
-    },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "professional",
-      "availableLanguage": "Spanish"
-    }
-  }
-  </script>
-
+  <meta property="og:title" content="Pilar Blanco | Actriz">
+  <meta property="og:description"
+    content="Pilar Blanco, actriz de cine, televisión, teatro y doblaje. Reel, galería, currículum y contacto para castings y agencias.">
+  <meta property="og:url" content="https://pilarblanco.es/home">
+  <meta property="og:image" content="https://pilarblanco.es/assets/images/og-pilar-blanco.webp">
+  <meta property="og:image:alt" content="Retrato de Pilar Blanco, actriz">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pilar Blanco | Actriz">
+  <meta name="twitter:description"
+    content="Pilar Blanco, actriz de cine, televisión, teatro y doblaje. Reel, galería, currículum y contacto para castings y agencias.">
+  <meta name="twitter:image" content="https://pilarblanco.es/assets/images/og-pilar-blanco.webp">
+  <meta name="twitter:image:alt" content="Retrato de Pilar Blanco, actriz">
   <link rel="icon" type="image/x-icon" href="./favicon.ico">
-  <link rel="canonical" href="https://pilarblanco.com/">
+  <style>
+    html, body {
+      margin: 0;
+      background-color: #5c5c5c;
+    }
+    app-root {
+      display: block;
+      min-height: 100dvh;
+      opacity: 0;
+    }
+    app-root.app-ready {
+      opacity: 1;
+      transition: opacity 0.35s ease;
+    }
+    @media (scripting: none) {
+      app-root { opacity: 1; }
+    }
+  </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Playfair+Display:wght@500;600&display=swap"
     rel="stylesheet">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/4d9bce4b44.js" crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/2ed51bcb87.js" crossorigin="anonymous"></script>
-  <script src="https://www.google.com/recaptcha/api.js?render=6LevbScqAAAAAAxWX_syCEhEXzudSqMPtqfcmHb0"></script>
+  <!-- Un único set de iconos (Font Awesome Free 6, solid+brands) cargado sin bloquear el render. -->
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"
+        media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css">
+  </noscript>
+  <script>
+    (function () {
+      var covers = ['fondo2', 'portada'];
+      var themes = { fondo2: 'mytheme', portada: 'mytheme-portada' };
+      var index = Math.floor(Date.now() / (30 * 60 * 1000)) % covers.length;
+      document.documentElement.setAttribute('data-theme', themes[covers[index]]);
+
+      // Solo /home pinta el hero: en cualquier otra ruta no precargamos nada.
+      if (location.pathname !== '/' && location.pathname !== '/home') {
+        return;
+      }
+      var key = covers[index];
+      var link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.type = 'image/webp';
+      link.href = 'assets/images/hero/' + key + '-1920.webp';
+      link.imageSrcset = [
+        'assets/images/hero/' + key + '-960.webp 960w',
+        'assets/images/hero/' + key + '-1920.webp 1920w',
+        'assets/images/hero/' + key + '-3200.webp 3200w'
+      ].join(', ');
+      link.imageSizes = '100vw';
+      document.head.appendChild(link);
+    })();
+  </script>
 </head>
 
 <body class="overflow-x-hidden">

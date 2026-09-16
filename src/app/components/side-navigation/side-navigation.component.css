@@ -10,7 +10,7 @@ aside {
 /* Mobile - fondo opaco neutral */
 @media (max-width: 768px) {
   aside {
-    background: #e5e7eb;
+    background: oklch(var(--n));
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     box-shadow: none;
@@ -28,7 +28,7 @@ aside {
 
 /* Estilo para el enlace activo con línea vertical */
 .active-nav-link {
-  @apply text-accent font-bold drop-shadow-lg relative;
+  @apply text-accent font-bold drop-shadow-lg relative transition-colors duration-[1200ms];
 }
 
 .active-nav-link::before {

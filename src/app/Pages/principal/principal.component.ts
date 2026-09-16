@@ -1,43 +1,90 @@
-import { Component, inject, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, AfterViewInit, ElementRef, HostListener } from '@angular/core';
 import { PlayBtnComponent } from '../../components/play-btn/play-btn.component';
 import { SideNavService } from '../../services/side-nav.service';
-import { SeoService } from '../../services/seo.service';
+import { HeroThemeService } from '../../services/hero-theme.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-principal',
-  standalone: true,
-  imports: [
-    PlayBtnComponent,
-    CommonModule
-  ],
-  templateUrl: './principal.component.html',
-  styleUrl: './principal.component.css'
+    selector: 'app-principal',
+    imports: [
+        PlayBtnComponent,
+        CommonModule
+    ],
+    templateUrl: './principal.component.html',
+    styleUrl: './principal.component.css'
 })
-export class PrincipalComponent implements OnInit {
+export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   sideNavIsOpen: boolean = false;
   subscription: any;
   showReel: boolean = false;
 
+  readonly heroTheme = inject(HeroThemeService);
+  readonly heroWidths: readonly number[] = [960, 1920, 3200];
+  coversAnimated = false;
+
+  /**
+   * La cubierta inactiva no se descarga en el critical path: se marca como
+   * lista tras un idle callback para no competir por ancho de banda con el
+   * LCP, mucho antes de que la rotación (cada 30 min) la necesite.
+   */
+  secondaryCoverReady = false;
+
+  private idleCallbackId: number | null = null;
+
   constructor(private elementRef: ElementRef) { }
 
   sideNavService = inject(SideNavService);
-  seoService = inject(SeoService);
 
   ngOnInit(): void {
     this.sideNavService.isOpen$.subscribe(isOpen => {
       this.sideNavIsOpen = isOpen;
     });
 
-    // SEO Configuration
-    this.seoService.updatePageSeo({
-      title: 'Pilar Blanco - Actriz Profesional | Portfolio Artístico',
-      description: 'Bienvenido al portfolio de Pilar Blanco, actriz profesional con más de 30 años de experiencia en cine, televisión, teatro y doblaje. Descubre su reel y trayectoria artística.',
-      keywords: 'Pilar Blanco, actriz, cine, televisión, teatro, doblaje, locución, portfolio, reel, España, Metronomoteatro, Ray Gitano, Rabia',
-      ogImage: 'https://pilarblanco.com/assets/images/pilar-blanco-home.jpg',
-      canonicalUrl: 'https://pilarblanco.com/'
+    if (typeof window !== 'undefined') {
+      this.scheduleSecondaryCoverPreload();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (typeof requestAnimationFrame === 'undefined') {
+      return;
+    }
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        this.coversAnimated = true;
+      });
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.idleCallbackId !== null && typeof (window as any).cancelIdleCallback === 'function') {
+      (window as any).cancelIdleCallback(this.idleCallbackId);
+    }
+  }
+
+  /** Devuelve el srcset responsivo (960/1920/3200w) para una cubierta del hero. */
+  coverSrcset(key: string): string {
+    return this.heroWidths
+      .map(width => `assets/images/hero/${key}-${width}.webp ${width}w`)
+      .join(', ');
+  }
+
+  /** Fallback para navegadores sin soporte de srcset. */
+  coverSrc(key: string): string {
+    return `assets/images/hero/${key}-1920.webp`;
+  }
+
+  private scheduleSecondaryCoverPreload(): void {
+    const markReady = () => {
+      this.secondaryCoverReady = true;
+    };
+    const win = window as any;
+    if (typeof win.requestIdleCallback === 'function') {
+      this.idleCallbackId = win.requestIdleCallback(markReady, { timeout: 800 });
+    } else {
+      setTimeout(markReady, 300);
+    }
   }
 
   toggleShowReel() {

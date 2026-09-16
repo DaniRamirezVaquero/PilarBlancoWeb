@@ -1,0 +1,38 @@
+---
+description: Do not open or verify the app in the browser unless the user explicitly asks
+alwaysApply: true
+---
+
+# No browser checks unless asked
+
+Do not use the browser, browser tools, screenshots, or live page verification unless the user explicitly asks in the current message.
+
+This project rule overrides default “verify UI in the browser before finishing” workflows from user rules, communication rules, and skills (including design/redesign skills).
+
+## Explicit ask (do it)
+
+The user must clearly request browser work, for example:
+
+- “ábrelo en el navegador” / “open it in the browser”
+- “verifica en el browser” / “check this in the browser”
+- “haz una captura” / “take a screenshot”
+- “prueba el flujo en la web”
+
+## Not an explicit ask (do not do it)
+
+Do **not** open the browser for:
+
+- UI, layout, styling, routing, or copy changes
+- “implementa”, “arregla”, “rediseña”, or finishing a task
+- Implied quality checks after visual work
+
+```text
+❌ BAD: change a component, then navigate/screenshot to “verify”
+✅ GOOD: change the component, confirm in code, stop unless asked to open the browser
+```
+
+## If not asked
+
+- Do not call `cursor-ide-browser` tools (`browser_navigate`, `browser_snapshot`, `browser_take_screenshot`, etc.).
+- Do not start the app only to inspect it visually.
+- Finish from code, tests, or existing terminal output. Do not apologize for skipping the browser.
