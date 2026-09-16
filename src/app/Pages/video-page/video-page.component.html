@@ -4,8 +4,8 @@
 
     <div class="flex flex-col gap-4 sm:gap-6 md:gap-8">
       <div>
-        <h1 class="lato-regular text-xl sm:text-2xl md:text-4xl text-base-content">Reel 2026</h1>
-        <div class="w-full h-0.5 rounded-full bg-accent transition-colors duration-[1200ms] mt-2"></div>
+        <h1 class="page-title">Reel 2026</h1>
+        <span class="page-title-dash" aria-hidden="true"></span>
       </div>
       <section class="w-full flex justify-center">
         <div class="shadow-md w-full ">
@@ -22,8 +22,7 @@
         aria-label="Videobook Express, reel y escena de Pilar Blanco">
 
         <div *ngFor="let scene of scenes" [hidden]="!scene.visible" class="w-full max-w-[1280px]">
-          <h2 class="lato-regular text-lg sm:text-xl md:text-2xl text-base-content mb-3">{{ scene.projectName }}</h2>
-          <div class="w-full h-0.5 rounded-full bg-accent transition-colors duration-[1200ms] mb-4"></div>
+          <h2 class="section-title mb-4">{{ scene.projectName }}</h2>
           <div class="shadow-md w-full">
             <app-vimeo-facade [videoId]="scene.videoId" [hash]="scene.hash" [poster]="scene.poster" [title]="scene.title" />
           </div>

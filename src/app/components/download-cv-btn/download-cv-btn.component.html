@@ -1,4 +1,11 @@
-<button class="btn btn-sm md:btn-md btn-primary" (click)="downloadCv()">
+<button type="button" (click)="downloadCv()"
+  aria-label="Descargar el currículum de Pilar Blanco en PDF"
+  class="group inline-flex items-center gap-2.5 rounded-full bg-accent px-5 py-2.5
+         lato-bold text-sm tracking-wide text-white shadow-sm
+         transition-[background-color,box-shadow,filter,transform] duration-300
+         hover:brightness-110 hover:shadow-md hover:-translate-y-px
+         focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
   Descargar CV
-  <app-icon name="file-arrow-down" size="lg"></app-icon>
+  <app-icon name="file-arrow-down" size="lg"
+    class="transition-transform duration-300 group-hover:translate-y-0.5"></app-icon>
 </button>

@@ -85,6 +85,43 @@ body {
   font-weight: 700;
 }
 
+/* Cabeceras internas — variante "Guión corto": Playfair de página, Lato de apartado */
+.page-title {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+  font-size: clamp(2rem, 4.2vw, 3.15rem);
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  color: oklch(var(--bc));
+  text-wrap: balance;
+}
+
+.page-title-dash {
+  display: block;
+  width: 3rem;
+  height: 2px;
+  margin-top: 0.85rem;
+  background: oklch(var(--a));
+  transition: background-color 1.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-title-dash {
+    transition: none;
+  }
+}
+
+.section-title {
+  margin: 0;
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+  letter-spacing: 0.05em;
+  color: oklch(var(--bc));
+  text-wrap: balance;
+}
+
 /* Animaciones personalizadas */
 @keyframes fade-in-up {
   from {

@@ -1,21 +1,19 @@
 <div
   class="hero-container relative w-screen h-dvh p-8 md:p-12 flex justify-center lg:items-end sm:justify-start overflow-x-hidden">
 
-  <div class="absolute inset-0 z-0" aria-hidden="true"
-       [class.hero-covers-animated]="coversAnimated">
-    @for (cover of heroTheme.covers; track cover; let i = $index) {
-      @if (i === heroTheme.currentCoverIndex() || secondaryCoverReady) {
-        <img
-          class="hero-cover absolute inset-0 h-full w-full object-cover object-[65%_50%]"
-          [class.is-active]="heroTheme.currentCoverIndex() === i"
-          [src]="coverSrc(cover)"
-          [srcset]="coverSrcset(cover)"
-          sizes="100vw"
-          [attr.fetchpriority]="i === heroTheme.currentCoverIndex() ? 'high' : 'low'"
-          [attr.loading]="i === heroTheme.currentCoverIndex() ? 'eager' : 'lazy'"
-          decoding="async"
-          alt="" />
-      }
+  <div class="absolute inset-0 z-0" aria-hidden="true">
+    @for (cover of [heroTheme.currentCover()]; track cover) {
+      <img
+        class="hero-cover absolute inset-0 h-full w-full object-cover object-[65%_50%]"
+        [class.is-active]="readyCover === cover"
+        (load)="onCoverLoad(cover)"
+        [src]="coverSrc(cover)"
+        [srcset]="coverSrcset(cover)"
+        sizes="100vw"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        alt="" />
     }
   </div>
 
@@ -39,8 +37,8 @@
 
       <!-- Línea decorativa mejorada -->
       <div class="relative my-8">
-        <div class="bg-primary w-full h-1 rounded-full
-                    shadow-lg shadow-primary/30 transition-colors duration-[1200ms]"></div>
+        <div class="bg-accent w-full h-1 rounded-full
+                    shadow-lg shadow-accent/30 transition-colors duration-[1200ms]"></div>
       </div>
 
       <!-- Profesión con estilo elegante -->

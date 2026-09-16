@@ -1,7 +1,7 @@
-import { Component, inject, OnInit, OnDestroy, AfterViewInit, ElementRef, HostListener } from '@angular/core';
+import { Component, inject, OnInit, AfterViewInit, ElementRef, HostListener } from '@angular/core';
 import { PlayBtnComponent } from '../../components/play-btn/play-btn.component';
 import { SideNavService } from '../../services/side-nav.service';
-import { HeroThemeService } from '../../services/hero-theme.service';
+import { HeroCover, HeroThemeService } from '../../services/hero-theme.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
     templateUrl: './principal.component.html',
     styleUrl: './principal.component.css'
 })
-export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PrincipalComponent implements OnInit, AfterViewInit {
 
   sideNavIsOpen: boolean = false;
   subscription: any;
@@ -21,16 +21,7 @@ export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   readonly heroTheme = inject(HeroThemeService);
   readonly heroWidths: readonly number[] = [960, 1920, 3200];
-  coversAnimated = false;
-
-  /**
-   * La cubierta inactiva no se descarga en el critical path: se marca como
-   * lista tras un idle callback para no competir por ancho de banda con el
-   * LCP, mucho antes de que la rotación (cada 30 min) la necesite.
-   */
-  secondaryCoverReady = false;
-
-  private idleCallbackId: number | null = null;
+  readyCover: HeroCover | null = null;
 
   constructor(private elementRef: ElementRef) { }
 
@@ -40,26 +31,15 @@ export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sideNavService.isOpen$.subscribe(isOpen => {
       this.sideNavIsOpen = isOpen;
     });
-
-    if (typeof window !== 'undefined') {
-      this.scheduleSecondaryCoverPreload();
-    }
   }
 
   ngAfterViewInit(): void {
-    if (typeof requestAnimationFrame === 'undefined') {
-      return;
-    }
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        this.coversAnimated = true;
-      });
-    });
+    this.revealIfCached();
   }
 
-  ngOnDestroy(): void {
-    if (this.idleCallbackId !== null && typeof (window as any).cancelIdleCallback === 'function') {
-      (window as any).cancelIdleCallback(this.idleCallbackId);
+  onCoverLoad(cover: HeroCover): void {
+    if (cover === this.heroTheme.currentCover()) {
+      this.readyCover = cover;
     }
   }
 
@@ -75,15 +55,12 @@ export class PrincipalComponent implements OnInit, AfterViewInit, OnDestroy {
     return `assets/images/hero/${key}-1920.webp`;
   }
 
-  private scheduleSecondaryCoverPreload(): void {
-    const markReady = () => {
-      this.secondaryCoverReady = true;
-    };
-    const win = window as any;
-    if (typeof win.requestIdleCallback === 'function') {
-      this.idleCallbackId = win.requestIdleCallback(markReady, { timeout: 800 });
-    } else {
-      setTimeout(markReady, 300);
+  private revealIfCached(): void {
+    const img = this.elementRef.nativeElement.querySelector('img.hero-cover') as HTMLImageElement | null;
+    const cover = this.heroTheme.currentCover();
+    const src = img?.currentSrc || img?.src || '';
+    if (img?.complete && img.naturalWidth > 0 && src.includes(cover)) {
+      this.readyCover = cover;
     }
   }
 

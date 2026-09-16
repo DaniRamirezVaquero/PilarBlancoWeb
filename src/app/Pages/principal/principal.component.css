@@ -5,14 +5,17 @@
 .hero-cover {
   opacity: 0;
   pointer-events: none;
+  transition: opacity 1s ease-out;
 }
 
 .hero-cover.is-active {
   opacity: 1;
 }
 
-.hero-covers-animated .hero-cover {
-  transition: opacity 2s ease-in-out;
+@media (scripting: none) {
+  .hero-cover {
+    opacity: 1;
+  }
 }
 
 .dynamic-text-glow {

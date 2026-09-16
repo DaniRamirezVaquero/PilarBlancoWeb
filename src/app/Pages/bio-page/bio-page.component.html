@@ -1,11 +1,11 @@
 <div
   class="bg-page w-screen py-24 lg:py-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden flex flex-col gap-6 md:gap-8 xl:gap-10 items-center">
   <div class="w-full animate-[fade-in-up_1s_ease-out_backwards]">
-    <h1 class="lato-regular text-xl sm:text-2xl md:text-4xl text-base-content">Sobre mí</h1>
-    <div class="w-full h-0.5 rounded-full bg-accent transition-colors duration-[1200ms] mt-2"></div>
+    <h1 class="page-title">Sobre mí</h1>
+    <span class="page-title-dash" aria-hidden="true"></span>
   </div>
   <article
-    class="max-w-4xl w-full shadow-md grid grid-cols-1 lg:grid-cols-2 overflow-hidden animate-[fade-in_0.5s_ease-out_backwards]">
+    class="w-full shadow-md grid grid-cols-1 lg:grid-cols-2 overflow-hidden animate-[fade-in_0.5s_ease-out_backwards]">
     <!-- Panel izquierdo: entra deslizándose desde la izquierda, como si se colocara la primera hoja -->
     <div
       class="bg-white text-neutral-900 p-8 sm:p-10 lg:p-12 flex flex-col gap-6 animate-[slide-in-left_0.6s_ease-out_200ms_backwards]">
@@ -14,7 +14,7 @@
         Pilar</h2>
       <img src="assets/sobre-mi-1-1430.webp"
         srcset="assets/sobre-mi-1-700.webp 700w, assets/sobre-mi-1-1430.webp 1430w"
-        sizes="(min-width: 1024px) 380px, (min-width: 640px) 600px, 100vw"
+        sizes="(min-width: 1280px) calc((100vw - 32rem) / 2), (min-width: 1024px) calc((100vw - 16rem) / 2), (min-width: 640px) calc(100vw - 8rem), calc(100vw - 4rem)"
         width="1430" height="1445"
         class="w-full aspect-[3/2] object-cover object-top shadow-sm animate-[fade-in-up_1s_ease-out_650ms_backwards]"
         fetchpriority="high" decoding="async"
@@ -71,10 +71,10 @@
       </div>
       <img src="assets/sobre-mi-2-1430.webp"
         srcset="assets/sobre-mi-2-700.webp 700w, assets/sobre-mi-2-1430.webp 1430w"
-        sizes="(min-width: 1024px) 260px, (min-width: 640px) 380px, 60vw"
+        sizes="(min-width: 1280px) calc((100vw - 32rem) * 0.36), (min-width: 1024px) calc((100vw - 16rem) * 0.36), (min-width: 640px) calc((100vw - 8rem) * 0.72), 80vw"
         width="1430" height="1490"
         loading="lazy" decoding="async"
-        class="w-2/3 sm:w-3/5 ml-auto mt-auto aspect-square object-cover object-top shadow-sm animate-[fade-in-up_1s_ease-out_950ms_backwards]"
+        class="w-4/5 sm:w-[72%] ml-auto mt-auto aspect-square object-cover object-top shadow-sm animate-[fade-in-up_1s_ease-out_950ms_backwards]"
         alt="Retrato de Pilar Blanco sonriendo">
     </div>
   </article>
