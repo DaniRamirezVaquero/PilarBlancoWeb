@@ -5,6 +5,7 @@ import { SideNavigationComponent } from './components/side-navigation/side-navig
 import { FooterComponent } from './components/footer/footer.component';
 import { SeoService } from './seo/seo.service';
 import { HeroThemeService } from './services/hero-theme.service';
+import { VercelAnalyticsService } from './services/vercel-analytics.service';
 import { filter } from 'rxjs';
 
 @Component({
@@ -28,6 +29,8 @@ export class AppComponent implements AfterViewInit {
   private readonly seo = inject(SeoService);
   /** Arranca el temporizador de cover/tema; el commit visual solo ocurre en /home. */
   private readonly _heroTheme = inject(HeroThemeService);
+  /** Web Analytics de Vercel: pageviews en cada navegación del router. */
+  private readonly _analytics = inject(VercelAnalyticsService);
 
   constructor(private router: Router) {
     this.seo.updateForUrl(this.router.url);
