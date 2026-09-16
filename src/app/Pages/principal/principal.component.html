@@ -1,17 +1,20 @@
 <div
   class="hero-container relative w-screen h-dvh p-8 md:p-12 flex justify-center lg:items-end sm:justify-start overflow-x-hidden">
 
-  <div class="absolute inset-0 z-0" aria-hidden="true"
-       [class.hero-covers-animated]="coversAnimated">
-    <img
-      class="hero-cover is-active absolute inset-0 h-full w-full object-cover object-[65%_50%]"
-      [src]="coverSrc(heroTheme.currentCover())"
-      [srcset]="coverSrcset(heroTheme.currentCover())"
-      sizes="100vw"
-      fetchpriority="high"
-      loading="eager"
-      decoding="async"
-      alt="" />
+  <div class="absolute inset-0 z-0" aria-hidden="true">
+    @for (cover of [heroTheme.currentCover()]; track cover) {
+      <img
+        class="hero-cover absolute inset-0 h-full w-full object-cover object-[65%_50%]"
+        [class.is-active]="readyCover === cover"
+        (load)="onCoverLoad(cover)"
+        [src]="coverSrc(cover)"
+        [srcset]="coverSrcset(cover)"
+        sizes="100vw"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        alt="" />
+    }
   </div>
 
   <!-- Overlay con gradiente sutil -->

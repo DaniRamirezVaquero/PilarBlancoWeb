@@ -22,7 +22,7 @@ import { filter } from 'rxjs';
 export class AppComponent implements AfterViewInit {
   title = 'PilarBlancoWeb';
 
-  @HostBinding('class.app-ready') appReady = typeof requestAnimationFrame === 'undefined';
+  @HostBinding('class.app-ready') appReady = this.readInitialAppReady();
 
   showFooter: boolean = true;
 
@@ -49,6 +49,14 @@ export class AppComponent implements AfterViewInit {
     requestAnimationFrame(() => {
       this.appReady = true;
     });
+  }
+
+  /** El HTML prerenderizado ya trae app-ready: no lo quites al hidratar o la página se oculta y vuelve con fade. */
+  private readInitialAppReady(): boolean {
+    if (typeof document === 'undefined' || typeof requestAnimationFrame === 'undefined') {
+      return true;
+    }
+    return !!document.querySelector('app-root.app-ready');
   }
 
   private updateVisibility(url: string): void {

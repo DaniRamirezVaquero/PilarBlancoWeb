@@ -40,6 +40,7 @@ export class HeroThemeService {
       return;
     }
     document.documentElement.setAttribute('data-theme', this.currentTheme());
+    document.documentElement.setAttribute('data-hero', this.currentCover());
   }
 }
 
