@@ -12,25 +12,20 @@ body {
   overflow-x: hidden;
 }
 
-/* Efectos de gradiente personalizados */
-.gradient-text {
-  background: linear-gradient(135deg, #87CEEB 0%, #4682B4 50%, #B0E0E6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Superficie de páginas internas — tokens --page-* del theme */
+[data-theme="mytheme-portada"] {
+  --page-from: #A4ADB6 !important;
+  --page-via: #727C88 !important;
+  --page-to: #59646F !important;
 }
 
-.gradient-border {
-  background: linear-gradient(135deg, #87CEEB, #4682B4, #B0E0E6);
-  border-radius: 0.375rem;
-  padding: 2px;
-}
-
-.gradient-border-inner {
-  background: white;
-  border-radius: 0.25rem;
-  width: 100%;
-  height: 100%;
+.bg-page {
+  background-image: linear-gradient(
+    to top right,
+    var(--page-from),
+    var(--page-via),
+    var(--page-to)
+  );
 }
 
 /* Animaciones sutiles */
@@ -140,9 +135,9 @@ body {
   background: linear-gradient(
     90deg,
     transparent 10%,
-    rgba(135, 179, 208, 0.8) 45%,
-    rgba(135, 179, 208, 1) 50%,
-    rgba(135, 179, 208, 0.8) 55%,
+    oklch(var(--p) / 0.8) 45%,
+    oklch(var(--p)) 50%,
+    oklch(var(--p) / 0.8) 55%,
     transparent 90%
   );
   background-size: 300% 100%;
