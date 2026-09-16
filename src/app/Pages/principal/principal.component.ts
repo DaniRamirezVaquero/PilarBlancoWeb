@@ -3,14 +3,12 @@ import { PlayBtnComponent } from '../../components/play-btn/play-btn.component';
 import { SideNavService } from '../../services/side-nav.service';
 import { HeroThemeService } from '../../services/hero-theme.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-principal',
     imports: [
         PlayBtnComponent,
-        CommonModule,
-        RouterLink
+        CommonModule
     ],
     templateUrl: './principal.component.html',
     styleUrl: './principal.component.css'
