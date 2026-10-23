@@ -1,0 +1,39 @@
+.contact-trigger { min-height: 2.5rem; padding: 0.5rem 1rem; font-size: 0.8125rem; }
+
+.contact-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.75rem; height: 2.75rem; border-radius: 999px;
+  border: 1.5px solid var(--ink); color: var(--ink); background: transparent;
+}
+
+.contact-card {
+  position: absolute; right: 0; top: calc(100% + 0.75rem); z-index: 60;
+  width: min(19rem, calc(100vw - 2rem)); padding: 1.1rem 1.1rem 1rem;
+  transform-origin: top right; animation: card-in 0.28s var(--ease-out);
+}
+.contact-card.align-left { right: auto; left: 0; transform-origin: top left; }
+
+.contact-address {
+  flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-weight: 600; font-size: 0.9375rem;
+}
+
+.contact-copy {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.25rem; height: 2.25rem; border-radius: 999px; flex-shrink: 0;
+  border: 1.5px solid var(--rule); color: var(--ink);
+  transition: border-color 0.2s, color 0.2s;
+}
+.contact-copy:hover { border-color: var(--pencil); color: var(--pencil-deep); }
+
+.contact-status { min-height: 1.1rem; margin-top: 0.35rem; font-size: 0.75rem; color: var(--ink-soft); }
+
+.contact-socials {
+  display: flex; gap: 1.25rem; margin-top: 0.9rem; padding-top: 0.8rem;
+  border-top: 1px solid var(--rule); font-size: 0.875rem;
+}
+.contact-socials a { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+}

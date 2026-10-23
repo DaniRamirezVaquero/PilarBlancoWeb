@@ -1,27 +1,21 @@
-<div
-  class="bg-page w-screen py-24 lg:py-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden flex flex-col gap-6 md:gap-8 xl:gap-10 items-center">
-  <div class="w-full animate-[fade-in-up_1s_ease-out_backwards]">
-    <h1 class="page-title">Sobre mí</h1>
-    <span class="page-title-dash" aria-hidden="true"></span>
-  </div>
-  <article
-    class="w-full shadow-md grid grid-cols-1 lg:grid-cols-2 overflow-hidden animate-[fade-in_0.5s_ease-out_backwards]">
-    <!-- Panel izquierdo: entra deslizándose desde la izquierda, como si se colocara la primera hoja -->
-    <div
-      class="bg-white text-neutral-900 p-8 sm:p-10 lg:p-12 flex flex-col gap-6 animate-[slide-in-left_0.6s_ease-out_200ms_backwards]">
-      <h2
-        class="playfair-display-medium text-5xl sm:text-6xl lg:text-7xl leading-none text-center animate-[fade-in-up_1s_ease-out_500ms_backwards]">
-        Pilar</h2>
+<div class="page">
+  <header class="sheet-head">
+    <h1 class="sheet-title">Sobre mí</h1>
+  </header>
+
+  <article class="bio-spread" aria-labelledby="bio-trayectoria">
+    <figure class="bio-print print">
       <img src="assets/sobre-mi-1-1430.webp"
         srcset="assets/sobre-mi-1-700.webp 700w, assets/sobre-mi-1-1430.webp 1430w"
-        sizes="(min-width: 1280px) calc((100vw - 32rem) / 2), (min-width: 1024px) calc((100vw - 16rem) / 2), (min-width: 640px) calc(100vw - 8rem), calc(100vw - 4rem)"
-        width="1430" height="1445"
-        class="w-full aspect-[3/2] object-cover object-top shadow-sm animate-[fade-in-up_1s_ease-out_650ms_backwards]"
+        sizes="(min-width: 1024px) 34vw, calc(100vw - 2rem)" width="1430" height="1445"
         fetchpriority="high" decoding="async"
-        alt="Pilar Blanco recibiendo maquillaje en el set de un rodaje">
-      <div class="animate-[fade-in-up_1s_ease-out_800ms_backwards]">
-        <h3 class="lato-bold text-lg sm:text-xl mb-3 text-center">Sobre mí</h3>
-        <p class="lato-regular text-sm sm:text-base leading-relaxed">
+        alt="Pilar Blanco recibiendo maquillaje en el set de un rodaje" />
+      <figcaption class="edge-code bio-code"><b>01A</b> En el set</figcaption>
+    </figure>
+    <div>
+      <h2 id="bio-trayectoria" class="sub-title">Trayectoria</h2>
+      <div class="prose-sheet mt-4">
+        <p>
           Inicié mi carrera profesional a finales de los años 80 en Metronomoteatro, un laboratorio de
           investigación escénica, donde formé parte del elenco estable y participé en la creación de
           montajes con un lenguaje distintivo, como <em>Repris</em>, que ganó el Premio Nacional de
@@ -31,7 +25,7 @@
           trabajado como locutora y redactora en el programa <em>A vivir que son dos días</em> de la
           Cadena Ser Costa del Sol.
         </p>
-        <p class="lato-regular text-sm sm:text-base leading-relaxed mt-4">
+        <p>
           Formadora también de jóvenes ante la cámara, ha sido la combinación de mi formación en
           dramática creativa y juego dramático con mi experiencia ante la cámara la que me ha
           permitido desarrollar una sólida labor docente dirigida a niñas, niños y jóvenes, basada en
@@ -39,43 +33,42 @@
         </p>
       </div>
     </div>
+  </article>
 
-    <!-- Panel derecho: entra deslizándose desde la derecha justo después del izquierdo -->
-    <div
-      class="bg-accent transition-colors duration-[1200ms] text-white p-8 sm:p-10 lg:p-12 flex flex-col gap-6 animate-[slide-in-right_0.6s_ease-out_300ms_backwards]">
-      <h2
-        class="playfair-display-medium text-5xl sm:text-6xl lg:text-7xl leading-none text-center animate-[fade-in-up_1s_ease-out_600ms_backwards]">
-        Blanco</h2>
-      <div class="animate-[fade-in-up_1s_ease-out_750ms_backwards]">
-        <h3 class="lato-bold text-lg sm:text-xl mb-3 text-center">Pasan Cosas...</h3>
-        <p class="lato-regular text-sm sm:text-base leading-relaxed">
+  <article class="bio-spread bio-spread-alt" aria-labelledby="bio-cosas">
+    <div>
+      <h2 id="bio-cosas" class="sub-title">Pasan cosas…</h2>
+      <div class="prose-sheet mt-4">
+        <p>
           Arrancó el año en Madrid con el estreno del largo <strong>Quién llorará por mí</strong>,
           dirigido por Paco Izquierdo y ya en cines. En febrero llegó <strong>Entre bestias</strong> de
           Samcreta, y en edición avanzan <strong>Cuarzo</strong> de Daniel Ortiz y
           <strong>El culpable, redención</strong> de Jorge Porras.
         </p>
-        <p class="lato-regular text-sm sm:text-base leading-relaxed mt-4">
+        <p>
           Varios cortometrajes que he protagonizado están disponibles en abierto. Te invito a
           descubrir piezas como <strong>Violencias Periféricas</strong> de Davinia Burgos,
           <strong>Aquella fotografía</strong> de Sergio Barba y <strong>Gloria y Candela</strong> de
           Alicia Arwgar.
         </p>
-        <p class="lato-regular text-sm sm:text-base leading-relaxed mt-4">
+        <p>
           Quizás te pueda interesar ver mi aparición en <strong>Rey gitano</strong> de Juanma Bajo
           Ulloa como la Infanta Cristina, o disfrutar de Por las nubes dirigida por Fernando Colomo.
         </p>
-        <p class="lato-regular text-sm sm:text-base leading-relaxed mt-4">
+        <p>
           En publicidad, creo que merece la pena destacar los videos de la campaña
           <strong>Espacio Alzheimer Andalucía</strong> por su formato de docudrama.
         </p>
       </div>
+      <a routerLink="/curriculum" class="btn-line mt-6">Ver el currículum <app-icon name="arrow-right"></app-icon></a>
+    </div>
+    <figure class="bio-print bio-print-small print">
       <img src="assets/sobre-mi-2-1430.webp"
         srcset="assets/sobre-mi-2-700.webp 700w, assets/sobre-mi-2-1430.webp 1430w"
-        sizes="(min-width: 1280px) calc((100vw - 32rem) * 0.36), (min-width: 1024px) calc((100vw - 16rem) * 0.36), (min-width: 640px) calc((100vw - 8rem) * 0.72), 80vw"
-        width="1430" height="1490"
+        sizes="(min-width: 1024px) 26vw, 80vw" width="1430" height="1490"
         loading="lazy" decoding="async"
-        class="w-4/5 sm:w-[72%] ml-auto mt-auto aspect-square object-cover object-top shadow-sm animate-[fade-in-up_1s_ease-out_950ms_backwards]"
-        alt="Retrato de Pilar Blanco sonriendo">
-    </div>
+        alt="Retrato de Pilar Blanco sonriendo" />
+      <figcaption class="edge-code bio-code"><b>02A</b> Retrato</figcaption>
+    </figure>
   </article>
 </div>

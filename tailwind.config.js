@@ -3,82 +3,28 @@ module.exports = {
   content: [
     "./src/**/*.{html,ts}",
   ],
-  daisyui: {
-    themes: [
-      {
-        mytheme: {
-          "primary": "#80A59E",
-          "secondary": "#4A4542",
-          "accent": "#2f76ba",
-          "neutral": "#E4E8EC",
-          "base-100": "#4E565E",
-          "info": "#38bdf8",
-          "success": "#4ade80",
-          "warning": "#fcd34d",
-          "error": "#f87171",
-          "--page-from": "#A4ADB6",
-          "--page-via": "#727C88",
-          "--page-to": "#59646F",
-        },
-      },
-    ],
-  },
-  variants: {
-    extend: {
-      scale: ['group-hover'],
-      opacity: ['group-hover'],
-      transform: ['group-hover'],
-      blur: ['group-hover'],
-    },
-  },
   theme: {
     extend: {
-      animation: {
-        'fade-in-up': 'fadeInUp 1s ease-out forwards',
-        'fade-in': 'fadeIn 0.5s ease-out forwards',
-        'scale-in': 'scaleIn 0.3s ease-out forwards',
-        'pulse-subtle': 'pulseSubtle 2s ease-in-out infinite',
-        'shimmer-slow': 'shimmerSlow 3s ease-in-out infinite',
-        'float': 'float 3s ease-in-out infinite',
-        'shimmer': 'shimmer 2s infinite',
+      // Tokens de la hoja de contactos: los valores viven en :root (src/styles.css).
+      colors: {
+        paper: 'var(--paper)',
+        print: 'var(--print)',
+        ink: 'var(--ink)',
+        'ink-soft': 'var(--ink-soft)',
+        rule: 'var(--rule)',
+        film: 'var(--film)',
+        'film-soft': 'var(--film-soft)',
+        pencil: 'var(--pencil)',
+        'pencil-deep': 'var(--pencil-deep)',
+        edge: 'var(--edge)',
       },
-      keyframes: {
-        fadeInUp: {
-          '0%': { opacity: '0', transform: 'translateY(30px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        scaleIn: {
-          '0%': { opacity: '0', transform: 'scale(0.9)' },
-          '100%': { opacity: '1', transform: 'scale(1)' },
-        },
-        pulseSubtle: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.8' },
-        },
-        shimmerSlow: {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
-        shimmer: {
-          '0%': { backgroundPosition: '-200% 0' },
-          '100%': { backgroundPosition: '200% 0' },
-        },
-      },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      fontFamily: {
+        display: 'var(--font-display)',
+        body: 'var(--font-body)',
+        code: 'var(--font-code)',
+        hand: 'var(--font-hand)',
       },
     },
   },
-  plugins: [
-    require('daisyui')
-  ],
+  plugins: [],
 }

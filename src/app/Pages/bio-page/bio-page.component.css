@@ -1,0 +1,14 @@
+.bio-spread { display: grid; gap: calc(var(--step) * 1.75); align-items: start; }
+.bio-spread + .bio-spread { margin-top: calc(var(--step) * 4); }
+
+@media (min-width: 1024px) {
+  .bio-spread { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: calc(var(--step) * 3); }
+  .bio-spread-alt { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.8fr); }
+}
+
+.bio-print { margin: 0; }
+.bio-print img { aspect-ratio: 3 / 2; object-position: top; }
+.bio-print-small { max-width: 26rem; justify-self: end; transform: rotate(1.25deg); }
+.bio-print-small img { aspect-ratio: 1; }
+.bio-code { display: flex; gap: 0.75em; padding-top: 0.6rem; color: var(--ink-soft); }
+.bio-code b { color: var(--pencil-deep); }

@@ -1,243 +1,269 @@
 ---
 name: Pilar Blanco, actriz
-description: Portfolio de actriz con una paleta única, verde salvia y cobalto, que prolonga la fotografía en lugar de competir con ella.
+description: La web es la hoja de contactos de la que un director de casting elige; el fotograma elegido se rodea en rojo y se amplía.
 colors:
-  primary-sage: "#80A59E"
-  secondary-umber: "#4A4542"
-  accent-cobalt: "#2f76ba"
-  neutral-fog: "#E4E8EC"
-  base-steel: "#4E565E"
-  page-from-slate: "#A4ADB6"
-  page-via-slate: "#727C88"
-  page-to-slate: "#59646F"
-  paper-white: "#ffffff"
-  paper-zinc: "#d4d4d8"
-  ink: "#171717"
-  footer-ink: "#18181b"
+  pencil: "#d42a1e"
+  pencil-deep: "#ad1d13"
+  edge: "#f0a13a"
+  paper: "#fafaf8"
+  print: "#ffffff"
+  ink: "#171513"
+  ink-soft: "#5a554f"
+  rule: "#dcdad4"
+  film: "#151312"
+  film-soft: "#2b2725"
+  sprocket: "#e9e6df"
 typography:
   display:
-    fontFamily: "Lato, sans-serif"
-    fontSize: "6rem"
-    fontWeight: 300
-    lineHeight: 1.25
-    letterSpacing: "0.025em"
+    fontFamily: "Archivo Variable, Archivo, Arial Narrow, sans-serif"
+    fontSize: "clamp(4.25rem, 2rem + 9.5vw, 9.5rem)"
+    fontWeight: 800
+    lineHeight: 0.86
+    letterSpacing: "-0.01em"
+    fontVariation: "'wdth' 62"
   headline:
-    fontFamily: "Playfair Display, serif"
-    fontSize: "clamp(2rem, 4.2vw, 3.15rem)"
-    fontWeight: 500
-    lineHeight: 1.12
-    letterSpacing: "-0.025em"
+    fontFamily: "Archivo Variable, Archivo, Arial Narrow, sans-serif"
+    fontSize: "clamp(3rem, 1.6rem + 6vw, 6rem)"
+    fontWeight: 800
+    lineHeight: 0.86
+    letterSpacing: "-0.01em"
+    fontVariation: "'wdth' 62"
   title:
-    fontFamily: "Lato, sans-serif"
-    fontSize: "clamp(1.05rem, 1.7vw, 1.35rem)"
-    fontWeight: 400
-    lineHeight: 1.5
-    letterSpacing: "0.05em"
+    fontFamily: "Archivo Variable, Archivo, Arial Narrow, sans-serif"
+    fontSize: "clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem)"
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "0.005em"
+    fontVariation: "'wdth' 75"
   body:
-    fontFamily: "Lato, sans-serif"
+    fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
-    lineHeight: 1.625
-    letterSpacing: "normal"
-  label:
-    fontFamily: "Lato, sans-serif"
-    fontSize: "0.75rem"
+    lineHeight: 1.6
+  prose:
+    fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
+    fontSize: "clamp(1rem, 0.95rem + 0.2vw, 1.0625rem)"
+    fontWeight: 400
+    lineHeight: 1.7
+  role:
+    fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
+    fontSize: "clamp(1rem, 0.8rem + 0.6vw, 1.35rem)"
+    fontWeight: 600
+    letterSpacing: "0.42em"
+  button:
+    fontFamily: "Archivo Variable, Archivo, Arial Narrow, sans-serif"
+    fontSize: "0.9375rem"
     fontWeight: 700
-    lineHeight: 1.33
-    letterSpacing: "0.025em"
+    letterSpacing: "0.08em"
+    fontVariation: "'wdth' 80"
+  label:
+    fontFamily: "Martian Mono Variable, ui-monospace, monospace"
+    fontSize: "0.6875rem"
+    fontWeight: 600
+    lineHeight: 1
+    letterSpacing: "0.14em"
+    fontFeature: "'tnum' 1"
+    fontVariation: "'wdth' 75"
+  hand:
+    fontFamily: "Caveat Brush, Segoe Print, cursive"
+    fontWeight: 400
+    lineHeight: 1
 rounded:
-  none: "0px"
-  sm: "0.5rem"
-  pill: "9999px"
+  label: "2px"
+  hole: "999px"
 spacing:
-  gap-sm: "24px"
-  gap-md: "32px"
-  gap-lg: "40px"
-  panel-sm: "32px"
-  panel-md: "40px"
-  panel-lg: "48px"
-  page-y: "96px"
-  page-y-lg: "144px"
+  step: "clamp(1rem, 0.6rem + 1.6vw, 2rem)"
+  gutter: "clamp(1rem, 0.4rem + 3vw, 3.5rem)"
+  perf: "0.875rem"
 components:
-  button-download:
-    backgroundColor: "{colors.accent-cobalt}"
-    textColor: "{colors.paper-white}"
-    typography: "{typography.label}"
-    rounded: "{rounded.pill}"
-    padding: "10px 20px"
-  button-download-hover:
-    backgroundColor: "{colors.accent-cobalt}"
-  chip-label:
-    backgroundColor: "{colors.paper-white}"
+  button-pencil:
+    backgroundColor: "{colors.pencil}"
+    textColor: "{colors.print}"
+    typography: "{typography.button}"
+    rounded: "{rounded.label}"
+    padding: "0.7rem 1.35rem"
+    height: "2.875rem"
+  button-pencil-hover:
+    backgroundColor: "{colors.pencil-deep}"
+    textColor: "{colors.print}"
+  button-line:
+    backgroundColor: "transparent"
     textColor: "{colors.ink}"
-    typography: "{typography.label}"
-    rounded: "{rounded.none}"
-    padding: "4px 12px"
-  panel-paper:
-    backgroundColor: "{colors.paper-white}"
-    textColor: "{colors.ink}"
-    typography: "{typography.body}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.panel-lg}"
-  panel-accent:
-    backgroundColor: "{colors.accent-cobalt}"
-    textColor: "{colors.paper-white}"
-    typography: "{typography.body}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.panel-lg}"
-  panel-zinc:
-    backgroundColor: "{colors.paper-zinc}"
+    typography: "{typography.button}"
+    rounded: "{rounded.label}"
+    padding: "0.7rem 1.35rem"
+    height: "2.875rem"
+  nav-link:
     textColor: "{colors.ink}"
     typography: "{typography.body}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.panel-md}"
-  social-circle:
-    textColor: "{colors.paper-white}"
-    rounded: "{rounded.pill}"
-    size: "48px"
-  footer:
-    backgroundColor: "{colors.footer-ink}"
-    textColor: "{colors.neutral-fog}"
-    height: "128px"
+    padding: "0.4rem 0"
+  icon-button:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.print}"
+    rounded: "{rounded.hole}"
+    size: "2.75rem"
+  voice-play:
+    backgroundColor: "{colors.print}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.hole}"
+    size: "3.25rem"
+  voice-play-active:
+    backgroundColor: "{colors.pencil}"
+    textColor: "{colors.print}"
+  print:
+    backgroundColor: "{colors.print}"
+    padding: "clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem)"
+  film-strip:
+    backgroundColor: "{colors.film}"
+    textColor: "{colors.edge}"
+    padding: "1.8375rem 0.65625rem"
 ---
 
 # Design System: Pilar Blanco, actriz
 
 ## Overview
 
-**Creative North Star: "El Dosier sobre Pizarra"**
+**Creative North Star: "La Hoja de Contactos"**
 
-La web de Pilar tiene una sola paleta y una sola portada. La paleta nace de esa fotografía: verde salvia de apoyo, un acento cobalto y un degradado de pizarras azuladas que hace de mesa para las páginas interiores. Sobre esa mesa se colocan las piezas del dosier (hojas de papel, vídeos, fotos) y la interfaz se aparta para que manden. Quien compara perfiles en una visita corta reconoce siempre la misma casa.
+La web es la hoja de contactos de la que un director de casting elige. Cada mirada de Pilar es un fotograma impreso en una tira de negativo; el elegido se rodea con lápiz graso rojo y se amplía en una copia con margen blanco. Todo el sistema sale de ese objeto de laboratorio: papel fotográfico brillante como suelo, tiras casi negras con perforaciones crema, códigos de borde ámbar en monoespaciada condensada, y un solo rojo que marca la elección.
 
-El resto del sistema se aparta para dejar mandar al material. Las páginas interiores son un fondo grisáceo en degradado sobre el que se apoyan «hojas» de papel blanco o zinc, de esquinas rectas, con sombra suave, como cartulinas de un dosier sobre una mesa. Los títulos son serif editorial (Playfair Display) con un guion corto de acento debajo; el cuerpo, Lato, claro y sin adornos. Lo más expresivo (cristal esmerilado, brillo del nombre que sigue al ratón, casete de voz) queda en el inicio, el menú y la sección de voz.
+La densidad es la de una hoja de trabajo, no la de una revista: títulos condensados enormes frente a códigos de borde diminutos (el salto de escala es el gesto tipográfico central), retícula regida por un único paso de fotograma, y las fotos siempre rectas, sin radio, como copias reales. El manuscrito rojo existe pero es escaso: pocas palabras factuales, como el «esta» que señala el fotograma 02A en la apertura.
 
-El carácter de los componentes es suave y cercano: botones en píldora, círculos de cristal para las redes, transiciones largas y amables. Aún no se ha confirmado ninguna anti-referencia visual.
+Todo el material fotográfico, de vídeo y de audio es el contenido elegido por la actriz; el sistema no añade imágenes propias. Se rechazan expresamente la portada a sangre con nombre fino, las secciones en tarjetas iguales, la plantilla con slider y las marcas de lápiz repartidas por todas partes.
 
 **Key Characteristics:**
-- Una sola paleta, expuesta como tokens del tema (`accent`, `primary`, `.bg-page`); los componentes no usan hexadecimales.
-- Hojas de papel de esquinas rectas sobre un degradado gris azulado de página.
-- Playfair Display solo para títulos de página y nombres grandes; Lato para todo lo demás.
-- Movimiento de entrada escalonado (slide/fade-in-up) y transiciones de color largas (1,2 s).
-- Cristal esmerilado reservado a superficies flotantes (menú lateral, redes, popover de correo).
+- Papel fotográfico blanco cálido como suelo; copias blancas con sombra suave; tiras de negativo como único plano oscuro.
+- Un único rojo de lápiz, reservado a la elección activa y a la acción principal.
+- Archivo Variable condensada (eje wdth) en mayúsculas para títulos; Martian Mono condensada para los códigos de borde.
+- Etiquetas de corte recto; lo redondo pertenece al trazo de lápiz y a los agujeros/objetos.
+- Interacción firma: lupa sobre los fotogramas, círculo rojo que se dibuja y ampliación en diálogo.
 
 ## Colors
 
-Una paleta fría y contenida, tomada de la portada, con un único acento: un color de apoyo claro (primary), uno oscuro (secondary), un acento que firma, un degradado de página y neutros azulados.
+Paleta de laboratorio fotográfico: neutros cálidos de papel y negativo, un ámbar que solo vive en la película y un rojo de lápiz graso que solo vive donde se elige.
 
 ### Primary
-- **Verde Salvia** (#80A59E): color de apoyo. Anillo y resplandor del botón de reproducir, hover de enlaces del menú, borde del pie.
+- **Rojo Lápiz Graso** (pencil): la elección activa y la acción principal. Anillo del fotograma elegido, subrayado de la navegación activa y al pasar, fondo del botón principal y óvalo de lápiz que lo rodea al señalarlo, porción ya reproducida de la onda de voz, botón de cerrar de los diálogos, selección de texto y anillo de foco.
+- **Rojo Lápiz Hundido** (pencil-deep): estado hover del rojo y su versión de texto sobre papel (código del fotograma elegido en pies de foto, enlace al pasar, código de navegación activo), donde el rojo pleno no alcanzaría contraste suficiente a tamaño pequeño.
 
 ### Secondary
-- **Pardo Umbra** (#4A4542): tinta de apoyo profunda.
-
-### Tertiary (acento)
-- **Cobalto** (#2f76ba): línea bajo el nombre del inicio, guion de los títulos, botón de descarga, panel derecho de «Sobre mí», enlace activo del menú. Con texto blanco da unos 4,8:1 de contraste.
+- **Ámbar de Borde** (edge): los códigos impresos en el margen de la película (números de fotograma, rótulos de las tiras, tiempos de voz) y la onda óptica de las tiras de voz al 55 % de opacidad. También el contorno de foco dentro de la película, donde el rojo se perdería. No sale de la película.
 
 ### Neutral
-- **Niebla** (#E4E8EC): neutro del tema; fondo del menú en móvil.
-- **Acero** (#4E565E): `base-100`, fondo base del tema.
-- **Degradado de página**: de pizarra clara (#A4ADB6) a (#727C88) a (#59646F), en diagonal de abajo-izquierda a arriba-derecha.
-- **Papel Blanco** (#ffffff) y **Papel Zinc** (#d4d4d8): hojas y paneles sobre el degradado; texto en **Tinta** (#171717).
-- **Tinta de Pie** (#18181b): fondo del pie, con degradado hacia zinc-800.
+- **Papel Fotográfico** (paper): suelo de todas las páginas, barra superior y menú móvil.
+- **Blanco de Copia** (print): margen de ampliación de cada foto, tarjetas emergentes y texto sobre rojo o película.
+- **Tinta** (ink): texto, contorno del botón secundario, botón de menú redondo.
+- **Tinta Suave** (ink-soft): textos secundarios, códigos de borde sobre papel, notas de crédito.
+- **Filete** (rule): líneas divisorias de 1px (barra, listas de créditos, CV) y subrayado de enlace en reposo.
+- **Negativo** (film): fondo de las tiras de película, telón de los diálogos (al 94-95 %), aro de la lupa.
+- **Negativo Velado** (film-soft): relleno bajo las fotos mientras cargan; barra de desplazamiento.
+- **Perforación** (sprocket): los agujeros de arrastre de las tiras, al 92 % de opacidad.
 
 ### Named Rules
-**The Single Key Rule.** Ningún componente nombra un color de tema por su hexadecimal: usa `accent`, `primary`, `info` o `.bg-page`. Así, retocar el acento es cambiar un solo valor. Los hex fijos (hoy, el casete de voz) son deuda, no precedente.
+**The One Red Rule.** El rojo marca solo la elección activa y la acción principal, una vez por zona: el anillo del fotograma, el subrayado de navegación, el óvalo del botón al pasar, la parte reproducida de la onda. Nunca decora rótulos, encabezados ni fondos.
 
-**The One Signature Rule.** El acento aparece una vez por zona: un subrayado, un botón o un panel, no varios a la vez.
+**The Amber Stays On Film Rule.** El ámbar es tinta de película: aparece en tiras de negativo y en su lupa, nunca sobre papel.
 
 ## Typography
 
-**Display Font:** Lato (con sans-serif)
-**Headline Font:** Playfair Display (con serif)
-**Body Font:** Lato (con sans-serif)
+**Display Font:** Archivo Variable (con Archivo, Arial Narrow), autoalojada vía @fontsource, usando el eje de anchura.
+**Body Font:** Archivo Variable (con Archivo, system-ui).
+**Label/Mono Font:** Martian Mono Variable (con ui-monospace), también con eje de anchura.
+**Hand Font:** Caveat Brush (con Segoe Print, cursive), siempre en rojo lápiz.
 
-**Character:** Un serif editorial contenido para los títulos y un sans humanista cálido para leer; el contraste entre ambos da el aire de un dosier cuidado sin solemnidad.
+**Character:** Una sola familia que se estrecha hasta parecer rotulación de laboratorio en los títulos y se abre en el texto corrido; la monoespaciada condensada hace de tinta impresa en el margen de la película.
 
 ### Hierarchy
-- **Display** (Lato 300, 6rem en escritorio / 3.75rem en móvil, interlineado 1,25, tracking amplio): nombre «PILAR BLANCO» del inicio, siempre en blanco sobre foto.
-- **Headline** (Playfair Display 500, clamp(2rem, 4.2vw, 3.15rem), 1,12, -0,025em): `.page-title`, título de cada página interior. En las hojas de «Sobre mí», «Pilar» y «Blanco» llegan a 4,5rem.
-- **Title** (Lato 400, clamp(1.05rem, 1.7vw, 1.35rem), 0,05em): `.section-title`, apartados («Largometrajes», «Doblaje»); en mayúsculas dentro del CV.
-- **Body** (Lato 400, 0.875rem móvil / 1rem escritorio, interlineado 1,625): texto corrido de bio y CV; sin límite de ancho fijado, la hoja lo acota.
-- **Label** (Lato 700, 0.75rem, mayúsculas, 0,025em): chips de apartado del CV; en la cinta «ACTRIZ», Lato 600 en 1.25–1.5rem con tracking 0,3em.
+- **Display** (800, wdth 62, clamp(4.25rem → 9.5rem), 0.86, mayúsculas): el nombre «PILAR BLANCO» en blanco sobre la portada. Una sola vez.
+- **Headline** (800, wdth 62, clamp(3rem → 6rem), 0.86, mayúsculas, text-wrap balance): título de cada página y de cada bloque del inicio (Reel 2026, Book, Voz, Trayectoria, Contacto). También el correo de contacto gigante en minúsculas y los enlaces del menú móvil.
+- **Title** (700, wdth 75, clamp(1.5rem → 2.25rem), 1, mayúsculas): subtítulos del CV, etiquetas de las tiras de voz, títulos de crédito (variante a clamp(1.35rem → 1.85rem)).
+- **Body** (400, 1rem, 1.6): texto general. La prosa de biografía sube a 1.7 y se limita a 66ch.
+- **Role** (600, wdth 100, 0.42em de espaciado, mayúsculas): «ACTRIZ» bajo el nombre y en el CV.
+- **Label / código de borde** (600, wdth 75, 0.6875rem, 0.14em, mayúsculas, cifras tabulares): números de fotograma, rótulos de tira, tiempos, direcciones de navegación.
+- **Hand** (400, ~2.4rem, girado unos -8°): anotación manuscrita roja, pocas palabras factuales.
 
 ### Named Rules
-**The Serif Is Rare Rule.** Playfair solo en títulos de página y nombres de hoja; nunca en cuerpo, botones ni navegación.
+**The Edge Code Rule.** Los códigos de fotograma (06A, 02A...) se imprimen solo donde la película los imprime: direcciones de navegación, márgenes de las tiras, pies de foto y pie de la ampliación. Nunca como antetítulo sobre un encabezado.
+
+**The Scale Jump Rule.** La jerarquía se construye con saltos, no con pasos: código de borde de 11px junto a títulos de 6-9.5rem. No hay tamaños intermedios de relleno.
 
 ## Layout
 
-Cada página interior es un lienzo `.bg-page` de ancho completo con una columna de contenido a sangre variable: gutter lateral 32 → 64 → 128 → 256 px (por defecto, `sm`, `lg`, `xl`) y aire vertical de 96 px (144 px desde `lg`). Los bloques se separan 24–40 px.
+Una sola retícula regida por el paso de fotograma (step, clamp(1rem → 2rem)): huecos, márgenes de cabecera de hoja (step × 1.5), secciones (step × 3.5 en vertical) y páginas (step × 2.5 arriba, step × 4 abajo) son múltiplos de él. El margen lateral es el gutter (clamp(1rem → 3.5rem)); el contenido se limita a 100rem centrados.
 
-El contenido son «artículos» de una sola hoja que se parten en rejilla desde `lg`: 2 columnas en «Sobre mí», 3 en el CV (retrato + datos / trayectoria a dos columnas). Las hojas llevan un relleno de 32 → 40 → 48 px. Vídeos y galería usan rejillas de 1 o 2 columnas con huecos amplios (hasta 80 px) para que cada pieza respire.
+La barra superior es fija (4.25rem), sobre papel con filete inferior. En escritorio (≥1024px) la apertura ocupa el alto de la ventana menos la barra: ampliación de la portada a la izquierda y tira vertical de 4 fotogramas a la derecha (clamp(10rem, 13vw, 14rem)). Por debajo de 1024px la tira pasa a horizontal con perforaciones arriba y abajo y desplazamiento con snap; la navegación se pliega en un menú a pantalla completa de enlaces gigantes.
 
-El inicio es una sola pantalla (`h-dvh`) con la fotografía de portada a sangre, el nombre y la línea de acento hacia el borde izquierdo y el botón de reproducir al pie. El menú es un cajón lateral de 460 px que empuja el contenido del inicio. La navegación es una sola capa, sin cabecera fija.
+Las hojas de contactos de escritorio reparten los fotogramas en tantas columnas como fija cada tira; en móvil son carriles horizontales de min(62vw, 18rem). Créditos y CV usan columnas asimétricas (1.25fr / 1fr; 1fr / 2.4fr). Puntos de corte observados: 480, 640, 768 y 1024px.
 
 ## Elevation & Depth
 
-Híbrido: la profundidad de contenido es tonal y plana, con sombras casi ausentes; la de las superficies flotantes es de cristal.
-
-Las hojas descansan con una sombra suave (`shadow-md`) sobre el degradado; las fotografías dentro de ellas llevan `shadow-sm`. El menú, los círculos de redes y el popover de correo usan cristal esmerilado. Sobre las portadas se aplica un velo `black/30 → transparente → black/20` para dar contraste al texto.
+La profundidad es física, no de interfaz: papel apoyado sobre papel. Las copias flotan con una sombra suave y desplazada hacia abajo, algunas ligeramente giradas (-1.5° a 1.25°) como si estuvieran sueltas sobre la mesa. La película no lleva sombra: es el plano oscuro de referencia. Los diálogos (ampliación, reel) oscurecen todo con un telón de negativo casi opaco.
 
 ### Shadow Vocabulary
-- **Hoja** (`box-shadow` de Tailwind `shadow-md`): artículos y vídeos sobre el degradado.
-- **Foto en hoja** (`shadow-sm`): retratos e imágenes dentro de una hoja.
-- **Cristal** (`background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37)`): menú lateral, círculos de redes, popover de correo.
-- **Elevación al pasar** (`-translate-y-px` + `shadow-md`, brillo +10 %): botón de descarga.
+- **Copia** (`box-shadow: 0 1px 1px rgb(23 21 19 / 0.06), 0 18px 40px -24px rgb(23 21 19 / 0.35)`): toda foto con margen blanco y las tarjetas emergentes.
+- **Botón rojo** (`box-shadow: 0 10px 24px -14px rgb(173 29 19 / 0.9)`): solo la acción principal.
+- **Lupa** (`box-shadow: 0 0 0 6px var(--film), 0 0 0 7px rgb(255 255 255 / 0.25), 0 22px 40px -10px rgb(0 0 0 / 0.55)`): el cuentahílos sobre el fotograma.
 
 ### Named Rules
-**The Glass Is Afloat Rule.** El cristal es solo para lo que flota sobre otra cosa; nunca una hoja de contenido.
+**The Soft Print Rule.** Las sombras son blandas y difusas, como una copia sobre papel. Nada de sombras duras desplazadas.
 
 ## Shapes
 
-Dos gramáticas conviven y no se mezclan: lo editorial es rectangular y lo interactivo es redondo.
+Mundo de corte recto. Fotos y fotogramas sin radio, como copias guillotinadas. Botones como etiquetas de corte recto (2px). Lo redondo tiene dos dueños: el trazo de lápiz (anillo de elección, óvalo del botón principal, subrayados a mano alzada, todos SVG de trazo irregular con extremos redondeados) y los agujeros u objetos físicos (botones de icono, discos de reproducción, la lupa). Las perforaciones de la película son rectángulos repetidos. Las líneas son filetes de 1px o contornos de tinta de 1.5px.
 
-Hojas, paneles, chips y fotos son rectos (radio 0), como papel cortado. Botones de acción y círculos de redes son píldoras o círculos completos (9999 px). Los botones DaisyUI de galería usan el radio por defecto del tema (0,5 rem). El único adorno de forma es el guion de 3 rem × 2 px bajo cada `page-title`, en el acento.
+### Named Rules
+**The Square Label Rule.** Los botones son etiquetas de corte recto (2px); la redondez pertenece al trazo de lápiz que las marca. Lo circular queda reservado a agujeros y objetos: botones de icono, discos de reproducción, la lupa.
 
 ## Components
 
 ### Buttons
-- **Shape:** píldora completa (9999 px).
-- **Primary (descarga):** fondo de acento, texto blanco Lato 700 0,875rem, relleno 10 × 20 px, icono a la derecha.
-- **Hover / Focus:** sube 1 px, sombra media, brillo +10 %; el icono baja 2 px. Foco visible con contorno blanco de 2 px, desplazado 2 px.
-- **Galería (`btn-accent`):** botón DaisyUI relleno de acento, sin borde, texto blanco.
-
-### Chips
-- **Style:** fondo blanco, tinta oscura, esquinas rectas, Lato 700 mayúsculas 0,75rem, con sombra mínima.
-- **State:** estático; son rótulos de apartado del CV (Medidas, Contacto, Formación, Idiomas).
+Etiquetas de laboratorio, firmes y recortadas, que el lápiz señala.
+- **Shape:** corte recto (2px), alto mínimo 2.875rem.
+- **Principal (btn-pencil):** fondo rojo lápiz, texto blanco en Archivo 700 condensada al 80 %, mayúsculas, espaciado 0.08em, relleno 0.7rem × 1.35rem, sombra roja difusa. Una por zona («Ver reel 2026», descargas).
+- **Hover / Focus:** el fondo baja a rojo hundido y un óvalo de lápiz se dibuja alrededor de la etiqueta (clip-path de izquierda a derecha, 0.5s, ease-out). Foco: contorno rojo de 2px a 3px de distancia.
+- **Secundario (btn-line):** transparente, contorno de tinta de 1.5px; al pasar, el lápiz lo subraya con un trazo rojo a mano alzada.
+- **Botones de icono:** círculos de 2.75-3rem (menú en tinta, contacto con contorno, cerrar en rojo, controles de la ampliación con contorno blanco sobre negativo).
 
 ### Cards / Containers
-- **Corner Style:** recto.
-- **Background:** papel blanco, papel zinc (#d4d4d8) o el acento (panel derecho de «Sobre mí»).
-- **Shadow Strategy:** `shadow-md` en el artículo completo; las hojas internas no se sombrean por separado.
-- **Border:** ninguno.
-- **Internal Padding:** 32 / 40 / 48 px según ancho.
-
-### Inputs / Fields
-Hoy no hay formularios en el sitio. El único campo es la dirección copiable del popover de correo, dentro de cristal.
+- **Copia:** fondo blanco de copia, margen clamp(0.5rem → 0.875rem), sin radio, sombra Copia. Es el único contenedor de fotos sobre papel.
+- **Tarjeta de contacto:** copia emergente de 19rem bajo el botón Contacto, con correo, botón de copiar circular y redes tras un filete.
 
 ### Navigation
-Botón de hamburguesa SVG animado (arriba a la izquierda) que abre un cajón de 460 px con cristal en escritorio y fondo opaco bruma en móvil. Enlaces en Lato 400, `text-xl → text-3xl`, tinta oscura; al pasar, color primary y 105 % de escala; el enlace activo va en acento, negrita, con una barra vertical a su izquierda. Lleva partículas decorativas muy tenues.
+- **Escritorio:** enlaces en Archivo 500, 0.9375rem, precedidos por su dirección de fotograma en código de borde (tinta suave). Al pasar y en la ruta activa, un subrayado rojo a mano alzada se dibuja de izquierda a derecha (0.45s); el código activo pasa a rojo hundido. A la derecha, enlace CV con icono de descarga y botón Contacto con contorno.
+- **Móvil (<1024px):** botón redondo de tinta que abre una hoja a pantalla completa sobre papel con enlaces en headline gigante (clamp(2.5rem, 12vw, 4rem)) separados por filetes; el activo en rojo hundido.
+- **Enlaces de texto:** subrayado de filete de 1.5px que pasa a rojo al pasar, con el texto a rojo hundido. El correo gigante de contacto se subraya en rojo de izquierda a derecha.
 
-### Botón de reproducir (firma del inicio)
-Anillo y símbolo de play SVG de 62 px en blanco, con un anillo `animate-ping` en primary y resplandor difuminado al pasar; el texto «Ver reel» aparece al lado. Flota en bucle de 3 s.
+### Tira de negativo (signature)
+Fondo negativo con perforaciones crema arriba y abajo (horizontal) o a los lados (vertical), paso de perforación 0.875rem. Cada fotograma lleva debajo su código de borde ámbar y su pie. Con ratón, una lupa circular de 11.5rem sigue al cursor y amplía el fotograma; al hacer clic, el anillo rojo se dibuja sobre él y se abre la ampliación: diálogo a pantalla completa con la copia que «revela» (de sobreexpuesta a normal en 0.55s), pie con código en rojo y contador, y controles circulares. En pantallas táctiles no hay lupa; el toque abre la ampliación.
 
-### Casete de voz (firma de la página de voz)
-Casete dibujado en SVG, azul empolvado con franja naranja, que gira sus bobinas al reproducir; barra de progreso, controles fantasma y volumen. Es un objeto narrativo, no un patrón reutilizable, y hoy lleva sus colores en hexadecimal (ver The Single Key Rule).
+### Anillo de lápiz (signature)
+Círculo rojo de dos pasadas irregulares (5.5 y 3.5 de trazo) que se dibuja con stroke-dashoffset en 0.9s más una segunda pasada de 0.35s. Es la única marca roja activa de su zona.
 
-### Redes y contacto
-Círculos de 48 px de cristal con icono blanco que adopta un color propio al pasar (rosa en Instagram, `info` en Vimeo, acento en correo). El correo abre un popover de cristal con la dirección, botón de copiar y acción «Redactar en Gmail».
+### Tira de voz (signature)
+Cada demo de voz es una tira de negativo cuya banda sonora óptica es la onda real del MP3 (picos medidos de los archivos), en barras ámbar al 55 %; la parte reproducida se pinta en rojo lápiz y la pista es clicable para buscar. Disco de reproducción blanco de 3.25rem que pasa a rojo al estar activo; código ámbar, etiqueta en title blanco y tiempo en blanco al 62 %.
+
+### Apertura (signature)
+Secuencia única del inicio: la portada se «revela» (1.6s, de lavada a normal), el nombre y la acción suben escalonados (0.25-0.55s), la tira entra fotograma a fotograma (0.12s de escalón) y termina con el anillo rojo cayendo sobre el fotograma 02A y la anotación «esta» a mano. Con movimiento reducido todo queda en su estado final.
+
+### Vídeo
+Fachada de Vimeo: miniatura con botón de reproducir que solo carga el reproductor al pulsar; el reel se abre en un diálogo a pantalla completa sobre telón de negativo.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** colorear con tokens de tema (`bg-accent`, `text-primary`, `.bg-page`) para que un retoque de paleta llegue a todo el sitio.
-- **Do** dejar que la fotografía lleve el peso del inicio: nombre en blanco, velo ligero, un solo acento.
-- **Do** apoyar contenido sobre hojas rectas blancas o zinc con `shadow-md` encima del degradado de página.
-- **Do** reservar Playfair Display (500) para `page-title` y nombres grandes, y rematar cada título con el guion corto de acento (3 rem × 2 px).
-- **Do** usar píldoras o círculos para lo pulsable y esquinas rectas para lo editorial.
-- **Do** mantener las transiciones de color en 1,2 s y respetar `prefers-reduced-motion` en nuevos movimientos.
+- **Do** reservar el rojo lápiz para la elección activa y la acción principal, una vez por zona (The One Red Rule).
+- **Do** presentar cada foto sobre papel como copia: margen blanco, sin radio, sombra Copia.
+- **Do** imprimir los códigos de fotograma solo donde la película los imprime: navegación, márgenes de tira, pies de foto y la ampliación.
+- **Do** construir la jerarquía con saltos de escala: headline condensado enorme frente a código de borde de 0.6875rem.
+- **Do** medir huecos y márgenes en múltiplos del paso de fotograma (step) y del gutter.
+- **Do** usar solo el contenido elegido por la actriz; el sistema no aporta imágenes, vídeos ni audio propios.
+- **Do** dejar que la lupa sea solo de ratón y que el toque abra directamente la ampliación.
 
 ### Don't:
-- **Don't** escribir hexadecimales de color en componentes nuevos; el casete de voz es deuda existente.
-- **Don't** usar cristal esmerilado en hojas de contenido ni apilar varios acentos en una misma zona.
-- **Don't** redondear hojas, chips o fotos (radio > 0) ni usar esquinas rectas en botones.
-- **Don't** introducir otras familias tipográficas distintas de Lato y Playfair Display.
+- **Don't** poner un código de fotograma, rótulo o etiqueta en código de borde como antetítulo sobre un encabezado.
+- **Don't** usar el rojo para decorar rótulos, encabezados de sección o fondos de zona.
+- **Don't** redondear botones o fotos; lo redondo es solo del trazo de lápiz, los agujeros y los objetos (icono, disco, lupa).
+- **Don't** repartir marcas de lápiz o manuscrito por todas partes; el manuscrito son pocas palabras factuales.
+- **Don't** sacar el ámbar de la película.
+- **Don't** usar sombras duras desplazadas ni tarjetas iguales en rejilla.
+- **Don't** abrir con la portada a sangre y el nombre en un trazo fino, ni con un slider.

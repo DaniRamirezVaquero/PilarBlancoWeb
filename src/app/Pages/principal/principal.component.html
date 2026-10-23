@@ -1,82 +1,168 @@
-<div
-  class="hero-container relative w-screen h-dvh p-8 md:p-12 flex justify-center lg:items-end sm:justify-start overflow-x-hidden">
-
-  <div class="absolute inset-0 z-0" aria-hidden="true">
-    <img
-      class="hero-cover absolute inset-0 h-full w-full object-cover object-[65%_50%]"
-      [class.is-active]="coverReady"
-      (load)="coverReady = true"
-      src="assets/images/hero/portada-1920.webp"
-      srcset="assets/images/hero/portada-960.webp 960w, assets/images/hero/portada-1920.webp 1920w, assets/images/hero/portada-3200.webp 3200w"
-      sizes="100vw"
-      fetchpriority="high"
-      loading="eager"
-      decoding="async"
-      alt="" />
-  </div>
-
-  <!-- Overlay con gradiente sutil -->
-  <div class="absolute inset-0 z-[1] bg-gradient-to-r from-black/30 via-transparent to-black/20"></div>
-
-  <div class="relative z-10 grid grid-rows-3 h-full">
-    <div></div>
-
-    <!-- Contenido principal mejorado -->
-    <div class="text-white w-min flex flex-col justify-center md:ml-40 transition-all duration-700 ease-out"
-      [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[300px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
-
-      <!-- Nombre con efecto interactivo -->
-      <div class="interactive-name lato-light text-6xl lg:text-8xl leading-tight tracking-wide tilt-3d">
-        <h1 class="relative">
-          <span class="block drop-shadow-2xl animate-fade-in-up dynamic-text-glow">PILAR </span>
-          <span class="block drop-shadow-2xl animate-fade-in-up animation-delay-200 dynamic-text-glow">BLANCO</span>
-        </h1>
-      </div>
-
-      <!-- Línea decorativa mejorada -->
-      <div class="relative my-8">
-        <div class="bg-accent w-full h-1 rounded-full
-                    shadow-lg shadow-accent/30 transition-colors duration-[1200ms]"></div>
-      </div>
-
-      <!-- Profesión con estilo elegante -->
-      <p class="font-sans font-semibold text-xl lg:text-2xl tracking-[0.3em] drop-shadow-lg
-               animate-fade-in-up animation-delay-400">ACTRIZ</p>
-    </div>
-
-    <!-- Botón de play mejorado -->
-    <div class="flex items-end transition-all duration-700 ease-out float-animation"
-      [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[460px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
-      <app-play-btn (click)="toggleShowReel()"/>
-    </div>
-  </div>
-</div>
-
-@if (showReel) {
-  <div class="fixed top-0 left-0 z-[100] w-screen h-dvh
-              bg-gradient-to-br from-black/90 via-black/80 to-black/90
-              backdrop-filter backdrop-blur-xl
-              flex items-center justify-center animate-fade-in">
-
-    <!-- Botón de cerrar simplificado -->
-    <svg class="absolute top-8 right-8 text-primary hover:text-info
-                transition-all duration-300 cursor-pointer hover:scale-110"
-         width="30" height="30" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg"
-         (click)="toggleShowReel()">
-      <path d="M2.24536 32.3148L32.2454 2.3148" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
-      <path d="M32.2454 32.3148L2.24537 2.3148" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
-    </svg>
-
-    <!-- Contenedor del video simplificado -->
-    <div class="w-full max-w-[80%] lg:max-w-[70%]">
-      <div class="relative pb-[56.25%] h-0 overflow-hidden animate-scale-in">
-        <iframe id="player" title="Reel de actuación de Pilar Blanco"
-          src="https://player.vimeo.com/video/1208363473?h=3205afba43"
-          class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-          allowfullscreen></iframe>
+<!-- 01A–04A · Apertura: la ampliación elegida y la tira de la que sale -->
+<section class="opening" aria-labelledby="nombre">
+  <figure class="enlargement print">
+    <div class="enlargement-photo">
+      <img src="assets/images/hero/portada-1920.webp"
+        srcset="assets/images/hero/portada-960.webp 960w, assets/images/hero/portada-1920.webp 1920w, assets/images/hero/portada-3200.webp 3200w"
+        sizes="(min-width: 1024px) 62vw, 100vw" width="1920" height="1080"
+        fetchpriority="high" loading="eager" decoding="async"
+        alt="Pilar Blanco, actriz, sentada sobre un baúl metálico con camisa blanca y vaqueros" />
+      <div class="enlargement-veil" aria-hidden="true"></div>
+      <div class="enlargement-title">
+        <h1 id="nombre" class="type-display name">Pilar<br />Blanco</h1>
+        <p class="role">Actriz</p>
+        <button type="button" class="btn-pencil reel-cta" (click)="openReel()">
+          <app-icon name="play"></app-icon>
+          Ver reel 2026
+        </button>
       </div>
     </div>
+    <figcaption class="edge-code enlargement-code">
+      <span><b>02A</b> Pilar Blanco</span>
+      <span>Cine · Televisión · Teatro · Doblaje</span>
+    </figcaption>
+  </figure>
+
+  <div class="opening-strip">
+    <app-contact-sheet [frames]="heroStrip" layout="vertical" aspect="4 / 5" [chosen]="1"
+      [ringDelay]="1100" [eager]="true" sizes="(min-width: 1024px) 12rem, 40vw"></app-contact-sheet>
+    <p class="hand opening-note" aria-hidden="true">esta</p>
   </div>
-}
+</section>
+
+<!-- 05A · Reel -->
+<section id="reel" class="section home-block" aria-labelledby="reel-title">
+  <header class="sheet-head">
+    <h2 id="reel-title" class="sheet-title">Reel 2026</h2>
+  </header>
+  <div class="reel-grid">
+    <div class="film film-h">
+      <app-vimeo-facade [videoId]="reel.videoId" [hash]="reel.hash" [poster]="reel.poster" [title]="reel.title" />
+    </div>
+    <aside class="reel-more" aria-label="Más vídeos">
+      <h3 class="sub-title">Más escenas</h3>
+      <ul class="scene-list">
+        @for (scene of scenes; track scene.videoId) {
+          <li>
+            <a routerLink="/video" class="scene-link">
+              <img [src]="scene.poster" alt="" loading="lazy" decoding="async" width="160" height="90" />
+              <span>
+                <span class="edge-code text-ink-soft">{{ scene.code }}</span>
+                <span class="scene-name">{{ scene.label }}</span>
+              </span>
+            </a>
+          </li>
+        }
+      </ul>
+      <a routerLink="/video" class="btn-line">Todos los vídeos <app-icon name="arrow-right"></app-icon></a>
+    </aside>
+  </div>
+</section>
+
+<!-- 06A–17A · Book -->
+<section id="fotos" class="section home-block" aria-labelledby="fotos-title">
+  <header class="sheet-head sheet-head-row">
+    <div class="grid gap-3">
+      <h2 id="fotos-title" class="sheet-title">Book</h2>
+    </div>
+    <p class="sheet-hint">Pasa la lupa por los fotogramas o pulsa uno para verlo en grande.</p>
+  </header>
+  <app-contact-sheet [frames]="book" [perStrip]="6" aspect="4 / 5" sizes="(min-width: 1024px) 15vw, 62vw"></app-contact-sheet>
+  <div class="block-actions">
+    <a [href]="photosZip" download="Pilar Blanco - Galeria fotos.zip" class="btn-line">
+      Descargar las fotos <app-icon name="download"></app-icon>
+    </a>
+    <a routerLink="/gallery" class="link-pencil">Fotogramas de proyectos</a>
+  </div>
+</section>
+
+<!-- 18A–21A · Voz -->
+<section id="voz" class="section home-block" aria-labelledby="voz-title">
+  <header class="sheet-head">
+    <h2 id="voz-title" class="sheet-title">Voz</h2>
+  </header>
+  <app-voice-strip [demos]="voice"></app-voice-strip>
+  <div class="block-actions">
+    <a routerLink="/voice" class="link-pencil">Demos de doblaje en vídeo</a>
+  </div>
+</section>
+
+<!-- 22A–23A · Trayectoria y sobre mí -->
+<section id="trayectoria" class="section home-block" aria-labelledby="trayectoria-title">
+  <div class="career">
+    <div>
+      <header class="sheet-head">
+        <h2 id="trayectoria-title" class="sheet-title">Trayectoria</h2>
+      </header>
+      <ul class="credit-list">
+        @for (credit of credits; track credit.title) {
+          <li class="credit">
+            <span class="edge-code credit-note">{{ credit.note }}</span>
+            @if (credit.url) {
+              <a [href]="credit.url" target="_blank" rel="noopener noreferrer" class="credit-title link-pencil">
+                {{ titleHead(credit.title) }}<span class="whitespace-nowrap">{{ titleTail(credit.title) }}<app-icon name="up-right-from-square" class="credit-out"></app-icon></span>
+              </a>
+            } @else {
+              <span class="credit-title">{{ credit.title }}</span>
+            }
+            <span class="credit-by">{{ credit.by }}</span>
+          </li>
+        }
+      </ul>
+      <div class="block-actions">
+        <a routerLink="/curriculum" class="btn-line">Currículum completo <app-icon name="arrow-right"></app-icon></a>
+        <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="link-pencil">Descargar CV en PDF</a>
+      </div>
+    </div>
+
+    <article class="about" aria-labelledby="sobre-title">
+      <div class="print about-print">
+        <img src="assets/sobre-mi-2-700.webp" srcset="assets/sobre-mi-2-700.webp 700w, assets/sobre-mi-2-1430.webp 1430w"
+          sizes="(min-width: 1024px) 18rem, 60vw" width="700" height="729" loading="lazy" decoding="async"
+          alt="Retrato de Pilar Blanco sonriendo" />
+      </div>
+      <div>
+        <h3 id="sobre-title" class="sub-title">Desde finales de los 80</h3>
+        <p class="prose-sheet mt-3">
+          Inicié mi carrera en Metronomoteatro, un laboratorio de investigación escénica, con montajes como
+          <em>Repris</em>, Premio Nacional de Teatro de Vanguardia en 1991. De ahí, a la televisión con
+          <em>Plaza alta</em> y <em>Arrayán</em>, la radio y la formación de jóvenes ante la cámara.
+        </p>
+        <a routerLink="/bio" class="link-pencil mt-4 inline-block">Leer la biografía</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 24A · Contacto -->
+<section id="contacto" class="section home-block contact" aria-labelledby="contacto-title">
+  <header class="sheet-head">
+    <h2 id="contacto-title" class="sheet-title">Contacto</h2>
+  </header>
+  <a [href]="mailtoUrl" class="contact-email">{{ emailUser }}<wbr />{{ emailDomain }}</a>
+  <div class="block-actions">
+    <a [href]="gmailUrl" target="_blank" rel="noopener noreferrer" class="btn-pencil">Escribir en Gmail</a>
+    <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="btn-line">Descargar CV <app-icon name="download"></app-icon></a>
+    <a [href]="instagram" target="_blank" rel="noopener noreferrer me" class="link-pencil inline-flex items-center gap-2">
+      <app-icon name="instagram"></app-icon> pilarblanco.actriz
+    </a>
+    <a [href]="vimeo" target="_blank" rel="noopener noreferrer me" class="link-pencil inline-flex items-center gap-2">
+      <app-icon name="vimeo-v"></app-icon> Vimeo
+    </a>
+  </div>
+</section>
+
+<dialog #reelDialog class="reel-dialog" aria-label="Reel 2026 de Pilar Blanco" (close)="onReelClose()" (click)="onReelBackdrop($event)">
+  <div class="reel-dialog-frame film film-h">
+    @if (reelOpen()) {
+      <div class="relative pb-[56.25%] h-0">
+        <iframe [src]="reelUrl" title="Reel 2026 de actuación de Pilar Blanco"
+          class="absolute inset-0 h-full w-full" frameborder="0" referrerpolicy="strict-origin-when-cross-origin"
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
+      </div>
+    }
+  </div>
+  <button type="button" class="reel-close" (click)="closeReel()" aria-label="Cerrar el reel">
+    <app-icon name="xmark"></app-icon>
+  </button>
+</dialog>

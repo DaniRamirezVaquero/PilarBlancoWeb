@@ -2,300 +2,340 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Estilos base mejorados */
-* {
+/*
+ * Hoja de contactos — sistema visual de la web de Pilar Blanco.
+ * Papel fotográfico blanco, tiras de negativo casi negras, un único rojo de lápiz
+ * graso para la elección activa y la acción principal, y códigos de borde ámbar.
+ */
+:root {
+  --paper: #fafaf8;
+  --print: #ffffff;
+  --ink: #171513;
+  --ink-soft: #5a554f;
+  --rule: #dcdad4;
+  --film: #151312;
+  --film-soft: #2b2725;
+  --sprocket: #e9e6df;
+  --pencil: #d42a1e;
+  --pencil-deep: #ad1d13;
+  --edge: #f0a13a;
+
+  --font-display: 'Archivo Variable', 'Archivo', 'Arial Narrow', sans-serif;
+  --font-body: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+  --font-code: 'Martian Mono Variable', ui-monospace, monospace;
+  --font-hand: 'Caveat Brush', 'Segoe Print', cursive;
+
+  /* Paso de fotograma: rige gutter, huecos y ritmo vertical de toda la maqueta. */
+  --step: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+  --gutter: clamp(1rem, 0.4rem + 3vw, 3.5rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: light;
+  accent-color: var(--pencil);
+}
+
+html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  background: var(--paper);
+  scrollbar-color: var(--film-soft) var(--paper);
 }
 
 body {
-  font-family: 'Lato', sans-serif;
-  overflow-x: hidden;
-}
-
-/* Superficie de páginas internas — tokens --page-* del theme */
-.bg-page {
-  background-image: linear-gradient(
-    to top right,
-    var(--page-from),
-    var(--page-via),
-    var(--page-to)
-  );
-}
-
-/* Animaciones sutiles */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.float-animation {
-  animation: float 3s ease-in-out infinite;
-}
-
-.shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
-/* Efecto glass morphism */
-.glass-effect {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-}
-
-/* Nuevos estilos de fuente para elegancia */
-.playfair-display {
-  font-family: "Playfair Display", serif;
-}
-
-.playfair-display-medium {
-  font-family: "Playfair Display", serif;
-  font-weight: 500;
-}
-
-.playfair-display-semibold {
-  font-family: "Playfair Display", serif;
-  font-weight: 600;
-}
-
-.playfair-display-bold {
-  font-family: "Playfair Display", serif;
-  font-weight: 700;
-}
-
-/* Cabeceras internas — variante "Guión corto": Playfair de página, Lato de apartado */
-.page-title {
   margin: 0;
-  font-family: "Playfair Display", serif;
-  font-weight: 500;
-  font-size: clamp(2rem, 4.2vw, 3.15rem);
-  letter-spacing: -0.025em;
-  line-height: 1.12;
-  color: oklch(var(--bc));
-  text-wrap: balance;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-.page-title-dash {
-  display: block;
-  width: 3rem;
-  height: 2px;
-  margin-top: 0.85rem;
-  background: oklch(var(--a));
-  transition: background-color 1.2s ease;
+::selection {
+  background: var(--pencil);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--pencil);
+  outline-offset: 3px;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+}
+
+img {
+  max-width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page-title-dash {
-    transition: none;
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
   }
 }
 
-.section-title {
-  margin: 0;
-  font-family: Lato, sans-serif;
+/* ——— Voces tipográficas ——— */
+
+.type-display {
+  font-family: var(--font-display);
+  font-stretch: 62%;
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/* Código de borde: lo que va impreso en el margen de la película (números, rótulos). */
+.edge-code {
+  font-family: var(--font-code);
+  font-stretch: 75%;
+  font-weight: 600;
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.hand {
+  font-family: var(--font-hand);
+  color: var(--pencil);
   font-weight: 400;
-  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
-  letter-spacing: 0.05em;
-  color: oklch(var(--bc));
+  line-height: 1;
+}
+
+.prose-sheet {
+  max-width: 66ch;
+  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+  line-height: 1.7;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.prose-sheet p + p {
+  margin-top: 1em;
+}
+
+/* ——— Cabecera de hoja (título de cada página y sección) ——— */
+
+.sheet-head {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: calc(var(--step) * 1.5);
+}
+
+
+.sheet-title {
+  font-family: var(--font-display);
+  font-stretch: 62%;
+  font-weight: 800;
+  font-size: clamp(3rem, 1.6rem + 6vw, 6rem);
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
   text-wrap: balance;
 }
 
-/* Animaciones personalizadas */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.sub-title {
+  font-family: var(--font-display);
+  font-stretch: 75%;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
 }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* ——— Página ——— */
+
+.page {
+  padding: calc(var(--step) * 2.5) var(--gutter) calc(var(--step) * 4);
+  max-width: 100rem;
+  margin: 0 auto;
 }
 
-@keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.section {
+  padding-block: calc(var(--step) * 3.5);
 }
 
-@keyframes slide-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-32px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
+/* ——— Tira de negativo ——— */
 
-@keyframes slide-in-right {
-  from {
-    opacity: 0;
-    transform: translateX(32px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse-subtle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
-}
-
-@keyframes shimmer-slow {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* Efectos interactivos con mouse */
-.mouse-interactive {
-  transition: all 0.2s ease-out;
-  transform-style: preserve-3d;
+.film {
+  --perf: 0.875rem;
   position: relative;
+  background: var(--film);
+  color: var(--edge);
 }
 
-/* Efecto de gradiente dinámico para el texto - MÁS NOTABLE */
-.dynamic-text-glow {
-  background: linear-gradient(
-    90deg,
-    transparent 10%,
-    oklch(var(--p) / 0.8) 45%,
-    oklch(var(--p)) 50%,
-    oklch(var(--p) / 0.8) 55%,
-    transparent 90%
-  );
-  background-size: 300% 100%;
-  background-position: var(--glow-x, -150%) 0;
-  background-clip: text;
-  -webkit-background-clip: text;
-  transition: background-position 0.2s ease-out;
+/* Perforaciones arriba y abajo (tira horizontal). */
+.film-h {
+  padding: calc(var(--perf) * 2.1) calc(var(--perf) * 0.75);
 }
 
-/* Clase para el efecto tilt 3D - MÁS NOTABLE */
-.tilt-3d {
-  transform-style: preserve-3d;
-  transition: transform 0.15s ease-out;
+.film-h::before,
+.film-h::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--perf);
+  background: repeating-linear-gradient(90deg, transparent 0 0.5rem, var(--sprocket) 0.5rem 1.25rem);
+  opacity: 0.92;
 }
 
-/* Transición más lenta para el retorno a posición original */
-.tilt-3d.returning {
-  transition: transform 0.6s ease-out;
+.film-h::before {
+  top: calc(var(--perf) * 0.5);
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 1s ease-out forwards;
+.film-h::after {
+  bottom: calc(var(--perf) * 0.5);
 }
 
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out forwards;
+/* Perforaciones a los lados (tira vertical). */
+.film-v {
+  padding: calc(var(--perf) * 0.75) calc(var(--perf) * 2.1);
 }
 
-.animate-scale-in {
-  animation: scale-in 0.3s ease-out forwards;
+.film-v::before,
+.film-v::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--perf);
+  background: repeating-linear-gradient(180deg, transparent 0 0.5rem, var(--sprocket) 0.5rem 1.25rem);
+  opacity: 0.92;
 }
 
-.animate-slide-in-left {
-  animation: slide-in-left 0.6s ease-out forwards;
+.film-v::before {
+  left: calc(var(--perf) * 0.5);
 }
 
-.animate-slide-in-right {
-  animation: slide-in-right 0.6s ease-out forwards;
+.film-v::after {
+  right: calc(var(--perf) * 0.5);
 }
 
-.animate-pulse-subtle {
-  animation: pulse-subtle 2s ease-in-out infinite;
+/* Copia: foto con margen blanco de ampliación. */
+.print {
+  background: var(--print);
+  padding: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
+  box-shadow: 0 1px 1px rgb(23 21 19 / 0.06), 0 18px 40px -24px rgb(23 21 19 / 0.35);
 }
 
-.animate-shimmer-slow {
-  animation: shimmer-slow 3s ease-in-out infinite;
+.print img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.animation-delay-200 {
-  animation-delay: 200ms;
-}
+/* ——— Acciones ——— */
 
-.animation-delay-400 {
-  animation-delay: 400ms;
-}
-
-.lato-thin {
-  font-family: "Lato", sans-serif;
-  font-weight: 100;
-  font-style: normal;
-}
-
-.lato-light {
-  font-family: "Lato", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.lato-regular {
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.lato-bold {
-  font-family: "Lato", sans-serif;
+.btn-pencil,
+.btn-line {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  min-height: 2.875rem;
+  padding: 0.7rem 1.35rem;
+  /* Etiquetas de corte recto: lo redondo es el trazo de lápiz que las marca. */
+  border-radius: 2px;
+  font-family: var(--font-display);
+  font-stretch: 80%;
   font-weight: 700;
-  font-style: normal;
+  font-size: 0.9375rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
 }
 
-.lato-black {
-  font-family: "Lato", sans-serif;
-  font-weight: 900;
-  font-style: normal;
+.btn-pencil::after,
+.btn-line::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.5s var(--ease-out);
 }
 
-.lato-thin-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 100;
-  font-style: italic;
+.btn-pencil:hover::after,
+.btn-pencil:focus-visible::after,
+.btn-line:hover::after,
+.btn-line:focus-visible::after {
+  clip-path: inset(0 0 0 0);
 }
 
-.lato-light-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 300;
-  font-style: italic;
+/* Acción principal: etiqueta roja que el lápiz rodea al señalarla. */
+.btn-pencil {
+  background: var(--pencil);
+  color: #fff;
+  border: 0;
+  box-shadow: 0 10px 24px -14px rgb(173 29 19 / 0.9);
 }
 
-.lato-regular-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
-  font-style: italic;
+.btn-pencil::after {
+  inset: -0.7rem -0.9rem;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80' preserveAspectRatio='none'%3E%3Cpath d='M108 6C56 3 8 14 5 39c-3 26 46 37 99 36 54-1 92-14 91-38C194 14 152 4 96 8 74 10 55 14 44 20' fill='none' stroke='%23d42a1e' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
 }
 
-.lato-bold-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 700;
-  font-style: italic;
+.btn-pencil:hover {
+  background: var(--pencil-deep);
 }
 
-.lato-black-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 900;
-  font-style: italic;
+/* Secundaria: contorno de tinta; al pasar, el lápiz la subraya. */
+.btn-line {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid currentColor;
+}
+
+.btn-line::after {
+  left: -4%;
+  right: -4%;
+  bottom: -0.75rem;
+  height: 0.6rem;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6.5C22 3 48 3.5 98 5' fill='none' stroke='%23d42a1e' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+
+.btn-pencil svg,
+.btn-line svg {
+  width: 1em;
+  height: 1em;
+}
+
+/* Enlace de texto con subrayado de lápiz al pasar. */
+.link-pencil {
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-decoration-thickness: 1.5px;
+  transition: text-decoration-color 0.2s, color 0.2s;
+}
+
+.link-pencil:hover {
+  color: var(--pencil-deep);
+  text-decoration-color: var(--pencil);
+}
+
+.sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

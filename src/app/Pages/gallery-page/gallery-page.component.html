@@ -1,23 +1,24 @@
-<div
-  class="bg-page w-screen py-24 lg:py-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden">
+<div class="page">
+  <header class="sheet-head">
+    <h1 class="sheet-title">Fotos</h1>
+  </header>
 
-  <div class="flex flex-col gap-4 sm:gap-6 md:gap-8">
-    <div>
-      <h1 class="page-title">Galería</h1>
-      <span class="page-title-dash" aria-hidden="true"></span>
-    </div>
-    <app-carousel></app-carousel>
-    <div class="flex justify-center mt-20 md:mt-24">
-      <a class="btn btn-sm md:btn-md btn-accent gap-2 border-none text-white"
-        href="assets/downloads/pilar-blanco-galeria-fotos.zip" download="Pilar Blanco - Galeria fotos.zip"
-        aria-label="Descargar el pack de fotos del carrusel en calidad completa">
-        Descargar fotos
-        <app-icon name="download" size="lg"></app-icon>
+  <section aria-labelledby="book-title">
+    <div class="flex flex-wrap items-end justify-between gap-4 mb-[calc(var(--step)*1.25)]">
+      <h2 id="book-title" class="sub-title">Book</h2>
+      <a [href]="photosZip" download="Pilar Blanco - Galeria fotos.zip" class="btn-pencil"
+        aria-label="Descargar el book fotográfico de Pilar Blanco en calidad completa (zip)">
+        Descargar las fotos <app-icon name="download"></app-icon>
       </a>
     </div>
-    <div class="mt-16 lg:mt-20">
-      <h2 class="section-title">Proyectos</h2>
+    <app-contact-sheet [frames]="book" [perStrip]="4" aspect="4 / 5" sizes="(min-width: 1024px) 22vw, 62vw"></app-contact-sheet>
+  </section>
+
+  <section class="mt-[calc(var(--step)*3.5)]" aria-labelledby="proyectos-title">
+    <div class="mb-[calc(var(--step)*1.25)] grid gap-2">
+      <h2 id="proyectos-title" class="sub-title">Fotogramas de proyectos</h2>
+      <p class="text-ink-soft">El título de cada proyecto va impreso en el borde de su fotograma.</p>
     </div>
-    <app-collage></app-collage>
-  </div>
+    <app-contact-sheet [frames]="projects" [perStrip]="5" aspect="16 / 9" sizes="(min-width: 1024px) 18vw, 62vw"></app-contact-sheet>
+  </section>
 </div>

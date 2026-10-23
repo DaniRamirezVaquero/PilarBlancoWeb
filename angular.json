@@ -33,6 +33,9 @@
               "src/sitemap.xml"
             ],
             "styles": [
+              "node_modules/@fontsource-variable/archivo/wdth.css",
+              "node_modules/@fontsource-variable/martian-mono/wdth.css",
+              "node_modules/@fontsource/caveat-brush/latin-400.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -47,8 +50,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ],
               "outputHashing": "all"
@@ -98,6 +101,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@fontsource-variable/archivo/wdth.css",
+              "node_modules/@fontsource-variable/martian-mono/wdth.css",
+              "node_modules/@fontsource/caveat-brush/latin-400.css",
               "src/styles.css"
             ],
             "scripts": []

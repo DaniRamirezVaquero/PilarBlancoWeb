@@ -1,98 +1,78 @@
-import { Component, inject, OnInit, AfterViewInit, ElementRef, HostListener } from '@angular/core';
-import { PlayBtnComponent } from '../../components/play-btn/play-btn.component';
-import { SideNavService } from '../../services/side-nav.service';
-import { CommonModule } from '@angular/common';
+import { Component, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ContactSheetComponent } from '../../components/contact-sheet/contact-sheet.component';
+import { VoiceStripComponent } from '../../components/voice-strip/voice-strip.component';
+import { VimeoFacadeComponent } from '../../components/vimeo-facade/vimeo-facade.component';
+import { IconComponent } from '../../components/icon/icon.component';
+import {
+  BOOK, CONTACT, HERO_STRIP, HIGHLIGHT_CREDITS, REEL, SCENES, VOICE,
+} from '../../data/portfolio.data';
 
+/**
+ * Inicio-dosier: en un solo recorrido, la ampliación de la portada con su tira de
+ * contactos, el reel, el book, la voz, la trayectoria y el contacto. Cada bloque
+ * enlaza a su página propia con el material completo.
+ */
 @Component({
-    selector: 'app-principal',
-    imports: [
-        PlayBtnComponent,
-        CommonModule
-    ],
-    templateUrl: './principal.component.html',
-    styleUrl: './principal.component.css'
+  selector: 'app-principal',
+  imports: [RouterLink, ContactSheetComponent, VoiceStripComponent, VimeoFacadeComponent, IconComponent],
+  templateUrl: './principal.component.html',
+  styleUrl: './principal.component.css',
 })
-export class PrincipalComponent implements OnInit, AfterViewInit {
+export class PrincipalComponent {
+  readonly heroStrip = HERO_STRIP;
+  readonly book = BOOK;
+  readonly voice = VOICE;
+  readonly credits = HIGHLIGHT_CREDITS;
+  readonly reel = REEL;
+  readonly scenes = SCENES;
 
-  sideNavIsOpen: boolean = false;
-  subscription: any;
-  showReel: boolean = false;
+  readonly email = CONTACT.email;
+  /** Usuario y dominio por separado: en móvil la dirección parte justo antes de la arroba. */
+  readonly emailUser = CONTACT.email.slice(0, CONTACT.email.indexOf('@'));
+  readonly emailDomain = CONTACT.email.slice(CONTACT.email.indexOf('@'));
+  readonly mailtoUrl = `mailto:${CONTACT.email}`;
+  readonly gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONTACT.email)}`;
+  readonly instagram = CONTACT.instagram;
+  readonly vimeo = CONTACT.vimeo;
+  readonly cvUrl = CONTACT.cv;
+  readonly photosZip = CONTACT.photosZip;
 
-  coverReady = false;
+  readonly reelOpen = signal(false);
+  readonly reelUrl: SafeResourceUrl = inject(DomSanitizer).bypassSecurityTrustResourceUrl(
+    `https://player.vimeo.com/video/${REEL.videoId}?h=${REEL.hash}&autoplay=1`,
+  );
 
-  constructor(private elementRef: ElementRef) { }
+  private readonly reelDialog = viewChild<ElementRef<HTMLDialogElement>>('reelDialog');
 
-  sideNavService = inject(SideNavService);
-
-  ngOnInit(): void {
-    this.sideNavService.isOpen$.subscribe(isOpen => {
-      this.sideNavIsOpen = isOpen;
-    });
+  /** Título sin su última palabra: la última va unida al icono de enlace para que nunca quede sola. */
+  titleHead(title: string): string {
+    const cut = title.lastIndexOf(' ');
+    return cut < 0 ? '' : title.slice(0, cut + 1);
   }
 
-  ngAfterViewInit(): void {
-    this.revealIfCached();
+  titleTail(title: string): string {
+    return title.slice(title.lastIndexOf(' ') + 1);
   }
 
-  private revealIfCached(): void {
-    const img = this.elementRef.nativeElement.querySelector('img.hero-cover') as HTMLImageElement | null;
-    if (img?.complete && img.naturalWidth > 0) {
-      // Se aplaza un microtask: cambiarlo en ngAfterViewInit lanza NG0100.
-      Promise.resolve().then(() => { this.coverReady = true; });
-    }
+  openReel(): void {
+    this.reelOpen.set(true);
+    this.reelDialog()?.nativeElement.showModal();
   }
 
-  toggleShowReel() {
-    this.showReel = !this.showReel;
+  closeReel(): void {
+    this.reelDialog()?.nativeElement.close();
   }
 
-  @HostListener('mousemove', ['$event'])
-  onMouseMove(event: MouseEvent): void {
-    const container = this.elementRef.nativeElement.querySelector('.hero-container');
-    const nameElement = this.elementRef.nativeElement.querySelector('.interactive-name');
-
-    if (container && nameElement) {
-      // Quitar la clase de retorno para transición rápida durante movimiento
-      nameElement.classList.remove('returning');
-
-      const rect = container.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-
-      // Calcular la posición relativa del mouse
-      const mouseX = event.clientX - centerX;
-      const mouseY = event.clientY - centerY;
-
-      // Calcular rotación más notable (máximo 8 grados)
-      const rotateX = (mouseY / rect.height) * -15;
-      const rotateY = (mouseX / rect.width) * 15;
-
-      // Aplicar transformación 3D más notable
-      nameElement.style.transform = `
-        perspective(800px)
-        rotateX(${Math.max(-8, Math.min(8, rotateX))}deg)
-        rotateY(${Math.max(-8, Math.min(8, rotateY))}deg)
-        translateZ(20px)
-      `;
-
-      // Calcular posición del gradiente dinámico - más responsivo
-      const mousePercentX = ((event.clientX - rect.left) / rect.width) * 100;
-
-      // Actualizar variable CSS para el gradiente más dinámico
-      container.style.setProperty('--glow-x', `${mousePercentX - 75}%`);
-    }
+  /** Al cerrar se retira el iframe para que el vídeo deje de sonar. */
+  onReelClose(): void {
+    this.reelOpen.set(false);
   }
 
-  @HostListener('mouseleave')
-  onMouseLeave(): void {
-    const nameElement = this.elementRef.nativeElement.querySelector('.interactive-name');
-    if (nameElement) {
-      // Agregar clase para transición lenta de retorno
-      nameElement.classList.add('returning');
-
-      // Resetear transformación con transición suave
-      nameElement.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0)';
-      nameElement.style.setProperty('--glow-x', '-150%');
+  onReelBackdrop(event: MouseEvent): void {
+    if (event.target === this.reelDialog()?.nativeElement) {
+      this.closeReel();
     }
   }
 }

@@ -1,0 +1,28 @@
+.sheet-head-cv { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1.25rem 2rem; }
+
+.cv { display: grid; gap: calc(var(--step) * 2.5); }
+@media (min-width: 1024px) {
+  .cv { grid-template-columns: minmax(15rem, 1fr) minmax(0, 2.4fr); gap: calc(var(--step) * 3); align-items: start; }
+}
+
+.cv-side { display: grid; gap: calc(var(--step) * 1.25); align-content: start; }
+.cv-side .print { max-width: 24rem; }
+.cv-side .print img { aspect-ratio: 743 / 1024; }
+
+.cv-block { font-size: 0.9375rem; line-height: 1.6; }
+.cv-label { margin: 0 0 0.6rem; padding-bottom: 0.45rem; border-bottom: 1px solid var(--rule); color: var(--ink-soft); }
+.cv-contact { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; overflow-wrap: anywhere; }
+.cv-contact app-icon { color: var(--ink-soft); }
+
+.cv-lockup { display: grid; gap: 1rem; padding-bottom: calc(var(--step) * 1.25); border-bottom: 1px solid var(--rule); }
+.cv-role {
+  margin: 0; font-family: var(--font-display); font-stretch: 100%; font-weight: 600;
+  font-size: 1rem; letter-spacing: 0.42em; text-transform: uppercase;
+}
+
+.cv-columns { display: grid; gap: calc(var(--step) * 1.75) calc(var(--step) * 2.5); margin-top: calc(var(--step) * 1.75); }
+@media (min-width: 768px) { .cv-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.cv-heading { margin-bottom: 0.75rem; }
+.cv-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.3rem; font-size: 1rem; }
+.cv-list-loose { gap: 0.6rem; font-size: 0.9375rem; }

@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, HostBinding, inject } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
-import { SideNavigationComponent } from './components/side-navigation/side-navigation.component';
+import { SiteBarComponent } from './components/site-bar/site-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SeoService } from './seo/seo.service';
 import { VercelAnalyticsService } from './services/vercel-analytics.service';
@@ -11,8 +10,7 @@ import { filter } from 'rxjs';
     selector: 'app-root',
     imports: [
         RouterOutlet,
-        HeaderComponent,
-        SideNavigationComponent,
+        SiteBarComponent,
         FooterComponent
     ],
     templateUrl: './app.component.html',
@@ -23,8 +21,6 @@ export class AppComponent implements AfterViewInit {
 
   @HostBinding('class.app-ready') appReady = this.readInitialAppReady();
 
-  showFooter: boolean = true;
-
   private readonly seo = inject(SeoService);
   /** Web Analytics de Vercel: pageviews en cada navegación del router. */
   private readonly _analytics = inject(VercelAnalyticsService);
@@ -34,7 +30,6 @@ export class AppComponent implements AfterViewInit {
     this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event) => {
-        this.updateVisibility(event.urlAfterRedirects);
         this.seo.updateForUrl(event.urlAfterRedirects);
       });
   }
@@ -54,9 +49,5 @@ export class AppComponent implements AfterViewInit {
       return true;
     }
     return !!document.querySelector('app-root.app-ready');
-  }
-
-  private updateVisibility(url: string): void {
-    this.showFooter = url !== '/home';
   }
 }
