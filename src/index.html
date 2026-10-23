@@ -26,15 +26,14 @@
     content="Pilar Blanco, actriz de cine, televisión, teatro y doblaje. Reel, galería, currículum y contacto para castings y agencias.">
   <meta name="twitter:image" content="https://pilarblanco.es/assets/images/og-pilar-blanco.webp">
   <meta name="twitter:image:alt" content="Retrato de Pilar Blanco, actriz">
+  <link rel="preload" as="image" type="image/webp" href="assets/images/hero/portada-1920.webp"
+    imagesrcset="assets/images/hero/portada-960.webp 960w, assets/images/hero/portada-1920.webp 1920w, assets/images/hero/portada-3200.webp 3200w"
+    imagesizes="100vw">
   <link rel="icon" type="image/x-icon" href="./favicon.ico">
   <style>
     html, body {
       margin: 0;
       background-color: #5c5c5c;
-    }
-    html[data-hero="portada"] img.hero-cover[src*="fondo2-"],
-    html[data-hero="fondo2"] img.hero-cover[src*="portada-"] {
-      opacity: 0 !important;
     }
     app-root {
       display: block;
@@ -54,93 +53,6 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Playfair+Display:wght@500;600&display=swap"
     rel="stylesheet">
-  <script>
-    (function () {
-      var covers = ['fondo2', 'portada'];
-      var themes = { fondo2: 'mytheme', portada: 'mytheme-portada' };
-      var SESSION_KEY = 'hero-cover';
-      var LAST_KEY = 'hero-cover-last';
-
-      function read(storage, key) {
-        try { return storage.getItem(key); } catch (e) { return null; }
-      }
-      function write(storage, key, value) {
-        try { storage.setItem(key, value); } catch (e) {}
-      }
-
-      var index = 0;
-      var sessionCover = read(sessionStorage, SESSION_KEY);
-      if (sessionCover && covers.indexOf(sessionCover) !== -1) {
-        index = covers.indexOf(sessionCover);
-      } else {
-        var lastCover = read(localStorage, LAST_KEY);
-        if (lastCover && covers.indexOf(lastCover) !== -1) {
-          index = (covers.indexOf(lastCover) + 1) % covers.length;
-        }
-        write(sessionStorage, SESSION_KEY, covers[index]);
-        write(localStorage, LAST_KEY, covers[index]);
-      }
-      var key = covers[index];
-      document.documentElement.setAttribute('data-theme', themes[key]);
-      document.documentElement.setAttribute('data-hero', key);
-
-      // Solo /home pinta el hero: en cualquier otra ruta no precargamos nada.
-      if (location.pathname !== '/' && location.pathname !== '/home') {
-        return;
-      }
-
-      function coverSrcset(coverKey) {
-        return [
-          'assets/images/hero/' + coverKey + '-960.webp 960w',
-          'assets/images/hero/' + coverKey + '-1920.webp 1920w',
-          'assets/images/hero/' + coverKey + '-3200.webp 3200w'
-        ].join(', ');
-      }
-
-      function applyCover(img) {
-        if (!img || img.getAttribute('data-hero-applied') === key) {
-          return;
-        }
-        img.setAttribute('src', 'assets/images/hero/' + key + '-1920.webp');
-        img.setAttribute('srcset', coverSrcset(key));
-        img.setAttribute('data-hero-applied', key);
-      }
-
-      var observer = new MutationObserver(function (mutations) {
-        for (var i = 0; i < mutations.length; i++) {
-          var nodes = mutations[i].addedNodes;
-          for (var j = 0; j < nodes.length; j++) {
-            var node = nodes[j];
-            if (node.nodeType !== 1) {
-              continue;
-            }
-            if (node.classList && node.classList.contains('hero-cover')) {
-              applyCover(node);
-            }
-            if (node.querySelectorAll) {
-              var imgs = node.querySelectorAll('img.hero-cover');
-              for (var k = 0; k < imgs.length; k++) {
-                applyCover(imgs[k]);
-              }
-            }
-          }
-        }
-      });
-      observer.observe(document.documentElement, { childList: true, subtree: true });
-      document.addEventListener('DOMContentLoaded', function () {
-        observer.disconnect();
-      });
-
-      var link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.type = 'image/webp';
-      link.href = 'assets/images/hero/' + key + '-1920.webp';
-      link.imageSrcset = coverSrcset(key);
-      link.imageSizes = '100vw';
-      document.head.appendChild(link);
-    })();
-  </script>
 </head>
 
 <body class="overflow-x-hidden">

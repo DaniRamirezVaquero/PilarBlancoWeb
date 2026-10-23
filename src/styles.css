@@ -13,12 +13,6 @@ body {
 }
 
 /* Superficie de páginas internas — tokens --page-* del theme */
-[data-theme="mytheme-portada"] {
-  --page-from: #A4ADB6 !important;
-  --page-via: #727C88 !important;
-  --page-to: #59646F !important;
-}
-
 .bg-page {
   background-image: linear-gradient(
     to top right,

@@ -1,7 +1,6 @@
 import { Component, inject, OnInit, AfterViewInit, ElementRef, HostListener } from '@angular/core';
 import { PlayBtnComponent } from '../../components/play-btn/play-btn.component';
 import { SideNavService } from '../../services/side-nav.service';
-import { HeroCover, HeroThemeService } from '../../services/hero-theme.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -19,9 +18,7 @@ export class PrincipalComponent implements OnInit, AfterViewInit {
   subscription: any;
   showReel: boolean = false;
 
-  readonly heroTheme = inject(HeroThemeService);
-  readonly heroWidths: readonly number[] = [960, 1920, 3200];
-  readyCover: HeroCover | null = null;
+  coverReady = false;
 
   constructor(private elementRef: ElementRef) { }
 
@@ -37,30 +34,11 @@ export class PrincipalComponent implements OnInit, AfterViewInit {
     this.revealIfCached();
   }
 
-  onCoverLoad(cover: HeroCover): void {
-    if (cover === this.heroTheme.currentCover()) {
-      this.readyCover = cover;
-    }
-  }
-
-  /** Devuelve el srcset responsivo (960/1920/3200w) para una cubierta del hero. */
-  coverSrcset(key: string): string {
-    return this.heroWidths
-      .map(width => `assets/images/hero/${key}-${width}.webp ${width}w`)
-      .join(', ');
-  }
-
-  /** Fallback para navegadores sin soporte de srcset. */
-  coverSrc(key: string): string {
-    return `assets/images/hero/${key}-1920.webp`;
-  }
-
   private revealIfCached(): void {
     const img = this.elementRef.nativeElement.querySelector('img.hero-cover') as HTMLImageElement | null;
-    const cover = this.heroTheme.currentCover();
-    const src = img?.currentSrc || img?.src || '';
-    if (img?.complete && img.naturalWidth > 0 && src.includes(cover)) {
-      this.readyCover = cover;
+    if (img?.complete && img.naturalWidth > 0) {
+      // Se aplaza un microtask: cambiarlo en ngAfterViewInit lanza NG0100.
+      Promise.resolve().then(() => { this.coverReady = true; });
     }
   }
 

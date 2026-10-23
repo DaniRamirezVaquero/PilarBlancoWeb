@@ -7,22 +7,6 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          "primary": "#95B2C6",
-          "secondary": "#1e3a4d",
-          "accent": "#E4754E",
-          "neutral": "#e5e7eb",
-          "base-100": "#374151",
-          "info": "#38bdf8",
-          "success": "#4ade80",
-          "warning": "#fcd34d",
-          "error": "#f87171",
-          "--page-from": "#a1a1aa",
-          "--page-via": "#737373",
-          "--page-to": "#525252",
-        },
-      },
-      {
-        "mytheme-portada": {
           "primary": "#80A59E",
           "secondary": "#4A4542",
           "accent": "#2f76ba",

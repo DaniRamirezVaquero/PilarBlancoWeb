@@ -4,7 +4,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { SideNavigationComponent } from './components/side-navigation/side-navigation.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SeoService } from './seo/seo.service';
-import { HeroThemeService } from './services/hero-theme.service';
 import { VercelAnalyticsService } from './services/vercel-analytics.service';
 import { filter } from 'rxjs';
 
@@ -27,8 +26,6 @@ export class AppComponent implements AfterViewInit {
   showFooter: boolean = true;
 
   private readonly seo = inject(SeoService);
-  /** Fija cover/tema de esta pestaña; no rota mientras la sesión sigue abierta. */
-  private readonly _heroTheme = inject(HeroThemeService);
   /** Web Analytics de Vercel: pageviews en cada navegación del router. */
   private readonly _analytics = inject(VercelAnalyticsService);
 
