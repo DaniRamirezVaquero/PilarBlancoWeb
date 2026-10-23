@@ -48,3 +48,5 @@ Material Nuevo
 Thumbs.db
 .vercel
 .env*
+.claude/skills/impeccable/scripts/bin/
+.claude/settings.local.json
