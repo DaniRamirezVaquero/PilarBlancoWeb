@@ -36,6 +36,17 @@
   font-weight: 600; font-size: 0.9375rem; text-decoration: none;
 }
 .cv-link:hover { color: var(--pencil-deep); }
+.cv-link-mobile { display: none; }
+
+/* En móvil el CV es un botón redondo más, como el de contacto y el menú. */
+@media (max-width: 639px) {
+  .cv-link {
+    justify-content: center; width: 2.75rem; height: 2.75rem; padding: 0;
+    border-radius: 999px; border: 1.5px solid var(--ink); font-size: 1.05rem;
+  }
+  .cv-link-label, .cv-link-desktop { display: none; }
+  .cv-link-mobile { display: inline-flex; }
+}
 
 .menu-btn {
   display: inline-flex; align-items: center; justify-content: center;

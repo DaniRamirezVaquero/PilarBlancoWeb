@@ -10,7 +10,8 @@
                 (click)="open(item.index, $event.currentTarget)"
                 (pointermove)="onPointerMove($event, item.frame)" (pointerleave)="hideLoupe()">
                 <img [src]="item.frame.src" [attr.srcset]="item.frame.srcset ?? null" [attr.sizes]="item.frame.srcset ? sizes : null"
-                  alt="" [attr.loading]="eager ? 'eager' : 'lazy'" decoding="async" draggable="false" />
+                  alt="" [attr.loading]="eager ? 'eager' : 'lazy'" decoding="async" draggable="false"
+                  [style.object-position]="item.frame.position ?? null" />
               </button>
               @if (chosen === item.index) {
                 <app-pencil-ring [delay]="ringDelay"></app-pencil-ring>

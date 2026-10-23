@@ -9,6 +9,30 @@ import { PencilRingComponent } from '../pencil-ring/pencil-ring.component';
 /** Aumento de la lupa respecto a la miniatura. */
 const LOUPE_ZOOM = 2.6;
 
+interface Box {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
+/**
+ * Caja que ocupa una imagen con object-fit: cover dentro de un marco, según su
+ * object-position (en %, que es lo que usa la web).
+ */
+function coverBox(frameW: number, frameH: number, imgW: number, imgH: number, position: string): Box {
+  const scale = Math.max(frameW / imgW, frameH / imgH);
+  const width = imgW * scale;
+  const height = imgH * scale;
+  const [px, py] = position.split(' ').map((value) => (value.endsWith('%') ? parseFloat(value) / 100 : 0.5));
+  return {
+    left: (frameW - width) * (px ?? 0.5),
+    top: (frameH - height) * (py ?? 0.5),
+    width,
+    height,
+  };
+}
+
 /**
  * Hoja de contactos: tiras de negativo con fotogramas. Al pasar el ratón, una lupa
  * amplía el fotograma; al pulsarlo, se rodea en rojo y se abre en grande.
@@ -106,17 +130,24 @@ export class ContactSheetComponent implements OnChanges, OnDestroy {
     if (!loupe || !target) {
       return;
     }
+    const img = target.querySelector('img');
+    if (!img || !img.naturalWidth) {
+      return;
+    }
     this.zone.runOutsideAngular(() => {
       const rect = target.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const url = `url("${encodeURI(frame.full)}")`;
+      // La miniatura usa object-fit: cover; la lupa reproduce ese mismo recorte
+      // para ampliar la foto con su proporción real, sin estirarla al fotograma.
+      const cover = coverBox(rect.width, rect.height, img.naturalWidth, img.naturalHeight,
+        getComputedStyle(img).objectPosition);
+      const x = event.clientX - rect.left - cover.left;
+      const y = event.clientY - rect.top - cover.top;
       if (loupe.dataset['src'] !== frame.full) {
-        loupe.style.backgroundImage = url;
+        loupe.style.backgroundImage = `url("${encodeURI(frame.full)}")`;
         loupe.dataset['src'] = frame.full;
       }
       const half = loupe.offsetWidth / 2;
-      loupe.style.backgroundSize = `${rect.width * LOUPE_ZOOM}px ${rect.height * LOUPE_ZOOM}px`;
+      loupe.style.backgroundSize = `${cover.width * LOUPE_ZOOM}px ${cover.height * LOUPE_ZOOM}px`;
       loupe.style.backgroundPosition = `${half - x * LOUPE_ZOOM}px ${half - y * LOUPE_ZOOM}px`;
       loupe.style.transform = `translate3d(${event.clientX - half}px, ${event.clientY - half}px, 0)`;
       loupe.classList.add('is-on');

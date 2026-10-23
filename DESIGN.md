@@ -234,7 +234,7 @@ Etiquetas de laboratorio, firmes y recortadas, que el lápiz señala.
 - **Enlaces de texto:** subrayado de filete de 1.5px que pasa a rojo al pasar, con el texto a rojo hundido. El correo gigante de contacto se subraya en rojo de izquierda a derecha.
 
 ### Tira de negativo (signature)
-Fondo negativo con perforaciones crema arriba y abajo (horizontal) o a los lados (vertical), paso de perforación 0.875rem. Cada fotograma lleva debajo su código de borde ámbar y su pie. Con ratón, una lupa circular de 11.5rem sigue al cursor y amplía el fotograma; al hacer clic, el anillo rojo se dibuja sobre él y se abre la ampliación: diálogo a pantalla completa con la copia que «revela» (de sobreexpuesta a normal en 0.55s), pie con código en rojo y contador, y controles circulares. En pantallas táctiles no hay lupa; el toque abre la ampliación.
+Fondo negativo con perforaciones crema arriba y abajo (horizontal) o a los lados (vertical), paso de perforación 0.875rem. Cada fotograma lleva debajo su código de borde ámbar y su pie. Cada foto se encuadra en su fotograma con object-fit: cover y su propio encuadre (`position` en los datos: la portada apaisada se centra en Pilar, las fotos del book conservan la cabeza). Con ratón, una lupa circular de 11.5rem sigue al cursor y amplía el fotograma reproduciendo ese mismo recorte, sin deformar la foto; al hacer clic, el anillo rojo (un solo trazo que se pasa de su inicio, ceñido a la foto sin tapar el código de borde) se dibuja sobre él y se abre la ampliación: diálogo a pantalla completa con la copia que «revela» (de sobreexpuesta a normal en 0.55s), pie con código en rojo y contador, y controles circulares. En pantallas táctiles no hay lupa; el toque abre la ampliación.
 
 ### Anillo de lápiz (signature)
 Círculo rojo de dos pasadas irregulares (5.5 y 3.5 de trazo) que se dibuja con stroke-dashoffset en 0.9s más una segunda pasada de 0.35s. Es la única marca roja activa de su zona.
@@ -258,6 +258,7 @@ Fachada de Vimeo: miniatura con botón de reproducir que solo carga el reproduct
 - **Do** medir huecos y márgenes en múltiplos del paso de fotograma (step) y del gutter.
 - **Do** usar solo el contenido elegido por la actriz; el sistema no aporta imágenes, vídeos ni audio propios.
 - **Do** dejar que la lupa sea solo de ratón y que el toque abra directamente la ampliación.
+- **Do** componer el nombre de Pilar con la tipografía de la portada (Archivo condensada, con un único subrayado de lápiz en el membrete del CV), nunca con un logotipo en imagen.
 
 ### Don't:
 - **Don't** poner un código de fotograma, rótulo o etiqueta en código de borde como antetítulo sobre un encabezado.

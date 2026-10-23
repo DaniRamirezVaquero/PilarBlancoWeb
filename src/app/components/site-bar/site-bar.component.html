@@ -18,8 +18,9 @@
   <div class="actions">
     <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="cv-link"
       aria-label="Descargar el currículum de Pilar Blanco en PDF">
-      <span>CV</span>
-      <app-icon name="download"></app-icon>
+      <span class="cv-link-label">CV</span>
+      <app-icon class="cv-link-desktop" name="download"></app-icon>
+      <app-icon class="cv-link-mobile" name="file-arrow-down"></app-icon>
     </a>
     <app-contact-menu class="hidden sm:block"></app-contact-menu>
     <app-contact-menu class="sm:hidden" variant="compact"></app-contact-menu>

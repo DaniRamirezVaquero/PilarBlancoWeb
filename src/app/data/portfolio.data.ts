@@ -13,6 +13,11 @@ export interface Frame {
   /** Imagen grande para la lupa y la ampliación. */
   full: string;
   alt: string;
+  /**
+   * Encuadre dentro del fotograma (CSS object-position) cuando la foto no tiene
+   * la proporción del fotograma; por defecto, centrado.
+   */
+  position?: string;
   /** Rótulo opcional (título del proyecto en la hoja de proyectos). */
   caption?: string;
 }
@@ -66,6 +71,8 @@ function book(n: number, alt: string, code: string): Frame {
     srcset: `${encoded}-900.webp 900w, ${encoded}-1400.webp 1400w`,
     full: `${base}-1400.webp`,
     alt,
+    // Si el fotograma recorta la foto, se conserva la cabeza antes que los pies.
+    position: '50% 20%',
   };
 }
 
@@ -75,6 +82,8 @@ export const COVER: Frame = {
   srcset: 'assets/images/hero/portada-960.webp 960w, assets/images/hero/portada-1920.webp 1920w',
   full: 'assets/images/hero/portada-1920.webp',
   alt: 'Pilar Blanco, actriz, sentada sobre un baúl metálico con camisa blanca y vaqueros',
+  // La portada es apaisada (16:9): en un fotograma vertical se encuadra sobre ella, no sobre el fondo.
+  position: '66% 40%',
 };
 
 /** Book fotográfico (descargable en zip). Rollo de inicio: 06A–17A. */
