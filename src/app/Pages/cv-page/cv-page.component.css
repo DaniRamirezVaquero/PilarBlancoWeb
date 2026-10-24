@@ -1,8 +1,17 @@
 .sheet-head-cv { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1.25rem 2rem; }
 
+/* Móvil: membrete, foto y datos, trayectoria. Escritorio: foto y datos a la izquierda, membrete y trayectoria a la derecha. */
 .cv { display: grid; gap: calc(var(--step) * 2.5); }
 @media (min-width: 1024px) {
-  .cv { grid-template-columns: minmax(15rem, 1fr) minmax(0, 2.4fr); gap: calc(var(--step) * 3); align-items: start; }
+  .cv {
+    grid-template-columns: minmax(15rem, 1fr) minmax(0, 2.4fr);
+    grid-template-areas: 'side lockup' 'side main';
+    grid-template-rows: auto 1fr;
+    gap: 0 calc(var(--step) * 3); align-items: start;
+  }
+  .cv-lockup { grid-area: lockup; }
+  .cv-side { grid-area: side; }
+  .cv-main { grid-area: main; }
 }
 
 .cv-side { display: grid; gap: calc(var(--step) * 1.25); align-content: start; }
