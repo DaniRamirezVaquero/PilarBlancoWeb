@@ -1,13 +1,13 @@
 :host { display: block; }
 
-.site-footer { padding: 0 var(--gutter) 2rem; }
+.site-footer { background: var(--shade-deep); }
 
-.footer-strip p {
-  display: flex; justify-content: space-between; gap: 1rem; margin: 0; padding: 0.35rem 0.5rem;
-  color: var(--edge); overflow: hidden; white-space: nowrap;
+.footer-inner {
+  display: grid; gap: 0.6rem 2rem; align-items: baseline;
+  max-width: 100rem; margin: 0 auto; padding: calc(var(--step) * 2) var(--gutter) calc(var(--step) * 1.75);
 }
+@media (min-width: 768px) { .footer-inner { grid-template-columns: auto minmax(0, 1fr) auto; } }
 
-.footer-row {
-  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem;
-  padding-top: 1rem; font-size: 0.8125rem;
-}
+.footer-name { margin: 0; font-family: var(--font-display); font-weight: 200; font-size: 2rem; line-height: 1; }
+.footer-role { margin: 0; color: var(--platinum-soft); font-size: 0.625rem; }
+.footer-copy { margin: 0; font-size: 0.8125rem; color: var(--platinum-soft); }

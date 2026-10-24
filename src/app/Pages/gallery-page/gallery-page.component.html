@@ -1,24 +1,19 @@
 <div class="page">
-  <header class="sheet-head">
-    <h1 class="sheet-title">Fotos</h1>
+  <header class="head head-row">
+    <h1 class="title-xl">Fotos</h1>
+    <a [href]="photosZip" download="Pilar Blanco - Galeria fotos.zip" class="btn-main"
+      aria-label="Descargar el book fotográfico de Pilar Blanco en calidad completa (zip)">
+      Descargar las fotos <app-icon name="download"></app-icon>
+    </a>
   </header>
 
   <section aria-labelledby="book-title">
-    <div class="flex flex-wrap items-end justify-between gap-4 mb-[calc(var(--step)*1.25)]">
-      <h2 id="book-title" class="sub-title">Book</h2>
-      <a [href]="photosZip" download="Pilar Blanco - Galeria fotos.zip" class="btn-pencil"
-        aria-label="Descargar el book fotográfico de Pilar Blanco en calidad completa (zip)">
-        Descargar las fotos <app-icon name="download"></app-icon>
-      </a>
-    </div>
-    <app-contact-sheet [frames]="book" [perStrip]="4" aspect="4 / 5" sizes="(min-width: 1024px) 22vw, 62vw"></app-contact-sheet>
+    <h2 id="book-title" class="sub-title mb-[calc(var(--step)*1.25)]">Book</h2>
+    <app-photo-book [frames]="book"></app-photo-book>
   </section>
 
-  <section class="mt-[calc(var(--step)*3.5)]" aria-labelledby="proyectos-title">
-    <div class="mb-[calc(var(--step)*1.25)] grid gap-2">
-      <h2 id="proyectos-title" class="sub-title">Fotogramas de proyectos</h2>
-      <p class="text-ink-soft">El título de cada proyecto va impreso en el borde de su fotograma.</p>
-    </div>
-    <app-contact-sheet [frames]="projects" [perStrip]="5" aspect="16 / 9" sizes="(min-width: 1024px) 18vw, 62vw"></app-contact-sheet>
+  <section class="mt-[calc(var(--step)*4.5)]" aria-labelledby="proyectos-title">
+    <h2 id="proyectos-title" class="sub-title mb-[calc(var(--step)*1.25)]">Fotogramas de proyectos</h2>
+    <app-photo-book [frames]="projects" layout="wall" sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw"></app-photo-book>
   </section>
 </div>

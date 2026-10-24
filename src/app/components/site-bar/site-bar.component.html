@@ -2,29 +2,25 @@
   <a class="sr-only-focusable skip" href="#contenido">Saltar al contenido</a>
 
   <a routerLink="/home" class="wordmark" (click)="closeMenu()" aria-label="Pilar Blanco, actriz. Inicio">
-    <span class="type-display">Pilar Blanco</span>
-    <span class="edge-code text-ink-soft">Actriz</span>
+    <span class="wordmark-name">Pilar Blanco</span>
+    <span class="label wordmark-role">Actriz</span>
   </a>
 
   <nav class="nav" aria-label="Secciones">
     @for (item of nav; track item.link) {
-      <a [routerLink]="item.link" routerLinkActive="is-active" class="nav-link">
-        <span class="edge-code nav-code">{{ item.code }}</span>
-        <span>{{ item.label }}</span>
-      </a>
+      <a [routerLink]="item.link" routerLinkActive="is-active" class="nav-link label">{{ item.label }}</a>
     }
   </nav>
 
   <div class="actions">
-    <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="btn-line bar-btn"
+    <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="btn-quiet bar-btn"
       aria-label="Descargar el currículum de Pilar Blanco en PDF">
       <app-icon name="file-arrow-down"></app-icon>
       <span>CV</span>
-      <span class="edge-code cv-format">PDF</span>
     </a>
     <app-contact-menu class="hidden sm:block"></app-contact-menu>
     <app-contact-menu class="sm:hidden" variant="compact"></app-contact-menu>
-    <button type="button" class="menu-btn lg:hidden" (click)="toggleMenu()"
+    <button type="button" class="menu-btn" (click)="toggleMenu()"
       [attr.aria-expanded]="menuOpen()" aria-controls="menu-movil"
       [attr.aria-label]="menuOpen() ? 'Cerrar menú' : 'Abrir menú'">
       <app-icon [name]="menuOpen() ? 'xmark' : 'bars'"></app-icon>
@@ -33,16 +29,12 @@
 </header>
 
 @if (menuOpen()) {
-  <div id="menu-movil" class="sheet-menu lg:hidden">
+  <div id="menu-movil" class="sheet-menu ground-shade">
     <nav aria-label="Secciones">
       <a routerLink="/home" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }"
-        class="sheet-link" (click)="closeMenu()">
-        <span class="edge-code">01A</span><span>Inicio</span>
-      </a>
+        class="sheet-link" (click)="closeMenu()">Inicio</a>
       @for (item of nav; track item.link) {
-        <a [routerLink]="item.link" routerLinkActive="is-active" class="sheet-link" (click)="closeMenu()">
-          <span class="edge-code">{{ item.code }}</span><span>{{ item.label }}</span>
-        </a>
+        <a [routerLink]="item.link" routerLinkActive="is-active" class="sheet-link" (click)="closeMenu()">{{ item.label }}</a>
       }
     </nav>
   </div>

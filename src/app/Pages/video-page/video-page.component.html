@@ -1,30 +1,27 @@
 <div class="page">
-  <header class="sheet-head">
-    <h1 class="sheet-title">Vídeos</h1>
+  <header class="head">
+    <h1 class="title-xl">Vídeos</h1>
   </header>
 
   <section aria-labelledby="reel-title">
     <h2 id="reel-title" class="sr-only">{{ reel.label }}</h2>
     <figure class="m-0">
-      <div class="film film-h">
+      <div class="print">
         <app-vimeo-facade [videoId]="reel.videoId" [hash]="reel.hash" [poster]="reel.poster" [title]="reel.title" [priority]="true" />
       </div>
-      <figcaption class="edge-code mt-3 flex gap-4 text-ink-soft"><b class="text-pencil-deep">{{ reel.code }}</b>{{ reel.label }}</figcaption>
+      <figcaption class="label mt-4 text-ink-soft">{{ reel.label }}</figcaption>
     </figure>
   </section>
 
-  <section class="mt-[calc(var(--step)*3.5)]" aria-labelledby="escenas-title">
+  <section class="mt-[calc(var(--step)*4)]" aria-labelledby="escenas-title">
     <h2 id="escenas-title" class="sub-title mb-[calc(var(--step)*1.25)]">Escenas y videobook</h2>
-    <div class="grid gap-[calc(var(--step)*1.5)] lg:grid-cols-2">
+    <div class="grid gap-[calc(var(--step)*1.75)] lg:grid-cols-2">
       @for (scene of scenes; track scene.videoId) {
         <figure class="m-0">
-          <div class="film film-h">
+          <div class="print">
             <app-vimeo-facade [videoId]="scene.videoId" [hash]="scene.hash" [poster]="scene.poster" [title]="scene.title" />
           </div>
-          <figcaption class="mt-3 flex items-baseline gap-4">
-            <span class="edge-code text-ink-soft">{{ scene.code }}</span>
-            <span class="font-semibold">{{ scene.label }}</span>
-          </figcaption>
+          <figcaption class="mt-4 font-display text-xl font-light">{{ scene.label }}</figcaption>
         </figure>
       }
     </div>

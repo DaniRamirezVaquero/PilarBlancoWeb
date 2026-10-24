@@ -1,34 +1,29 @@
 :host { display: block; }
 
-.voice-list { display: grid; gap: 0.9rem; margin: 0; padding: 0; list-style: none; }
+.voice-list { display: grid; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--rule); }
 
 .voice {
-  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 0.6rem 1.1rem;
-  padding-inline: 1.1rem;
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 0.9rem 1.25rem;
+  padding: 1.25rem 0; border-bottom: 1px solid var(--rule);
 }
 @media (min-width: 768px) {
-  .voice { grid-template-columns: auto 12rem minmax(0, 1fr); }
+  .voice { grid-template-columns: auto 14rem minmax(0, 1fr); gap: 1rem 2rem; }
 }
 
 .voice-play {
   display: inline-flex; align-items: center; justify-content: center; width: 3.25rem; height: 3.25rem;
-  border-radius: 999px; background: var(--print); color: var(--ink); font-size: 1.05rem;
-  transition: background-color 0.25s, color 0.25s, transform 0.25s var(--ease-out);
+  border-radius: 999px; border: 1px solid rgb(236 232 226 / 0.5); color: var(--platinum); font-size: 0.95rem;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
-.voice-play:hover { transform: scale(1.06); }
-.is-active .voice-play { background: var(--pencil); color: #fff; }
+.voice-play:hover { background: var(--platinum); color: var(--ink); border-color: var(--platinum); }
+.is-active .voice-play { background: var(--orange); border-color: var(--orange); color: var(--ink); }
 
-.voice-meta { display: grid; gap: 0.3rem; min-width: 0; }
-.voice-code { color: var(--edge); }
-.voice-label {
-  color: var(--print); font-family: var(--font-display); font-stretch: 75%; font-weight: 700;
-  font-size: 1.375rem; line-height: 1; text-transform: uppercase;
-}
-.voice-time { color: rgb(255 255 255 / 0.62); }
+.voice-meta { display: grid; gap: 0.35rem; min-width: 0; }
+.voice-label { font-family: var(--font-display); font-weight: 300; font-size: 1.5rem; line-height: 1.1; }
+.voice-time { color: var(--platinum-soft); font-size: 0.6875rem; }
 
-.voice-track { grid-column: 1 / -1; height: 3rem; cursor: pointer; }
+.voice-track { grid-column: 1 / -1; height: 3.25rem; cursor: pointer; }
 @media (min-width: 768px) { .voice-track { grid-column: auto; } }
 .voice-track svg { display: block; width: 100%; height: 100%; }
-.voice-track:focus-visible { outline-color: var(--edge); }
-.bars rect { fill: rgb(240 161 58 / 0.55); }
-.bars-played rect { fill: var(--pencil); }
+.bars rect { fill: rgb(236 232 226 / 0.32); }
+.bars-played rect { fill: var(--orange); }

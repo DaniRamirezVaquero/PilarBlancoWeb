@@ -9,7 +9,9 @@ import { IconComponent } from '../../components/icon/icon.component';
         IconComponent,
     ],
     templateUrl: './cv-page.component.html',
-    styleUrl: './cv-page.component.css'
+    styleUrl: './cv-page.component.css',
+    // Lectura en la zona iluminada del fondo continuo.
+    host: { class: 'ground-lit' },
 })
 export class CVPageComponent {
 

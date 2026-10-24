@@ -3,47 +3,65 @@
 @tailwind utilities;
 
 /*
- * Hoja de contactos — sistema visual de la web de Pilar Blanco.
- * Papel fotográfico blanco, tiras de negativo casi negras, un único rojo de lápiz
- * graso para la elección activa y la acción principal, y códigos de borde ámbar.
+ * Fondo continuo — sistema visual de la web de Pilar Blanco.
+ * Sale de su foto de estudio: papel gris iluminado desde arriba a la derecha que cae
+ * a grafito en la esquina, negro de seda y azul pavo real del damasco, platino del
+ * pelo y un único naranja, el del pantalón, para la acción principal.
  */
 :root {
-  --paper: #fafaf8;
-  --print: #ffffff;
-  --ink: #171513;
-  --ink-soft: #5a554f;
-  --rule: #dcdad4;
-  --film: #151312;
-  --film-soft: #2b2725;
-  --sprocket: #e9e6df;
-  --pencil: #d42a1e;
-  --pencil-deep: #ad1d13;
-  --edge: #f0a13a;
+  /* Fondo continuo, de la zona iluminada a la sombra. */
+  /* Muestreados del fondo de la foto, un punto más claros para leer: gris neutro, algo frío. */
+  --studio-lit: #b9bbbd;
+  --studio: #a4a6a9;
+  --studio-deep: #8a8c90;
+  --shade: #2b2c2e;
+  --shade-deep: #17181a;
 
-  --font-display: 'Archivo Variable', 'Archivo', 'Arial Narrow', sans-serif;
-  --font-body: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
-  --font-code: 'Martian Mono Variable', ui-monospace, monospace;
-  --font-hand: 'Caveat Brush', 'Segoe Print', cursive;
+  /* Tinta sobre el gris claro; platino sobre la sombra. */
+  --ink: #141517;
+  --ink-soft: #26282c;
+  --platinum: #ece8e2;
+  --platinum-soft: #b5b2ad;
 
-  /* Paso de fotograma: rige gutter, huecos y ritmo vertical de toda la maqueta. */
+  /* Damasco de la camisa: profundidad y enlaces. */
+  --silk: #0b0c0d;
+  --peacock: #173646;
+  --cuff: #9fb6c4;
+  /* Brillo azul del damasco: subrayados y filetes de enlace en reposo. */
+  --damask: #2f6a8e;
+
+  /* El pantalón: la acción principal y el campo del contacto. */
+  --orange: #d2683f;
+  --orange-lit: #e07c52;
+  --orange-deep: #a5462a;
+
+  --rule: rgb(20 21 23 / 0.16);
+  --rule-shade: rgb(236 232 226 / 0.16);
+
+  --font-display: 'Spectral', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Jost Variable', 'Jost', 'Futura', system-ui, sans-serif;
+
   --step: clamp(1rem, 0.6rem + 1.6vw, 2rem);
-  --gutter: clamp(1rem, 0.4rem + 3vw, 3.5rem);
+  --gutter: clamp(1.25rem, 0.4rem + 3.6vw, 4.5rem);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
+  /* Grano fino del papel de fondo continuo. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+
   color-scheme: light;
-  accent-color: var(--pencil);
+  accent-color: var(--orange);
 }
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
-  background: var(--paper);
-  scrollbar-color: var(--film-soft) var(--paper);
+  background: var(--studio);
+  scrollbar-color: var(--shade) var(--studio);
 }
 
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--studio);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 1rem;
@@ -54,18 +72,18 @@ body {
 }
 
 ::selection {
-  background: var(--pencil);
-  color: #fff;
+  background: var(--orange);
+  color: var(--ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--pencil);
-  outline-offset: 3px;
+  outline: 1.5px solid var(--orange);
+  outline-offset: 4px;
 }
 
 a {
   color: inherit;
-  text-underline-offset: 0.22em;
+  text-underline-offset: 0.3em;
   text-decoration-thickness: 1px;
 }
 
@@ -86,152 +104,129 @@ img {
   }
 }
 
+/* ——— Fondos: el mismo papel continuo, con la luz principal arriba a la izquierda como en la foto ——— */
+
+.ground-lit,
+.ground-shade {
+  position: relative;
+  isolation: isolate;
+}
+
+.ground-lit {
+  background:
+    radial-gradient(120% 90% at 24% 0%, var(--studio-lit), var(--studio) 48%, var(--studio-deep) 120%);
+  color: var(--ink);
+}
+
+.ground-shade {
+  --rule: var(--rule-shade);
+  --ink-soft: var(--platinum-soft);
+  background:
+    radial-gradient(110% 80% at 24% 0%, #46474a, var(--shade) 52%, var(--shade-deep) 110%);
+  color: var(--platinum);
+  color-scheme: dark;
+}
+
+.ground-lit::before,
+.ground-shade::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--grain);
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
 /* ——— Voces tipográficas ——— */
 
 .type-display {
   font-family: var(--font-display);
-  font-stretch: 62%;
-  font-weight: 800;
-  line-height: 0.86;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
+  font-weight: 200;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
 }
 
-/* Código de borde: lo que va impreso en el margen de la película (números, rótulos). */
-.edge-code {
-  font-family: var(--font-code);
-  font-stretch: 75%;
-  font-weight: 600;
-  font-size: 0.6875rem;
-  line-height: 1;
-  letter-spacing: 0.14em;
+/* Rótulo de interfaz: palo seco geométrico, espaciado, en versalitas. */
+.label {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   font-variant-numeric: tabular-nums;
 }
 
-.hand {
-  font-family: var(--font-hand);
-  color: var(--pencil);
+.prose {
+  max-width: 64ch;
+  font-family: var(--font-display);
   font-weight: 400;
-  line-height: 1;
-}
-
-.prose-sheet {
-  max-width: 66ch;
-  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
   line-height: 1.7;
-  color: var(--ink);
   text-wrap: pretty;
 }
 
-.prose-sheet p + p {
+.prose p + p {
   margin-top: 1em;
 }
 
-/* ——— Cabecera de hoja (título de cada página y sección) ——— */
+/* ——— Cabeceras ——— */
 
-.sheet-head {
+.head {
   display: grid;
-  gap: 0.75rem;
-  margin-bottom: calc(var(--step) * 1.5);
+  gap: 0.9rem;
+  margin-bottom: calc(var(--step) * 1.75);
 }
 
+.head-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.25rem 2.5rem;
+}
 
-.sheet-title {
+.title-xl {
   font-family: var(--font-display);
-  font-stretch: 62%;
-  font-weight: 800;
-  font-size: clamp(3rem, 1.6rem + 6vw, 6rem);
-  line-height: 0.86;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
+  font-weight: 200;
+  font-size: clamp(2.75rem, 1.7rem + 3.6vw, 5.25rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
   text-wrap: balance;
 }
 
 .sub-title {
   font-family: var(--font-display);
-  font-stretch: 75%;
-  font-weight: 700;
-  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 0.005em;
+  font-weight: 300;
+  font-size: clamp(1.5rem, 1.2rem + 0.9vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
 /* ——— Página ——— */
 
 .page {
-  padding: calc(var(--step) * 2.5) var(--gutter) calc(var(--step) * 4);
+  padding: calc(var(--step) * 3) var(--gutter) calc(var(--step) * 4.5);
   max-width: 100rem;
   margin: 0 auto;
 }
 
 .section {
-  padding-block: calc(var(--step) * 3.5);
+  padding-block: calc(var(--step) * 4.5);
 }
 
-/* ——— Tira de negativo ——— */
-
-.film {
-  --perf: 0.875rem;
-  position: relative;
-  background: var(--film);
-  color: var(--edge);
+.wrap {
+  max-width: 100rem;
+  margin: 0 auto;
+  padding-inline: var(--gutter);
 }
 
-/* Perforaciones arriba y abajo (tira horizontal). */
-.film-h {
-  padding: calc(var(--perf) * 2.1) calc(var(--perf) * 0.75);
-}
-
-.film-h::before,
-.film-h::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: var(--perf);
-  background: repeating-linear-gradient(90deg, transparent 0 0.5rem, var(--sprocket) 0.5rem 1.25rem);
-  opacity: 0.92;
-}
-
-.film-h::before {
-  top: calc(var(--perf) * 0.5);
-}
-
-.film-h::after {
-  bottom: calc(var(--perf) * 0.5);
-}
-
-/* Perforaciones a los lados (tira vertical). */
-.film-v {
-  padding: calc(var(--perf) * 0.75) calc(var(--perf) * 2.1);
-}
-
-.film-v::before,
-.film-v::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: var(--perf);
-  background: repeating-linear-gradient(180deg, transparent 0 0.5rem, var(--sprocket) 0.5rem 1.25rem);
-  opacity: 0.92;
-}
-
-.film-v::before {
-  left: calc(var(--perf) * 0.5);
-}
-
-.film-v::after {
-  right: calc(var(--perf) * 0.5);
-}
-
-/* Copia: foto con margen blanco de ampliación. */
+/* Copia: la foto colgada sobre el fondo, sin marco, con sombra blanda de estudio. */
 .print {
-  background: var(--print);
-  padding: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
-  box-shadow: 0 1px 1px rgb(23 21 19 / 0.06), 0 18px 40px -24px rgb(23 21 19 / 0.35);
+  background: var(--shade);
+  box-shadow: 0 2px 4px rgb(11 12 13 / 0.12), 0 28px 50px -30px rgb(11 12 13 / 0.6);
 }
 
 .print img {
@@ -243,92 +238,97 @@ img {
 
 /* ——— Acciones ——— */
 
-.btn-pencil,
-.btn-line {
+.btn-main,
+.btn-quiet,
+.btn-ink {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.6em;
-  min-height: 2.875rem;
-  padding: 0.7rem 1.35rem;
-  /* Etiquetas de corte recto: lo redondo es el trazo de lápiz que las marca. */
-  border-radius: 2px;
-  font-family: var(--font-display);
-  font-stretch: 80%;
-  font-weight: 700;
-  font-size: 0.9375rem;
-  letter-spacing: 0.08em;
+  justify-content: center;
+  gap: 0.75em;
+  min-height: 3rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 0;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+  transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
 }
 
-.btn-pencil::after,
-.btn-line::after {
-  content: '';
-  position: absolute;
-  pointer-events: none;
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 0.5s var(--ease-out);
-}
-
-.btn-pencil:hover::after,
-.btn-pencil:focus-visible::after,
-.btn-line:hover::after,
-.btn-line:focus-visible::after {
-  clip-path: inset(0 0 0 0);
-}
-
-/* Acción principal: etiqueta roja que el lápiz rodea al señalarla. */
-.btn-pencil {
-  background: var(--pencil);
-  color: #fff;
-  border: 0;
-  box-shadow: 0 10px 24px -14px rgb(173 29 19 / 0.9);
-}
-
-.btn-pencil::after {
-  inset: -0.7rem -0.9rem;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80' preserveAspectRatio='none'%3E%3Cpath d='M108 6C56 3 8 14 5 39c-3 26 46 37 99 36 54-1 92-14 91-38C194 14 152 4 96 8 74 10 55 14 44 20' fill='none' stroke='%23d42a1e' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
-}
-
-.btn-pencil:hover {
-  background: var(--pencil-deep);
-}
-
-/* Secundaria: contorno de tinta; al pasar, el lápiz la subraya. */
-.btn-line {
-  background: transparent;
-  color: var(--ink);
-  border: 1.5px solid currentColor;
-}
-
-.btn-line::after {
-  left: -4%;
-  right: -4%;
-  bottom: -0.75rem;
-  height: 0.6rem;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6.5C22 3 48 3.5 98 5' fill='none' stroke='%23d42a1e' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
-}
-
-.btn-pencil svg,
-.btn-line svg {
+.btn-main svg,
+.btn-quiet svg,
+.btn-ink svg {
   width: 1em;
   height: 1em;
+  transition: transform 0.35s var(--ease-out);
 }
 
-/* Enlace de texto con subrayado de lápiz al pasar. */
-.link-pencil {
+.btn-main:hover svg,
+.btn-quiet:hover svg,
+.btn-ink:hover svg {
+  transform: translateX(3px);
+}
+
+/* Acción principal: el naranja del pantalón. */
+.btn-main {
+  background: var(--orange);
+  color: var(--ink);
+  border: 1px solid var(--orange);
+  box-shadow: 0 18px 32px -22px rgb(165 70 42 / 0.9);
+}
+
+.btn-main:hover {
+  background: var(--orange-lit);
+  border-color: var(--orange-lit);
+}
+
+/* Secundaria: filete fino del color del texto. */
+.btn-quiet {
+  background: transparent;
+  color: inherit;
+  border: 1px solid currentColor;
+}
+
+.btn-quiet:hover {
+  background: color-mix(in srgb, currentColor 9%, transparent);
+}
+
+/* Sobre el naranja: botón de seda negra. */
+.btn-ink {
+  background: var(--silk);
+  color: var(--platinum);
+  border: 1px solid var(--silk);
+}
+
+.btn-ink:hover {
+  background: var(--peacock);
+  border-color: var(--peacock);
+}
+
+.link-fine {
   text-decoration: underline;
-  text-decoration-color: var(--rule);
+  /* El azul pavo real del damasco subraya los enlaces en reposo. */
+  text-decoration-color: var(--link-rule, var(--damask));
   text-decoration-thickness: 1.5px;
-  transition: text-decoration-color 0.2s, color 0.2s;
+  transition: text-decoration-color 0.25s, color 0.25s;
 }
 
-.link-pencil:hover {
-  color: var(--pencil-deep);
-  text-decoration-color: var(--pencil);
+.link-fine:hover {
+  color: var(--peacock);
+  text-decoration-color: currentColor;
+}
+
+.ground-shade {
+  --link-rule: var(--cuff);
+}
+
+.ground-shade .link-fine:hover {
+  color: var(--cuff);
 }
 
 .sr-only-focusable:not(:focus) {

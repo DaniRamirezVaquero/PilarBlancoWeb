@@ -1,28 +1,27 @@
 import { Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ContactSheetComponent } from '../../components/contact-sheet/contact-sheet.component';
+import { PhotoBookComponent } from '../../components/photo-book/photo-book.component';
 import { VoiceStripComponent } from '../../components/voice-strip/voice-strip.component';
 import { VimeoFacadeComponent } from '../../components/vimeo-facade/vimeo-facade.component';
 import { IconComponent } from '../../components/icon/icon.component';
 import {
-  BOOK, CONTACT, HERO_STRIP, HIGHLIGHT_CREDITS, REEL, SCENES, VOICE,
+  CONTACT, HIGHLIGHT_CREDITS, REEL, SCENES, SESSION, VOICE,
 } from '../../data/portfolio.data';
 
 /**
- * Inicio-dosier: en un solo recorrido, la ampliación de la portada con su tira de
- * contactos, el reel, el book, la voz, la trayectoria y el contacto. Cada bloque
+ * Inicio-dosier: en un solo recorrido, Pilar en el estudio, el reel, el book, la
+ * voz, la trayectoria y el contacto. Cada bloque
  * enlaza a su página propia con el material completo.
  */
 @Component({
   selector: 'app-principal',
-  imports: [RouterLink, ContactSheetComponent, VoiceStripComponent, VimeoFacadeComponent, IconComponent],
+  imports: [RouterLink, PhotoBookComponent, VoiceStripComponent, VimeoFacadeComponent, IconComponent],
   templateUrl: './principal.component.html',
   styleUrl: './principal.component.css',
 })
 export class PrincipalComponent {
-  readonly heroStrip = HERO_STRIP;
-  readonly book = BOOK;
+  readonly session = SESSION;
   readonly voice = VOICE;
   readonly credits = HIGHLIGHT_CREDITS;
   readonly reel = REEL;

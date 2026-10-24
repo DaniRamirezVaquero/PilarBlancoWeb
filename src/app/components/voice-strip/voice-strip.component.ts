@@ -4,9 +4,8 @@ import { VoiceDemo } from '../../data/portfolio.data';
 import { IconComponent } from '../icon/icon.component';
 
 /**
- * Demos de locución como tiras de película con su banda sonora óptica: la forma
- * de onda real de cada MP3. La parte escuchada se marca en rojo. Una sola pista
- * suena a la vez; el audio no se descarga hasta pulsar reproducir.
+ * Demos de locución con la forma de onda real de cada MP3. La parte escuchada se
+ * marca en naranja. Una sola pista suena a la vez; el audio no se descarga hasta pulsar reproducir.
  */
 @Component({
   selector: 'app-voice-strip',

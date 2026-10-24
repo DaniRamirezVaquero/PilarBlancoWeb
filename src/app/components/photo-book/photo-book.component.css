@@ -1,0 +1,94 @@
+:host { display: block; }
+
+/* ——— Sesión: copia a la luz + hilera en sombra ——— */
+
+.session { display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--step) * 1.25); }
+@media (min-width: 1024px) {
+  .session { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: calc(var(--step) * 2.5); align-items: start; }
+}
+
+.stage { margin: 0; display: grid; gap: 0.9rem; }
+
+/* Móvil: escenario de alto fijo, la copia apoyada abajo; así la hilera no salta al cambiar de foto. */
+.stage-btn {
+  display: flex; align-items: flex-end; justify-content: flex-start;
+  height: min(118vw, 72svh, 46rem); padding: 0; border: 0; background: none; cursor: zoom-in;
+}
+/* Escritorio: la hilera va al lado, así que la copia se cuelga arriba sin franja vacía. */
+@media (min-width: 1024px) {
+  .stage-btn { height: auto; align-items: flex-start; }
+  .stage-img { max-height: min(76svh, 46rem); }
+}
+.stage-img {
+  display: block; max-width: 100%; max-height: 100%; width: auto; height: auto;
+  box-shadow: 0 2px 4px rgb(11 12 13 / 0.14), 0 40px 70px -40px rgb(11 12 13 / 0.75);
+  animation: to-light 0.9s var(--ease-out);
+}
+
+.stage-caption { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; color: var(--ink-soft); }
+@media (hover: none) { .stage-hint { display: none; } }
+
+.thumbs {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 5.25rem; gap: 0.6rem;
+  margin: 0; padding: 0 0 0.75rem; list-style: none; overflow-x: auto; scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+@media (min-width: 1024px) {
+  /* 4 columnas: la hilera alcanza la altura de la copia grande. Con 13 fotos la última
+     queda sola en su fila; no se quita ninguna porque todo el book es material de la actriz. */
+  .thumbs { grid-auto-flow: row; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.9rem; overflow: visible; padding: 0; }
+}
+
+.thumb {
+  position: relative; display: block; width: 100%; aspect-ratio: 4 / 5; padding: 0; border: 0;
+  background: var(--shade); cursor: pointer; scroll-snap-align: start;
+}
+.thumb img {
+  display: block; width: 100%; height: 100%; object-fit: cover; user-select: none;
+  /* Las copias no elegidas esperan en la sombra del estudio. */
+  filter: brightness(0.6) saturate(0.7);
+  transition: filter 0.5s var(--ease-out);
+}
+.thumb:hover img, .thumb:focus-visible img, .thumb.is-chosen img { filter: none; }
+.thumb::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -0.45rem; height: 2px;
+  background: var(--orange); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.5s var(--ease-out);
+}
+.thumb.is-chosen::after { transform: scaleX(1); }
+
+/* ——— Muro ——— */
+
+.wall { margin: 0; padding: 0; list-style: none; columns: 3 17rem; column-gap: calc(var(--step) * 1.25); }
+.wall-item { break-inside: avoid; margin-bottom: calc(var(--step) * 1.25); }
+.wall-btn { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; overflow: hidden; }
+.wall-btn img { display: block; width: 100%; height: auto; transition: transform 0.8s var(--ease-out), filter 0.5s; }
+.wall-btn:hover img { transform: scale(1.03); filter: brightness(1.05); }
+.wall-caption { margin: 0.7rem 0 0; color: var(--ink-soft); }
+
+/* ——— Ampliación ——— */
+
+.enlargement {
+  width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 4rem var(--gutter) 1.5rem;
+  border: 0; background: transparent; overflow: hidden; color: var(--platinum);
+}
+.enlargement[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.1rem; }
+.enlargement::backdrop { background: rgb(23 24 26 / 0.96); }
+.enlargement-figure { margin: 0; display: grid; justify-items: center; gap: 0.75rem; max-width: min(100%, 76rem); }
+.enlargement-figure img {
+  max-height: calc(100dvh - 11rem); width: auto; max-width: 100%; object-fit: contain;
+  animation: to-light 0.7s var(--ease-out);
+}
+.enlargement-caption { display: flex; justify-content: space-between; gap: 2rem; width: 100%; color: var(--platinum-soft); }
+.enlargement-controls { display: flex; gap: 0.75rem; }
+.ctrl {
+  display: inline-flex; align-items: center; justify-content: center; width: 3rem; height: 3rem;
+  border-radius: 999px; border: 1px solid rgb(236 232 226 / 0.45); color: var(--platinum); background: transparent;
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+}
+.ctrl:hover { background: var(--platinum); color: var(--ink); border-color: var(--platinum); }
+
+/* La luz de modelado se enciende sobre la copia. */
+@keyframes to-light {
+  from { opacity: 0.2; filter: brightness(0.35) saturate(0.6); }
+}

@@ -1,0 +1,70 @@
+@if (layout === 'session') {
+  <div class="session">
+    <figure class="stage">
+      <!-- Un bloque por copia: al cambiar de copia la nueva entra con la luz. -->
+      @for (frame of [frames[selected()]]; track frame.full) {
+        <button type="button" class="stage-btn" (click)="open(selected(), $event.currentTarget)"
+          [attr.aria-label]="'Ver en grande: ' + frame.alt">
+          <img class="stage-img" [src]="frame.full" [alt]="frame.alt" decoding="async" loading="lazy" />
+        </button>
+      }
+      <figcaption class="stage-caption label">
+        <span>{{ selected() + 1 }} / {{ frames.length }}</span>
+        <span class="stage-hint">Pulsa la foto para verla en grande</span>
+      </figcaption>
+    </figure>
+
+    <ul class="thumbs" aria-label="Fotos del book">
+      @for (frame of frames; track frame.full; let i = $index) {
+        <li>
+          <button type="button" class="thumb" [class.is-chosen]="selected() === i"
+            [attr.aria-pressed]="selected() === i" [attr.aria-label]="'Mostrar: ' + frame.alt"
+            (click)="select(i)">
+            <img [src]="frame.src" [attr.srcset]="frame.srcset ?? null" [attr.sizes]="frame.srcset ? sizes : null"
+              alt="" loading="lazy" decoding="async" draggable="false"
+              [style.object-position]="frame.position ?? null" />
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+} @else {
+  <ul class="wall">
+    @for (frame of frames; track frame.src + i; let i = $index) {
+      <li class="wall-item">
+        <button type="button" class="wall-btn print" (click)="open(i, $event.currentTarget)"
+          [attr.aria-label]="'Ver en grande: ' + frame.alt">
+          <img [src]="frame.src" [attr.srcset]="frame.srcset ?? null" [attr.sizes]="frame.srcset ? sizes : null"
+            alt="" loading="lazy" decoding="async" draggable="false" />
+        </button>
+        <p class="label wall-caption">{{ frame.caption || caption }}</p>
+      </li>
+    }
+  </ul>
+}
+
+<dialog #dialog class="enlargement" aria-label="Foto en grande"
+  (close)="onDialogClose()" (click)="onDialogClick($event)" (keydown)="onDialogKey($event)">
+  @if (frames[current()]; as frame) {
+    <figure class="enlargement-figure">
+      @for (shown of [frame]; track shown.full) {
+        <img [src]="shown.full" [alt]="shown.alt" decoding="async" />
+      }
+      <figcaption class="enlargement-caption label">
+        <span>{{ frame.caption || caption }}</span>
+        <span>{{ current() + 1 }} / {{ frames.length }}</span>
+      </figcaption>
+    </figure>
+    <div class="enlargement-controls">
+      <button type="button" class="ctrl" (click)="step(-1)" aria-label="Foto anterior">
+        <app-icon name="chevron-left"></app-icon>
+      </button>
+      <button type="button" class="ctrl" (click)="step(1)" aria-label="Foto siguiente">
+        <app-icon name="chevron-right"></app-icon>
+      </button>
+      <button type="button" class="ctrl" (click)="close()" aria-label="Cerrar">
+        <app-icon name="xmark"></app-icon>
+      </button>
+    </div>
+  }
+</dialog>

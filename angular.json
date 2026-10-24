@@ -33,9 +33,13 @@
               "src/sitemap.xml"
             ],
             "styles": [
-              "node_modules/@fontsource-variable/archivo/wdth.css",
-              "node_modules/@fontsource-variable/martian-mono/wdth.css",
-              "node_modules/@fontsource/caveat-brush/latin-400.css",
+              "node_modules/@fontsource/spectral/latin-200.css",
+              "node_modules/@fontsource/spectral/latin-300.css",
+              "node_modules/@fontsource/spectral/latin-300-italic.css",
+              "node_modules/@fontsource/spectral/latin-400.css",
+              "node_modules/@fontsource/spectral/latin-400-italic.css",
+              "node_modules/@fontsource/spectral/latin-500.css",
+              "node_modules/@fontsource-variable/jost/wght.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -101,9 +105,13 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/@fontsource-variable/archivo/wdth.css",
-              "node_modules/@fontsource-variable/martian-mono/wdth.css",
-              "node_modules/@fontsource/caveat-brush/latin-400.css",
+              "node_modules/@fontsource/spectral/latin-200.css",
+              "node_modules/@fontsource/spectral/latin-300.css",
+              "node_modules/@fontsource/spectral/latin-300-italic.css",
+              "node_modules/@fontsource/spectral/latin-400.css",
+              "node_modules/@fontsource/spectral/latin-400-italic.css",
+              "node_modules/@fontsource/spectral/latin-500.css",
+              "node_modules/@fontsource-variable/jost/wght.css",
               "src/styles.css"
             ],
             "scripts": []
