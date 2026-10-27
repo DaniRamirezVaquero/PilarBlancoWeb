@@ -7,6 +7,24 @@
   padding: var(--step) var(--gutter) calc(var(--step) * 2);
 }
 
+/*
+ * Móvil y tableta: como en escritorio, la apertura ocupa justo el alto de la pantalla
+ * (menos la barra). La fila de fotos toma su alto natural y la foto grande, el resto.
+ * Con pantallas muy bajas (móvil en horizontal) se respeta un mínimo y se deja desplazar.
+ */
+@media (max-width: 1023px) {
+  .opening {
+    display: flex; flex-direction: column;
+    height: calc(100svh - 4.25rem); min-height: 34rem;
+    padding-bottom: var(--step);
+  }
+  .opening .enlargement { flex: 1; }
+  .opening .enlargement-photo { min-height: 0; }
+  /* Marco más vertical que en escritorio: se centra la cara en lugar del lado derecho. */
+  .opening .enlargement-photo img { object-position: 67% 30%; }
+  .opening-strip { flex: none; }
+}
+
 @media (min-width: 1024px) {
   .opening {
     grid-template-columns: minmax(0, 1fr) clamp(10rem, 13vw, 14rem);
