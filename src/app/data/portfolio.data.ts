@@ -1,21 +1,20 @@
 /**
  * Material real de Pilar Blanco compartido por el inicio y las páginas propias.
- * Cada pieza lleva su código de fotograma («06A», «18A»…): la web es una hoja de
- * contactos y ese código es su dirección fija, visible en la navegación.
+ * Cada pieza conserva un código interno («06A», «18A»…) que ya no se muestra en la web.
  */
 
 export interface Frame {
-  /** Código de borde del fotograma, p. ej. «07A». */
+  /** Código interno de la foto, p. ej. «07A» (no se muestra). */
   code: string;
-  /** Imagen para la miniatura de la tira. */
+  /** Imagen para la miniatura. */
   src: string;
   srcset?: string;
   /** Imagen grande para la lupa y la ampliación. */
   full: string;
   alt: string;
   /**
-   * Encuadre dentro del fotograma (CSS object-position) cuando la foto no tiene
-   * la proporción del fotograma; por defecto, centrado.
+   * Encuadre dentro del marco (CSS object-position) cuando la foto no tiene
+   * la proporción del marco; por defecto, centrado.
    */
   position?: string;
   /** Rótulo opcional (título del proyecto en la hoja de proyectos). */
@@ -29,7 +28,7 @@ export interface Video {
   /**
    * Póster en alta resolución (CDN de Vimeo, ~1920px), obtenido con:
    * curl "https://vimeo.com/api/oembed.json?url=https://vimeo.com/<id>&width=1920"
-   * Regenerar si Vimeo cambia el fotograma de portada del vídeo.
+   * Regenerar si Vimeo cambia la imagen de portada del vídeo.
    */
   poster: string;
   title: string;
@@ -44,7 +43,7 @@ export interface VoiceDemo {
   duration: number;
   /**
    * Picos de amplitud (0–100) en 96 tramos, medidos del propio MP3 con
-   * decodeAudioData: dibujan la banda sonora óptica de la tira.
+   * decodeAudioData: dibujan la forma de onda de la pista.
    */
   peaks: number[];
 }
@@ -58,7 +57,7 @@ export interface Credit {
 
 const pad = (n: number) => `${String(n).padStart(2, '0')}A`;
 
-/** Código de fotograma a partir de su posición en el rollo. */
+/** Código interno a partir de su posición. */
 export const frameCode = pad;
 
 function book(n: number, alt: string, code: string): Frame {
@@ -71,7 +70,7 @@ function book(n: number, alt: string, code: string): Frame {
     srcset: `${encoded}-900.webp 900w, ${encoded}-1400.webp 1400w`,
     full: `${base}-1400.webp`,
     alt,
-    // Si el fotograma recorta la foto, se conserva la cabeza antes que los pies.
+    // Si el marco recorta la foto, se conserva la cabeza antes que los pies.
     position: '50% 20%',
   };
 }
@@ -82,11 +81,11 @@ export const COVER: Frame = {
   srcset: 'assets/images/hero/portada-960.webp 960w, assets/images/hero/portada-1920.webp 1920w',
   full: 'assets/images/hero/portada-1920.webp',
   alt: 'Pilar Blanco, actriz, sentada sobre un baúl metálico con camisa blanca y vaqueros',
-  // La portada es apaisada (16:9): en un fotograma vertical se encuadra sobre ella, no sobre el fondo.
+  // La portada es apaisada (16:9): en un marco vertical se encuadra sobre ella, no sobre el fondo.
   position: '66% 40%',
 };
 
-/** Book fotográfico (descargable en zip). Rollo de inicio: 06A–17A. */
+/** Book fotográfico (descargable en zip). Inicio: 06A–17A. */
 export const BOOK: Frame[] = [
   [1, 'Pilar Blanco, actriz, de pie con camiseta negra en book fotográfico'],
   [2, 'Pilar Blanco, actriz, en retrato de book fotográfico'],
@@ -102,7 +101,7 @@ export const BOOK: Frame[] = [
   [12, 'Pilar Blanco, actriz, sentada en un baúl en book fotográfico'],
 ].map(([n, alt], i) => book(n as number, alt as string, pad(6 + i)));
 
-/** Tira del primer pantallazo: otras miradas alrededor de la portada (02A). */
+/** Columna del primer pantallazo: otras miradas alrededor de la portada (02A). */
 export const HERO_STRIP: Frame[] = [
   { ...BOOK[3], code: '01A' },
   COVER,
@@ -120,7 +119,7 @@ const PROJECT_TITLES = [
   'Alice', 'Espacio Alzheimer Andalucía', 'Espacio Alzheimer Andalucía', 'Espacio Alzheimer Andalucía', 'Darkinside',
 ];
 
-/** Fotogramas de proyectos (rollo 2 de la galería): el título va como código de borde. */
+/** Fotos de proyectos de la galería: el título va como pie de foto. */
 export const PROJECTS: Frame[] = PROJECT_TITLES.map((title, i) => {
   // Los «-900» son versiones recomprimidas (~900px) de los originales, que superaban los 700 KB.
   const src = `assets/images/collage/FOTO (${i + 1})-900.webp`;
@@ -188,7 +187,7 @@ export const DUBBING: Video[] = [
   },
 ];
 
-/** Demos de locución. Rollo de inicio: 18A–21A. */
+/** Demos de locución. Inicio: 18A–21A. */
 export const VOICE: VoiceDemo[] = [
   {
     code: '18A', label: 'Publicidad', url: 'assets/tapes/Demo2.mp3', duration: 28,

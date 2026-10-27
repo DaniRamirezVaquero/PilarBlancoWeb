@@ -6,7 +6,7 @@
   <section aria-labelledby="book-title">
     <div class="flex flex-wrap items-end justify-between gap-4 mb-[calc(var(--step)*1.25)]">
       <h2 id="book-title" class="sub-title">Book</h2>
-      <a [href]="photosZip" download="Pilar Blanco - Galeria fotos.zip" class="btn-pencil"
+      <a [href]="photosZip" download="Pilar Blanco - Galeria fotos.zip" class="btn-primary"
         aria-label="Descargar el book fotográfico de Pilar Blanco en calidad completa (zip)">
         Descargar las fotos <app-icon name="download"></app-icon>
       </a>
@@ -16,8 +16,8 @@
 
   <section class="mt-[calc(var(--step)*3.5)]" aria-labelledby="proyectos-title">
     <div class="mb-[calc(var(--step)*1.25)] grid gap-2">
-      <h2 id="proyectos-title" class="sub-title">Fotogramas de proyectos</h2>
-      <p class="text-ink-soft">El título de cada proyecto va impreso en el borde de su fotograma.</p>
+      <h2 id="proyectos-title" class="sub-title">Fotos de proyectos</h2>
+      <p class="text-ink-soft">Cada foto lleva debajo el título de su proyecto.</p>
     </div>
     <app-contact-sheet [frames]="projects" [perStrip]="5" aspect="16 / 9" sizes="(min-width: 1024px) 18vw, 62vw"></app-contact-sheet>
   </section>

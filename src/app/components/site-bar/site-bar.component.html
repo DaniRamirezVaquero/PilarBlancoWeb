@@ -3,13 +3,12 @@
 
   <a routerLink="/home" class="wordmark" (click)="closeMenu()" aria-label="Pilar Blanco, actriz. Inicio">
     <span class="type-display">Pilar Blanco</span>
-    <span class="edge-code text-ink-soft">Actriz</span>
+    <span class="note text-ink-soft">Actriz</span>
   </a>
 
   <nav class="nav" aria-label="Secciones">
     @for (item of nav; track item.link) {
       <a [routerLink]="item.link" routerLinkActive="is-active" class="nav-link">
-        <span class="edge-code nav-code">{{ item.code }}</span>
         <span>{{ item.label }}</span>
       </a>
     }
@@ -20,7 +19,7 @@
       aria-label="Descargar el currículum de Pilar Blanco en PDF">
       <app-icon name="file-arrow-down"></app-icon>
       <span>CV</span>
-      <span class="edge-code cv-format">PDF</span>
+      <span class="note cv-format">PDF</span>
     </a>
     <app-contact-menu class="hidden sm:block"></app-contact-menu>
     <app-contact-menu class="sm:hidden" variant="compact"></app-contact-menu>
@@ -37,11 +36,11 @@
     <nav aria-label="Secciones">
       <a routerLink="/home" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }"
         class="sheet-link" (click)="closeMenu()">
-        <span class="edge-code">01A</span><span>Inicio</span>
+        <span>Inicio</span>
       </a>
       @for (item of nav; track item.link) {
         <a [routerLink]="item.link" routerLinkActive="is-active" class="sheet-link" (click)="closeMenu()">
-          <span class="edge-code">{{ item.code }}</span><span>{{ item.label }}</span>
+          <span>{{ item.label }}</span>
         </a>
       }
     </nav>

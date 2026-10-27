@@ -6,10 +6,10 @@
   <section aria-labelledby="reel-title">
     <h2 id="reel-title" class="sr-only">{{ reel.label }}</h2>
     <figure class="m-0">
-      <div class="film film-h">
+      <div class="frame-navy">
         <app-vimeo-facade [videoId]="reel.videoId" [hash]="reel.hash" [poster]="reel.poster" [title]="reel.title" [priority]="true" />
       </div>
-      <figcaption class="edge-code mt-3 flex gap-4 text-ink-soft"><b class="text-pencil-deep">{{ reel.code }}</b>{{ reel.label }}</figcaption>
+      <figcaption class="note mt-3 flex gap-4 text-ink-soft">{{ reel.label }}</figcaption>
     </figure>
   </section>
 
@@ -18,11 +18,10 @@
     <div class="grid gap-[calc(var(--step)*1.5)] lg:grid-cols-2">
       @for (scene of scenes; track scene.videoId) {
         <figure class="m-0">
-          <div class="film film-h">
+          <div class="frame-navy">
             <app-vimeo-facade [videoId]="scene.videoId" [hash]="scene.hash" [poster]="scene.poster" [title]="scene.title" />
           </div>
           <figcaption class="mt-3 flex items-baseline gap-4">
-            <span class="edge-code text-ink-soft">{{ scene.code }}</span>
             <span class="font-semibold">{{ scene.label }}</span>
           </figcaption>
         </figure>

@@ -1,4 +1,4 @@
-.contact-trigger { min-height: 2.5rem; padding: 0.5rem 1rem; font-size: 0.8125rem; }
+.contact-trigger { min-height: 2.5rem; padding: 0.5rem 1rem; }
 
 .contact-icon {
   display: inline-flex; align-items: center; justify-content: center;
@@ -10,6 +10,7 @@
   position: absolute; right: 0; top: calc(100% + 0.75rem); z-index: 60;
   width: min(19rem, calc(100vw - 2rem)); padding: 1.1rem 1.1rem 1rem;
   transform-origin: top right; animation: card-in 0.28s var(--ease-out);
+  background: var(--surface); box-shadow: 0 18px 40px -20px rgb(17 28 51 / 0.35);
 }
 .contact-card.align-left { right: auto; left: 0; transform-origin: top left; }
 
@@ -24,7 +25,7 @@
   border: 1.5px solid var(--rule); color: var(--ink);
   transition: border-color 0.2s, color 0.2s;
 }
-.contact-copy:hover { border-color: var(--pencil); color: var(--pencil-deep); }
+.contact-copy:hover { border-color: var(--accent); color: var(--accent-deep); }
 
 .contact-status { min-height: 1.1rem; margin-top: 0.35rem; font-size: 0.75rem; color: var(--ink-soft); }
 

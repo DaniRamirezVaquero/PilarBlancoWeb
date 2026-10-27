@@ -5,24 +5,22 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // Tokens de la hoja de contactos: los valores viven en :root (src/styles.css).
+      // Tokens del sistema visual: los valores viven en :root (src/styles.css).
       colors: {
-        paper: 'var(--paper)',
-        print: 'var(--print)',
+        ground: 'var(--ground)',
+        surface: 'var(--surface)',
         ink: 'var(--ink)',
         'ink-soft': 'var(--ink-soft)',
         rule: 'var(--rule)',
-        film: 'var(--film)',
-        'film-soft': 'var(--film-soft)',
-        pencil: 'var(--pencil)',
-        'pencil-deep': 'var(--pencil-deep)',
-        edge: 'var(--edge)',
+        navy: 'var(--navy)',
+        'navy-soft': 'var(--navy-soft)',
+        accent: 'var(--accent)',
+        'accent-deep': 'var(--accent-deep)',
+        'on-navy': 'var(--on-navy)',
       },
       fontFamily: {
         display: 'var(--font-display)',
         body: 'var(--font-body)',
-        code: 'var(--font-code)',
-        hand: 'var(--font-hand)',
       },
     },
   },

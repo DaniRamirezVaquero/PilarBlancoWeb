@@ -8,7 +8,6 @@
 
 .bio-print { margin: 0; }
 .bio-print img { aspect-ratio: 3 / 2; object-position: top; }
-.bio-print-small { max-width: 26rem; justify-self: end; transform: rotate(1.25deg); }
+.bio-print-small { max-width: 26rem; justify-self: end; }
 .bio-print-small img { aspect-ratio: 1; }
-.bio-code { display: flex; gap: 0.75em; padding-top: 0.6rem; color: var(--ink-soft); }
-.bio-code b { color: var(--pencil-deep); }
+.bio-code { padding-top: 0.6rem; color: var(--ink-soft); }

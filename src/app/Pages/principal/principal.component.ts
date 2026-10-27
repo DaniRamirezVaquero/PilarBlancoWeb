@@ -10,8 +10,8 @@ import {
 } from '../../data/portfolio.data';
 
 /**
- * Inicio-dosier: en un solo recorrido, la ampliación de la portada con su tira de
- * contactos, el reel, el book, la voz, la trayectoria y el contacto. Cada bloque
+ * Inicio-dosier: en un solo recorrido, la portada con su columna de fotos,
+ * el reel, el book, la voz, la trayectoria y el contacto. Cada bloque
  * enlaza a su página propia con el material completo.
  */
 @Component({

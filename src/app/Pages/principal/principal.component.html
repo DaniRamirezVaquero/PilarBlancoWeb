@@ -1,43 +1,42 @@
-<!-- 01A–04A · Apertura: la ampliación elegida y la tira de la que sale -->
+<!-- Apertura: foto de portada y columna de fotos -->
 <section class="opening" aria-labelledby="nombre">
   <figure class="enlargement print">
     <div class="enlargement-photo">
       <!-- sizes cuenta con el recorte (object-fit: cover): en tabletas la foto se pinta mucho más ancha que su marco. -->
-      <img src="assets/images/hero/portada-1920.webp"
-        srcset="assets/images/hero/portada-960.webp 960w, assets/images/hero/portada-1920.webp 1920w, assets/images/hero/portada-3200.webp 3200w"
+      <img src="assets/images/hero/fondo2-1920.webp"
+        srcset="assets/images/hero/fondo2-960.webp 960w, assets/images/hero/fondo2-1920.webp 1920w, assets/images/hero/fondo2-3200.webp 3200w"
         sizes="(min-width: 800px) 100vw, 800px" width="1920" height="1080"
         fetchpriority="high" loading="eager" decoding="async"
-        alt="Pilar Blanco, actriz, sentada sobre un baúl metálico con camisa blanca y vaqueros" />
+        alt="Pilar Blanco, actriz, con camisa estampada azul marino y pantalón terracota sobre fondo gris de estudio" />
       <div class="enlargement-veil" aria-hidden="true"></div>
       <div class="enlargement-title">
         <h1 id="nombre" class="type-display name">Pilar<br />Blanco</h1>
         <p class="role">Actriz</p>
-        <button type="button" class="btn-pencil reel-cta" (click)="openReel()">
+        <button type="button" class="btn-primary reel-cta" (click)="openReel()">
           <app-icon name="play"></app-icon>
           Ver reel 2026
         </button>
       </div>
     </div>
-    <figcaption class="edge-code enlargement-code">
-      <span><b>02A</b> Pilar Blanco</span>
-      <span>Cine · Televisión · Teatro · Doblaje</span>
+    <figcaption class="note enlargement-code">
+      <span>Pilar Blanco</span>
+      <span>Cine · Televisión · Teatro · Locución</span>
     </figcaption>
   </figure>
 
   <div class="opening-strip">
-    <app-contact-sheet [frames]="heroStrip" layout="vertical" aspect="4 / 5" [chosen]="1"
-      [ringDelay]="1100" [eager]="true" sizes="(min-width: 1024px) 12rem, 40vw"></app-contact-sheet>
-    <p class="hand opening-note" aria-hidden="true">esta</p>
+    <app-contact-sheet [frames]="heroStrip" layout="vertical" aspect="4 / 5"
+      [eager]="true" sizes="(min-width: 1024px) 12rem, 40vw"></app-contact-sheet>
   </div>
 </section>
 
-<!-- 05A · Reel -->
+<!-- Reel -->
 <section id="reel" class="section home-block" aria-labelledby="reel-title">
   <header class="sheet-head">
     <h2 id="reel-title" class="sheet-title">Reel 2026</h2>
   </header>
   <div class="reel-grid">
-    <div class="film film-h">
+    <div class="frame-navy">
       <app-vimeo-facade [videoId]="reel.videoId" [hash]="reel.hash" [poster]="reel.poster" [title]="reel.title" />
     </div>
     <aside class="reel-more" aria-label="Más vídeos">
@@ -48,7 +47,6 @@
             <a routerLink="/video" class="scene-link">
               <img [src]="scene.poster" alt="" loading="lazy" decoding="async" width="160" height="90" />
               <span>
-                <span class="edge-code text-ink-soft">{{ scene.code }}</span>
                 <span class="scene-name">{{ scene.label }}</span>
               </span>
             </a>
@@ -60,35 +58,35 @@
   </div>
 </section>
 
-<!-- 06A–17A · Book -->
+<!-- Book -->
 <section id="fotos" class="section home-block" aria-labelledby="fotos-title">
   <header class="sheet-head sheet-head-row">
     <div class="grid gap-3">
       <h2 id="fotos-title" class="sheet-title">Book</h2>
     </div>
-    <p class="sheet-hint">Pasa la lupa por los fotogramas o pulsa uno para verlo en grande.</p>
+    <p class="sheet-hint">Pasa el ratón por una foto o púlsala para verla en grande.</p>
   </header>
   <app-contact-sheet [frames]="book" [perStrip]="6" aspect="4 / 5" sizes="(min-width: 1024px) 15vw, 62vw"></app-contact-sheet>
   <div class="block-actions">
     <a [href]="photosZip" download="Pilar Blanco - Galeria fotos.zip" class="btn-line">
       Descargar las fotos <app-icon name="download"></app-icon>
     </a>
-    <a routerLink="/gallery" class="link-pencil">Fotogramas de proyectos</a>
+    <a routerLink="/gallery" class="link-quiet">Fotos de proyectos</a>
   </div>
 </section>
 
-<!-- 18A–21A · Voz -->
+<!-- Voz -->
 <section id="voz" class="section home-block" aria-labelledby="voz-title">
   <header class="sheet-head">
     <h2 id="voz-title" class="sheet-title">Voz</h2>
   </header>
   <app-voice-strip [demos]="voice"></app-voice-strip>
   <div class="block-actions">
-    <a routerLink="/voice" class="link-pencil">Demos de doblaje en vídeo</a>
+    <a routerLink="/voice" class="link-quiet">Demos de doblaje en vídeo</a>
   </div>
 </section>
 
-<!-- 22A–23A · Trayectoria y sobre mí -->
+<!-- Trayectoria y sobre mí -->
 <section id="trayectoria" class="section home-block" aria-labelledby="trayectoria-title">
   <div class="career">
     <div>
@@ -98,9 +96,9 @@
       <ul class="credit-list">
         @for (credit of credits; track credit.title) {
           <li class="credit">
-            <span class="edge-code credit-note">{{ credit.note }}</span>
+            <span class="note credit-note">{{ credit.note }}</span>
             @if (credit.url) {
-              <a [href]="credit.url" target="_blank" rel="noopener noreferrer" class="credit-title link-pencil">
+              <a [href]="credit.url" target="_blank" rel="noopener noreferrer" class="credit-title link-quiet">
                 {{ titleHead(credit.title) }}<span class="whitespace-nowrap">{{ titleTail(credit.title) }}<app-icon name="up-right-from-square" class="credit-out"></app-icon></span>
               </a>
             } @else {
@@ -112,7 +110,7 @@
       </ul>
       <div class="block-actions">
         <a routerLink="/curriculum" class="btn-line">Currículum completo <app-icon name="arrow-right"></app-icon></a>
-        <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="link-pencil">Descargar CV en PDF</a>
+        <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="link-quiet">Descargar CV en PDF</a>
       </div>
     </div>
 
@@ -129,32 +127,32 @@
           <em>Repris</em>, Premio Nacional de Teatro de Vanguardia en 1991. De ahí, a la televisión con
           <em>Plaza alta</em> y <em>Arrayán</em>, la radio y la formación de jóvenes ante la cámara.
         </p>
-        <a routerLink="/bio" class="link-pencil mt-4 inline-block">Leer la biografía</a>
+        <a routerLink="/bio" class="link-quiet mt-4 inline-block">Leer la biografía</a>
       </div>
     </article>
   </div>
 </section>
 
-<!-- 24A · Contacto -->
+<!-- Contacto -->
 <section id="contacto" class="section home-block contact" aria-labelledby="contacto-title">
   <header class="sheet-head">
     <h2 id="contacto-title" class="sheet-title">Contacto</h2>
   </header>
   <a [href]="mailtoUrl" class="contact-email">{{ emailUser }}<wbr />{{ emailDomain }}</a>
   <div class="block-actions">
-    <a [href]="gmailUrl" target="_blank" rel="noopener noreferrer" class="btn-pencil">Escribir en Gmail</a>
+    <a [href]="gmailUrl" target="_blank" rel="noopener noreferrer" class="btn-primary">Escribir en Gmail</a>
     <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="btn-line">Descargar CV <app-icon name="download"></app-icon></a>
-    <a [href]="instagram" target="_blank" rel="noopener noreferrer me" class="link-pencil inline-flex items-center gap-2">
+    <a [href]="instagram" target="_blank" rel="noopener noreferrer me" class="link-quiet inline-flex items-center gap-2">
       <app-icon name="instagram"></app-icon> pilarblanco.actriz
     </a>
-    <a [href]="vimeo" target="_blank" rel="noopener noreferrer me" class="link-pencil inline-flex items-center gap-2">
+    <a [href]="vimeo" target="_blank" rel="noopener noreferrer me" class="link-quiet inline-flex items-center gap-2">
       <app-icon name="vimeo-v"></app-icon> Vimeo
     </a>
   </div>
 </section>
 
 <dialog #reelDialog class="reel-dialog" aria-label="Reel 2026 de Pilar Blanco" (close)="onReelClose()" (click)="onReelBackdrop($event)">
-  <div class="reel-dialog-frame film film-h">
+  <div class="reel-dialog-frame frame-navy">
     @if (reelOpen()) {
       <div class="relative pb-[56.25%] h-0">
         <iframe [src]="reelUrl" title="Reel 2026 de actuación de Pilar Blanco"

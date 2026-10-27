@@ -18,19 +18,6 @@
 
 .is-vertical .frames { grid-auto-columns: min(40vw, 11rem); }
 
-/* En móvil la tira de portada va en horizontal: perforaciones arriba y abajo. */
-@media (max-width: 1023px) {
-  /* Holgura para que el círculo de lápiz no quede cortado por el borde de la tira. */
-  .frames { padding: 0.75rem 0.75rem; margin: -0.75rem -0.75rem; scroll-padding-inline: 0.75rem; }
-  .is-vertical .strip { padding: calc(var(--perf) * 2.1) calc(var(--perf) * 0.75); }
-  .is-vertical .strip::before,
-  .is-vertical .strip::after {
-    left: 0; right: 0; width: auto; height: var(--perf);
-    background: repeating-linear-gradient(90deg, transparent 0 0.5rem, var(--sprocket) 0.5rem 1.25rem);
-  }
-  .is-vertical .strip::before { top: calc(var(--perf) * 0.5); bottom: auto; }
-  .is-vertical .strip::after { bottom: calc(var(--perf) * 0.5); top: auto; }
-}
 @media (min-width: 1024px) {
   .is-vertical { height: 100%; }
   .is-vertical .strip { height: 100%; }
@@ -47,7 +34,7 @@
 .frame-shot { position: relative; aspect-ratio: var(--aspect); min-height: 0; }
 
 .frame-btn {
-  position: absolute; inset: 0; display: block; padding: 0; border: 0; background: var(--film-soft);
+  position: absolute; inset: 0; display: block; padding: 0; border: 0; background: var(--navy-soft);
   cursor: zoom-in; overflow: hidden;
 }
 .frame-btn img {
@@ -55,16 +42,16 @@
   transition: filter 0.4s var(--ease-out);
 }
 .frame-btn:hover img { filter: brightness(1.06); }
-.frame-btn:focus-visible { outline-color: var(--edge); outline-offset: 2px; }
+.frame-btn:focus-visible { outline-color: var(--on-navy); outline-offset: 2px; }
 
-.frame-code { display: flex; gap: 0.75em; color: var(--edge); min-width: 0; }
-.frame-caption { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; opacity: 0.82; }
+/* Pie con el título del proyecto (solo cuando la foto lo trae). */
+.frame-caption { margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--on-navy); opacity: 0.85; }
 
-/* Lupa: un cuentahílos de cristal sobre el fotograma. */
+/* Lupa: círculo que amplía la foto bajo el ratón. */
 .loupe {
   position: fixed; left: 0; top: 0; z-index: 70; width: 11.5rem; height: 11.5rem;
-  border-radius: 50%; pointer-events: none; background-color: var(--film); background-repeat: no-repeat;
-  box-shadow: 0 0 0 6px var(--film), 0 0 0 7px rgb(255 255 255 / 0.25), 0 22px 40px -10px rgb(0 0 0 / 0.55);
+  border-radius: 50%; pointer-events: none; background-color: var(--navy); background-repeat: no-repeat;
+  box-shadow: 0 0 0 1.5px rgb(243 238 229 / 0.85), 0 22px 44px -18px rgb(14 24 41 / 0.55);
   opacity: 0; scale: 0.85; transition: opacity 0.18s, scale 0.25s var(--ease-out);
 }
 .loupe.is-on { opacity: 1; scale: 1; }
@@ -76,18 +63,17 @@
   border: 0; background: transparent; overflow: hidden;
 }
 .enlargement[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
-.enlargement::backdrop { background: rgb(21 19 18 / 0.94); }
-.enlargement-print { margin: 0; max-width: min(100%, 72rem); animation: develop 0.55s var(--ease-out); }
+.enlargement::backdrop { background: rgb(17 28 51 / 0.94); }
+.enlargement-print { margin: 0; max-width: min(100%, 72rem); animation: appear 0.4s var(--ease-out); }
 .enlargement-print img { max-height: calc(100dvh - 11rem); width: auto; max-width: 100%; margin: 0 auto; object-fit: contain; }
-.enlargement-caption { display: flex; justify-content: space-between; gap: 1rem; padding-top: 0.6rem; }
-.enlargement-caption b { color: var(--pencil); }
+.enlargement-caption { display: flex; justify-content: space-between; gap: 1rem; padding-top: 0.6rem; color: var(--on-navy); }
 .enlargement-controls { display: flex; gap: 0.6rem; }
 .ctrl {
   display: inline-flex; align-items: center; justify-content: center; width: 3rem; height: 3rem;
   border-radius: 999px; border: 1.5px solid rgb(255 255 255 / 0.55); color: #fff; background: transparent;
 }
 .ctrl:hover { background: #fff; color: var(--ink); }
-.ctrl-close { background: var(--pencil); border-color: var(--pencil); }
-.ctrl-close:hover { background: var(--pencil-deep); color: #fff; }
+.ctrl-close { background: var(--accent); border-color: var(--accent); }
+.ctrl-close:hover { background: var(--accent-deep); color: #fff; }
 
-@keyframes develop { from { opacity: 0; filter: brightness(1.8) contrast(0.6); } }
+@keyframes appear { from { opacity: 0; scale: 0.98; } }

@@ -3,47 +3,45 @@
 @tailwind utilities;
 
 /*
- * Hoja de contactos — sistema visual de la web de Pilar Blanco.
- * Papel fotográfico blanco, tiras de negativo casi negras, un único rojo de lápiz
- * graso para la elección activa y la acción principal, y códigos de borde ámbar.
+ * Marfil y tinta — sistema visual de la web de Pilar Blanco.
+ * Suelo marfil cálido, planos marino para el Reel y la Voz, terracota solo para la acción
+ * (botón principal, pista activa, parte reproducida, foco) y Bodoni Moda con Lato.
  */
 :root {
-  --paper: #fafaf8;
-  --print: #ffffff;
-  --ink: #171513;
-  --ink-soft: #5a554f;
-  --rule: #dcdad4;
-  --film: #151312;
-  --film-soft: #2b2725;
-  --sprocket: #e9e6df;
-  --pencil: #d42a1e;
-  --pencil-deep: #ad1d13;
-  --edge: #f0a13a;
+  --ground: #f3eee5;
+  --surface: #f3eee5;
+  --surface-2: #e9e2d5;
+  --ink: #111c33;
+  --ink-soft: #4a5267;
+  --rule: rgb(17 28 51 / 0.14);
+  --navy: #111c33;
+  --navy-soft: #1d2a47;
+  --accent: #c4572a;
+  --accent-deep: #a2441d;
+  --on-navy: #e6e0d4;
 
-  --font-display: 'Archivo Variable', 'Archivo', 'Arial Narrow', sans-serif;
-  --font-body: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
-  --font-code: 'Martian Mono Variable', ui-monospace, monospace;
-  --font-hand: 'Caveat Brush', 'Segoe Print', cursive;
+  --font-display: 'Bodoni Moda Variable', 'Bodoni Moda', Georgia, serif;
+  --font-body: 'Lato', system-ui, sans-serif;
 
-  /* Paso de fotograma: rige gutter, huecos y ritmo vertical de toda la maqueta. */
+  /* Paso de la maqueta: rige gutter, huecos y ritmo vertical. */
   --step: clamp(1rem, 0.6rem + 1.6vw, 2rem);
   --gutter: clamp(1rem, 0.4rem + 3vw, 3.5rem);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   color-scheme: light;
-  accent-color: var(--pencil);
+  accent-color: var(--accent);
 }
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
-  background: var(--paper);
-  scrollbar-color: var(--film-soft) var(--paper);
+  background: var(--ground);
+  scrollbar-color: var(--navy-soft) var(--ground);
 }
 
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--ground);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 1rem;
@@ -54,12 +52,12 @@ body {
 }
 
 ::selection {
-  background: var(--pencil);
+  background: var(--accent);
   color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--pencil);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -90,30 +88,18 @@ img {
 
 .type-display {
   font-family: var(--font-display);
-  font-stretch: 62%;
-  font-weight: 800;
-  line-height: 0.86;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-}
-
-/* Código de borde: lo que va impreso en el margen de la película (números, rótulos). */
-.edge-code {
-  font-family: var(--font-code);
-  font-stretch: 75%;
-  font-weight: 600;
-  font-size: 0.6875rem;
-  line-height: 1;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-variant-numeric: tabular-nums;
-}
-
-.hand {
-  font-family: var(--font-hand);
-  color: var(--pencil);
   font-weight: 400;
-  line-height: 1;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+/* Nota: rótulo pequeño en Lato (títulos de proyecto, pies, etiquetas). */
+.note {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
 }
 
 .prose-sheet {
@@ -139,23 +125,20 @@ img {
 
 .sheet-title {
   font-family: var(--font-display);
-  font-stretch: 62%;
-  font-weight: 800;
-  font-size: clamp(3rem, 1.6rem + 6vw, 6rem);
-  line-height: 0.86;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
+  font-weight: 400;
+  font-size: clamp(3rem, 1.6rem + 4.6vw, 6.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
   text-wrap: balance;
 }
 
 .sub-title {
   font-family: var(--font-display);
-  font-stretch: 75%;
-  font-weight: 700;
-  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 0.005em;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.4rem, 1.1rem + 0.9vw, 1.9rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
 /* ——— Página ——— */
@@ -170,68 +153,16 @@ img {
   padding-block: calc(var(--step) * 3.5);
 }
 
-/* ——— Tira de negativo ——— */
-
-.film {
-  --perf: 0.875rem;
-  position: relative;
-  background: var(--film);
-  color: var(--edge);
+/* Marco marino liso que contiene vídeos y fotos. */
+.frame-navy {
+  background: var(--navy);
+  color: var(--on-navy);
+  padding: 0.75rem;
 }
 
-/* Perforaciones arriba y abajo (tira horizontal). */
-.film-h {
-  padding: calc(var(--perf) * 2.1) calc(var(--perf) * 0.75);
-}
-
-.film-h::before,
-.film-h::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: var(--perf);
-  background: repeating-linear-gradient(90deg, transparent 0 0.5rem, var(--sprocket) 0.5rem 1.25rem);
-  opacity: 0.92;
-}
-
-.film-h::before {
-  top: calc(var(--perf) * 0.5);
-}
-
-.film-h::after {
-  bottom: calc(var(--perf) * 0.5);
-}
-
-/* Perforaciones a los lados (tira vertical). */
-.film-v {
-  padding: calc(var(--perf) * 0.75) calc(var(--perf) * 2.1);
-}
-
-.film-v::before,
-.film-v::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: var(--perf);
-  background: repeating-linear-gradient(180deg, transparent 0 0.5rem, var(--sprocket) 0.5rem 1.25rem);
-  opacity: 0.92;
-}
-
-.film-v::before {
-  left: calc(var(--perf) * 0.5);
-}
-
-.film-v::after {
-  right: calc(var(--perf) * 0.5);
-}
-
-/* Copia: foto con margen blanco de ampliación. */
+/* Foto limpia: sin margen, sin sombra. */
 .print {
-  background: var(--print);
-  padding: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem);
-  box-shadow: 0 1px 1px rgb(23 21 19 / 0.06), 0 18px 40px -24px rgb(23 21 19 / 0.35);
+  background: transparent;
 }
 
 .print img {
@@ -243,92 +174,66 @@ img {
 
 /* ——— Acciones ——— */
 
-.btn-pencil,
+.btn-primary,
 .btn-line {
-  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.6em;
   min-height: 2.875rem;
   padding: 0.7rem 1.35rem;
-  /* Etiquetas de corte recto: lo redondo es el trazo de lápiz que las marca. */
-  border-radius: 2px;
-  font-family: var(--font-display);
-  font-stretch: 80%;
+  border-radius: 0;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 0.9375rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
 }
 
-.btn-pencil::after,
-.btn-line::after {
-  content: '';
-  position: absolute;
-  pointer-events: none;
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 0.5s var(--ease-out);
-}
-
-.btn-pencil:hover::after,
-.btn-pencil:focus-visible::after,
-.btn-line:hover::after,
-.btn-line:focus-visible::after {
-  clip-path: inset(0 0 0 0);
-}
-
-/* Acción principal: etiqueta roja que el lápiz rodea al señalarla. */
-.btn-pencil {
-  background: var(--pencil);
+/* Acción principal: bloque terracota. */
+.btn-primary {
+  padding-inline: 1.6rem;
+  min-height: 3.1rem;
+  background: var(--accent);
   color: #fff;
   border: 0;
-  box-shadow: 0 10px 24px -14px rgb(173 29 19 / 0.9);
 }
 
-.btn-pencil::after {
-  inset: -0.7rem -0.9rem;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80' preserveAspectRatio='none'%3E%3Cpath d='M108 6C56 3 8 14 5 39c-3 26 46 37 99 36 54-1 92-14 91-38C194 14 152 4 96 8 74 10 55 14 44 20' fill='none' stroke='%23d42a1e' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+.btn-primary:hover {
+  background: var(--accent-deep);
 }
 
-.btn-pencil:hover {
-  background: var(--pencil-deep);
-}
-
-/* Secundaria: contorno de tinta; al pasar, el lápiz la subraya. */
+/* Secundaria: contorno de tinta; al pasar se rellena de marino. */
 .btn-line {
   background: transparent;
   color: var(--ink);
-  border: 1.5px solid currentColor;
+  border: 1.5px solid var(--ink);
 }
 
-.btn-line::after {
-  left: -4%;
-  right: -4%;
-  bottom: -0.75rem;
-  height: 0.6rem;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6.5C22 3 48 3.5 98 5' fill='none' stroke='%23d42a1e' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+.btn-line:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--surface);
 }
 
-.btn-pencil svg,
+.btn-primary svg,
 .btn-line svg {
   width: 1em;
   height: 1em;
 }
 
-/* Enlace de texto con subrayado de lápiz al pasar. */
-.link-pencil {
+/* Enlace de texto con subrayado fino. */
+.link-quiet {
   text-decoration: underline;
-  text-decoration-color: var(--rule);
+  text-decoration-color: rgb(17 28 51 / 0.4);
   text-decoration-thickness: 1.5px;
   transition: text-decoration-color 0.2s, color 0.2s;
 }
 
-.link-pencil:hover {
-  color: var(--pencil-deep);
-  text-decoration-color: var(--pencil);
+.link-quiet:hover {
+  color: var(--accent-deep);
+  text-decoration-color: currentColor;
 }
 
 .sr-only-focusable:not(:focus) {

@@ -7,13 +7,11 @@ import { CONTACT } from '../../data/portfolio.data';
 interface NavItem {
   label: string;
   link: string;
-  /** Dirección del material en el rollo del inicio. */
-  code: string;
 }
 
 /**
- * Barra superior: el membrete de la hoja de contactos. Nombre, direcciones de
- * fotograma hacia cada página, contacto y descarga del CV siempre a mano.
+ * Barra superior: el membrete de la web. Nombre, enlaces a cada página,
+ * contacto y descarga del CV siempre a mano.
  */
 @Component({
   selector: 'app-site-bar',
@@ -27,11 +25,11 @@ interface NavItem {
 })
 export class SiteBarComponent {
   readonly nav: NavItem[] = [
-    { label: 'Vídeos', link: '/video', code: '05A' },
-    { label: 'Fotos', link: '/gallery', code: '06A' },
-    { label: 'Voz', link: '/voice', code: '18A' },
-    { label: 'Currículum', link: '/curriculum', code: '22A' },
-    { label: 'Sobre mí', link: '/bio', code: '23A' },
+    { label: 'Vídeos', link: '/video' },
+    { label: 'Fotos', link: '/gallery' },
+    { label: 'Voz', link: '/voice' },
+    { label: 'Currículum', link: '/curriculum' },
+    { label: 'Sobre mí', link: '/bio' },
   ];
 
   readonly cvUrl = CONTACT.cv;

@@ -33,9 +33,10 @@
               "src/sitemap.xml"
             ],
             "styles": [
-              "node_modules/@fontsource-variable/archivo/wdth.css",
-              "node_modules/@fontsource-variable/martian-mono/wdth.css",
-              "node_modules/@fontsource/caveat-brush/latin-400.css",
+              "node_modules/@fontsource-variable/bodoni-moda/opsz.css",
+              "node_modules/@fontsource-variable/bodoni-moda/opsz-italic.css",
+              "node_modules/@fontsource/lato/400.css",
+              "node_modules/@fontsource/lato/700.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -101,9 +102,10 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/@fontsource-variable/archivo/wdth.css",
-              "node_modules/@fontsource-variable/martian-mono/wdth.css",
-              "node_modules/@fontsource/caveat-brush/latin-400.css",
+              "node_modules/@fontsource-variable/bodoni-moda/opsz.css",
+              "node_modules/@fontsource-variable/bodoni-moda/opsz-italic.css",
+              "node_modules/@fontsource/lato/400.css",
+              "node_modules/@fontsource/lato/700.css",
               "src/styles.css"
             ],
             "scripts": []

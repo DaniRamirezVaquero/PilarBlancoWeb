@@ -30,7 +30,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     path: '/gallery',
     title: 'Galería y proyectos de Pilar Blanco | Actriz',
     description:
-      'Book fotográfico y fotogramas de proyectos de Pilar Blanco: cine, series, cortometrajes y publicidad.',
+      'Book fotográfico y fotos de proyectos de Pilar Blanco: cine, series, cortometrajes y publicidad.',
     breadcrumb: 'Galería',
   },
   '/voice': {

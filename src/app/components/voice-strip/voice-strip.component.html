@@ -1,6 +1,6 @@
 <ul class="voice-list">
   @for (demo of demos; track demo.url; let i = $index) {
-    <li class="film film-h voice" [class.is-active]="active() === i">
+    <li class="voice" [class.is-active]="active() === i">
       <button type="button" class="voice-play"
         (click)="toggle(i)" [attr.aria-pressed]="playing() === i"
         [attr.aria-label]="(playing() === i ? 'Pausar ' : 'Escuchar ') + 'demo de voz: ' + demo.label">
@@ -8,9 +8,8 @@
       </button>
 
       <div class="voice-meta">
-        <span class="edge-code voice-code">{{ demo.code }}</span>
         <span class="voice-label">{{ demo.label }}</span>
-        <span class="edge-code voice-time">
+        <span class="note voice-time">
           @if (failed() === i) { No se pudo cargar } @else if (loading() && active() === i) { Cargando… } @else { {{ elapsed(i, demo) }} }
         </span>
       </div>

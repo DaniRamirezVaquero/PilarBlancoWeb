@@ -16,7 +16,7 @@ Portfolio profesional de Pilar Blanco, actriz. Reúne showreel (Vimeo), galería
 Según la propia petición: hay pocas actrices de su edad, con su aspecto y con su versatilidad. La web debe mostrar ese rango (imagen, interpretación y voz) en lugar de afirmarlo en abstracto.
 
 ## Operating Context
-Se consulta en escritorio y móvil, normalmente en una visita corta de revisión. Los materiales descargables (CV en PDF, fotos de la galería en zip) forman parte del flujo de los profesionales. La web se está rediseñando (rama `rediseno-web`).
+Se consulta en escritorio y móvil, normalmente en una visita corta de revisión. Los materiales descargables (CV en PDF, fotos de la galería en zip) forman parte del flujo de los profesionales. La web se está rediseñando (rama `rediseno-hoja-elegante`, sobre `rediseno-hoja-contactos`).
 
 ## Capabilities and Constraints
 - Angular 17.3 (con SSR) + Tailwind/DaisyUI, desplegado en Vercel. Ya no hay formulario de contacto ni backend: el contacto es un popover de correo (copiar dirección o redactar en Gmail) y el correo que figura en el CV.
@@ -25,6 +25,8 @@ Se consulta en escritorio y móvil, normalmente en una visita corta de revisión
 - Biografía y CV son HTML real (con retrato, créditos enlazados a vídeos y botón de descarga del PDF), no imágenes.
 - El inicio tiene una única portada y la web una única paleta (ver DESIGN.md); se retiró la alternancia de portadas y temas.
 - Pilar ya no trabaja con OK Agencia: no mostrar su logo, enlace ni email. Hoy no hay representación confirmada; el contacto es directo.
+- Alcance del rediseño actual (rama `rediseno-hoja-elegante`): es un RESTYLE, no una recomposición. Se mantiene tal cual la estructura de `rediseno-hoja-contactos`: orden de secciones, maquetación de cada bloque, navegación, columna de fotos junto a la portada, lupa, pistas de voz en líneas separadas y transiciones entre páginas. Solo cambia la estética: color, tipografía, acabados y el lenguaje visual de carrete, que se sustituye por equivalentes serenos en el mismo sitio y con la misma función. No proponer nuevas composiciones ni mover, quitar o añadir secciones sin pedirlo la actriz.
+- Preferencias de Pilar: le gustaron las pistas de voz en líneas separadas y las transiciones entre páginas, sobre todo la apertura de la home; no le gustó que se abusara de un mismo recurso (la cita de cine).
 - Sin decidir: si se añade idioma alternativo.
 
 ## Brand Commitments
