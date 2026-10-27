@@ -1,11 +1,13 @@
 :host { display: block; }
 
-.sheet { display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--step) * 0.9); }
-.strip { min-width: 0; }
+/* Marco marino fino (4 px) y continuo: las filas se tocan para que el filete entre fotos sea siempre igual. */
+.sheet { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+.strip { min-width: 0; padding: 4px; }
+.strip + .strip { padding-top: 0; }
 
 .frames {
   display: grid; grid-auto-flow: column; grid-auto-columns: min(62vw, 18rem);
-  gap: 0.75rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  gap: 4px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
   margin: 0; padding: 0; list-style: none;
 }
 .frames::-webkit-scrollbar { display: none; }
@@ -77,3 +79,29 @@
 .ctrl-close:hover { background: var(--accent-deep); color: #fff; }
 
 @keyframes appear { from { opacity: 0; scale: 0.98; } }
+
+/*
+ * Reparto (clase `deal` en el host, solo en /gallery): las fotos se descubren una a una,
+ * de arriba abajo, como copias que se van dejando sobre la mesa. Con appReveal espera a
+ * que la hoja llegue a la pantalla; el escalón se limita para que una hoja larga no se eternice.
+ */
+:host(.deal) .strip {
+  animation: deal 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.25s backwards;
+}
+:host(.deal) .frame-shot {
+  animation: deal 0.8s cubic-bezier(0.65, 0, 0.35, 1) calc(0.4s + min(var(--n, 0), 11) * 0.055s) backwards;
+}
+:host(.deal.reveal-pending) .strip,
+:host(.deal.reveal-pending) .frame-shot { animation: none; }
+:host(.deal.reveal-in) .strip { animation-delay: 0s; }
+:host(.deal.reveal-in) .frame-shot { animation-delay: calc(0.15s + min(var(--n, 0), 11) * 0.055s); }
+
+@keyframes deal {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.deal) .strip,
+  :host(.deal) .frame-shot { animation: none; }
+}

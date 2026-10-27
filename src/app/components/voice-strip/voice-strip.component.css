@@ -31,3 +31,28 @@
 .voice-track svg { display: block; width: 100%; height: 100%; }
 .bars rect { fill: rgb(17 28 51 / 0.78); }
 .bars-played rect { fill: var(--accent); }
+
+/*
+ * Entrada de /voice (clase `draw` en el host): cada pista entra en su línea y su onda
+ * se dibuja de izquierda a derecha, como si sonara por primera vez.
+ */
+:host(.draw) .voice {
+  animation: track-in 0.8s var(--ease-out) calc(0.4s + var(--n, 0) * 0.1s) backwards;
+}
+:host(.draw) .voice-track svg {
+  animation: wave-draw 1.3s cubic-bezier(0.65, 0, 0.35, 1) calc(0.55s + var(--n, 0) * 0.1s) backwards;
+}
+
+@keyframes track-in {
+  from { opacity: 0; transform: translateX(-18px); }
+}
+
+@keyframes wave-draw {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.draw) .voice,
+  :host(.draw) .voice-track svg { animation: none; }
+}

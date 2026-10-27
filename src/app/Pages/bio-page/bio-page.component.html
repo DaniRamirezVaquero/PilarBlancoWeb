@@ -1,10 +1,10 @@
 <div class="page">
   <header class="sheet-head">
-    <h1 class="sheet-title">Sobre mí</h1>
+    <h1 class="sheet-title enter-title">Sobre mí</h1>
   </header>
 
   <article class="bio-spread" aria-labelledby="bio-trayectoria">
-    <figure class="bio-print print">
+    <figure class="bio-print print enter-unveil" style="--i:1">
       <img src="assets/sobre-mi-1-1430.webp"
         srcset="assets/sobre-mi-1-700.webp 700w, assets/sobre-mi-1-1430.webp 1430w"
         sizes="(min-width: 1024px) 34vw, calc(100vw - 2rem)" width="1430" height="1445"
@@ -12,7 +12,7 @@
         alt="Pilar Blanco recibiendo maquillaje en el set de un rodaje" />
       <figcaption class="note bio-code">En el set</figcaption>
     </figure>
-    <div>
+    <div class="bio-text-in">
       <h2 id="bio-trayectoria" class="sub-title">Trayectoria</h2>
       <div class="prose-sheet mt-4">
         <p>
@@ -36,7 +36,7 @@
   </article>
 
   <article class="bio-spread bio-spread-alt" aria-labelledby="bio-cosas">
-    <div>
+    <div appReveal class="enter" style="--i:3">
       <h2 id="bio-cosas" class="sub-title">Pasan cosas…</h2>
       <div class="prose-sheet mt-4">
         <p>
@@ -62,7 +62,7 @@
       </div>
       <a routerLink="/curriculum" class="btn-line mt-6">Ver el currículum <app-icon name="arrow-right"></app-icon></a>
     </div>
-    <figure class="bio-print bio-print-small print">
+    <figure appReveal class="bio-print bio-print-small print enter-unveil reveal-unveil" style="--i:4" [style.--r]="1">
       <img src="assets/sobre-mi-2-1430.webp"
         srcset="assets/sobre-mi-2-700.webp 700w, assets/sobre-mi-2-1430.webp 1430w"
         sizes="(min-width: 1024px) 26vw, 80vw" width="1430" height="1490"

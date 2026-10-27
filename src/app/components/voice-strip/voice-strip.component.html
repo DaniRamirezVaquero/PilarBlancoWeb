@@ -1,6 +1,6 @@
 <ul class="voice-list">
   @for (demo of demos; track demo.url; let i = $index) {
-    <li class="voice" [class.is-active]="active() === i">
+    <li class="voice" [class.is-active]="active() === i" [style.--n]="i">
       <button type="button" class="voice-play"
         (click)="toggle(i)" [attr.aria-pressed]="playing() === i"
         [attr.aria-label]="(playing() === i ? 'Pausar ' : 'Escuchar ') + 'demo de voz: ' + demo.label">

@@ -1,14 +1,14 @@
 <div class="page">
   <header class="sheet-head sheet-head-cv">
     <div class="grid gap-3">
-      <h1 class="sheet-title">Currículum</h1>
+      <h1 class="sheet-title enter-title">Currículum</h1>
     </div>
-    <app-download-cv-btn />
+    <app-download-cv-btn class="enter" style="--i:1" />
   </header>
 
   <article class="cv">
     <!-- El membrete va primero en el HTML: en móvil encabeza el CV; en escritorio se coloca junto a la foto. -->
-    <header class="cv-lockup">
+    <header class="cv-lockup lockup-in">
       <h2 class="cv-name type-display">
         <span>Pilar</span>
         <span class="cv-name-last">Blanco</span>
@@ -17,7 +17,7 @@
     </header>
 
     <aside class="cv-side">
-      <figure class="print m-0">
+      <figure class="print m-0 enter-unveil" style="--i:2">
         <img src="assets/cv-photo-743.webp"
           srcset="assets/cv-photo-400.webp 400w, assets/cv-photo-743.webp 743w"
           sizes="(min-width: 1024px) 24vw, calc(100vw - 2rem)" width="743" height="1024"
@@ -25,12 +25,12 @@
           alt="Pilar Blanco, actriz, retrato para book" />
       </figure>
 
-      <section class="cv-block">
+      <section class="cv-block enter" style="--i:3" appReveal>
         <h2 class="note cv-label">Medidas</h2>
         <p>Altura: 165 cm</p>
         <p>Talla: 40/M</p>
       </section>
-      <section class="cv-block">
+      <section class="cv-block enter" style="--i:4" appReveal>
         <h2 class="note cv-label">Contacto</h2>
         <a href="mailto:pilarblanco.actriz@gmail.com" class="cv-contact link-quiet">
           <app-icon name="envelope"></app-icon><span>pilarblanco.actriz&#64;gmail.com</span>
@@ -39,7 +39,7 @@
           <app-icon name="globe"></app-icon><span>www.pilarblanco.es</span>
         </a>
       </section>
-      <section class="cv-block">
+      <section class="cv-block enter" style="--i:5" appReveal>
         <h2 class="note cv-label">Formación</h2>
         <ul class="cv-list cv-list-loose">
           <li>Creación Integral de una obra audiovisual | Fernando Colomo, Belén Sánchez Arévalo y Sinuhé Muñoz. Aisge-Netflix (120 horas)</li>
@@ -51,7 +51,7 @@
           <li>Cabaret | Virginia Nölting</li>
         </ul>
       </section>
-      <section class="cv-block">
+      <section class="cv-block enter" style="--i:6" appReveal>
         <h2 class="note cv-label">Idiomas</h2>
         <p>Español: Nativo</p>
         <p>Inglés: Medio</p>
@@ -59,9 +59,9 @@
       </section>
     </aside>
 
-    <div class="cv-main">
+    <div class="cv-main enter" style="--i:4">
       <div class="cv-columns">
-        <section class="cv-block">
+        <section class="cv-block" appReveal>
           <h2 class="sub-title cv-heading">Largometrajes</h2>
           <ul class="cv-list">
             <li><a href="https://www.facebook.com/share/v/151JSUmSu32/" target="_blank" rel="noopener noreferrer" class="link-quiet">Quién llorará por mí</a> . Paco Izquierdo</li>
@@ -72,7 +72,7 @@
             <li><a href="https://youtu.be/Q6LxQ0mGF2o" target="_blank" rel="noopener noreferrer" class="link-quiet">Por las nubes</a> . Fernando Colomo (Mediometraje)</li>
           </ul>
         </section>
-        <section class="cv-block">
+        <section class="cv-block" appReveal>
           <h2 class="sub-title cv-heading">Televisión</h2>
           <ul class="cv-list">
             <li>Rabia . Mediaset España</li>
@@ -80,7 +80,7 @@
             <li>Plaza Alta . Canal Sur</li>
           </ul>
         </section>
-        <section class="cv-block">
+        <section class="cv-block" appReveal>
           <h2 class="sub-title cv-heading">Cortometrajes</h2>
           <ul class="cv-list">
             <li><a href="https://youtu.be/wqx6g6Ste-w" target="_blank" rel="noopener noreferrer" class="link-quiet">Aquella Fotografía</a> . Sergio Barba</li>
@@ -98,7 +98,7 @@
             <li>Darkinside | Andrés Peña (Serie web)</li>
           </ul>
         </section>
-        <section class="cv-block">
+        <section class="cv-block" appReveal>
           <h2 class="sub-title cv-heading">Teatro</h2>
           <ul class="cv-list">
             <li>Ópera Werther . Paul-Emile Fourny</li>

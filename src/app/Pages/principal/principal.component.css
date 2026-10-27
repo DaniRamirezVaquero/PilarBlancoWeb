@@ -57,8 +57,6 @@
 .opening-strip { position: relative; min-height: 0; }
 .opening-strip app-contact-sheet { height: 100%; }
 /* Columna de portada: marco fino y fotos casi pegadas. */
-.opening-strip ::ng-deep .strip { padding: 4px; }
-.opening-strip ::ng-deep .frames { gap: 4px; }
 .opening-strip ::ng-deep .frame { animation: feed 0.9s var(--ease-out) both; }
 .opening-strip ::ng-deep .frame:nth-child(2) { animation-delay: 0.12s; }
 .opening-strip ::ng-deep .frame:nth-child(3) { animation-delay: 0.24s; }

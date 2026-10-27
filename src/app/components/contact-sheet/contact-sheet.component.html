@@ -3,7 +3,7 @@
     <div class="frame-navy strip">
       <ul class="frames">
         @for (item of strip; track item.index) {
-          <li class="frame">
+          <li class="frame" [style.--n]="item.index">
             <div class="frame-shot">
               <button type="button" class="frame-btn"
                 [attr.aria-label]="'Ampliar foto: ' + item.frame.alt"

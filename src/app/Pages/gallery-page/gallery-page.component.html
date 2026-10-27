@@ -1,24 +1,24 @@
 <div class="page">
   <header class="sheet-head">
-    <h1 class="sheet-title">Fotos</h1>
+    <h1 class="sheet-title enter-title">Fotos</h1>
   </header>
 
   <section aria-labelledby="book-title">
-    <div class="flex flex-wrap items-end justify-between gap-4 mb-[calc(var(--step)*1.25)]">
+    <div class="enter flex flex-wrap items-end justify-between gap-4 mb-[calc(var(--step)*1.25)]" style="--i:1">
       <h2 id="book-title" class="sub-title">Book</h2>
       <a [href]="photosZip" download="Pilar Blanco - Galeria fotos.zip" class="btn-primary"
         aria-label="Descargar el book fotográfico de Pilar Blanco en calidad completa (zip)">
         Descargar las fotos <app-icon name="download"></app-icon>
       </a>
     </div>
-    <app-contact-sheet [frames]="book" [perStrip]="4" aspect="4 / 5" sizes="(min-width: 1024px) 22vw, 62vw"></app-contact-sheet>
+    <app-contact-sheet class="deal" [frames]="book" [perStrip]="4" aspect="4 / 5" sizes="(min-width: 1024px) 22vw, 62vw"></app-contact-sheet>
   </section>
 
   <section class="mt-[calc(var(--step)*3.5)]" aria-labelledby="proyectos-title">
-    <div class="mb-[calc(var(--step)*1.25)] grid gap-2">
+    <div appReveal class="enter mb-[calc(var(--step)*1.25)] grid gap-2" style="--i:3">
       <h2 id="proyectos-title" class="sub-title">Fotos de proyectos</h2>
       <p class="text-ink-soft">Cada foto lleva debajo el título de su proyecto.</p>
     </div>
-    <app-contact-sheet [frames]="projects" [perStrip]="5" aspect="16 / 9" sizes="(min-width: 1024px) 18vw, 62vw"></app-contact-sheet>
+    <app-contact-sheet appReveal class="deal" [frames]="projects" [perStrip]="5" aspect="16 / 9" sizes="(min-width: 1024px) 18vw, 62vw"></app-contact-sheet>
   </section>
 </div>

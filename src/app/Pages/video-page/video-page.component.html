@@ -1,9 +1,9 @@
 <div class="page">
   <header class="sheet-head">
-    <h1 class="sheet-title">Vídeos</h1>
+    <h1 class="sheet-title enter-title">Vídeos</h1>
   </header>
 
-  <section aria-labelledby="reel-title">
+  <section aria-labelledby="reel-title" class="enter-curtain" style="--i:1">
     <h2 id="reel-title" class="sr-only">{{ reel.label }}</h2>
     <figure class="m-0">
       <div class="frame-navy">
@@ -14,10 +14,10 @@
   </section>
 
   <section class="mt-[calc(var(--step)*3.5)]" aria-labelledby="escenas-title">
-    <h2 id="escenas-title" class="sub-title mb-[calc(var(--step)*1.25)]">Escenas y videobook</h2>
+    <h2 id="escenas-title" appReveal class="sub-title enter mb-[calc(var(--step)*1.25)]" style="--i:2">Escenas y videobook</h2>
     <div class="grid gap-[calc(var(--step)*1.5)] lg:grid-cols-2">
       @for (scene of scenes; track scene.videoId) {
-        <figure class="m-0">
+        <figure appReveal class="m-0 enter-curtain reveal-curtain" [style.--i]="$index + 3" [style.--r]="$index % 2">
           <div class="frame-navy">
             <app-vimeo-facade [videoId]="scene.videoId" [hash]="scene.hash" [poster]="scene.poster" [title]="scene.title" />
           </div>

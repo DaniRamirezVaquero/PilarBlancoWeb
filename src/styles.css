@@ -141,6 +141,30 @@ img {
   letter-spacing: -0.01em;
 }
 
+/*
+ * Bodoni a tamaño de texto: el eje óptico automático da trazos finos casi invisibles
+ * por debajo de ~2.5rem. Se fija el corte de texto (opsz bajo), de trazos más robustos.
+ */
+.sub-title,
+.credit-title,
+.voice-label,
+.role,
+.cv-role,
+.wordmark .type-display,
+.sheet-link {
+  font-variation-settings: 'opsz' 11;
+  font-weight: 500;
+}
+
+/* En móvil los títulos grandes rondan los 3rem: a ese tamaño también necesitan un corte más robusto. */
+@media (max-width: 767px) {
+  .sheet-title,
+  .type-display,
+  .contact-email {
+    font-variation-settings: 'opsz' 24;
+  }
+}
+
 /* ——— Página ——— */
 
 .page {
@@ -243,4 +267,110 @@ img {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+/* ——— Entrada de las páginas interiores ———
+ * Cada página tiene su propia entrada, ligada a lo que muestra; lo común es el título,
+ * que sube tras una máscara (la apertura del inicio, en cambio, revela la foto y funde el nombre).
+ * `--i` es el orden de un elemento en la secuencia (0, 1, 2…).
+ * Fill "backwards": mientras espera está oculto y al acabar vuelve a su estilo natural
+ * (sin transform ni clip residual). Sin JS ni animación el contenido ya está visible.
+ */
+.enter {
+  animation: enter-rise 0.8s var(--ease-out) calc(0.3s + var(--i, 0) * 0.09s) backwards;
+}
+
+/* Título: la línea sube tras una máscara fija, sin fundido. */
+.enter-title {
+  animation: enter-mask 1.1s var(--ease-out) 0.08s backwards;
+}
+
+/* Vídeo: el marco se abre desde el centro, como un telón, y el fotograma se asienta. */
+.enter-curtain {
+  animation: enter-curtain 1.15s cubic-bezier(0.65, 0, 0.35, 1) calc(0.35s + var(--i, 0) * 0.09s) backwards;
+}
+.enter-curtain img {
+  animation: enter-settle 1.8s var(--ease-out) calc(0.35s + var(--i, 0) * 0.09s) backwards;
+}
+
+/* Foto: se descubre de arriba abajo, con un acercamiento lento que se detiene. */
+.enter-unveil {
+  animation: enter-unveil 1.2s cubic-bezier(0.65, 0, 0.35, 1) calc(0.3s + var(--i, 0) * 0.09s) backwards;
+}
+.enter-unveil img {
+  animation: enter-settle 1.9s var(--ease-out) calc(0.3s + var(--i, 0) * 0.09s) backwards;
+}
+
+@keyframes enter-rise {
+  from { opacity: 0; transform: translateY(14px); }
+}
+
+@keyframes enter-mask {
+  from { transform: translateY(0.95em); clip-path: inset(-0.3em -0.1em 0.95em -0.1em); }
+  to { transform: none; clip-path: inset(-0.3em -0.1em -0.3em -0.1em); }
+}
+
+@keyframes enter-curtain {
+  from { clip-path: inset(0 50% 0 50%); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes enter-unveil {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes enter-settle {
+  from { transform: scale(1.07); }
+}
+
+/*
+ * Contenido más abajo: aparece una sola vez al llegar (lo gestiona appReveal), con su
+ * propio retardo `--r`. Si ese contenido ya cabe en la primera pantalla, appReveal no lo
+ * toca y lo anima su clase de entrada (enter, enter-curtain…) junto al resto de la página.
+ */
+.reveal-pending {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.reveal-in {
+  animation: enter-rise 0.8s var(--ease-out) calc(var(--r, 0) * 0.09s) backwards;
+}
+
+/* Variantes al llegar: los vídeos se abren como telón y las fotos se descubren. */
+.reveal-curtain.reveal-pending,
+.reveal-unveil.reveal-pending {
+  transform: none;
+}
+.reveal-curtain.reveal-in {
+  animation: enter-curtain 1s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--r, 0) * 0.12s) backwards;
+}
+.reveal-unveil.reveal-in {
+  animation: enter-unveil 1.1s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--r, 0) * 0.12s) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter,
+  .enter-title,
+  .enter-curtain,
+  .enter-unveil,
+  .reveal-in,
+  .reveal-curtain.reveal-in,
+  .reveal-unveil.reveal-in {
+    animation-name: enter-fade;
+    animation-duration: 0.3s;
+    animation-delay: 0s;
+  }
+  .enter-curtain img,
+  .enter-unveil img {
+    animation: none;
+  }
+  .reveal-pending {
+    opacity: 1;
+    transform: none;
+  }
+  @keyframes enter-fade {
+    from { opacity: 0; }
+  }
 }

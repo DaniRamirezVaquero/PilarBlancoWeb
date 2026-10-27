@@ -11,3 +11,21 @@
 .bio-print-small { max-width: 26rem; justify-self: end; }
 .bio-print-small img { aspect-ratio: 1; }
 .bio-code { padding-top: 0.6rem; color: var(--ink-soft); }
+
+/* Entrada: la foto se descubre y el texto la sigue párrafo a párrafo. */
+.bio-text-in .sub-title,
+.bio-text-in .prose-sheet p {
+  animation: text-in 0.8s var(--ease-out) backwards;
+}
+.bio-text-in .sub-title { animation-delay: 0.55s; }
+.bio-text-in .prose-sheet p:nth-child(1) { animation-delay: 0.7s; }
+.bio-text-in .prose-sheet p:nth-child(2) { animation-delay: 0.85s; }
+
+@keyframes text-in {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bio-text-in .sub-title,
+  .bio-text-in .prose-sheet p { animation: none; }
+}

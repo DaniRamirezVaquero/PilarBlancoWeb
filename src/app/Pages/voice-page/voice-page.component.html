@@ -1,18 +1,18 @@
 <div class="page">
   <header class="sheet-head">
-    <h1 class="sheet-title">Voz</h1>
+    <h1 class="sheet-title enter-title">Voz</h1>
   </header>
 
   <section aria-labelledby="locucion-title">
-    <h2 id="locucion-title" class="sub-title mb-[calc(var(--step)*1.25)]">Locución</h2>
-    <app-voice-strip [demos]="voice"></app-voice-strip>
+    <h2 id="locucion-title" class="sub-title enter mb-[calc(var(--step)*1.25)]">Locución</h2>
+    <app-voice-strip class="draw" [demos]="voice"></app-voice-strip>
   </section>
 
   <section class="mt-[calc(var(--step)*3.5)]" aria-labelledby="doblaje-title">
-    <h2 id="doblaje-title" class="sub-title mb-[calc(var(--step)*1.25)]">Doblaje</h2>
+    <h2 id="doblaje-title" appReveal class="sub-title enter mb-[calc(var(--step)*1.25)]" style="--i:4">Doblaje</h2>
     <div class="grid gap-[calc(var(--step)*1.5)] lg:grid-cols-2">
       @for (demo of dubbing; track demo.videoId; let first = $first) {
-        <figure class="m-0">
+        <figure appReveal class="m-0 enter-curtain reveal-curtain" [style.--i]="$index + 5" [style.--r]="$index % 2">
           <div class="frame-navy">
             <app-vimeo-facade [videoId]="demo.videoId" [hash]="demo.hash" [poster]="demo.poster" [title]="demo.title" [priority]="first" />
           </div>

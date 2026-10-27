@@ -39,3 +39,22 @@
 .cv-heading { margin-bottom: 0.75rem; }
 .cv-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.3rem; font-size: 1rem; }
 .cv-list-loose { gap: 0.6rem; font-size: 0.9375rem; }
+
+/* Entrada: el membrete se escribe línea a línea tras una máscara (Pilar, Blanco, Actriz). */
+.lockup-in .cv-name > span,
+.lockup-in .cv-role {
+  animation: line-up 1s var(--ease-out) backwards;
+}
+.lockup-in .cv-name > span:first-child { animation-delay: 0.3s; }
+.lockup-in .cv-name > span:last-child { animation-delay: 0.42s; }
+.lockup-in .cv-role { animation-delay: 0.6s; }
+
+@keyframes line-up {
+  from { transform: translateY(0.95em); clip-path: inset(-0.3em -0.1em 0.95em -0.1em); }
+  to { transform: none; clip-path: inset(-0.3em -0.1em -0.3em -0.1em); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lockup-in .cv-name > span,
+  .lockup-in .cv-role { animation: none; }
+}
