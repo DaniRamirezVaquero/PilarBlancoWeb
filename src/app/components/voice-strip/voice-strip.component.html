@@ -28,12 +28,12 @@
           </defs>
           <g class="bars">
             @for (bar of barsOf[i]; track bar.x) {
-              <rect [attr.x]="bar.x" [attr.y]="24 - bar.h / 2" width="2.4" [attr.height]="bar.h" />
+              <rect [attr.x]="bar.x" [attr.y]="24 - bar.h / 2" width="2.6" [attr.height]="bar.h" />
             }
           </g>
           <g class="bars-played" [attr.clip-path]="'url(#played-' + i + ')'">
             @for (bar of barsOf[i]; track bar.x) {
-              <rect [attr.x]="bar.x" [attr.y]="24 - bar.h / 2" width="2.4" [attr.height]="bar.h" />
+              <rect [attr.x]="bar.x" [attr.y]="24 - bar.h / 2" width="2.6" [attr.height]="bar.h" />
             }
           </g>
         </svg>

@@ -26,10 +26,22 @@
 }
 .voice-time { color: var(--ink-soft); }
 
+/*
+ * Móvil: fila más baja. Disco de 44px (el mínimo táctil), duración junto al título y onda
+ * en su propia línea pero más baja; cuatro demos dejan de ocupar casi una pantalla.
+ */
+@media (max-width: 767px) {
+  .voice { gap: 0.2rem 0.9rem; padding: 0.7rem 1rem; }
+  .voice-play { width: 2.75rem; height: 2.75rem; font-size: 0.95rem; }
+  .voice-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.75rem; }
+  .voice-label { font-size: 1.45rem; }
+  .voice-track { height: 2.25rem; }
+}
+
 .voice-track { grid-column: 1 / -1; height: 3rem; cursor: pointer; }
 @media (min-width: 768px) { .voice-track { grid-column: auto; } }
 .voice-track svg { display: block; width: 100%; height: 100%; }
-.bars rect { fill: rgb(17 28 51 / 0.78); }
+.bars rect { fill: rgb(17 28 51 / 0.58); }
 .bars-played rect { fill: var(--accent); }
 
 /*

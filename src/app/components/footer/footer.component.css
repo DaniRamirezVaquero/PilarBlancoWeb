@@ -9,5 +9,5 @@
 
 .footer-row {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem;
-  padding-top: 1rem; font-size: 0.8125rem;
+  padding-top: 1rem; font-size: 0.875rem;
 }

@@ -15,7 +15,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     path: '/home',
     title: 'Pilar Blanco | Actriz',
     description:
-      'Pilar Blanco, actriz de cine, televisión, teatro y doblaje. Reel, galería, currículum y contacto para castings y agencias.',
+      'Pilar Blanco, actriz de cine, televisión, teatro y doblaje. Reel, fotos, currículum y contacto para castings y agencias.',
     breadcrumb: 'Inicio',
     ogType: 'profile',
   },
@@ -28,10 +28,10 @@ export const SEO_PAGES: Record<string, SeoPage> = {
   },
   '/gallery': {
     path: '/gallery',
-    title: 'Galería y proyectos de Pilar Blanco | Actriz',
+    title: 'Fotos y book de Pilar Blanco | Actriz',
     description:
       'Book fotográfico y fotos de proyectos de Pilar Blanco: cine, series, cortometrajes y publicidad.',
-    breadcrumb: 'Galería',
+    breadcrumb: 'Fotos',
   },
   '/voice': {
     path: '/voice',

@@ -21,6 +21,14 @@
 /* Columna de la portada en móvil: las cuatro fotos en una fila que cabe entera, sin desplazamiento. */
 .is-vertical .frames { grid-auto-columns: minmax(0, 1fr); overflow: visible; }
 
+/* Móvil: tira que se desliza; la tercera foto asoma cortada en el borde derecho como pista de desborde. */
+@media (max-width: 639px) {
+  .is-vertical .frames {
+    grid-auto-columns: min(37vw, 9.625rem); overflow-x: auto; scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 @media (min-width: 1024px) {
   .is-vertical { height: 100%; }
   .is-vertical .strip { height: 100%; }

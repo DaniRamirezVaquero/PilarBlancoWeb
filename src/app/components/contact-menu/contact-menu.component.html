@@ -1,7 +1,8 @@
 <div #root class="relative">
   <button type="button" (click)="toggle()"
     [attr.aria-expanded]="open()" aria-haspopup="dialog" aria-controls="contact-card"
-    [attr.aria-label]="variant === 'compact' ? 'Contactar con Pilar Blanco' : null"
+    [attr.aria-label]="variant === 'compact' ? 'Contacto' : null"
+    [attr.title]="variant === 'compact' ? 'Contacto' : null"
     [class]="variant === 'compact' ? 'contact-icon' : 'btn-line contact-trigger'">
     <app-icon name="envelope"></app-icon>
     @if (variant === 'full') {

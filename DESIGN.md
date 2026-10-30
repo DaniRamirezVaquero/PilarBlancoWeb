@@ -2,8 +2,8 @@
 name: Pilar Blanco, actriz
 description: Retrato de estudio sereno sobre marfil: Bodoni Moda y Lato, planos marino para el Reel y la Voz, terracota solo para la acción.
 colors:
-  accent: "#c4572a"
-  accent-deep: "#a2441d"
+  accent: "#bb5126"
+  accent-deep: "#9a3f1a"
   ground: "#f3eee5"
   surface: "#f3eee5"
   surface-2: "#e9e2d5"
@@ -65,7 +65,7 @@ typography:
     letterSpacing: "0.02em"
   note:
     fontFamily: "Lato, system-ui, sans-serif"
-    fontSize: "0.8125rem"
+    fontSize: "0.875rem"
     fontWeight: 400
     lineHeight: 1.3
     fontFeature: "'tnum' 1"
@@ -149,7 +149,7 @@ Todo el material fotográfico, de vídeo y de audio es el elegido por la actriz;
 Marfil cálido y tinta marino, con una sola nota cálida de acción.
 
 ### Primary
-- **Terracota** (#c4572a): botón principal, disco de la pista activa, parte reproducida de la onda, selección de texto, anillo de foco y subrayado de la navegación activa o al pasar. Hover: **Terracota profundo** (#a2441d).
+- **Terracota** (#bb5126): botón principal, disco de la pista activa, parte reproducida de la onda, selección de texto, anillo de foco (doble: marfil pegado y tinta por fuera, para que se lea también sobre el propio terracota) y subrayado de la navegación activa o al pasar. Hover: **Terracota profundo** (#9a3f1a).
 
 ### Neutral
 - **Marfil** (#f3eee5): suelo de la página, barra superior, menú móvil y filas claras de voz.
@@ -178,7 +178,7 @@ Marfil cálido y tinta marino, con una sola nota cálida de acción.
 - **Rol** (cursiva 400, clamp(1.25rem → 1.6rem)): «Actriz» en portada y CV.
 - **Body / prose** (Lato 400, 1rem y hasta 1.0625rem, interlínea 1.6 y 1.7, máximo 66ch).
 - **Botón** (Lato 700, 0.9375rem, tracking 0.02em, sin mayúsculas).
-- **Nota** (Lato 400, 0.8125rem, interlínea 1.3, cifras tabulares): pies de foto, títulos de proyecto, etiquetas, tiempo de las pistas.
+- **Nota** (Lato 400, 0.875rem, interlínea 1.3, cifras tabulares): pies de foto, títulos de proyecto, etiquetas, tiempo de las pistas.
 
 ### Named Rules
 **La regla del peso único.** Los títulos van en 400, sin text-transform ni stretch; el contraste lo da la propia Bodoni y el salto de escala.

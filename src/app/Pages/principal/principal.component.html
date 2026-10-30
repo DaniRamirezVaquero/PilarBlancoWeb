@@ -64,14 +64,14 @@
     <div class="grid gap-3">
       <h2 id="fotos-title" class="sheet-title">Book</h2>
     </div>
-    <p class="sheet-hint">Pasa el ratón por una foto o púlsala para verla en grande.</p>
+    <p class="sheet-hint">Pulsa una foto para verla en grande.</p>
   </header>
   <app-contact-sheet [frames]="book" [perStrip]="6" aspect="4 / 5" sizes="(min-width: 1024px) 15vw, 62vw"></app-contact-sheet>
   <div class="block-actions">
     <a [href]="photosZip" download="Pilar Blanco - Galeria fotos.zip" class="btn-line">
-      Descargar las fotos <app-icon name="download"></app-icon>
+      Descargar fotos (ZIP) <app-icon name="download"></app-icon>
     </a>
-    <a routerLink="/gallery" class="link-quiet">Fotos de proyectos</a>
+    <a routerLink="/gallery" class="link-quiet">Ver todas las fotos</a>
   </div>
 </section>
 
@@ -99,7 +99,7 @@
             <span class="note credit-note">{{ credit.note }}</span>
             @if (credit.url) {
               <a [href]="credit.url" target="_blank" rel="noopener noreferrer" class="credit-title link-quiet">
-                {{ titleHead(credit.title) }}<span class="whitespace-nowrap">{{ titleTail(credit.title) }}<app-icon name="up-right-from-square" class="credit-out"></app-icon></span>
+                {{ titleHead(credit.title) }}<span class="whitespace-nowrap">{{ titleTail(credit.title) }}<app-icon name="up-right-from-square" class="credit-out"></app-icon><span class="sr-only"> (se abre en otra pestaña)</span></span>
               </a>
             } @else {
               <span class="credit-title">{{ credit.title }}</span>
@@ -110,7 +110,7 @@
       </ul>
       <div class="block-actions">
         <a routerLink="/curriculum" class="btn-line">Currículum completo <app-icon name="arrow-right"></app-icon></a>
-        <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="link-quiet">Descargar CV en PDF</a>
+        <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="link-quiet">Descargar CV</a>
       </div>
     </div>
 
@@ -140,13 +140,13 @@
   </header>
   <a [href]="mailtoUrl" class="contact-email">{{ emailUser }}<wbr />{{ emailDomain }}</a>
   <div class="block-actions">
-    <a [href]="gmailUrl" target="_blank" rel="noopener noreferrer" class="btn-primary">Escribir en Gmail</a>
+    <a [href]="gmailUrl" target="_blank" rel="noopener noreferrer" class="btn-primary">Escribir en Gmail<span class="sr-only"> (se abre en otra pestaña)</span></a>
     <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="btn-line">Descargar CV <app-icon name="download"></app-icon></a>
     <a [href]="instagram" target="_blank" rel="noopener noreferrer me" class="link-quiet inline-flex items-center gap-2">
-      <app-icon name="instagram"></app-icon> pilarblanco.actriz
+      <app-icon name="instagram"></app-icon> pilarblanco.actriz<span class="sr-only"> en Instagram (se abre en otra pestaña)</span>
     </a>
     <a [href]="vimeo" target="_blank" rel="noopener noreferrer me" class="link-quiet inline-flex items-center gap-2">
-      <app-icon name="vimeo-v"></app-icon> Vimeo
+      <app-icon name="vimeo-v"></app-icon> Vimeo<span class="sr-only"> (se abre en otra pestaña)</span>
     </a>
   </div>
 </section>

@@ -32,8 +32,12 @@ export class VoiceStripComponent implements OnChanges, OnDestroy {
   barsOf: { x: number; h: number }[][] = [];
 
   ngOnChanges(): void {
+    // Una barra por cada dos picos (el mayor de la pareja): onda menos densa, misma forma.
     this.barsOf = this.demos.map((demo) =>
-      demo.peaks.map((peak, i) => ({ x: i * 4 + 1, h: Math.max(2, peak * 0.44) })));
+      Array.from({ length: Math.ceil(demo.peaks.length / 2) }, (_, j) => ({
+        x: j * 8 + 2,
+        h: Math.max(2, Math.max(demo.peaks[j * 2], demo.peaks[j * 2 + 1] ?? 0) * 0.44),
+      })));
   }
 
   percent(): number {

@@ -2,50 +2,39 @@
 
 /* ——— Apertura ——— */
 
-.opening {
-  display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--step);
-  padding: var(--step) var(--gutter) calc(var(--step) * 2);
-}
-
 /*
  * Móvil y tableta: como en escritorio, la apertura ocupa justo el alto de la pantalla
  * (menos la barra). La fila de fotos toma su alto natural y la foto grande, el resto.
  * Con pantallas muy bajas (móvil en horizontal) se respeta un mínimo y se deja desplazar.
  */
-@media (max-width: 1023px) {
-  .opening {
-    display: flex; flex-direction: column;
-    height: calc(100svh - 4.25rem); min-height: 34rem;
-    padding-bottom: var(--step);
-  }
-  .opening .enlargement { flex: 1; }
-  .opening .enlargement-photo { min-height: 0; }
-  /* Marco más vertical que en escritorio: se centra la cara en lugar del lado derecho. */
-  .opening .enlargement-photo img { object-position: 67% 30%; }
-  .opening-strip { flex: none; }
+.opening {
+  display: flex; flex-direction: column; gap: var(--step);
+  height: calc(100svh - 4.25rem); min-height: 34rem;
+  padding: var(--step) var(--gutter);
 }
+.opening-strip { flex: none; }
 
 @media (min-width: 1024px) {
   .opening {
-    grid-template-columns: minmax(0, 1fr) clamp(10rem, 13vw, 14rem);
+    display: grid; grid-template-columns: minmax(0, 1fr) clamp(10rem, 13vw, 14rem);
     height: calc(100dvh - 4.25rem); min-height: 36rem; max-height: 62rem;
-    padding-bottom: var(--step);
   }
 }
 
-.enlargement { position: relative; margin: 0; display: flex; flex-direction: column; min-height: 0; }
+.enlargement { position: relative; margin: 0; display: flex; flex: 1; flex-direction: column; min-height: 0; }
 
-.enlargement-photo { position: relative; flex: 1; min-height: 28rem; overflow: hidden; background: #8e8f91; }
-@media (min-width: 1024px) { .enlargement-photo { min-height: 0; } }
+.enlargement-photo { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--photo-wall); }
 
 .enlargement-photo img {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 92% 30%;
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 67% 30%; /* marco vertical: se centra la cara */
   animation: fade-in 1.6s var(--ease-out) both;
 }
+@media (min-width: 1024px) { .enlargement-photo img { object-position: 92% 30%; } }
 
 .enlargement-veil {
   position: absolute; inset: 0;
-  background: linear-gradient(0deg, rgb(14 24 41 / 0.28), transparent 45%);
+  /* Marino (--navy) a 62 y 40 %: sostiene «Actriz» y el nombre sobre la pared gris. */
+  background: linear-gradient(0deg, rgb(17 28 51 / 0.62), rgb(17 28 51 / 0.4) 38%, transparent 68%);
 }
 
 .enlargement-title {
@@ -60,7 +49,7 @@
 
 .role {
   margin: 0.9rem 0 0; font-family: var(--font-display); font-style: italic; font-weight: 400;
-  font-size: clamp(1.25rem, 1rem + 0.6vw, 1.6rem);
+  font-size: clamp(1.4rem, 1.1rem + 0.6vw, 1.6rem);
   animation: rise 1s var(--ease-out) 0.4s both;
 }
 
@@ -156,6 +145,9 @@
   transition: background-size 0.5s var(--ease-out), color 0.3s;
 }
 .contact-email:hover { background-size: 100% 0.09em; color: var(--accent-deep); }
+
+/* Táctil: sin hover no hay subrayado que revele el enlace; queda uno fino y permanente. */
+@media (hover: none), (pointer: coarse) { .contact-email { background-size: 100% 0.05em; } }
 
 /* Reel en grande */
 .reel-dialog {

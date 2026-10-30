@@ -35,7 +35,7 @@
 
 /* CV: botón con texto, gemelo del botón «Contacto», para que se lea qué descarga. */
 .bar-btn { min-height: 2.5rem; padding: 0.5rem 0.9rem; gap: 0.45em; }
-.cv-format { font-size: 0.6875rem; color: var(--ink-soft); }
+.cv-format { font-size: 0.875rem; color: var(--ink-soft); }
 .bar-btn:hover .cv-format { color: inherit; }
 /* Móvil: píldora con icono y «CV», del mismo alto y borde redondeado que los botones de contacto y menú. */
 @media (max-width: 639px) {
