@@ -1,6 +1,6 @@
 /**
  * Lógica pura de las carátulas de Vimeo. La comparten el front (facade) y la
- * función de Vercel `api/vimeo-poster.ts`, así que no depende de Angular.
+ * función de Vercel `api/vimeo-poster.mjs` (que replica su validación), así que no depende de Angular.
  */
 
 export const POSTER_WIDTHS = [640, 1280, 1920] as const;
@@ -21,7 +21,7 @@ export const isHash = (value: string | null): value is string => !!value && HASH
 export const toPosterWidth = (raw: string | null): PosterWidth =>
   POSTER_WIDTHS.find((w) => String(w) === raw) ?? DEFAULT_WIDTH;
 
-/** URL relativa del póster vivo (la sirve api/vimeo-poster.ts). */
+/** URL relativa del póster vivo (la sirve api/vimeo-poster.mjs). */
 export function posterUrl(id: string, hash: string, width: PosterWidth): string {
   return `${POSTER_ENDPOINT}?id=${id}&h=${hash}&w=${width}`;
 }
