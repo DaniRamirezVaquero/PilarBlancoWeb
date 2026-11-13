@@ -6,10 +6,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SeoService } from './seo/seo.service';
 import { HeroThemeService } from './services/hero-theme.service';
 import { VercelAnalyticsService } from './services/vercel-analytics.service';
+import { ANCHOR_GAP_PX } from './utils/nav-scroll';
 import { filter } from 'rxjs';
-
-/** Aire entre la barra superior y el título de la sección a la que se salta. */
-const ANCHOR_GAP_PX = 16;
 
 @Component({
     selector: 'app-root',
@@ -37,7 +35,7 @@ export class AppComponent implements AfterViewInit {
     const document = inject(DOCUMENT);
     inject(ViewportScroller).setOffset(() => [
       0,
-      (document.querySelector('app-site-nav .site-nav')?.getBoundingClientRect().height ?? 0) + ANCHOR_GAP_PX,
+      (parseFloat(document.documentElement.style.getPropertyValue('--nav-h')) || 0) + ANCHOR_GAP_PX,
     ]);
     this.seo.updateForUrl(this.router.url);
     this.router.events

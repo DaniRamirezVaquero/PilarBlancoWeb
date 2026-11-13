@@ -31,12 +31,12 @@
 
 /* Velo oscuro del hero, solo en móvil (md:hidden): tras el bloque del nombre, de más a menos intenso. */
 .hero-veil {
-  background: radial-gradient(ellipse 100% 30% at 36% 52%, rgb(0 0 0 / 0.72), rgb(0 0 0 / 0.5) 55%, transparent 100%);
+  background: radial-gradient(ellipse 100% 30% at 36% 52%, rgb(0 0 0 / 0.5), rgb(0 0 0 / 0.35) 55%, transparent 100%);
 }
 
 /* Secciones con scroll bajo el hero: el ancla no queda bajo la barra superior. */
 .home-block {
-  scroll-margin-top: calc(var(--nav-h) + 1rem);
+  scroll-margin-top: calc(var(--nav-h) + var(--anchor-gap));
   color: oklch(var(--bc));
 }
 

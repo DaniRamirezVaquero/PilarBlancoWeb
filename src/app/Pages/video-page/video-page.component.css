@@ -1,5 +1,5 @@
 
 /* El salto a una escena (desde la home) no queda bajo la barra superior. */
 .scene-anchor {
-  scroll-margin-top: calc(var(--nav-h) + 1rem);
+  scroll-margin-top: calc(var(--nav-h) + var(--anchor-gap));
 }

@@ -1,15 +1,16 @@
-<header class="site-nav" [class.is-solid]="solid()">
+<header #header class="site-nav" [class.is-solid]="solid()">
   <div class="site-nav-inner">
     <a routerLink="/home" class="site-nav-brand" (click)="goTo($event, null)" aria-label="Pilar Blanco, actriz: inicio">
       PILAR BLANCO
     </a>
 
-    <nav class="site-nav-links" aria-label="Secciones">
+    <nav #linksRow class="site-nav-links" aria-label="Secciones">
       <ul>
         @for (section of sections; track section.id) {
           <li>
             <a [routerLink]="['/home']" [fragment]="section.id" class="site-nav-link"
-              [class.is-active]="isActive(section.id)" [attr.aria-current]="isActive(section.id) ? 'location' : null"
+              [class.is-active]="isActive(section.id)" [attr.data-section]="section.id"
+              [attr.aria-current]="isActive(section.id) ? (onHome() ? 'location' : 'page') : null"
               (click)="goTo($event, section.id)">{{ section.label }}</a>
           </li>
         }
