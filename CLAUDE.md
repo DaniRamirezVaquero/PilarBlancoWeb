@@ -16,12 +16,13 @@ Hero a pantalla completa y debajo un scroll de secciones con ancla: `#reel`, `#f
 
 ## Datos y utilidades
 - `src/app/data/portfolio.data.ts`: `REEL`, `SCENES`, `DUBBING`, `VOICE` (con los `peaks` de cada MP3), `HIGHLIGHT_CREDITS`, `CONTACT`.
-- `src/app/utils/vimeo-thumbnail.ts` (puro, compartido con `api/`) y `src/app/utils/waveform.ts` (`resampleBars`), con sus `.spec.ts`.
+- `src/app/utils/vimeo-thumbnail.ts` (puro; `api/vimeo-poster.mjs` replica su validación porque no puede importarlo) y `src/app/utils/waveform.ts` (`resampleBars`), con sus `.spec.ts`.
 
 ## Locución (`voice-strip`)
 Sustituye al antiguo cassette (ya no existe). La onda se dibuja a escala 1:1: el viewBox es el tamaño real de la pista en px, con barras de 2 px cada ~6 px y sin tope.
 
-## Carátulas de Vimeo (`api/vimeo-poster.ts`)
+## Carátulas de Vimeo (`api/vimeo-poster.mjs`)
+La función es JavaScript ESM autocontenido (`.mjs`). El `package.json` no declara `"type": "module"`, así que una función `.ts` que importe de `src/` se carga como CommonJS y falla en Vercel con `FUNCTION_INVOCATION_FAILED`.
 Función de Vercel `GET /api/vimeo-poster?id=&h=&w=`: consulta oEmbed y responde 302 a `i.vimeocdn.com` en 640/1280/1920 px, con `s-maxage=3600, stale-while-revalidate=86400`. Valida id y hash y fija el host de destino. `vimeo-facade` pide el póster ahí (con `srcset`), crea el iframe solo al pulsar y usa `fallbackPoster` si falla. En `ng serve` no hay `/api`, así que en local se ven los pósters de respaldo; para probar la función, `npx vercel dev` o un preview de Vercel.
 
 ## Idioma
