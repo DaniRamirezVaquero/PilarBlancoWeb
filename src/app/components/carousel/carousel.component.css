@@ -6,3 +6,33 @@
 .carousel-snap * {
   transition: none !important;
 }
+
+/* Controles del carrusel: disco de 44 px con contraste sobre la foto y sobre el fondo de página. */
+.carousel-btn {
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  color: oklch(var(--bc));
+  background: oklch(var(--b1) / 0.92);
+  border: 1px solid oklch(var(--bc) / 0.35);
+  transition: background-color 0.2s ease;
+}
+
+.carousel-btn:hover {
+  background: oklch(var(--b1));
+}
+
+.carousel-btn:focus-visible {
+  outline: 2px solid oklch(var(--bc));
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-btn {
+    transition: none;
+  }
+}

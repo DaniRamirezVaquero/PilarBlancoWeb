@@ -1,0 +1,68 @@
+:host { display: block; }
+
+.voice-list { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+
+.voice {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 0.6rem 1.1rem;
+  padding: 1rem 1.25rem; color: oklch(var(--bc));
+  background: oklch(var(--b1) / 0.3);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.voice:nth-child(even) { background: oklch(var(--b1) / 0.42); }
+@media (min-width: 768px) {
+  .voice { grid-template-columns: auto 12rem minmax(0, 1fr); }
+}
+
+.voice-play {
+  display: inline-flex; align-items: center; justify-content: center; width: 3.25rem; height: 3.25rem;
+  border-radius: 999px; background: oklch(var(--b1) / 0.55); color: oklch(var(--bc)); border: 2px solid oklch(var(--bc)); font-size: 1.05rem; cursor: pointer;
+  transition: background-color 0.25s, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.voice-play:hover { transform: scale(1.06); }
+.is-active .voice-play { background: oklch(var(--bc)); color: oklch(var(--b1)); }
+.voice-play:focus-visible, .voice-track:focus-visible { outline: 2px solid oklch(var(--bc)); outline-offset: 3px; }
+
+.voice-meta { display: grid; gap: 0.3rem; min-width: 0; }
+.voice-label {
+  font-family: "Playfair Display", serif; font-weight: 500;
+  font-size: 1.5rem; line-height: 1.1; letter-spacing: -0.01em;
+}
+.voice-time { font-family: Lato, sans-serif; font-size: 0.8rem; }
+
+/* Móvil: fila más baja, disco de 44px (mínimo táctil) y onda en su propia línea. */
+@media (max-width: 767px) {
+  .voice { gap: 0.2rem 0.9rem; padding: 0.7rem 1rem; }
+  .voice-play { width: 2.75rem; height: 2.75rem; font-size: 0.95rem; }
+  .voice-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.75rem; }
+  .voice-label { font-size: 1.3rem; }
+  .voice-track { height: 2.25rem; }
+}
+
+.voice-track { grid-column: 1 / -1; height: 3rem; cursor: pointer; }
+@media (min-width: 768px) { .voice-track { grid-column: auto; } }
+.voice-track svg { display: block; width: 100%; height: 100%; }
+:host(.is-measuring) .voice-track svg { opacity: 0; }
+.bars rect { fill: oklch(var(--bc) / 0.6); }
+.bars-played rect { fill: oklch(var(--bc)); }
+
+/* Entrada de /voice (clase `draw` en el host): cada pista entra en su línea y su onda se dibuja de izquierda a derecha. */
+:host(.draw) .voice {
+  animation: track-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(0.4s + var(--n, 0) * 0.1s) backwards;
+}
+:host(.draw) .voice-track svg {
+  animation: wave-draw 1.3s cubic-bezier(0.65, 0, 0.35, 1) calc(0.55s + var(--n, 0) * 0.1s) backwards;
+}
+
+@keyframes track-in {
+  from { opacity: 0; transform: translateX(-18px); }
+}
+
+@keyframes wave-draw {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.draw) .voice,
+  :host(.draw) .voice-track svg { animation: none; }
+}

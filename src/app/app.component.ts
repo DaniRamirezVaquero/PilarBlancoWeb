@@ -1,19 +1,21 @@
 import { AfterViewInit, Component, HostBinding, inject } from '@angular/core';
+import { DOCUMENT, ViewportScroller } from '@angular/common';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
-import { SideNavigationComponent } from './components/side-navigation/side-navigation.component';
+import { SiteNavComponent } from './components/site-nav/site-nav.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SeoService } from './seo/seo.service';
 import { HeroThemeService } from './services/hero-theme.service';
 import { VercelAnalyticsService } from './services/vercel-analytics.service';
 import { filter } from 'rxjs';
 
+/** Aire entre la barra superior y el título de la sección a la que se salta. */
+const ANCHOR_GAP_PX = 16;
+
 @Component({
     selector: 'app-root',
     imports: [
         RouterOutlet,
-        HeaderComponent,
-        SideNavigationComponent,
+        SiteNavComponent,
         FooterComponent
     ],
     templateUrl: './app.component.html',
@@ -24,8 +26,6 @@ export class AppComponent implements AfterViewInit {
 
   @HostBinding('class.app-ready') appReady = this.readInitialAppReady();
 
-  showFooter: boolean = true;
-
   private readonly seo = inject(SeoService);
   /** Fija cover/tema de esta pestaña; no rota mientras la sesión sigue abierta. */
   private readonly _heroTheme = inject(HeroThemeService);
@@ -33,11 +33,16 @@ export class AppComponent implements AfterViewInit {
   private readonly _analytics = inject(VercelAnalyticsService);
 
   constructor(private router: Router) {
+    // El scroll a un ancla del router ignora scroll-margin: se deja el hueco de la barra superior (su alto real).
+    const document = inject(DOCUMENT);
+    inject(ViewportScroller).setOffset(() => [
+      0,
+      (document.querySelector('app-site-nav .site-nav')?.getBoundingClientRect().height ?? 0) + ANCHOR_GAP_PX,
+    ]);
     this.seo.updateForUrl(this.router.url);
     this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event) => {
-        this.updateVisibility(event.urlAfterRedirects);
         this.seo.updateForUrl(event.urlAfterRedirects);
       });
   }
@@ -57,9 +62,5 @@ export class AppComponent implements AfterViewInit {
       return true;
     }
     return !!document.querySelector('app-root.app-ready');
-  }
-
-  private updateVisibility(url: string): void {
-    this.showFooter = url !== '/home';
   }
 }

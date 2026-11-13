@@ -70,3 +70,9 @@
   color: #fff;
   outline: none;
 }
+
+/* Tamaño de los círculos: la barra superior los reduce con --social-size. */
+.social-btn {
+  width: var(--social-size, 3rem);
+  height: var(--social-size, 3rem);
+}

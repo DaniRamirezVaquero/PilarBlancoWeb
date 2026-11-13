@@ -1,5 +1,5 @@
 <div
-  class="bg-page w-screen pt-24 lg:pt-36 px-8 sm:px-16 lg:px-32 xl:px-64">
+  class="bg-page w-screen pt-32 md:pt-28 lg:pt-36 px-8 sm:px-16 lg:px-32 xl:px-64">
   <div class="pb-8 w-full flex flex-col gap-6 md:gap-8 lg:gap-16">
 
     <div class="flex flex-col gap-4 sm:gap-6 md:gap-8">
@@ -9,10 +9,9 @@
       </div>
       <section class="w-full flex justify-center">
         <div class="shadow-md w-full ">
-          <app-vimeo-facade videoId="1208363473" hash="3205afba43"
-            poster="https://i.vimeocdn.com/video/2178138818-07a33c9c1b4410bb82955e868006a6fb428747ed8c4a33fad425ca3fafa70081-d_1920?region=us"
+          <app-vimeo-facade [videoId]="reel.videoId" [hash]="reel.hash" [fallbackPoster]="reel.fallbackPoster"
             title="Reel 2026 de actuación de Pilar Blanco - Video principal"
-            [priority]="true" />
+            [priority]="true" sizes="100vw" />
         </div>
       </section>
     </div>
@@ -21,12 +20,15 @@
       <section class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 lg:gap-20 lg:mb-12"
         aria-label="Videobook Express, reel y escena de Pilar Blanco">
 
-        <div *ngFor="let scene of scenes" [hidden]="!scene.visible" class="w-full max-w-[1280px]">
-          <h2 class="section-title mb-4">{{ scene.projectName }}</h2>
-          <div class="shadow-md w-full">
-            <app-vimeo-facade [videoId]="scene.videoId" [hash]="scene.hash" [poster]="scene.poster" [title]="scene.title" />
+        @for (scene of scenes; track scene.videoId) {
+          <div class="w-full max-w-[1280px] scene-anchor" [attr.id]="sceneSlug(scene)">
+            <h2 class="section-title mb-4">{{ scene.label }}</h2>
+            <div class="shadow-md w-full">
+              <app-vimeo-facade [videoId]="scene.videoId" [hash]="scene.hash" [fallbackPoster]="scene.fallbackPoster"
+                [title]="scene.title" />
+            </div>
           </div>
-        </div>
+        }
 
       </section>
     </div>

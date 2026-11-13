@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Alto de la barra superior fija: una fila en escritorio, dos (nombre + anclas) en móvil. */
+:root {
+  --nav-h: 4.5rem;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --nav-h: 6.5rem;
+  }
+}
+
 /* Estilos base mejorados */
 * {
   scroll-behavior: smooth;
@@ -14,8 +25,8 @@ body {
 
 /* Superficie de páginas internas — tokens --page-* del theme */
 [data-theme="mytheme-portada"] {
-  --page-from: #A4ADB6 !important;
-  --page-via: #727C88 !important;
+  --page-from: #636E79 !important;
+  --page-via: #5E6974 !important;
   --page-to: #59646F !important;
 }
 
@@ -95,7 +106,7 @@ body {
   width: 3rem;
   height: 2px;
   margin-top: 0.85rem;
-  background: oklch(var(--a));
+  background: oklch(var(--bc));
   transition: background-color 1.2s ease;
 }
 

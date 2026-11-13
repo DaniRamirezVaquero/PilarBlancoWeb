@@ -1,0 +1,43 @@
+<ul class="voice-list">
+  @for (demo of demos; track demo.url; let i = $index) {
+    <li class="voice" [class.is-active]="active() === i" [style.--n]="i">
+      <button type="button" class="voice-play"
+        (click)="toggle(i)" [attr.aria-pressed]="playing() === i"
+        [attr.aria-label]="(playing() === i ? 'Pausar ' : 'Escuchar ') + 'demo de voz: ' + demo.label">
+        <app-icon [name]="playing() === i ? 'pause' : 'play'"></app-icon>
+      </button>
+
+      <div class="voice-meta">
+        <span class="voice-label">{{ demo.label }}</span>
+        <span class="voice-time">
+          @if (failed() === i) { No se pudo cargar } @else if (loading() && active() === i) { Cargando… } @else { {{ elapsed(i, demo) }} }
+        </span>
+      </div>
+
+      <div class="voice-track" role="slider" tabindex="0"
+        [attr.aria-label]="'Posición en ' + demo.label"
+        aria-valuemin="0" aria-valuemax="100"
+        [attr.aria-valuenow]="active() === i ? percent() : 0"
+        [attr.aria-valuetext]="valueText(i, demo)"
+        (click)="seek($event, i)" (keydown)="onKeySeek($event, i)">
+        <svg [attr.viewBox]="'0 0 ' + box().w + ' ' + box().h" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <defs>
+            <clipPath [attr.id]="'played-' + i">
+              <rect x="0" y="0" [attr.height]="box().h" [attr.width]="active() === i ? progress() * box().w : 0" />
+            </clipPath>
+          </defs>
+          <g class="bars">
+            @for (bar of barsOf[i]; track bar.x) {
+              <rect [attr.x]="bar.x" [attr.y]="(box().h - bar.h) / 2" [attr.width]="barWidth" [attr.height]="bar.h" rx="1" />
+            }
+          </g>
+          <g class="bars-played" [attr.clip-path]="'url(#played-' + i + ')'">
+            @for (bar of barsOf[i]; track bar.x) {
+              <rect [attr.x]="bar.x" [attr.y]="(box().h - bar.h) / 2" [attr.width]="barWidth" [attr.height]="bar.h" rx="1" />
+            }
+          </g>
+        </svg>
+      </div>
+    </li>
+  }
+</ul>

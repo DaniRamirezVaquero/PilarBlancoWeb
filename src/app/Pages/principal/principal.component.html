@@ -1,11 +1,11 @@
 <div
-  class="hero-container relative w-screen h-dvh p-8 md:p-12 flex justify-center lg:items-end sm:justify-start overflow-x-hidden">
+  class="hero-container relative w-full h-dvh p-8 md:p-12 flex justify-center lg:items-end sm:justify-start overflow-x-hidden">
 
   <div class="absolute inset-0 z-0" aria-hidden="true">
     @for (cover of [heroTheme.currentCover()]; track cover) {
       <img
         class="hero-cover absolute inset-0 h-full w-full object-cover object-[65%_50%]"
-        [class.is-active]="readyCover === cover"
+        [class.is-active]="readyCover() === cover"
         (load)="onCoverLoad(cover)"
         [src]="coverSrc(cover)"
         [srcset]="coverSrcset(cover)"
@@ -19,13 +19,14 @@
 
   <!-- Overlay con gradiente sutil -->
   <div class="absolute inset-0 z-[1] bg-gradient-to-r from-black/30 via-transparent to-black/20"></div>
+  <!-- Velo solo en móvil: el nombre en blanco se pierde sobre la blusa clara de la portada -->
+  <div class="hero-veil absolute inset-0 z-[1] md:hidden" aria-hidden="true"></div>
 
   <div class="relative z-10 grid grid-rows-3 h-full">
     <div></div>
 
     <!-- Contenido principal mejorado -->
-    <div class="text-white w-min flex flex-col justify-center md:ml-40 transition-all duration-700 ease-out"
-      [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[300px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
+    <div class="text-white w-min flex flex-col justify-center md:ml-40">
 
       <!-- Nombre con efecto interactivo -->
       <div class="interactive-name lato-light text-6xl lg:text-8xl leading-tight tracking-wide tilt-3d">
@@ -47,27 +48,158 @@
     </div>
 
     <!-- Botón de play mejorado -->
-    <div class="flex items-end transition-all duration-700 ease-out float-animation"
-      [ngClass]="{'md:opacity-0 lg:opacity-100 lg:translate-x-[460px]': sideNavIsOpen, 'translate-x-0': !sideNavIsOpen}">
+    <div class="flex items-end float-animation">
       <app-play-btn (click)="toggleShowReel()"/>
     </div>
   </div>
 </div>
 
+<div class="bg-page w-full px-8 sm:px-16 lg:px-24 xl:px-40 py-24 lg:py-32 flex flex-col gap-24 overflow-x-hidden">
+
+  <!-- Reel -->
+  <section id="reel" class="home-block lg:pb-6" aria-labelledby="reel-title">
+    <h2 id="reel-title" class="page-title">Reel 2026</h2>
+    <span class="page-title-dash mb-8" aria-hidden="true"></span>
+    <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 lg:gap-12">
+      <div class="shadow-md w-full self-start">
+        <app-vimeo-facade [videoId]="reel.videoId" [hash]="reel.hash" [fallbackPoster]="reel.fallbackPoster"
+          [title]="reel.title" sizes="(min-width: 1024px) 60vw, 100vw" />
+      </div>
+      <aside aria-label="Más vídeos" class="flex flex-col gap-4">
+        <h3 class="section-title">Más escenas</h3>
+        <ul class="flex flex-col gap-3">
+          @for (scene of scenes; track scene.videoId) {
+            <li>
+              <a routerLink="/video" [fragment]="sceneSlug(scene)" class="scene-link group flex items-center gap-4">
+                <img [src]="sceneThumb(scene)" (error)="onSceneThumbError(scene)" alt="" loading="lazy" decoding="async"
+                  width="160" height="90" class="w-32 sm:w-40 aspect-video object-cover shadow-md flex-shrink-0" />
+                <span class="scene-label lato-regular text-base">{{ scene.label }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+        <a routerLink="/video" class="btn btn-sm md:btn-md btn-accent gap-2 border-none self-start mt-2">
+          Todos los vídeos <app-icon name="arrow-right"></app-icon>
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Fotos -->
+  <section id="fotos" class="home-block" aria-labelledby="fotos-title">
+    <h2 id="fotos-title" class="page-title">Fotos</h2>
+    <span class="page-title-dash mb-8" aria-hidden="true"></span>
+    <app-carousel></app-carousel>
+    <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mt-20 md:mt-24">
+      <a class="btn btn-sm md:btn-md btn-accent gap-2 border-none"
+        [href]="photosZip" download="Pilar Blanco - Galeria fotos.zip"
+        aria-label="Descargar el pack de fotos del carrusel en calidad completa">
+        Descargar fotos
+        <app-icon name="download" size="lg"></app-icon>
+      </a>
+      <a routerLink="/gallery" class="home-link">Ver galería completa</a>
+    </div>
+  </section>
+
+  <!-- Voz -->
+  <section id="voz" class="home-block" aria-labelledby="voz-title">
+    <h2 id="voz-title" class="page-title">Voz</h2>
+    <span class="page-title-dash mb-8" aria-hidden="true"></span>
+    <app-voice-strip [demos]="voice"></app-voice-strip>
+    <div class="mt-8">
+      <a routerLink="/voice" class="home-link">Demos de doblaje en vídeo</a>
+    </div>
+  </section>
+
+  <!-- Trayectoria y sobre mí -->
+  <section id="trayectoria" class="home-block" aria-labelledby="trayectoria-title">
+    <h2 id="trayectoria-title" class="page-title">Trayectoria</h2>
+    <span class="page-title-dash mb-8" aria-hidden="true"></span>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+      <div>
+        <ul class="flex flex-col">
+          @for (credit of credits; track credit.title) {
+            <li class="credit grid grid-cols-[6.5rem_1fr] sm:grid-cols-[8rem_1fr] gap-x-4 py-3">
+              <span class="credit-note text-sm pt-1">{{ credit.note }}</span>
+              <span>
+                @if (credit.url) {
+                  <a [href]="credit.url" target="_blank" rel="noopener noreferrer" class="credit-title home-link">
+                    {{ titleHead(credit.title) }}<span class="whitespace-nowrap">{{ titleTail(credit.title) }}<app-icon name="up-right-from-square" class="ml-2 text-sm"></app-icon><span class="sr-only"> (se abre en otra pestaña)</span></span>
+                  </a>
+                } @else {
+                  <span class="credit-title">{{ credit.title }}</span>
+                }
+                <span class="block text-sm">{{ credit.by }}</span>
+              </span>
+            </li>
+          }
+        </ul>
+        <div class="flex flex-wrap items-center gap-x-8 gap-y-4 mt-8">
+          <a routerLink="/curriculum" class="btn btn-sm md:btn-md btn-accent gap-2 border-none">
+            Currículum completo <app-icon name="arrow-right"></app-icon>
+          </a>
+          <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="home-link">Descargar CV</a>
+        </div>
+      </div>
+
+      <article class="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-6" aria-labelledby="sobre-title">
+        <img src="assets/sobre-mi-2-700.webp" srcset="assets/sobre-mi-2-700.webp 700w, assets/sobre-mi-2-1430.webp 1430w"
+          sizes="(min-width: 1024px) 18rem, 60vw" width="700" height="729" loading="lazy" decoding="async"
+          class="w-48 sm:w-56 lg:w-full xl:w-56 self-start object-cover aspect-[4/5] object-top shadow-md"
+          alt="Retrato de Pilar Blanco sonriendo" />
+        <div>
+          <h3 id="sobre-title" class="section-title mb-3">Sobre mí</h3>
+          <p class="lato-regular leading-relaxed">
+            Inicié mi carrera en Metronomoteatro, un laboratorio de investigación escénica, con montajes como
+            <em>Repris</em>, Premio Nacional de Teatro de Vanguardia en 1991. De ahí, a la televisión con
+            <em>Plaza alta</em> y <em>Arrayán</em>, la radio y la formación de jóvenes ante la cámara.
+          </p>
+          <a routerLink="/bio" class="home-link mt-4 inline-block">Leer la biografía</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="home-block lg:pt-2" aria-labelledby="contacto-title">
+    <h2 id="contacto-title" class="page-title">Contacto</h2>
+    <span class="page-title-dash mb-8" aria-hidden="true"></span>
+    <a [href]="mailtoUrl" class="contact-email playfair-display-medium block text-3xl sm:text-4xl lg:text-5xl leading-tight break-words">{{ emailUser }}<wbr />{{ emailDomain }}</a>
+    <div class="flex flex-wrap items-center gap-x-8 gap-y-4 mt-8">
+      <a [href]="gmailUrl" target="_blank" rel="noopener noreferrer" class="btn btn-sm md:btn-md btn-accent gap-2 border-none">
+        Escribir en Gmail<span class="sr-only"> (se abre en otra pestaña)</span>
+      </a>
+      <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="btn btn-sm md:btn-md btn-secondary-home gap-2">
+        Descargar CV <app-icon name="download"></app-icon>
+      </a>
+      <a [href]="instagram" target="_blank" rel="noopener noreferrer me" class="home-link inline-flex items-center gap-2">
+        <app-icon name="instagram"></app-icon> pilarblanco.actriz<span class="sr-only"> en Instagram (se abre en otra pestaña)</span>
+      </a>
+      <a [href]="vimeo" target="_blank" rel="noopener noreferrer me" class="home-link inline-flex items-center gap-2">
+        <app-icon name="vimeo-v"></app-icon> Vimeo<span class="sr-only"> (se abre en otra pestaña)</span>
+      </a>
+    </div>
+  </section>
+
+</div>
+
 @if (showReel) {
-  <div class="fixed top-0 left-0 z-[100] w-screen h-dvh
+  <div role="dialog" aria-modal="true" aria-label="Reel de Pilar Blanco"
+       class="fixed top-0 left-0 z-[100] w-screen h-dvh
               bg-gradient-to-br from-black/90 via-black/80 to-black/90
               backdrop-filter backdrop-blur-xl
               flex items-center justify-center animate-fade-in">
 
     <!-- Botón de cerrar simplificado -->
-    <svg class="absolute top-8 right-8 text-primary hover:text-info
-                transition-all duration-300 cursor-pointer hover:scale-110"
-         width="30" height="30" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg"
-         (click)="toggleShowReel()">
-      <path d="M2.24536 32.3148L32.2454 2.3148" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
-      <path d="M32.2454 32.3148L2.24537 2.3148" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
-    </svg>
+    <button type="button" (click)="toggleShowReel()" aria-label="Cerrar el reel"
+            class="absolute top-4 right-4 sm:top-8 sm:right-8 z-20 flex h-12 w-12 items-center justify-center rounded-full
+                   text-primary hover:text-info focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+                   focus-visible:outline-white transition-all duration-300 hover:scale-110">
+      <svg width="30" height="30" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M2.24536 32.3148L32.2454 2.3148" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
+        <path d="M32.2454 32.3148L2.24537 2.3148" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
+      </svg>
+    </button>
 
     <!-- Contenedor del video simplificado -->
     <div class="w-full max-w-[80%] lg:max-w-[70%]">

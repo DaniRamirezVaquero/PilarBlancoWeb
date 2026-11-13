@@ -28,3 +28,83 @@
     transparent 90%
   );
 }
+
+/* Velo oscuro del hero, solo en móvil (md:hidden): tras el bloque del nombre, de más a menos intenso. */
+.hero-veil {
+  background: radial-gradient(ellipse 100% 30% at 36% 52%, rgb(0 0 0 / 0.72), rgb(0 0 0 / 0.5) 55%, transparent 100%);
+}
+
+/* Secciones con scroll bajo el hero: el ancla no queda bajo la barra superior. */
+.home-block {
+  scroll-margin-top: calc(var(--nav-h) + 1rem);
+  color: oklch(var(--bc));
+}
+
+.home-link {
+  color: oklch(var(--bc));
+  text-decoration: underline;
+  text-decoration-color: oklch(var(--bc));
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
+  transition: text-decoration-thickness 0.2s ease;
+}
+
+.home-link:hover,
+.home-link:focus-visible {
+  text-decoration-thickness: 4px;
+}
+
+.scene-label {
+  text-decoration: underline transparent 2px;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.scene-link:hover .scene-label,
+.scene-link:focus-visible .scene-label {
+  text-decoration-color: oklch(var(--bc));
+}
+
+.credit-note {
+  letter-spacing: 0.02em;
+}
+
+.credit + .credit {
+  border-top: 1px solid oklch(var(--bc) / 0.2);
+}
+
+.credit-title {
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+.contact-email {
+  color: oklch(var(--bc));
+  transition: color 0.3s ease;
+}
+
+.contact-email {
+  text-decoration: underline transparent 3px;
+  text-underline-offset: 0.18em;
+}
+
+.contact-email:hover,
+.contact-email:focus-visible {
+  text-decoration-color: oklch(var(--bc));
+}
+
+/* Acción secundaria: borde que contrasta con el fondo de página. */
+.btn-secondary-home {
+  color: oklch(var(--bc));
+  background: transparent;
+  border: 2px solid oklch(var(--bc));
+}
+
+.btn-secondary-home:hover,
+.btn-secondary-home:focus-visible {
+  color: oklch(var(--bc));
+  background: oklch(var(--bc) / 0.16);
+  border-color: oklch(var(--bc));
+}

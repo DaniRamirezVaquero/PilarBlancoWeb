@@ -1,12 +1,17 @@
 import { Component, Input, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { IconComponent } from '../icon/icon.component';
+import { posterSrcset, posterUrl } from '../../utils/vimeo-thumbnail';
 
 /**
  * Facade ligero para vídeos de Vimeo: solo pinta un póster estático (miniatura)
  * y un botón de play. El <iframe> del reproductor (y todo su JS/cookies de
  * terceros) no se crea hasta que el usuario hace clic, evitando cargar
  * varios players Vimeo a la vez en /video y /voice.
+ *
+ * El póster se resuelve en vivo con /api/vimeo-poster (redirige a la carátula
+ * actual de Vimeo, cacheada en la CDN de Vercel). Si falla (dev local sin /api
+ * o Vimeo caído) se usa `fallbackPoster`.
  */
 @Component({
   selector: 'app-vimeo-facade',
@@ -19,20 +24,26 @@ export class VimeoFacadeComponent {
   @Input({ required: true }) videoId!: string;
   @Input({ required: true }) hash!: string;
   @Input({ required: true }) title!: string;
-  /**
-   * URL directa a la CDN de Vimeo (i.vimeocdn.com) en alta resolución, obtenida
-   * de la API oEmbed de cada vídeo (ver comentarios donde se usa el componente).
-   * vumbnail.com (usado antes) limita todas las miniaturas a 640×360, lo que se
-   * veía pixelado al estirarlo a pantalla completa.
-   */
-  @Input({ required: true }) poster!: string;
+  /** Póster guardado (CDN de Vimeo, ~1920px): solo respaldo si /api/vimeo-poster falla. */
+  @Input({ required: true }) fallbackPoster!: string;
   /** Marca el póster como recurso prioritario cuando el vídeo es el principal de la página. */
   @Input() priority = false;
+  /** Ancho que ocupa el póster, para que el navegador elija el candidato del srcset. */
+  @Input() sizes = '(min-width: 1024px) 50vw, 100vw';
 
   private readonly sanitizer = inject(DomSanitizer);
 
   readonly loaded = signal(false);
+  readonly posterFailed = signal(false);
   safeUrl: SafeResourceUrl | null = null;
+
+  get src(): string {
+    return this.posterFailed() ? this.fallbackPoster : posterUrl(this.videoId, this.hash, 1280);
+  }
+
+  get srcset(): string | null {
+    return this.posterFailed() ? null : posterSrcset(this.videoId, this.hash);
+  }
 
   load(): void {
     if (this.loaded()) {
