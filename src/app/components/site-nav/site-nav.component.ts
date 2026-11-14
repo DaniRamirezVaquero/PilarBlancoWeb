@@ -6,6 +6,7 @@ import { DOCUMENT, Location, isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
 import { NavService } from '../../services/nav.service';
+import { SocialsComponent } from '../socials/socials.component';
 import { isRouteActive, pathOf, scrollBehaviorFor, sectionForPage } from '../../utils/nav-scroll';
 
 interface SectionLink {
@@ -22,7 +23,7 @@ const DESKTOP_QUERY = '(min-width: 1024px)';
 /** Barra superior fija: transparente sobre el hero de /home y de cristal en el resto. */
 @Component({
   selector: 'app-site-nav',
-  imports: [RouterLink],
+  imports: [RouterLink, SocialsComponent],
   templateUrl: './site-nav.component.html',
   styleUrl: './site-nav.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,9 +39,6 @@ export class SiteNavComponent {
     { id: 'contacto', label: 'Contacto' },
   ];
 
-  readonly instagramUrl = 'https://www.instagram.com/pilarblanco.actriz/';
-  readonly vimeoUrl = 'https://vimeo.com/user18148957';
-  readonly mailtoUrl = 'mailto:pilarblanco.actriz@gmail.com';
 
   private readonly nav = inject(NavService);
   private readonly router = inject(Router);
@@ -114,7 +112,7 @@ export class SiteNavComponent {
     afterNextRender(() => this.closeButton()?.nativeElement.focus(), { injector: this.injector });
   }
 
-  /** Cierra el menú, libera el scroll y (salvo que se pida lo contrario) devuelve el foco al botón «Menú». */
+  /** Cierra el menú, libera el scroll y (salvo que se pida lo contrario) devuelve el foco al botón del menú. */
   closeMenu(restoreFocus = true): void {
     if (!this.menuOpen()) {
       return;
@@ -135,7 +133,9 @@ export class SiteNavComponent {
     if (event.key !== 'Tab') {
       return;
     }
-    const items = Array.from(this.menuPanel()?.nativeElement.querySelectorAll<HTMLElement>(FOCUSABLE) ?? []);
+    // Solo lo visible: las redes tienen dos variantes del correo (mailto en móvil, desplegable desde md) y una va oculta.
+    const items = Array.from(this.menuPanel()?.nativeElement.querySelectorAll<HTMLElement>(FOCUSABLE) ?? [])
+      .filter((el) => el.getClientRects().length > 0);
     if (items.length === 0) {
       return;
     }

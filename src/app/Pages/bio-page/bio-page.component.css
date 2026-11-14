@@ -1,31 +1,187 @@
-/* Texto de lectura: una columna de ~65 caracteres, con aire entre párrafos. */
-.bio-flow p {
-  max-width: 66ch;
-  margin: 0 0 1.25rem;
+/* Perfil en dos hojas apiladas: papel (Trayectoria) y acento (Pasan cosas), con el nombre partido como
+   cabecera gigante de cada una. Solo tokens DaisyUI: --n/--nc para el papel, --a/--ac para el acento. */
+
+.bio-wrap {
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+/* ---------- Hojas ---------- */
+
+.bio-sheet {
+  position: relative;
+  padding: 2rem 1.5rem 2.25rem;
+  box-shadow: 0 1.5rem 3rem -1.5rem oklch(var(--s) / 0.6);
+}
+
+.bio-sheet--paper {
+  color: oklch(var(--nc));
+  background: oklch(var(--n));
+  animation: slide-in-left 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s backwards;
+}
+
+/* La segunda hoja se monta sobre la primera y se desplaza a la derecha: dos papeles sobre la mesa. */
+.bio-sheet--accent {
+  z-index: 1;
+  margin-top: -1.5rem;
+  margin-left: 0.75rem;
+  margin-right: -0.5rem;
+  color: oklch(var(--ac));
+  background: oklch(var(--a));
+  transition: background-color 1.2s ease;
+  animation: slide-in-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s backwards;
+}
+
+/* Nombre partido, gigante y recortado contra el borde superior de la hoja. */
+.bio-giant {
+  margin: 0 0 1.5rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  font-size: clamp(4.25rem, 19vw, 10rem);
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+}
+
+.bio-text p.bio-giant {
+  max-width: none;
+  margin: 0 0 1.5rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(4.25rem, 19vw, 10rem);
+  line-height: 0.82;
+}
+
+/* ---------- Tipografía de lectura ---------- */
+
+.bio-kicker {
+  margin: 0 0 0.35rem;
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+}
+
+.bio-kicker span {
+  display: inline-block;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid currentColor;
+}
+
+.bio-heading {
+  margin: 0 0 1.5rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.bio-text p {
+  max-width: 62ch;
+  margin: 0 0 1.15rem;
   font-family: Lato, sans-serif;
   font-size: 1.0625rem;
   line-height: 1.7;
 }
 
-.bio-flow p:last-child {
+.bio-text p:last-child {
   margin-bottom: 0;
 }
 
-.bio-heading {
-  margin: 0;
-  font-family: 'Playfair Display', serif;
-  font-weight: 500;
-  font-size: clamp(1.75rem, 3.2vw, 2.35rem);
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  color: oklch(var(--bc));
+.bio-text p.bio-kicker {
+  margin-bottom: 0.35rem;
+  font-size: 0.75rem;
+  line-height: 1;
 }
+
+.bio-text .bio-lead {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  line-height: 1.5;
+}
+
+/* ---------- Hoja 1: retrato, cita, texto y datos ---------- */
+
+.bio-paper-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.bio-portrait {
+  margin: 0;
+}
+
+.bio-portrait img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top;
+  box-shadow: 0.75rem 0.75rem 0 oklch(var(--a));
+  transition: box-shadow 1.2s ease;
+}
+
+.bio-quote {
+  margin: 2rem 0 0;
+  padding-left: 1.1rem;
+  border-left: 2px solid oklch(var(--nc));
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.3rem;
+  line-height: 1.4;
+}
+
+.bio-facts {
+  display: grid;
+  gap: 1.25rem;
+  margin: 2.5rem 0 0;
+  padding-top: 1.75rem;
+  border-top: 1px solid oklch(var(--nc) / 0.25);
+}
+
+.bio-facts dt {
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.bio-facts dd {
+  margin: 0.2rem 0 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+/* ---------- Hoja 2: texto y foto que asoma por encima ---------- */
+
+.bio-accent-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.bio-text strong {
+  font-weight: 700;
+}
+
+.bio-accent-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top;
+  box-shadow: 0 1.25rem 2.5rem -1rem oklch(var(--s) / 0.55);
+}
+
+/* ---------- Cierre ---------- */
 
 .bio-close {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 1.25rem 2rem;
+  margin-top: 4rem;
+  padding-top: 2.5rem;
   border-top: 1px solid oklch(var(--bc) / 0.25);
 }
 
@@ -47,7 +203,103 @@
   outline-offset: 4px;
 }
 
+/* ---------- Tablet ---------- */
+
+@media (min-width: 640px) {
+  .bio-sheet {
+    padding: 2.75rem 2.5rem 3rem;
+  }
+
+  .bio-sheet--accent {
+    margin-left: 2.5rem;
+    margin-right: -1rem;
+    margin-top: -2rem;
+  }
+
+  .bio-facts {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .bio-facts > div {
+    padding-inline: 1.25rem;
+  }
+
+  .bio-facts > div:first-child {
+    padding-left: 0;
+  }
+
+  .bio-facts > div + div {
+    border-left: 1px solid oklch(var(--nc) / 0.25);
+  }
+}
+
+/* ---------- Escritorio ---------- */
+
+@media (min-width: 1024px) {
+  .bio-sheet {
+    padding: 3.5rem 4rem 4rem;
+  }
+
+  .bio-sheet--paper {
+    margin-right: 4rem;
+  }
+
+  .bio-sheet--accent {
+    margin-left: 8rem;
+    margin-right: 0;
+    margin-top: -3rem;
+  }
+
+  .bio-giant {
+    margin-bottom: 2.5rem;
+  }
+
+  .bio-paper-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* El retrato acompaña al texto mientras se lee. */
+  .bio-portrait {
+    position: sticky;
+    top: calc(var(--nav-h) + 2rem);
+  }
+
+  .bio-accent-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* La foto asoma por encima del borde de la hoja y se monta sobre la de papel: rompe la retícula.
+     La hoja de papel deja un margen inferior amplio para que la foto aterrice en vacío y no sobre los datos. */
+  .bio-accent-photo {
+    margin-top: -7.5rem;
+  }
+
+  .bio-sheet--paper {
+    padding-bottom: 8.5rem;
+  }
+
+  .bio-text p.bio-giant {
+    margin-bottom: 2.5rem;
+  }
+
+  .bio-facts dd {
+    font-size: 2.5rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .bio-sheet--paper,
+  .bio-sheet--accent {
+    animation: none;
+    transition: none;
+  }
+
+  .bio-portrait img,
   .bio-link {
     transition: none;
   }

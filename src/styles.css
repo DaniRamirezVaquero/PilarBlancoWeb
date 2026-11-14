@@ -15,16 +15,9 @@
   }
 }
 
-/* Estilos base mejorados */
-* {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    scroll-behavior: auto;
-  }
-}
+/* Sin scroll-behavior: smooth global: convertía en animación el «volver arriba» del router al cambiar de
+   página, y si se interrumpía el título quedaba bajo la barra. El scroll suave de las anclas de la home lo
+   pide goTo() explícitamente (y respeta prefers-reduced-motion). */
 
 body {
   font-family: 'Lato', sans-serif;
@@ -366,15 +359,6 @@ body {
 .btn-line:focus-visible {
   outline: 2px solid var(--btn-line-ink);
   outline-offset: 3px;
-}
-
-/* Línea secundaria de las descargas: formato y peso, p. ej. «ZIP · 36 MB». */
-.btn-line-meta {
-  display: block;
-  margin-top: 0.15rem;
-  font-weight: 400;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
 }
 
 .btn-line-paper {

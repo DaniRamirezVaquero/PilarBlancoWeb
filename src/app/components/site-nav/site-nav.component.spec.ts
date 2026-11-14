@@ -64,7 +64,9 @@ describe('SiteNavComponent', () => {
   it('atrapa el foco: Tab en el último elemento vuelve al primero y Mayús+Tab al revés', () => {
     menuButton().click();
     settle();
-    const items = Array.from(panel()!.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'));
+    // Solo los visibles: el correo tiene una variante oculta según el ancho.
+    const items = Array.from(panel()!.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'))
+      .filter((el) => el.getClientRects().length > 0);
     const first = items[0];
     const last = items[items.length - 1];
 

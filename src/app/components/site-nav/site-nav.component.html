@@ -35,15 +35,15 @@
       </ul>
     </nav>
 
-    <ul class="site-nav-socials" aria-label="Redes y contacto">
-      <li><a class="site-nav-link site-nav-social" [href]="instagramUrl" target="_blank" rel="noopener noreferrer me">Instagram<span class="sr-only"> (se abre en otra pestaña)</span></a></li>
-      <li><a class="site-nav-link site-nav-social" [href]="vimeoUrl" target="_blank" rel="noopener noreferrer me">Vimeo<span class="sr-only"> (se abre en otra pestaña)</span></a></li>
-      <li><a class="site-nav-link site-nav-social" [href]="mailtoUrl">Email</a></li>
-    </ul>
+    <app-socials class="site-nav-socials"></app-socials>
 
     <button #menuButton type="button" class="site-nav-menu-btn" (click)="openMenu()"
-      [attr.aria-expanded]="menuOpen()" aria-controls="site-nav-menu" aria-haspopup="dialog">
-      Menú
+      [attr.aria-expanded]="menuOpen()" aria-controls="site-nav-menu" aria-haspopup="dialog"
+      aria-label="Abrir el menú">
+      <!-- Dos trazos desiguales: hamburguesa más ligera, a juego con el tracking fino de la barra. -->
+      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false">
+        <path d="M3 8h18M9 16h12" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" />
+      </svg>
     </button>
   </div>
 </header>
@@ -51,6 +51,7 @@
 <!-- Fuera del header: el desenfoque de la barra crearía un contenedor para el fixed y el panel no cubriría la pantalla. -->
 @if (menuOpen()) {
   <div #menuPanel id="site-nav-menu" class="menu-panel" role="dialog" aria-modal="true"
+    animate.enter="menu-enter" animate.leave="menu-leave"
     aria-label="Menú de navegación" (keydown)="onPanelKeydown($event)">
     <div class="menu-top">
       <span class="menu-brand" aria-hidden="true">PILAR BLANCO</span>
@@ -64,8 +65,8 @@
 
     <nav class="menu-nav" aria-label="Secciones">
       <ul>
-        @for (section of sections; track section.id) {
-          <li>
+        @for (section of sections; track section.id; let i = $index) {
+          <li class="menu-item" [style.--i]="i">
             @if (onHome()) {
               <a [href]="'/home#' + section.id" class="menu-link"
                 [class.is-active]="isActive(section.id)"
@@ -79,17 +80,13 @@
             }
           </li>
         }
-        <li>
+        <li class="menu-item" [style.--i]="sections.length">
           <a routerLink="/curriculum" class="menu-link" [class.is-active]="cvActive()"
             [attr.aria-current]="cvActive() ? 'page' : null" (click)="closeMenu()">CV</a>
         </li>
       </ul>
     </nav>
 
-    <ul class="menu-socials" aria-label="Redes y contacto">
-      <li><a class="menu-social" [href]="instagramUrl" target="_blank" rel="noopener noreferrer me">Instagram<span class="sr-only"> (se abre en otra pestaña)</span></a></li>
-      <li><a class="menu-social" [href]="vimeoUrl" target="_blank" rel="noopener noreferrer me">Vimeo<span class="sr-only"> (se abre en otra pestaña)</span></a></li>
-      <li><a class="menu-social" [href]="mailtoUrl">Email</a></li>
-    </ul>
+    <app-socials class="menu-socials"></app-socials>
   </div>
 }
