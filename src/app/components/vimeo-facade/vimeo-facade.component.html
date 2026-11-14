@@ -1,22 +1,29 @@
-<div class="relative pb-[56.25%] h-0 overflow-hidden bg-zinc-900">
+<div class="relative pb-[56.25%] h-0 overflow-hidden bg-base-300">
   @if (!loaded()) {
-    <button type="button" class="group absolute inset-0 z-10 h-full w-full cursor-pointer"
+    <!-- Foco visible en 2 px y hacia dentro: el contenedor recorta (overflow-hidden) un contorno exterior. -->
+    <button type="button"
+      class="group absolute inset-0 z-10 h-full w-full cursor-pointer focus-visible:outline focus-visible:outline-2
+             focus-visible:outline-offset-[-6px] focus-visible:outline-base-content"
       [attr.aria-label]="'Reproducir ' + title" (click)="load()">
       <img [src]="src" [attr.srcset]="srcset" [attr.sizes]="sizes" (error)="posterFailed.set(true)"
         alt="" class="absolute inset-0 h-full w-full object-cover"
         [attr.loading]="priority ? 'eager' : 'lazy'"
         [attr.fetchpriority]="priority ? 'high' : 'low'"
         decoding="async" />
-      <span class="absolute inset-0 bg-black/30 transition-colors duration-300 group-hover:bg-black/10"></span>
+      <span class="absolute inset-0 bg-base-100/30 transition-colors duration-300 motion-reduce:transition-none
+                   group-hover:bg-base-100/10 group-focus-visible:bg-base-100/10"></span>
       <span class="absolute inset-0 flex items-center justify-center">
-        <span class="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 shadow-xl
-                     transition-transform duration-300 group-hover:scale-110">
-          <app-icon name="play" class="text-2xl text-zinc-900"></app-icon>
+        <!-- Mismo gesto que .voice-play: borde en bc y relleno en bc al pasar o enfocar. -->
+        <span class="flex h-16 w-16 items-center justify-center rounded-full border-2 border-base-content
+                     bg-base-100/70 text-base-content transition-colors duration-300 motion-reduce:transition-none
+                     group-hover:bg-base-content group-hover:text-base-100
+                     group-focus-visible:bg-base-content group-focus-visible:text-base-100">
+          <app-icon name="play" class="text-2xl"></app-icon>
         </span>
       </span>
     </button>
   } @else {
-    <iframe [title]="title" [src]="safeUrl"
+    <iframe #frame tabindex="-1" [title]="title" [src]="safeUrl"
       class="absolute top-0 left-0 z-10 h-full w-full" frameborder="0"
       referrerpolicy="strict-origin-when-cross-origin"
       allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"

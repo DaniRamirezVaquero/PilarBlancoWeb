@@ -1,6 +1,31 @@
 .collage-img {
-  /* Evita layout/paint de las fotos fuera de pantalla; solo hay 35 y la
-     mayoría no son visibles al cargar la página. */
+  /* Evita layout/paint de las fotos fuera de pantalla. width/height reales reservan la caja; con
+     `auto` el navegador recuerda el tamaño ya medido y 300px es solo el valor inicial. */
   content-visibility: auto;
-  contain-intrinsic-size: 600px 800px;
+  contain-intrinsic-size: auto 300px;
+  height: auto;
+}
+
+/* Título del proyecto: velo inferior con tokens, legible sin hover (táctil y teclado). */
+.collage-caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 1.5rem 0.5rem 0.4rem;
+  border-radius: 0 0 0.25rem 0.25rem;
+  font-family: Lato, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-transform: uppercase;
+  color: oklch(var(--bc));
+  background: linear-gradient(to top, oklch(var(--b1) / 0.92), oklch(var(--b1) / 0.6) 60%, transparent);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .collage-caption {
+    font-size: 0.75rem;
+    padding-inline: 0.65rem;
+  }
 }

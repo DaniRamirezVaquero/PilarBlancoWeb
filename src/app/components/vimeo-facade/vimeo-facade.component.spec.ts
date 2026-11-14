@@ -1,3 +1,4 @@
+import { ApplicationRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VimeoFacadeComponent } from './vimeo-facade.component';
 
@@ -45,5 +46,19 @@ describe('VimeoFacadeComponent', () => {
     // Assert
     const iframe = el.querySelector('iframe') as HTMLIFrameElement;
     expect(iframe.getAttribute('src')).toBe('https://player.vimeo.com/video/1208363473?h=3205afba43&autoplay=1');
+  });
+
+  it('lleva el foco al iframe tras pulsar el póster, en vez de dejarlo en el body', () => {
+    // Arrange
+    const el: HTMLElement = fixture.nativeElement;
+    (el.querySelector('button') as HTMLButtonElement).focus();
+    // Act
+    (el.querySelector('button') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    TestBed.inject(ApplicationRef).tick();
+    // Assert
+    const iframe = el.querySelector('iframe') as HTMLIFrameElement;
+    expect(iframe.getAttribute('tabindex')).toBe('-1');
+    expect(document.activeElement).toBe(iframe);
   });
 });

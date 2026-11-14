@@ -1,173 +1,86 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component } from '@angular/core';
+
+interface CollagePhoto {
+  src: string;
+  alt: string;
+  /** Texto que se ve siempre bajo la foto (no depende del hover). */
+  caption: string;
+  width: number;
+  height: number;
+}
+
+/** Todas las fotos se sirven a 900 px de ancho (versiones «-900» de los originales); la altura es la real de cada una. */
+const PHOTO_WIDTH = 900;
+const GROUP_SIZE = 9;
+
+/** Altura real (px) y proyecto de cada foto de /assets/images/collage, en orden. */
+const PHOTOS: readonly { n: number; height: number; title: string }[] = [
+  { n: 1, height: 475, title: 'VIOLENCIAS PERIFÉRICAS' },
+  { n: 2, height: 561, title: 'EL DON' },
+  { n: 3, height: 622, title: 'PECADORES DE LA PRADERA' },
+  { n: 4, height: 382, title: 'MEDAC' },
+  { n: 5, height: 432, title: 'PEDIOFOBIA' },
+  { n: 6, height: 591, title: 'AQUELLA FOTOGRAFÍA' },
+  { n: 7, height: 504, title: 'LUMON' },
+  { n: 8, height: 600, title: 'MÁS ALLÁ DE LO COMÚN' },
+  { n: 9, height: 390, title: 'DISONANCIAS' },
+  { n: 10, height: 506, title: 'LO QUE ESCONDE EL TARÓ' },
+  { n: 11, height: 428, title: 'APOGEO' },
+  { n: 12, height: 410, title: 'POR LAS NUBES_FERNANDO COLOMO' },
+  { n: 13, height: 375, title: 'PETIT À PETIT' },
+  { n: 14, height: 375, title: 'REY GITANO' },
+  { n: 15, height: 485, title: 'GLORIA Y CANDELA' },
+  { n: 16, height: 382, title: 'UNA LAMENTABLE PÉRDIDA' },
+  { n: 17, height: 506, title: 'NO SOY TU MADRE' },
+  { n: 18, height: 506, title: 'LIBRES AL FIN' },
+  { n: 19, height: 420, title: 'CRONOS' },
+  { n: 20, height: 409, title: 'BLURRY EYES' },
+  { n: 21, height: 380, title: 'CIEL SANS LUNE' },
+  { n: 22, height: 506, title: 'EL ANFITRIÓN' },
+  { n: 23, height: 402, title: 'CALIBRE 55' },
+  { n: 24, height: 403, title: 'CALIBRE 55' },
+  { n: 25, height: 506, title: 'QUANTUM' },
+  { n: 26, height: 432, title: 'CROMA 11' },
+  { n: 27, height: 600, title: 'ABRO LOS OJOS SUEÑO CONTIGO' },
+  { n: 28, height: 404, title: 'PABLO ESCOLAR' },
+  { n: 29, height: 473, title: 'SIN NOTICIAS DE GURB' },
+  { n: 30, height: 506, title: 'SERIE RABIA' },
+  { n: 31, height: 471, title: 'ALICE' },
+  { n: 32, height: 553, title: 'ESPACIO ALZHEIMER ANDALUCÍA' },
+  { n: 33, height: 506, title: 'ESPACIO ALZHEIMER ANDALUCÍA' },
+  { n: 34, height: 563, title: 'ESPACIO ALZHEIMER ANDALUCÍA' },
+  { n: 35, height: 570, title: 'DARKINSIDE' },
+];
+
+/** «POR LAS NUBES_FERNANDO COLOMO» se muestra como «Por las nubes · Fernando Colomo». */
+export function captionOf(title: string): string {
+  return title.replace(/_/g, ' · ');
+}
 
 @Component({
-    selector: 'app-collage',
-    imports: [CommonModule],
-    templateUrl: './collage.component.html',
-    styleUrl: './collage.component.css'
+  selector: 'app-collage',
+  templateUrl: './collage.component.html',
+  styleUrl: './collage.component.css',
 })
-export class CollageComponent implements OnInit, OnDestroy {
+export class CollageComponent {
+  /** Fotos repartidas en columnas consecutivas de 9. */
+  readonly photoGroups: CollagePhoto[][] = this.groupPhotos();
 
-  // Los ficheros "-900" son versiones recomprimidas/redimensionadas (~900px de
-  // ancho) de los originales: la rejilla nunca muestra más de un 25% del
-  // viewport por foto, así que no hace falta servir los .webp originales
-  // (algunos superaban los 700 KB).
-  images: string[] = [
-    'assets/images/collage/FOTO (1).webp',
-    'assets/images/collage/FOTO (2).webp',
-    'assets/images/collage/FOTO (3).webp',
-    'assets/images/collage/FOTO (4).webp',
-    'assets/images/collage/FOTO (5).webp',
-    'assets/images/collage/FOTO (6).webp',
-    'assets/images/collage/FOTO (7).webp',
-    'assets/images/collage/FOTO (8).webp',
-    'assets/images/collage/FOTO (9).webp',
-    'assets/images/collage/FOTO (10).webp',
-    'assets/images/collage/FOTO (11).webp',
-    'assets/images/collage/FOTO (12).webp',
-    'assets/images/collage/FOTO (13).webp',
-    'assets/images/collage/FOTO (14).webp',
-    'assets/images/collage/FOTO (15).webp',
-    'assets/images/collage/FOTO (16).webp',
-    'assets/images/collage/FOTO (17).webp',
-    'assets/images/collage/FOTO (18).webp',
-    'assets/images/collage/FOTO (19).webp',
-    'assets/images/collage/FOTO (20).webp',
-    'assets/images/collage/FOTO (21).webp',
-    'assets/images/collage/FOTO (22).webp',
-    'assets/images/collage/FOTO (23).webp',
-    'assets/images/collage/FOTO (24).webp',
-    'assets/images/collage/FOTO (25).webp',
-    'assets/images/collage/FOTO (26).webp',
-    'assets/images/collage/FOTO (27).webp',
-    'assets/images/collage/FOTO (28).webp',
-    'assets/images/collage/FOTO (29).webp',
-    'assets/images/collage/FOTO (30).webp',
-    'assets/images/collage/FOTO (31).webp',
-    'assets/images/collage/FOTO (32).webp',
-    'assets/images/collage/FOTO (33).webp',
-    'assets/images/collage/FOTO (34).webp',
-    'assets/images/collage/FOTO (35).webp',
-  ].map(src => src.replace(/\.webp$/, '-900.webp'));
-
-  titulos = [
-    {index: 1, titulo: 'VIOLENCIAS PERIFÉRICAS'},
-    {index: 2, titulo: 'EL DON'},
-    {index: 3, titulo: 'PECADORES DE LA PRADERA'},
-    {index: 4, titulo: 'MEDAC'},
-    {index: 5, titulo: 'PEDIOFOBIA'},
-    {index: 6, titulo: 'AQUELLA FOTOGRAFÍA'},
-    {index: 7, titulo: 'LUMON'},
-    {index: 8, titulo: 'MÁS ALLÁ DE LO COMÚN'},
-    {index: 9, titulo: 'DISONANCIAS'},
-    {index: 10, titulo: 'LO QUE ESCONDE EL TARÓ'},
-    {index: 11, titulo: 'APOGEO'},
-    {index: 12, titulo: 'POR LAS NUBES_FERNANDO COLOMO'},
-    {index: 13, titulo: 'PETIT À PETIT'},
-    {index: 14, titulo: 'REY GITANO'},
-    {index: 15, titulo: 'GLORIA Y CANDELA'},
-    {index: 16, titulo: 'UNA LAMENTABLE PÉRDIDA'},
-    {index: 17, titulo: 'NO SOY TU MADRE'},
-    {index: 18, titulo: 'LIBRES AL FIN'},
-    {index: 19, titulo: 'CRONOS'},
-    {index: 20, titulo: 'BLURRY EYES'},
-    {index: 21, titulo: 'CIEL SANS LUNE'},
-    {index: 22, titulo: 'EL ANFITRIÓN'},
-    {index: 23, titulo: 'CALIBRE 55'},
-    {index: 24, titulo: 'CALIBRE 55'},
-    {index: 25, titulo: 'QUANTUM'},
-    {index: 26, titulo: 'CROMA 11'},
-    {index: 27, titulo: 'ABRO LOS OJOS SUEÑO CONTIGO'},
-    {index: 28, titulo: 'PABLO ESCOLAR'},
-    {index: 29, titulo: 'SIN NOTICIAS DE GURB'},
-    {index: 30, titulo: 'SERIE RABIA'},
-    {index: 31, titulo: 'ALICE'},
-    {index: 32, titulo: 'ESPACIO ALZHEIMER ANDALUCÍA'},
-    {index: 33, titulo: 'ESPACIO ALZHEIMER ANDALUCÍA'},
-    {index: 34, titulo: 'ESPACIO ALZHEIMER ANDALUCÍA'},
-    {index: 35, titulo: 'DARKINSIDE'},
-
-  ]
-
-  imageGroups: string[][] = [];
-  titlePosition = { x: 0, y: 0 };
-  targetPosition = { x: 0, y: 0 };
-  lerpSpeed = 0.1;
-
-  private rafId: number | null = null;
-
-  constructor(
-    private ngZone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: object,
-  ) {}
-
-  ngOnInit(): void {
-    this.imageGroups = this.chunkArray(this.images, 9);
-  }
-
-  ngOnDestroy(): void {
-    this.stopTitleFollow();
-  }
-
-  onTitleEnter(event: MouseEvent): void {
-    this.updateTitlePosition(event);
-    this.startTitleFollow();
-  }
-
-  onTitleLeave(): void {
-    this.stopTitleFollow();
-  }
-
-  updateTitlePosition(event: MouseEvent) {
-    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
-    this.targetPosition.x = event.clientX - rect.left + 10; // Ajuste para evitar que el título se superponga al cursor
-    this.targetPosition.y = event.clientY - rect.top + 10;  // Ajuste para evitar que el título se superponga al cursor
-  }
-
-  private startTitleFollow(): void {
-    if (!isPlatformBrowser(this.platformId) || this.rafId !== null) {
-      return;
+  private groupPhotos(): CollagePhoto[][] {
+    const photos = PHOTOS.map((p): CollagePhoto => {
+      const caption = captionOf(p.title);
+      return {
+        src: `assets/images/collage/FOTO (${p.n})-900.webp`,
+        alt: `Pilar Blanco, actriz, en el proyecto ${caption}`,
+        caption,
+        width: PHOTO_WIDTH,
+        height: p.height,
+      };
+    });
+    const groups: CollagePhoto[][] = [];
+    for (let i = 0; i < photos.length; i += GROUP_SIZE) {
+      groups.push(photos.slice(i, i + GROUP_SIZE));
     }
-    this.ngZone.runOutsideAngular(() => this.animateTitle());
-  }
-
-  private stopTitleFollow(): void {
-    if (this.rafId !== null) {
-      cancelAnimationFrame(this.rafId);
-      this.rafId = null;
-    }
-  }
-
-  private animateTitle() {
-    this.titlePosition.x += (this.targetPosition.x - this.titlePosition.x) * this.lerpSpeed;
-    this.titlePosition.y += (this.targetPosition.y - this.titlePosition.y) * this.lerpSpeed;
-    this.rafId = requestAnimationFrame(() => this.animateTitle());
-  }
-
-
-  getAltText(imagePath: string): string {
-    const title = this.getTitle(imagePath);
-    return title
-      ? `Pilar Blanco, actriz, en el proyecto ${title}`
-      : 'Pilar Blanco, actriz, en un fotograma de proyecto';
-  }
-
-  getTitle(imagePath: string): string {
-    const index = this.images.indexOf(imagePath) + 1;
-    const tituloObj = this.titulos.find(t => t.index === index);
-    return tituloObj ? tituloObj.titulo : '';
-  }
-
-  trackByIndex(index: number): number {
-    return index;
-  }
-
-  private chunkArray(array: string[], chunkSize: number): string[][] {
-    const result: string[][] = [];
-    for (let i = 0; i < array.length; i += chunkSize) {
-      result.push(array.slice(i, i + chunkSize));
-    }
-    return result;
+    return groups;
   }
 }

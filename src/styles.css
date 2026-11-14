@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 /* Alto de la barra superior fija. SiteNavComponent lo mide y lo sobrescribe en px; estos son los valores
-   por defecto (prerender): una fila en escritorio, dos (nombre + anclas) en móvil. */
+   por defecto (prerender): una fila en escritorio y otra (nombre + «Menú») en móvil y tablet. */
 :root {
-  --nav-h: 4.0625rem;
+  --nav-h: 3.8125rem;
   --anchor-gap: 1rem;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   :root {
-    --nav-h: 5.8125rem;
+    --nav-h: 3.3125rem;
   }
 }
 
@@ -323,4 +323,78 @@ body {
   font-family: "Lato", sans-serif;
   font-weight: 900;
   font-style: italic;
+}
+
+/* Páginas internas: el título nunca queda bajo la barra superior fija (alto real en --nav-h). */
+.page-top {
+  padding-top: calc(var(--nav-h) + 2.5rem);
+}
+
+/* Botón fantasma editorial: acción principal de toda la web (sustituye a los botones DaisyUI).
+   Sobre papel claro (CV) se usa .btn-line-paper, que fija la tinta y el fondo con la paleta de Tailwind. */
+.btn-line {
+  --btn-line-ink: oklch(var(--bc));
+  --btn-line-on: oklch(var(--b1));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.25rem;
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  line-height: 1.25;
+  text-transform: uppercase;
+  text-align: left;
+  text-decoration: none;
+  color: var(--btn-line-ink);
+  background-color: transparent;
+  border: 1px solid var(--btn-line-ink);
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-line:hover {
+  color: var(--btn-line-on);
+  background-color: var(--btn-line-ink);
+}
+
+.btn-line:focus-visible {
+  outline: 2px solid var(--btn-line-ink);
+  outline-offset: 3px;
+}
+
+/* Línea secundaria de las descargas: formato y peso, p. ej. «ZIP · 36 MB». */
+.btn-line-meta {
+  display: block;
+  margin-top: 0.15rem;
+  font-weight: 400;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+}
+
+.btn-line-paper {
+  --btn-line-ink: black;
+  --btn-line-on: white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-line {
+    transition: none;
+  }
+}
+
+/* Encabezado de apartado del currículum (papel claro): un solo estilo en barra lateral y créditos. */
+.cv-heading {
+  margin: 0 0 0.75rem;
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: inherit;
 }

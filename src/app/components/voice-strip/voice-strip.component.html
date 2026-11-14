@@ -1,15 +1,18 @@
+<!-- Región viva única: anuncia «Cargando…» y los fallos sin repetir el contador de tiempo cada segundo. -->
+<p class="sr-only" role="status">{{ statusMessage() }}</p>
 <ul class="voice-list">
   @for (demo of demos; track demo.url; let i = $index) {
     <li class="voice" [class.is-active]="active() === i" [style.--n]="i">
       <button type="button" class="voice-play"
         (click)="toggle(i)" [attr.aria-pressed]="playing() === i"
+        [attr.aria-describedby]="failed() === i ? 'voice-error-' + i : null"
         [attr.aria-label]="(playing() === i ? 'Pausar ' : 'Escuchar ') + 'demo de voz: ' + demo.label">
         <app-icon [name]="playing() === i ? 'pause' : 'play'"></app-icon>
       </button>
 
       <div class="voice-meta">
         <span class="voice-label">{{ demo.label }}</span>
-        <span class="voice-time">
+        <span class="voice-time" [attr.id]="failed() === i ? 'voice-error-' + i : null">
           @if (failed() === i) { No se pudo cargar } @else if (loading() && active() === i) { Cargando… } @else { {{ elapsed(i, demo) }} }
         </span>
       </div>

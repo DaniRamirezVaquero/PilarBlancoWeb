@@ -1,20 +1,14 @@
-import { centeredScrollLeft, scrollBehaviorFor, sectionForPage } from './nav-scroll';
+import { isRouteActive, scrollBehaviorFor, sectionForPage } from './nav-scroll';
 
-describe('centeredScrollLeft', () => {
-  it('centra el enlace cuando está fuera de la vista', () => {
-    // Arrange / Act
-    const left = centeredScrollLeft(390, 800, 361, 111);
-    // Assert: 361 + 55.5 - 195 = 221.5
-    expect(left).toBe(221.5);
+describe('isRouteActive', () => {
+  it('marca la ruta exacta, con query o fragmento', () => {
+    expect(isRouteActive('/curriculum', '/curriculum')).toBeTrue();
+    expect(isRouteActive('/curriculum?x=1#a', '/curriculum')).toBeTrue();
   });
 
-  it('no baja de 0 ni pasa del recorrido máximo', () => {
-    expect(centeredScrollLeft(390, 600, 0, 50)).toBe(0);
-    expect(centeredScrollLeft(390, 600, 550, 50)).toBe(210);
-  });
-
-  it('devuelve 0 si la fila no desborda', () => {
-    expect(centeredScrollLeft(500, 400, 300, 80)).toBe(0);
+  it('no marca otras rutas ni prefijos parecidos', () => {
+    expect(isRouteActive('/home', '/curriculum')).toBeFalse();
+    expect(isRouteActive('/curriculum-2', '/curriculum')).toBeFalse();
   });
 });
 

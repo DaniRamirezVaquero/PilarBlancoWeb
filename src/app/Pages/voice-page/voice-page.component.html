@@ -1,29 +1,27 @@
-<div
-  class="bg-page pt-32 md:pt-28 lg:pt-36 pb-24 lg:pb-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden">
-  <div class="flex flex-col gap-8">
+<div class="bg-page w-full page-top pb-24 lg:pb-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden">
+  <div class="flex flex-col gap-12">
     <div>
-      <div class="mb-6">
-        <h1 class="page-title">Doblaje y locución</h1>
-        <span class="page-title-dash" aria-hidden="true"></span>
-      </div>
-      <h2 class="section-title voice-heading mb-5">Doblaje</h2>
-      <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 lg:gap-20 lg:mb-12">
+      <h1 class="page-title">Doblaje y locución</h1>
+      <span class="page-title-dash" aria-hidden="true"></span>
+    </div>
+
+    <section aria-labelledby="doblaje-title">
+      <h2 id="doblaje-title" class="section-title voice-heading mb-6">Doblaje</h2>
+      <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20">
 
         @for (v of dubbing; track v.videoId) {
-          <div class="shadow-md w-full">
+          <div class="w-full">
             <app-vimeo-facade [videoId]="v.videoId" [hash]="v.hash" [fallbackPoster]="v.fallbackPoster"
               [title]="v.title" [priority]="$index === 0" />
           </div>
         }
 
       </div>
-    </div>
+    </section>
 
-    <div>
-      <div class="mb-6">
-        <h2 class="section-title voice-heading">Locución</h2>
-      </div>
+    <section aria-labelledby="locucion-title">
+      <h2 id="locucion-title" class="section-title voice-heading mb-6">Locución</h2>
       <app-voice-strip class="draw" [demos]="voice"></app-voice-strip>
-    </div>
+    </section>
   </div>
 </div>

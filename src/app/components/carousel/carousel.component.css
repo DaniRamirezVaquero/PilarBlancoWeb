@@ -7,19 +7,46 @@
   transition: none !important;
 }
 
-/* Controles del carrusel: disco de 44 px con contraste sobre la foto y sobre el fondo de página. */
-.carousel-btn {
-  z-index: 30;
-  display: inline-flex;
+/* Barra de controles: «‹ ❚❚ ›» y la descarga de fotos. El margen deja pasar las fotos laterales, que bajan 5 rem. */
+.carousel-controls {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  gap: 1rem 2rem;
+  margin-top: 3.5rem;
+}
+
+/* Disco de 44 px con el glifo centrado de verdad: rejilla + SVG de viewBox simétrico (24×24).
+   Los trazos y el triángulo de play llevan un pequeño desplazamiento óptico dentro del propio path. */
+.carousel-btn {
+  display: grid;
+  place-items: center;
   width: 2.75rem;
   height: 2.75rem;
+  padding: 0;
   border-radius: 9999px;
   color: oklch(var(--bc));
   background: oklch(var(--b1) / 0.92);
   border: 1px solid oklch(var(--bc) / 0.35);
+  cursor: pointer;
   transition: background-color 0.2s ease;
+}
+
+.carousel-btn svg {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.carousel-btn svg.is-solid {
+  fill: currentColor;
+  stroke: none;
 }
 
 .carousel-btn:hover {

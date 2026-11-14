@@ -78,7 +78,7 @@
             </li>
           }
         </ul>
-        <a routerLink="/video" class="btn btn-sm md:btn-md btn-accent gap-2 border-none self-start mt-2">
+        <a routerLink="/video" class="btn-line self-start mt-2">
           Todos los vídeos <app-icon name="arrow-right"></app-icon>
         </a>
       </aside>
@@ -90,13 +90,7 @@
     <h2 id="fotos-title" class="page-title">Fotos</h2>
     <span class="page-title-dash mb-8" aria-hidden="true"></span>
     <app-carousel></app-carousel>
-    <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mt-20 md:mt-24">
-      <a class="btn btn-sm md:btn-md btn-accent gap-2 border-none"
-        [href]="photosZip" download="Pilar Blanco - Galeria fotos.zip"
-        aria-label="Descargar el pack de fotos del carrusel en calidad completa">
-        Descargar fotos
-        <app-icon name="download" size="lg"></app-icon>
-      </a>
+    <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mt-10">
       <a routerLink="/gallery" class="home-link">Ver galería completa</a>
     </div>
   </section>
@@ -135,7 +129,7 @@
           }
         </ul>
         <div class="flex flex-wrap items-center gap-x-8 gap-y-4 mt-8">
-          <a routerLink="/curriculum" class="btn btn-sm md:btn-md btn-accent gap-2 border-none">
+          <a routerLink="/curriculum" class="btn-line">
             Currículum completo <app-icon name="arrow-right"></app-icon>
           </a>
           <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="home-link">Descargar CV</a>
@@ -166,11 +160,12 @@
     <span class="page-title-dash mb-8" aria-hidden="true"></span>
     <a [href]="mailtoUrl" class="contact-email playfair-display-medium block text-3xl sm:text-4xl lg:text-5xl leading-tight break-words">{{ emailUser }}<wbr />{{ emailDomain }}</a>
     <div class="flex flex-wrap items-center gap-x-8 gap-y-4 mt-8">
-      <a [href]="gmailUrl" target="_blank" rel="noopener noreferrer" class="btn btn-sm md:btn-md btn-accent gap-2 border-none">
+      <a [href]="gmailUrl" target="_blank" rel="noopener noreferrer" class="btn-line">
         Escribir en Gmail<span class="sr-only"> (se abre en otra pestaña)</span>
       </a>
-      <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="btn btn-sm md:btn-md btn-secondary-home gap-2">
-        Descargar CV <app-icon name="download"></app-icon>
+      <a [href]="cvUrl" download="CV de Pilar Blanco.pdf" class="btn-line">
+        <span>Descargar CV<span class="btn-line-meta">PDF · 417 KB</span></span>
+        <app-icon name="download" size="lg"></app-icon>
       </a>
       <a [href]="instagram" target="_blank" rel="noopener noreferrer me" class="home-link inline-flex items-center gap-2">
         <app-icon name="instagram"></app-icon> pilarblanco.actriz<span class="sr-only"> en Instagram (se abre en otra pestaña)</span>

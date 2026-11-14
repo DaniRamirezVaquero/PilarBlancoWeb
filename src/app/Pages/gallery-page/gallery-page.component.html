@@ -1,21 +1,13 @@
-<div
-  class="bg-page w-screen py-24 lg:py-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden">
+<div class="bg-page w-full page-top pb-24 lg:pb-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden">
 
   <div class="flex flex-col gap-4 sm:gap-6 md:gap-8">
-    <div>
+    <!-- Título y carrusel comparten eje (centrado). -->
+    <div class="text-center">
       <h1 class="page-title">Galería</h1>
-      <span class="page-title-dash" aria-hidden="true"></span>
+      <span class="page-title-dash mx-auto" aria-hidden="true"></span>
     </div>
     <app-carousel></app-carousel>
-    <div class="flex justify-center mt-20 md:mt-24">
-      <a class="btn btn-sm md:btn-md btn-accent gap-2 border-none"
-        href="assets/downloads/pilar-blanco-galeria-fotos.zip" download="Pilar Blanco - Galeria fotos.zip"
-        aria-label="Descargar el pack de fotos del carrusel en calidad completa">
-        Descargar fotos
-        <app-icon name="download" size="lg"></app-icon>
-      </a>
-    </div>
-    <div class="mt-16 lg:mt-20">
+    <div class="mt-16 lg:mt-20 text-center">
       <h2 class="section-title">Proyectos</h2>
     </div>
     <app-collage></app-collage>

@@ -1,6 +1,8 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef, Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { IconComponent } from '../icon/icon.component';
+import { CONTACT } from '../../data/portfolio.data';
+import { prefersReducedMotion } from '../../utils/motion';
 
 interface CarouselImage {
   src: string;
@@ -47,6 +49,9 @@ export class CarouselComponent implements OnInit, OnDestroy {
     photo('Pilar Blanco WEB_12', 'Pilar Blanco, actriz, sentada en un baúl en book fotográfico')
   ];
 
+  /** Descarga del pack de fotos; vive en la barra de controles, bajo la foto. */
+  readonly photosZip = CONTACT.photosZip;
+
   slides: CarouselSlide[] = [];
   /** Índice 1 = primera foto real; 0 y el último son clones para el loop infinito. */
   currentIndex = 1;
@@ -63,6 +68,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
+    @Inject(DOCUMENT) private document: Document,
     private cdr: ChangeDetectorRef
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -71,7 +77,8 @@ export class CarouselComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.isBrowser) {
+    // Con movimiento reducido no arranca solo: la persona decide con el botón de reproducir.
+    if (this.isBrowser && !prefersReducedMotion(this.document.defaultView)) {
       this.startAutoplay();
     } else {
       this.isPlaying = false;
@@ -127,7 +134,9 @@ export class CarouselComponent implements OnInit, OnDestroy {
       clearTimeout(this.interactionTimeout);
     }
     this.interactionTimeout = setTimeout(() => {
-      this.startAutoplay();
+      if (!prefersReducedMotion(this.document.defaultView)) {
+        this.startAutoplay();
+      }
     }, 10000);
   }
 

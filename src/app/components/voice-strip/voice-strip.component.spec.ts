@@ -86,10 +86,33 @@ describe('VoiceStripComponent', () => {
     expect(track(0).getAttribute('aria-valuetext')).toBe(`0:00 de ${component.format(VOICE[0].duration)}`);
   });
 
-  it('B2: una flecha sobre una pista inactiva la activa y reproduce', () => {
+  it('VO3: una flecha sobre una pista inactiva no activa ni carga audio', () => {
     track(1).dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', cancelable: true }));
+    expect(component.active()).toBeNull();
+    expect(playSpy).not.toHaveBeenCalled();
+  });
+
+  it('VO3: Enter y Espacio sobre una pista inactiva la activan y reproducen', () => {
+    track(1).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', cancelable: true }));
     expect(component.active()).toBe(1);
-    expect(playSpy).toHaveBeenCalled();
+    expect(playSpy).toHaveBeenCalledTimes(1);
+    track(2).dispatchEvent(new KeyboardEvent('keydown', { key: ' ', cancelable: true }));
+    expect(component.active()).toBe(2);
+  });
+
+  it('VO2: anuncia «Cargando» y el fallo en la región viva y enlaza el error con el botón', async () => {
+    const status = host.querySelector('[role="status"]') as HTMLElement;
+    component.toggle(0);
+    fixture.detectChanges();
+    expect(status.textContent).toContain('Cargando');
+    playSpy.and.returnValue(Promise.reject(new Error('fallo')));
+    component.toggle(1);
+    await flush();
+    fixture.detectChanges();
+    expect(status.textContent).toContain('No se pudo cargar');
+    const play = host.querySelectorAll('.voice-play')[1];
+    expect(play.getAttribute('aria-describedby')).toBe('voice-error-1');
+    expect(host.querySelector('#voice-error-1')).not.toBeNull();
   });
 
   it('B2: flechas, Inicio y Fin mueven la posición de la pista activa', () => {

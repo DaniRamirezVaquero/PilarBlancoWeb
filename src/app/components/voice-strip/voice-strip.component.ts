@@ -107,6 +107,16 @@ export class VoiceStripComponent implements OnChanges, OnDestroy {
     this.resizeObserver.observe(track);
   }
 
+  /** Mensaje para el lector de pantalla: «Cargando…» y los fallos no se oían al estar solo en el texto de la fila. */
+  statusMessage(): string {
+    const failed = this.failed();
+    if (failed !== null) {
+      return `No se pudo cargar la demo ${this.demos[failed]?.label ?? ''}`.trim();
+    }
+    const active = this.active();
+    return this.loading() && active !== null ? `Cargando la demo ${this.demos[active]?.label ?? ''}…` : '';
+  }
+
   percent(): number {
     return Math.round(this.progress() * 100);
   }
@@ -157,15 +167,22 @@ export class VoiceStripComponent implements OnChanges, OnDestroy {
     this.seekToRatio(ratio, index);
   }
 
-  /** Flechas ±5 s, Inicio/Fin a los extremos; sobre una pista inactiva la activan. */
+  /**
+   * Enter/Espacio reproducen o pausan. Flechas ±5 s e Inicio/Fin a los extremos, solo sobre la pista activa:
+   * en una inactiva no cargan audio (no se descarga nada por pasar el foco o pulsar una flecha).
+   */
   onKeySeek(event: KeyboardEvent, index: number): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.toggle(index);
+      return;
+    }
     const keys = ['ArrowRight', 'ArrowLeft', 'Home', 'End'];
     if (!keys.includes(event.key)) {
       return;
     }
     event.preventDefault();
     if (this.active() !== index) {
-      this.toggle(index);
       return;
     }
     const audio = this.audio;

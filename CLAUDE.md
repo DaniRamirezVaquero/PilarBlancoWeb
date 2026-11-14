@@ -12,7 +12,10 @@ Web de la actriz Pilar Blanco: Angular 20 + Tailwind/DaisyUI con prerender está
 Solo tokens DaisyUI (`--p`, `--s`, `--a`, `--n`, `--bc`), Lato + Playfair Display y los temas `mytheme` / `mytheme-portada`, que alternan con la portada del hero (`HeroThemeService` y el script de `index.html`). Sin colores hex nuevos.
 
 ## Home (`/home`)
-Hero a pantalla completa y debajo un scroll de secciones con ancla: `#reel`, `#fotos` (carrusel), `#voz`, `#trayectoria` y `#contacto`. La navegación es una barra superior fija (`app-site-nav`), sin menú lateral. Contiene el nombre, las anclas (`/home#voz`…) y los iconos de Instagram, Vimeo y email. Es transparente sobre el hero y pasa a cristal al dejarlo atrás y en las páginas internas. En móvil, las anclas van en una fila deslizable. La sección visible se marca con `NavService.activeSection` y `aria-current`. El footer se muestra en todas las rutas.
+Hero a pantalla completa y debajo un scroll de secciones con ancla: `#reel`, `#fotos` (carrusel), `#voz`, `#trayectoria` y `#contacto`. La navegación es una barra superior fija (`app-site-nav`), sin menú lateral. Contiene el nombre, las anclas (`/home#voz`…), «CV» (`/curriculum`) y las redes en texto (Instagram · Vimeo · Email). Es transparente sobre el hero y pasa a cristal al dejarlo atrás y en las páginas internas. Por debajo de 1024 px, un botón «Menú» abre un panel a pantalla completa (diálogo con foco atrapado y Esc). En la home, las anclas son `<a href>` nativos que maneja `goTo()`: con `RouterLink` el router lanzaba un segundo scroll. La sección visible se marca con `NavService.activeSection` y `aria-current`. El footer se muestra en todas las rutas.
+
+## Botones
+Un único estilo global, `.btn-line` en `styles.css`: borde fino, sin relleno, Lato en mayúsculas con tracking y relleno invertido al pasar el ratón. Sobre el papel blanco del CV se usa `.btn-line-paper`. Las descargas son `<a download>` con el formato y el peso visibles. No uses `btn-accent` ni `btn-primary` de DaisyUI.
 
 ## Datos y utilidades
 - `src/app/data/portfolio.data.ts`: `REEL`, `SCENES`, `DUBBING`, `VOICE` (con los `peaks` de cada MP3), `HIGHLIGHT_CREDITS`, `CONTACT`.

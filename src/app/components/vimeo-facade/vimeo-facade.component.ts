@@ -1,4 +1,4 @@
-import { Component, Input, inject, signal } from '@angular/core';
+import { Component, ElementRef, Injector, Input, afterNextRender, inject, signal, viewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { IconComponent } from '../icon/icon.component';
 import { posterSrcset, posterUrl } from '../../utils/vimeo-thumbnail';
@@ -32,6 +32,8 @@ export class VimeoFacadeComponent {
   @Input() sizes = '(min-width: 1024px) 50vw, 100vw';
 
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly injector = inject(Injector);
+  private readonly frame = viewChild<ElementRef<HTMLIFrameElement>>('frame');
 
   readonly loaded = signal(false);
   readonly posterFailed = signal(false);
@@ -52,5 +54,7 @@ export class VimeoFacadeComponent {
     const url = `https://player.vimeo.com/video/${this.videoId}?h=${this.hash}&autoplay=1`;
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     this.loaded.set(true);
+    // El botón se destruye al cargar: sin esto el foco caería en <body>.
+    afterNextRender(() => this.frame()?.nativeElement.focus(), { injector: this.injector });
   }
 }

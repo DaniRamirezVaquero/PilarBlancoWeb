@@ -1,0 +1,54 @@
+/* Texto de lectura: una columna de ~65 caracteres, con aire entre párrafos. */
+.bio-flow p {
+  max-width: 66ch;
+  margin: 0 0 1.25rem;
+  font-family: Lato, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.bio-flow p:last-child {
+  margin-bottom: 0;
+}
+
+.bio-heading {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3.2vw, 2.35rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: oklch(var(--bc));
+}
+
+.bio-close {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 2rem;
+  border-top: 1px solid oklch(var(--bc) / 0.25);
+}
+
+.bio-link {
+  color: oklch(var(--bc));
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
+  transition: text-decoration-thickness 0.2s ease;
+}
+
+.bio-link:hover,
+.bio-link:focus-visible {
+  text-decoration-thickness: 4px;
+}
+
+.bio-link:focus-visible {
+  outline: 2px solid oklch(var(--bc));
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bio-link {
+    transition: none;
+  }
+}

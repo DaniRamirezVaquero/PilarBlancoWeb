@@ -1,0 +1,66 @@
+/* Enlaces de contacto: objetivo táctil de 44 px (py-2.5 ≈ 10 px por lado) y subrayado que cambia en hover, no el color. */
+.cv-contact {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding-block: 0.625rem;
+  font-family: Lato, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.625;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.cv-contact:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Créditos con vídeo: inline-block para que el padding vertical cuente como zona pulsable sin mover la línea. */
+.cv-credit-link {
+  display: inline-block;
+  padding-block: 0.375rem;
+  margin-block: -0.375rem;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: currentColor;
+  text-underline-offset: 4px;
+  transition: text-decoration-thickness 0.2s ease;
+}
+
+.cv-credit-link:hover {
+  text-decoration-thickness: 3px;
+}
+
+.cv-credit-link:focus-visible,
+.cv-contact:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Formato o estado del trabajo, en pequeño: sustituye a los paréntesis en línea. */
+.cv-chip {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0 0.4rem;
+  border: 1px solid currentColor;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  vertical-align: 0.1em;
+}
+
+/* Sin cortes por guion («Aisge-/Netflix»). */
+.cv-nohyphen {
+  hyphens: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cv-contact,
+  .cv-credit-link {
+    transition: none;
+  }
+}

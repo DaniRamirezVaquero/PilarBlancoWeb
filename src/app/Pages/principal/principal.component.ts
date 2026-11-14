@@ -55,7 +55,6 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
   readonly instagram = CONTACT.instagram;
   readonly vimeo = CONTACT.vimeo;
   readonly cvUrl = CONTACT.cv;
-  readonly photosZip = CONTACT.photosZip;
 
   /** Miniaturas de «Más escenas» cuyo póster vivo falló: usan el guardado. */
   private readonly failedThumbs = signal<ReadonlySet<string>>(new Set());

@@ -27,7 +27,7 @@
   font-family: "Playfair Display", serif; font-weight: 500;
   font-size: 1.5rem; line-height: 1.1; letter-spacing: -0.01em;
 }
-.voice-time { font-family: Lato, sans-serif; font-size: 0.8rem; }
+.voice-time { font-family: Lato, sans-serif; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
 
 /* Móvil: fila más baja, disco de 44px (mínimo táctil) y onda en su propia línea. */
 @media (max-width: 767px) {
@@ -35,14 +35,13 @@
   .voice-play { width: 2.75rem; height: 2.75rem; font-size: 0.95rem; }
   .voice-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.75rem; }
   .voice-label { font-size: 1.3rem; }
-  .voice-track { height: 2.25rem; }
 }
 
 .voice-track { grid-column: 1 / -1; height: 3rem; cursor: pointer; }
 @media (min-width: 768px) { .voice-track { grid-column: auto; } }
 .voice-track svg { display: block; width: 100%; height: 100%; }
 :host(.is-measuring) .voice-track svg { opacity: 0; }
-.bars rect { fill: oklch(var(--bc) / 0.6); }
+.bars rect { fill: oklch(var(--bc) / 0.7); }
 .bars-played rect { fill: oklch(var(--bc)); }
 
 /* Entrada de /voice (clase `draw` en el host): cada pista entra en su línea y su onda se dibuja de izquierda a derecha. */

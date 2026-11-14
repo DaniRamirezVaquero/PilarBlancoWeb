@@ -94,17 +94,3 @@
 .contact-email:focus-visible {
   text-decoration-color: oklch(var(--bc));
 }
-
-/* Acción secundaria: borde que contrasta con el fondo de página. */
-.btn-secondary-home {
-  color: oklch(var(--bc));
-  background: transparent;
-  border: 2px solid oklch(var(--bc));
-}
-
-.btn-secondary-home:hover,
-.btn-secondary-home:focus-visible {
-  color: oklch(var(--bc));
-  background: oklch(var(--bc) / 0.16);
-  border-color: oklch(var(--bc));
-}
