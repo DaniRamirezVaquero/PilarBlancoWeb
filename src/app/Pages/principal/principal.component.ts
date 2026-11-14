@@ -15,6 +15,8 @@ import { CommonModule } from '@angular/common';
 
 /** Ids de las secciones con scroll de la home, en orden de aparición. */
 const SECTION_IDS = ['reel', 'fotos', 'voz', 'trayectoria', 'contacto'] as const;
+/** Fracción visible a partir de la cual la última sección cuenta como «vista entera». */
+const LAST_SECTION_RATIO = 0.9;
 
 @Component({
     selector: 'app-principal',
@@ -62,6 +64,7 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
   private readonly document = inject(DOCUMENT);
   private readonly carousel = viewChild(CarouselComponent);
   private sectionObserver: IntersectionObserver | null = null;
+  private lastSectionObserver: IntersectionObserver | null = null;
   private carouselObserver: IntersectionObserver | null = null;
 
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
@@ -90,6 +93,7 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sectionObserver?.disconnect();
+    this.lastSectionObserver?.disconnect();
     this.carouselObserver?.disconnect();
     this.heroObserver?.disconnect();
     for (const [type, listener] of this.heroListeners) {
@@ -152,6 +156,13 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
   /** Publica la sección visible para marcarla en la barra superior. */
   private observeSections(): void {
     const visible = new Set<string>();
+    const lastId = SECTION_IDS[SECTION_IDS.length - 1];
+    // La última sección puede ser más corta que el recorrido que queda hasta el final de la página y no
+    // llegar nunca a la franja central: si se ve entera, es la activa.
+    let lastFullyVisible = false;
+    const publish = () =>
+      this.navService.activeSection.set(lastFullyVisible ? lastId : (SECTION_IDS.find((id) => visible.has(id)) ?? null));
+
     this.sectionObserver = new IntersectionObserver((entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
@@ -160,14 +171,22 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
           visible.delete(entry.target.id);
         }
       }
-      const current = SECTION_IDS.find((id) => visible.has(id)) ?? null;
-      this.navService.activeSection.set(current);
+      publish();
     }, { rootMargin: '-35% 0px -55% 0px' });
     for (const id of SECTION_IDS) {
       const el = this.document.getElementById(id);
       if (el) {
         this.sectionObserver.observe(el);
       }
+    }
+
+    const last = this.document.getElementById(lastId);
+    if (last) {
+      this.lastSectionObserver = new IntersectionObserver(([entry]) => {
+        lastFullyVisible = entry.intersectionRatio >= LAST_SECTION_RATIO;
+        publish();
+      }, { threshold: LAST_SECTION_RATIO });
+      this.lastSectionObserver.observe(last);
     }
   }
 
