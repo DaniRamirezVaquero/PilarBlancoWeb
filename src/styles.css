@@ -24,13 +24,8 @@ body {
   overflow-x: hidden;
 }
 
-/* Superficie de páginas internas — tokens --page-* del theme */
-[data-theme="mytheme-portada"] {
-  --page-from: #636E79 !important;
-  --page-via: #5E6974 !important;
-  --page-to: #59646F !important;
-}
-
+/* Superficie de las páginas: degradado con los tokens --page-* de cada tema (tailwind.config.js), sacados del
+   fondo de la foto del hero correspondiente para que la página parezca continuar el mismo fondo de estudio. */
 .bg-page {
   background-image: linear-gradient(
     to top right,
@@ -46,48 +41,24 @@ body {
   50% { transform: translateY(-10px); }
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
 .float-animation {
   animation: float 3s ease-in-out infinite;
 }
 
-.shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
-/* Efecto glass morphism */
+/* Superficie translúcida del desplegable de correo: con tokens del tema, opaca lo bastante para que el texto
+   mantenga contraste sobre el hero. */
 .glass-effect {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  background: oklch(var(--b1) / 0.92);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  border: 1px solid oklch(var(--bc) / 0.25);
+  box-shadow: 0 8px 32px 0 oklch(var(--s) / 0.45);
 }
 
 /* Nuevos estilos de fuente para elegancia */
-.playfair-display {
-  font-family: "Playfair Display", serif;
-}
-
 .playfair-display-medium {
   font-family: "Playfair Display", serif;
   font-weight: 500;
-}
-
-.playfair-display-semibold {
-  font-family: "Playfair Display", serif;
-  font-weight: 600;
-}
-
-.playfair-display-bold {
-  font-family: "Playfair Display", serif;
-  font-weight: 700;
 }
 
 /* Cabeceras internas — variante "Guión corto": Playfair de página, Lato de apartado */
@@ -155,46 +126,7 @@ body {
   }
 }
 
-@keyframes slide-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-32px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slide-in-right {
-  from {
-    opacity: 0;
-    transform: translateX(32px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse-subtle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
-}
-
-@keyframes shimmer-slow {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* Efectos interactivos con mouse */
-.mouse-interactive {
-  transition: all 0.2s ease-out;
-  transform-style: preserve-3d;
-  position: relative;
-}
-
-/* Efecto de gradiente dinámico para el texto - MÁS NOTABLE */
+/* Efecto de gradiente dinámico para el texto */
 .dynamic-text-glow {
   background: linear-gradient(
     90deg,
@@ -211,7 +143,7 @@ body {
   transition: background-position 0.2s ease-out;
 }
 
-/* Clase para el efecto tilt 3D - MÁS NOTABLE */
+/* Efecto tilt 3D */
 .tilt-3d {
   transform-style: preserve-3d;
   transition: transform 0.15s ease-out;
@@ -234,22 +166,6 @@ body {
   animation: scale-in 0.3s ease-out forwards;
 }
 
-.animate-slide-in-left {
-  animation: slide-in-left 0.6s ease-out forwards;
-}
-
-.animate-slide-in-right {
-  animation: slide-in-right 0.6s ease-out forwards;
-}
-
-.animate-pulse-subtle {
-  animation: pulse-subtle 2s ease-in-out infinite;
-}
-
-.animate-shimmer-slow {
-  animation: shimmer-slow 3s ease-in-out infinite;
-}
-
 .animation-delay-200 {
   animation-delay: 200ms;
 }
@@ -258,10 +174,20 @@ body {
   animation-delay: 400ms;
 }
 
-.lato-thin {
-  font-family: "Lato", sans-serif;
-  font-weight: 100;
-  font-style: normal;
+/* Sin movimiento: las entradas quedan en su estado final y el flotado se detiene. */
+@media (prefers-reduced-motion: reduce) {
+  .float-animation,
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-scale-in {
+    animation: none;
+  }
+
+  .tilt-3d,
+  .tilt-3d.returning,
+  .dynamic-text-glow {
+    transition: none;
+  }
 }
 
 .lato-light {
@@ -280,42 +206,6 @@ body {
   font-family: "Lato", sans-serif;
   font-weight: 700;
   font-style: normal;
-}
-
-.lato-black {
-  font-family: "Lato", sans-serif;
-  font-weight: 900;
-  font-style: normal;
-}
-
-.lato-thin-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 100;
-  font-style: italic;
-}
-
-.lato-light-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.lato-regular-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.lato-bold-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 700;
-  font-style: italic;
-}
-
-.lato-black-italic {
-  font-family: "Lato", sans-serif;
-  font-weight: 900;
-  font-style: italic;
 }
 
 /* Páginas internas: el título nunca queda bajo la barra superior fija (alto real en --nav-h). */
@@ -351,9 +241,26 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.btn-line:hover {
+/* El relleno invertido solo con puntero real: en táctil el :hover se queda pegado tras tocar. */
+@media (hover: hover) {
+  .btn-line:hover {
+    color: var(--btn-line-on);
+    background-color: var(--btn-line-ink);
+  }
+}
+
+.btn-line:active {
   color: var(--btn-line-on);
   background-color: var(--btn-line-ink);
+  opacity: 0.85;
+}
+
+/* Dato secundario dentro del botón (formato y peso de una descarga): más ligero y sin mayúsculas. */
+.btn-line-meta {
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  opacity: 0.8;
 }
 
 .btn-line:focus-visible {

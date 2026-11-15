@@ -10,7 +10,7 @@
       <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20">
 
         @for (v of dubbing; track v.videoId) {
-          <div class="w-full">
+          <div class="w-full shadow-md">
             <app-vimeo-facade [videoId]="v.videoId" [hash]="v.hash" [fallbackPoster]="v.fallbackPoster"
               [title]="v.title" [priority]="$index === 0" />
           </div>

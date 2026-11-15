@@ -24,6 +24,7 @@ export class AppComponent implements AfterViewInit {
 
   @HostBinding('class.app-ready') appReady = this.readInitialAppReady();
 
+  private readonly doc = inject(DOCUMENT);
   private readonly seo = inject(SeoService);
   /** Fija cover/tema de esta pestaña; no rota mientras la sesión sigue abierta. */
   private readonly _heroTheme = inject(HeroThemeService);
@@ -43,6 +44,12 @@ export class AppComponent implements AfterViewInit {
       .subscribe((event) => {
         this.seo.updateForUrl(event.urlAfterRedirects);
       });
+  }
+
+  /** Lleva el foco al contenido principal sin cambiar de ruta. */
+  skipToMain(event: Event): void {
+    event.preventDefault();
+    this.doc.getElementById('contenido')?.focus();
   }
 
   ngAfterViewInit(): void {

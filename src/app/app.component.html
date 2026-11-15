@@ -1,8 +1,10 @@
 <div class="relative min-h-screen">
+  <!-- Enlace de salto para teclado: href="#" resolvería contra <base> y llevaría a la home, así que lo gestiona skipToMain(). -->
+  <a href="/" class="skip-link" (click)="skipToMain($event)">Saltar al contenido</a>
+
   <app-site-nav></app-site-nav>
 
-  <!-- Contenido principal con transición -->
-  <main class="transition-all duration-700 ease-out">
+  <main id="contenido" tabindex="-1">
     <router-outlet></router-outlet>
   </main>
 

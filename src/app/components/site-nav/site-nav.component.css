@@ -131,7 +131,13 @@
 .site-nav-menu-btn:focus-visible {
   outline: 2px solid oklch(var(--bc));
   outline-offset: 2px;
-  border-radius: 0.25rem;
+}
+
+/* El aro sobre el hero necesita separarse del fondo: halo del color de la barra por fuera. */
+.site-nav:not(.is-solid) .site-nav-link:focus-visible,
+.site-nav:not(.is-solid) .site-nav-brand:focus-visible,
+.site-nav:not(.is-solid) .site-nav-menu-btn:focus-visible {
+  box-shadow: 0 0 0 4px oklch(var(--s) / 0.55);
 }
 
 @media (min-width: 1024px) {
@@ -162,9 +168,6 @@
 
   .site-nav-socials {
     display: block;
-  }
-
-  .site-nav-socials {
     padding-left: 1rem;
     border-left: 1px solid oklch(var(--bc) / 0.3);
   }
@@ -235,6 +238,11 @@
 .menu-link:focus-visible {
   outline: 2px solid oklch(var(--bc));
   outline-offset: 3px;
+}
+
+.menu-close:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
 }
 
 .menu-nav {

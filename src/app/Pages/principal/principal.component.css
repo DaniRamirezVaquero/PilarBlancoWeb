@@ -1,5 +1,6 @@
 .hero-container {
-  background-color: #5c5c5c;
+  /* Fondo mientras carga la portada: el base-100 del tema activo (--n sería casi blanco). */
+  background-color: oklch(var(--b1));
 }
 
 .hero-cover {
@@ -32,6 +33,17 @@
 /* Velo oscuro del hero, solo en móvil (md:hidden): tras el bloque del nombre, de más a menos intenso. */
 .hero-veil {
   background: radial-gradient(ellipse 100% 30% at 36% 52%, rgb(0 0 0 / 0.5), rgb(0 0 0 / 0.35) 55%, transparent 100%);
+}
+
+/* Fundido del pie del hero hacia --page-to: en un bloque tan alto, el degradado «to top right» de .bg-page
+   ya vale casi --page-to en todo su borde superior. */
+.hero-fade {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  height: clamp(6rem, 22vh, 14rem);
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--page-to));
 }
 
 /* Secciones con scroll bajo el hero: el ancla no queda bajo la barra superior. */
@@ -82,12 +94,9 @@
 
 .contact-email {
   color: oklch(var(--bc));
-  transition: color 0.3s ease;
-}
-
-.contact-email {
   text-decoration: underline transparent 3px;
   text-underline-offset: 0.18em;
+  transition: text-decoration-color 0.2s ease;
 }
 
 .contact-email:hover,

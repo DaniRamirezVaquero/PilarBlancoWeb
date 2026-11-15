@@ -14,7 +14,7 @@
   flex: 1;
   min-width: 0;
   margin: 0;
-  color: #f4f4f5;
+  color: oklch(var(--bc));
   font-size: 0.8125rem;
   letter-spacing: 0.01em;
   line-height: 1.35;
@@ -26,21 +26,27 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.85rem;
-  height: 1.85rem;
+  width: 2.25rem;
+  height: 2.25rem;
   padding: 0;
   border: 0;
   border-radius: 0.5rem;
   background: transparent;
-  color: rgba(255, 255, 255, 0.82);
+  color: oklch(var(--bc) / 0.85);
   cursor: pointer;
   transition: background-color 180ms ease, color 180ms ease;
 }
 
+.email-popover-copy:focus-visible,
+.email-popover-action:focus-visible {
+  outline: 2px solid oklch(var(--bc));
+  outline-offset: -2px;
+}
+
 .email-popover-copy:hover,
 .email-popover-copy:focus-visible {
-  background: rgba(255, 255, 255, 0.28);
-  color: #fff;
+  background: oklch(var(--bc) / 0.16);
+  color: oklch(var(--bc));
   outline: none;
 }
 
@@ -48,14 +54,21 @@
   font-size: 0.8rem;
 }
 
+/* En el menú móvil los iconos van al pie del panel: el desplegable se abre hacia arriba para no salirse. */
+:host-context(.menu-socials) .email-popover {
+  top: auto;
+  bottom: calc(100% + 0.75rem);
+  transform-origin: bottom right;
+}
+
 .email-popover-action {
   display: block;
   width: 100%;
-  padding: 0.45rem 0.6rem;
+  padding: 0.7rem 0.6rem;
   border: 0;
   border-radius: 0.65rem;
   background: transparent;
-  color: rgba(255, 255, 255, 0.82);
+  color: oklch(var(--bc) / 0.85);
   font-size: 0.8125rem;
   letter-spacing: 0.02em;
   text-align: left;
@@ -66,8 +79,8 @@
 
 .email-popover-action:hover,
 .email-popover-action:focus-visible {
-  background: rgba(255, 255, 255, 0.28);
-  color: #fff;
+  background: oklch(var(--bc) / 0.16);
+  color: oklch(var(--bc));
   outline: none;
 }
 

@@ -119,7 +119,8 @@ describe('SiteNavComponent', () => {
     menuButton().click();
     settle();
     const links = Array.from(panel()!.querySelectorAll<HTMLAnchorElement>('.menu-link'));
-    const cv = links.find((a) => a.textContent?.trim() === 'CV')!;
+    // El texto incluye un «(currículum)» solo para lectores de pantalla, así que se busca por destino.
+    const cv = links.find((a) => a.getAttribute('href')?.endsWith('/curriculum'))!;
     expect(cv.getAttribute('aria-current')).toBe('page');
   });
 });

@@ -1,15 +1,19 @@
-<div class="group cursor-pointer relative transform transition-all duration-300 hover:scale-110"
-  role="button" tabindex="0" aria-label="Ver reel de Pilar Blanco">
-  <!-- Efecto de anillo animado -->
-  <div class="absolute inset-0 rounded-full border-2 border-primary/50
-              animate-ping group-hover:border-primary transition-colors duration-[1200ms]"></div>
+<!-- Botón real: se activa con teclado (Enter/Espacio) y el clic sube al host, que abre el reel. -->
+<button type="button" aria-label="Ver reel de Pilar Blanco"
+  class="group relative block cursor-pointer rounded-full transform transition-transform duration-300 hover:scale-110
+         focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+  <!-- Efecto de anillo animado (solo si el usuario admite movimiento) -->
+  <span class="absolute inset-0 rounded-full border-2 border-primary/50 motion-safe:animate-ping
+               group-hover:border-primary group-focus-visible:border-primary transition-colors duration-[1200ms]"
+    aria-hidden="true"></span>
 
   <!-- Efecto de resplandor -->
-  <div class="absolute inset-0 rounded-full bg-primary/20 blur-xl
-              opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+  <span class="absolute inset-0 rounded-full bg-primary/20 blur-xl
+               opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-500"
+    aria-hidden="true"></span>
 
-  <svg width="62" height="62" viewBox="0 0 62 62" fill="none" xmlns="http://www.w3.org/2000/svg"
-    class="relative z-10 fill-current text-white group-hover:text-primary
+  <svg width="62" height="62" viewBox="0 0 62 62" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+    class="relative z-10 fill-current text-white group-hover:text-primary group-focus-visible:text-primary
            transition-all duration-300 scale-90 md:scale-100 drop-shadow-2xl">
     <path
       d="M46.1307 30.1969L24.7418 15.6136C24.4433 15.4114 24.0583 15.389 23.7394 15.5572C23.4215 15.7254 23.2222 16.056 23.2222 16.4166V45.5833C23.2222 45.944 23.4215 46.2746 23.7404 46.4428C23.8823 46.5186 24.0389 46.5555 24.1944 46.5555C24.386 46.5555 24.5775 46.4982 24.7418 46.3864L46.1307 31.803C46.3961 31.6222 46.5555 31.3218 46.5555 31C46.5555 30.6782 46.3961 30.3778 46.1307 30.1969ZM25.1666 43.7429V18.2571L43.8576 31L25.1666 43.7429Z"
@@ -25,12 +29,13 @@
       stroke="currentColor" stroke-width="2" />
   </svg>
 
-  <!-- Texto mejorado -->
-  <span class="absolute left-full top-1/2 transform -translate-y-1/2 opacity-100
-               group-hover:opacity-100 group-hover:left-full sm:opacity-0 sm:left-0
-               transition-all duration-300 w-max ml-4
-               font-semibold text-lg text-white drop-shadow-lg
-               group-hover:text-primary">
+  <!-- Rótulo: siempre visible en móvil; en pantallas grandes aparece al pasar el ratón o al enfocar con teclado -->
+  <span aria-hidden="true"
+    class="absolute left-full top-1/2 -translate-y-1/2 w-max ml-4 opacity-100
+           sm:opacity-0 sm:left-0
+           group-hover:opacity-100 group-hover:left-full group-hover:text-primary
+           group-focus-visible:opacity-100 group-focus-visible:left-full group-focus-visible:text-primary
+           transition-all duration-300 font-semibold text-lg text-white drop-shadow-lg">
     Ver reel
   </span>
-</div>
+</button>

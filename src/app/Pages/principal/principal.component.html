@@ -21,6 +21,8 @@
   <div class="absolute inset-0 z-[1] bg-gradient-to-r from-black/30 via-transparent to-black/20"></div>
   <!-- Velo solo en móvil: el nombre en blanco se pierde sobre la blusa clara de la portada -->
   <div class="hero-veil absolute inset-0 z-[1] md:hidden" aria-hidden="true"></div>
+  <!-- Fundido inferior: la foto se disuelve en el color de la página, que es el de su propio fondo. -->
+  <div class="hero-fade" aria-hidden="true"></div>
 
   <div class="relative z-10 grid grid-rows-3 h-full">
     <div></div>
@@ -181,13 +183,14 @@
 
 @if (showReel) {
   <div role="dialog" aria-modal="true" aria-label="Reel de Pilar Blanco"
+       (keydown)="onReelKeydown($event)" (click)="onReelBackdropClick($event)"
        class="fixed top-0 left-0 z-[100] w-screen h-dvh
               bg-gradient-to-br from-black/90 via-black/80 to-black/90
               backdrop-filter backdrop-blur-xl
               flex items-center justify-center animate-fade-in">
 
     <!-- Botón de cerrar simplificado -->
-    <button type="button" (click)="toggleShowReel()" aria-label="Cerrar el reel"
+    <button #reelClose type="button" (click)="toggleShowReel()" aria-label="Cerrar el reel"
             class="absolute top-4 right-4 sm:top-8 sm:right-8 z-20 flex h-12 w-12 items-center justify-center rounded-full
                    text-primary hover:text-info focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
                    focus-visible:outline-white transition-all duration-300 hover:scale-110">
@@ -208,5 +211,8 @@
           allowfullscreen></iframe>
       </div>
     </div>
+
+    <!-- Centinela: al salir del reproductor con Tab, el foco vuelve al botón de cerrar en vez de escapar del diálogo. -->
+    <span tabindex="0" aria-hidden="true" (focus)="reelClose.focus()"></span>
   </div>
 }

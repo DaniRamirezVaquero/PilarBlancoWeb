@@ -29,8 +29,7 @@
         }
         <li>
           <a routerLink="/curriculum" class="site-nav-link" data-route="curriculum"
-            [class.is-active]="cvActive()" [attr.aria-current]="cvActive() ? 'page' : null"
-            aria-label="Currículum">CV</a>
+            [class.is-active]="cvActive()" [attr.aria-current]="cvActive() ? 'page' : null">CV<span class="sr-only"> (currículum)</span></a>
         </li>
       </ul>
     </nav>
@@ -82,7 +81,7 @@
         }
         <li class="menu-item" [style.--i]="sections.length">
           <a routerLink="/curriculum" class="menu-link" [class.is-active]="cvActive()"
-            [attr.aria-current]="cvActive() ? 'page' : null" (click)="closeMenu()">CV</a>
+            [attr.aria-current]="cvActive() ? 'page' : null" (click)="closeMenu()">CV<span class="sr-only"> (currículum)</span></a>
         </li>
       </ul>
     </nav>

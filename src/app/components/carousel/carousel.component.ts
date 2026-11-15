@@ -93,6 +93,17 @@ export class CarouselComponent implements OnInit, OnDestroy {
     }
   }
 
+  /** Número de fotos reales (sin clones del loop). */
+  get photoCount(): number {
+    return this.photos.length;
+  }
+
+  /** Posición 1..N de la foto visible; los clones del loop cuentan como la foto que duplican. */
+  get realPosition(): number {
+    const count = this.photos.length;
+    return ((this.currentIndex - 1 + count) % count) + 1;
+  }
+
   trackSlide(_index: number, slide: CarouselSlide): string {
     return slide.id;
   }

@@ -7,13 +7,13 @@
   transition: none !important;
 }
 
-/* Barra de controles: «‹ ❚❚ ›» y la descarga de fotos. El margen deja pasar las fotos laterales, que bajan 5 rem. */
+/* Controles: «‹ ❚❚ ›» centrados bajo la foto y la descarga debajo, en todas las anchuras (antes, en desktop iban
+   en una fila y el grupo de navegación quedaba descentrado). El margen deja pasar las fotos laterales, que bajan 5 rem. */
 .carousel-controls {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1rem 2rem;
+  gap: 1.5rem;
   margin-top: 3.5rem;
 }
 
@@ -30,7 +30,7 @@
   background: oklch(var(--b1) / 0.92);
   border: 1px solid oklch(var(--bc) / 0.35);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
 }
 
 .carousel-btn svg {
@@ -49,8 +49,14 @@
   stroke: none;
 }
 
+/* Hover y active con relleno invertido, igual que .btn-line: antes el cambio de 0.92 a 1 era imperceptible. */
 .carousel-btn:hover {
-  background: oklch(var(--b1));
+  color: oklch(var(--b1));
+  background: oklch(var(--bc));
+}
+
+.carousel-btn:active {
+  transform: scale(0.94);
 }
 
 .carousel-btn:focus-visible {
@@ -61,5 +67,9 @@
 @media (prefers-reduced-motion: reduce) {
   .carousel-btn {
     transition: none;
+  }
+
+  .carousel-btn:active {
+    transform: none;
   }
 }

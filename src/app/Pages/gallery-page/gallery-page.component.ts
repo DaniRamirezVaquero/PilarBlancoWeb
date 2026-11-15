@@ -8,8 +8,7 @@ import { CollageComponent } from '../../components/collage/collage.component';
         CarouselComponent,
         CollageComponent,
     ],
-    templateUrl: './gallery-page.component.html',
-    styleUrl: './gallery-page.component.css'
+    templateUrl: './gallery-page.component.html'
 })
 export class GalleryPageComponent {
 

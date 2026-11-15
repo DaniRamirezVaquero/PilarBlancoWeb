@@ -7,7 +7,7 @@ import { DUBBING, VOICE } from '../../data/portfolio.data';
     selector: 'app-voice-page',
     imports: [VoiceStripComponent, VimeoFacadeComponent],
     templateUrl: './voice-page.component.html',
-    styleUrls: ['./voice-page.component.css']
+    styleUrl: './voice-page.component.css'
 })
 export class VoicePageComponent {
   readonly dubbing = DUBBING;

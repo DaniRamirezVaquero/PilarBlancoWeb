@@ -13,6 +13,12 @@
   transition: text-decoration-color 0.2s ease;
 }
 
+/* Correo y web largos: se parten antes que desbordar la columna estrecha. */
+.cv-contact span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .cv-contact:hover {
   text-decoration-color: currentColor;
 }
@@ -45,7 +51,7 @@
   margin-left: 0.4rem;
   padding: 0 0.4rem;
   border: 1px solid currentColor;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   line-height: 1.5;

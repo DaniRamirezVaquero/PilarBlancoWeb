@@ -116,6 +116,7 @@
   aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: top;
+  height: auto;
   box-shadow: 0.75rem 0.75rem 0 oklch(var(--a));
   transition: box-shadow 1.2s ease;
 }
@@ -170,6 +171,7 @@
   aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: top;
+  height: auto;
   box-shadow: 0 1.25rem 2.5rem -1rem oklch(var(--s) / 0.55);
 }
 
@@ -285,6 +287,16 @@
 
   .bio-text p.bio-giant {
     margin-bottom: 2.5rem;
+  }
+
+  /* «Blanco» vive en la columna de texto (7fr), más estrecha que la hoja: el tamaño sigue al ancho de
+     esa columna (34cqw ≈ ancho de la palabra) para que no se salga de la hoja entre 1024 y 1280 px. */
+  .bio-accent-grid .bio-text {
+    container-type: inline-size;
+  }
+
+  .bio-accent-grid .bio-text p.bio-giant {
+    font-size: min(10rem, 34cqw);
   }
 
   .bio-facts dd {

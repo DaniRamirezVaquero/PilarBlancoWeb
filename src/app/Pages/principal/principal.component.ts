@@ -62,6 +62,9 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly document = inject(DOCUMENT);
   private readonly carousel = viewChild(CarouselComponent);
+  private readonly reelClose = viewChild<ElementRef<HTMLButtonElement>>('reelClose');
+  /** Elemento que tenía el foco al abrir el reel, para devolvérselo al cerrar. */
+  private reelOpener: HTMLElement | null = null;
   private sectionObserver: IntersectionObserver | null = null;
   private lastSectionObserver: IntersectionObserver | null = null;
   private carouselObserver: IntersectionObserver | null = null;
@@ -244,9 +247,39 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
     this.showReel = !this.showReel;
     this.setBodyScrollLocked(this.showReel);
     if (this.showReel) {
+      this.reelOpener = this.document.activeElement as HTMLElement | null;
       this.document.addEventListener('keydown', this.onEscape);
+      // El foco pasa al botón de cerrar en cuanto el diálogo se pinta.
+      setTimeout(() => this.reelClose()?.nativeElement.focus());
     } else {
       this.document.removeEventListener('keydown', this.onEscape);
+      // Al cerrar, el foco vuelve a quien abrió el reel.
+      this.reelOpener?.focus();
+      this.reelOpener = null;
+    }
+  }
+
+  /** Mantiene el foco en el diálogo: Mayús+Tab en el botón de cerrar salta al reproductor (como el menú móvil). */
+  onReelKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Tab') {
+      return;
+    }
+    const close = this.reelClose()?.nativeElement;
+    const player = this.elementRef.nativeElement.querySelector<HTMLElement>('iframe#player');
+    if (!close || !player) {
+      return;
+    }
+    // Tab hacia delante ya entra en el reproductor y el centinela cierra el ciclo al salir de él.
+    if (event.shiftKey && this.document.activeElement === close) {
+      event.preventDefault();
+      player.focus();
+    }
+  }
+
+  /** Un clic en el fondo (no en el reproductor ni en el botón) cierra el reel. */
+  onReelBackdropClick(event: MouseEvent): void {
+    if (event.target === event.currentTarget) {
+      this.toggleShowReel();
     }
   }
 

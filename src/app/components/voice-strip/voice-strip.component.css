@@ -18,8 +18,16 @@
   border-radius: 999px; background: oklch(var(--b1) / 0.55); color: oklch(var(--bc)); border: 2px solid oklch(var(--bc)); font-size: 1.05rem; cursor: pointer;
   transition: background-color 0.25s, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.voice-play:hover { transform: scale(1.06); }
-.is-active .voice-play { background: oklch(var(--bc)); color: oklch(var(--b1)); }
+/* Mismo gesto que el play de vimeo-facade: relleno en bc al pasar, enfocar o estar activa la pista. */
+.voice-play:focus-visible, .is-active .voice-play { background: oklch(var(--bc)); color: oklch(var(--b1)); }
+@media (hover: hover) {
+  .voice-play:hover { background: oklch(var(--bc)); color: oklch(var(--b1)); transform: scale(1.06); }
+}
+.voice-play:active { transform: scale(0.96); }
+@media (prefers-reduced-motion: reduce) {
+  .voice-play { transition: background-color 0.25s, color 0.25s; }
+  .voice-play:hover, .voice-play:active { transform: none; }
+}
 .voice-play:focus-visible, .voice-track:focus-visible { outline: 2px solid oklch(var(--bc)); outline-offset: 3px; }
 
 .voice-meta { display: grid; gap: 0.3rem; min-width: 0; }

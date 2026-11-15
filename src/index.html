@@ -30,7 +30,12 @@
   <style>
     html, body {
       margin: 0;
-      background-color: #5c5c5c;
+      background-color: #59595C;
+    }
+    /* Mismo tono que --page-via de cada tema: evita un destello de otro gris antes de cargar los estilos. */
+    html[data-hero="portada"],
+    html[data-hero="portada"] body {
+      background-color: #646E78;
     }
     html[data-hero="portada"] img.hero-cover[src*="fondo2-"],
     html[data-hero="fondo2"] img.hero-cover[src*="portada-"] {
