@@ -1,14 +1,18 @@
-import { Component, inject, OnDestroy, AfterViewInit, ElementRef, NgZone, PLATFORM_ID, signal, viewChild } from '@angular/core';
+import {
+  Component, inject, OnDestroy, AfterViewInit, ElementRef, NgZone, PLATFORM_ID, computed, signal, viewChild,
+} from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PlayBtnComponent } from '../../components/play-btn/play-btn.component';
 import { VimeoFacadeComponent } from '../../components/vimeo-facade/vimeo-facade.component';
 import { VoiceStripComponent } from '../../components/voice-strip/voice-strip.component';
-import { CarouselComponent } from '../../components/carousel/carousel.component';
+import { ContactSheetComponent } from '../../components/contact-sheet/contact-sheet.component';
+import { OnAirWaveComponent } from '../../components/on-air/on-air-wave.component';
+import { OnAirPilotComponent } from '../../components/on-air/on-air-pilot.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { CONTACT, HIGHLIGHT_CREDITS, REEL, SCENES, VOICE, Video } from '../../data/portfolio.data';
-import { posterUrl } from '../../utils/vimeo-thumbnail';
-import { slugify } from '../../utils/slug';
+import { CONTACT, HIGHLIGHT_CREDITS, REEL, SCENES, VOICE } from '../../data/portfolio.data';
+import { FilmStripComponent } from '../../components/film-strip/film-strip.component';
+import { prefersReducedMotion } from '../../utils/motion';
 import { NavService } from '../../services/nav.service';
 import { HeroCover, HeroThemeService } from '../../services/hero-theme.service';
 import { CommonModule } from '@angular/common';
@@ -17,6 +21,10 @@ import { CommonModule } from '@angular/common';
 const SECTION_IDS = ['reel', 'fotos', 'voz', 'trayectoria', 'contacto'] as const;
 /** Fracción visible a partir de la cual la última sección cuenta como «vista entera». */
 const LAST_SECTION_RATIO = 0.9;
+/** Si al hidratar el reel empieza por debajo de esta fracción del viewport, su entrada se arma (aún no se ve). */
+const REEL_ARM_RATIO = 0.45;
+/** Fracción visible del reel que dispara su entrada. */
+const REEL_SHOW_RATIO = 0.15;
 
 @Component({
     selector: 'app-principal',
@@ -26,7 +34,10 @@ const LAST_SECTION_RATIO = 0.9;
         RouterLink,
         VimeoFacadeComponent,
         VoiceStripComponent,
-        CarouselComponent,
+        ContactSheetComponent,
+        FilmStripComponent,
+        OnAirWaveComponent,
+        OnAirPilotComponent,
         IconComponent
     ],
     templateUrl: './principal.component.html',
@@ -55,16 +66,41 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
   readonly instagram = CONTACT.instagram;
   readonly vimeo = CONTACT.vimeo;
   readonly cvUrl = CONTACT.cv;
+  readonly photosZip = CONTACT.photosZip;
 
-  /** Miniaturas de «Más escenas» cuyo póster vivo falló: usan el guardado. */
-  private readonly failedThumbs = signal<ReadonlySet<string>>(new Set());
+  /**
+   * «Se apagan las luces»: la sala se oscurece mientras el reel es la sección activa de la barra. También con
+   * movimiento reducido: entonces el CSS quita la transición y el oscurecimiento es instantáneo.
+   */
+  readonly lightsDown = computed(() => this.navService.activeSection() === 'reel');
+  /**
+   * Estado previo a la entrada del reel (rótulo, bandas y tira ocultos). Solo lo pone el JS en el
+   * navegador y sin movimiento reducido: el prerender, la hidratación y el modo sin JS ven el estado final.
+   */
+  readonly reelArmed = signal(false);
+  /** Se queda en true la primera vez que el reel entra en pantalla o recibe el foco: la entrada ocurre una vez. */
+  readonly reelShown = signal(false);
+  /** Lo armado y aún no mostrado: está oculto y no debe recibir el foco. */
+  readonly reelHidden = computed(() => this.reelArmed() && !this.reelShown());
+
+  private readonly strip = viewChild(VoiceStripComponent);
+  /** Pista que muestra la banda de monitor de #voz: la activa o, en reposo, la primera. */
+  readonly airDemo = computed(() => this.voice[this.strip()?.active() ?? 0] ?? this.voice[0]);
+  /** Avance de la pista activa; en reposo, 0. */
+  readonly airProgress = computed(() => {
+    const strip = this.strip();
+    return strip && strip.active() !== null ? strip.progress() : 0;
+  });
+  /** true mientras suena una demo: enciende el piloto. */
+  readonly airLive = computed(() => this.strip()?.playing() != null);
 
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly document = inject(DOCUMENT);
-  private readonly carousel = viewChild(CarouselComponent);
   private sectionObserver: IntersectionObserver | null = null;
   private lastSectionObserver: IntersectionObserver | null = null;
-  private carouselObserver: IntersectionObserver | null = null;
+  private reelObserver: IntersectionObserver | null = null;
+  private reelEl: HTMLElement | null = null;
+  private motionQuery: MediaQueryList | null = null;
 
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly zone = inject(NgZone);
@@ -84,17 +120,19 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
     }
     this.bindHeroPointer();
     if (typeof IntersectionObserver !== 'undefined') {
+      this.armReel();
       this.observeHero();
       this.observeSections();
-      this.pauseCarouselOffscreen();
     }
   }
 
   ngOnDestroy(): void {
     this.sectionObserver?.disconnect();
     this.lastSectionObserver?.disconnect();
-    this.carouselObserver?.disconnect();
     this.heroObserver?.disconnect();
+    this.reelObserver?.disconnect();
+    this.reelEl?.removeEventListener('focusin', this.revealReel);
+    this.motionQuery?.removeEventListener?.('change', this.onMotionChange);
     for (const [type, listener] of this.heroListeners) {
       this.heroEl?.removeEventListener(type, listener);
     }
@@ -138,20 +176,6 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
     return title.slice(title.lastIndexOf(' ') + 1);
   }
 
-  /** Ancla de la escena en /video. */
-  sceneSlug(scene: Video): string {
-    return slugify(scene.label);
-  }
-
-  /** Miniatura viva de una escena; si falla, el póster guardado. */
-  sceneThumb(scene: Video): string {
-    return this.failedThumbs().has(scene.videoId) ? scene.fallbackPoster : posterUrl(scene.videoId, scene.hash, 640);
-  }
-
-  onSceneThumbError(scene: Video): void {
-    this.failedThumbs.update((set) => new Set(set).add(scene.videoId));
-  }
-
   /** Publica la sección visible para marcarla en la barra superior. */
   private observeSections(): void {
     const visible = new Set<string>();
@@ -189,23 +213,52 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  /** El carrusel solo avanza solo mientras se ve: así no trabaja desde la carga de la home. */
-  private pauseCarouselOffscreen(): void {
-    const carousel = this.carousel();
-    const host = this.elementRef.nativeElement.querySelector('app-carousel');
-    if (!carousel || !host) {
+  /**
+   * Arma la entrada del reel solo si aún no está a la vista (lo normal al entrar por el hero), sin movimiento
+   * reducido y sin un enlace directo a una sección (`/home#fotos` deja el reel atrás, `#reel` ya lo enseña).
+   * La entrada la dispara un observador propio del reel, no la sección activa de la barra: así ocurre aunque
+   * se salte el reel con la barra y se vea solo en parte. Recibir el foco también la dispara.
+   */
+  private armReel(): void {
+    const view = this.document.defaultView;
+    const reel = this.document.getElementById('reel');
+    if (!view || !reel) {
       return;
     }
-    // El observer avisa nada más observar: si no se ve, para el autoplay que arrancó el carrusel.
-    this.carouselObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        carousel.startAutoplay();
-      } else {
-        carousel.stopAutoplay();
+    this.motionQuery = view.matchMedia?.('(prefers-reduced-motion: reduce)') ?? null;
+    this.motionQuery?.addEventListener?.('change', this.onMotionChange);
+    const hash = view.location.hash.slice(1);
+    const deepLink = (SECTION_IDS as readonly string[]).includes(hash);
+    const belowView = reel.getBoundingClientRect().top > view.innerHeight * REEL_ARM_RATIO;
+    if (prefersReducedMotion(view) || deepLink || !belowView) {
+      return;
+    }
+    this.reelArmed.set(true);
+    this.reelEl = reel;
+    reel.addEventListener('focusin', this.revealReel);
+    this.reelObserver = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) {
+        this.revealReel();
       }
-    });
-    this.carouselObserver.observe(host);
+    }, { threshold: REEL_SHOW_RATIO });
+    this.reelObserver.observe(reel);
   }
+
+  /** Entrada del reel, una sola vez: después ya no hace falta observarlo. */
+  private readonly revealReel = (): void => {
+    this.zone.run(() => this.reelShown.set(true));
+    this.reelObserver?.disconnect();
+    this.reelObserver = null;
+    this.reelEl?.removeEventListener('focusin', this.revealReel);
+  };
+
+  /** Si se activa el movimiento reducido con la entrada aún armada, se desarma: todo queda visible y quieto. */
+  private readonly onMotionChange = (event: MediaQueryListEvent): void => {
+    if (event.matches && this.reelArmed()) {
+      this.zone.run(() => this.reelArmed.set(false));
+      this.revealReel();
+    }
+  };
 
   private setBodyScrollLocked(locked: boolean): void {
     if (this.isBrowser) {

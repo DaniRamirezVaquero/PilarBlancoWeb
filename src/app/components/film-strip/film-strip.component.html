@@ -1,0 +1,14 @@
+<ul class="film-strip">
+  @for (scene of scenes(); track scene.videoId) {
+    <li class="film-frame">
+      <a routerLink="/video" [fragment]="sceneSlug(scene)" class="scene-link">
+        <!-- Solo el fotograma va sobre el negro de la película; el rótulo queda debajo, sobre la sala. -->
+        <span class="film-cell">
+          <img [src]="sceneThumb(scene)" (error)="onSceneThumbError(scene)" alt="" loading="lazy" decoding="async"
+            width="320" height="180" class="film-thumb" />
+        </span>
+        <span class="scene-label lato-regular">{{ scene.label }}</span>
+      </a>
+    </li>
+  }
+</ul>

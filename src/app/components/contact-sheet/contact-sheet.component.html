@@ -1,0 +1,14 @@
+<ol class="sheet" aria-label="Hoja de contactos del book de Pilar Blanco">
+  @for (photo of photos; track photo.src; let i = $index) {
+    <li class="frame">
+      <!-- Rótulo del borde de la película: los de cada fila se leen seguidos («▸ 1 ▸ 2 400TX ▸ 3…»);
+           la marca de la emulsión solo asoma en un fotograma por fila (CSS). -->
+      <span class="frame-head" aria-hidden="true">
+        <span class="frame-edge"><span class="frame-mark"></span>{{ frameNumber(i) }}</span>
+        <span class="frame-film">400TX</span>
+      </span>
+      <img [src]="photo.src" [srcset]="photo.srcset" [alt]="photo.alt" width="720" height="1280"
+        sizes="(min-width: 1024px) 14vw, (min-width: 640px) 21vw, 28vw" loading="lazy" decoding="async" />
+    </li>
+  }
+</ol>

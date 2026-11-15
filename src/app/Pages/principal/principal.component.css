@@ -36,8 +36,153 @@
 
 /* Secciones con scroll bajo el hero: el ancla no queda bajo la barra superior. */
 .home-block {
+  position: relative;
+  z-index: 1;
   scroll-margin-top: calc(var(--nav-h) + var(--anchor-gap));
   color: oklch(var(--bc));
+}
+
+/* ── Sala: «se apagan las luces» ─────────────────────────────────────────────
+   Capa del tono oscuro del tema (--s) llevado casi a negro (L≈0.18–0.22, azul-negro o marrón-negro);
+   solo cambia su opacidad. Con movimiento reducido se oscurece igual, pero de golpe. */
+.house-lights {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: color-mix(in oklab, oklch(var(--s)) 55%, var(--film-black));
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.lights-down > .house-lights {
+  opacity: 0.95;
+  transition-duration: 0.9s;
+}
+
+/* Como en una sala: rótulo, bandas y pantalla caben a la vez en la ventana; la tira se alinea con ellas. */
+.reel { --screen-w: min(70rem, max(24rem, calc((100svh - var(--nav-h) - 13rem) * 16 / 9))); }
+
+/* Rótulo a la izquierda, alineado con la pantalla: «REEL» en Playfair y el año en Lato fina. */
+.reel-head {
+  max-width: var(--screen-w);
+  margin: 0 auto clamp(1.25rem, 3vw, 2rem);
+  transform-origin: left bottom;
+}
+
+.reel-word { text-transform: uppercase; letter-spacing: 0.06em; }
+
+.reel-year {
+  font-family: Lato, sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Pantalla con bandas panorámicas negras en el padding: el espacio está siempre reservado (CLS 0). */
+.reel-screen {
+  --band: clamp(0.75rem, 2.6vw, 2.25rem);
+  position: relative;
+  max-width: var(--screen-w);
+  margin-inline: auto;
+  padding-block: var(--band);
+}
+
+.reel-screen::before,
+.reel-screen::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--band);
+  background: var(--film-black);
+}
+
+.reel-screen::before { top: 0; transform-origin: bottom; }
+.reel-screen::after { bottom: 0; transform-origin: top; }
+
+.reel-more {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: var(--screen-w);
+  margin: clamp(2rem, 4vw, 3rem) auto 0;
+}
+
+/* Estado armado (solo con JS y sin movimiento reducido) y entrada, una sola vez. */
+.reel.is-armed .reel-head { opacity: 0; transform: translateY(0.75rem); }
+.reel.is-armed .reel-screen::before,
+.reel.is-armed .reel-screen::after { transform: scaleY(0); }
+.reel.is-armed .reel-strip { opacity: 0; transform: translateX(2.5rem); }
+
+.reel.is-armed.is-shown .reel-head,
+.reel.is-armed.is-shown .reel-strip { opacity: 1; transform: none; }
+.reel.is-armed.is-shown .reel-screen::before,
+.reel.is-armed.is-shown .reel-screen::after {
+  transform: none;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+}
+.reel.is-armed.is-shown .reel-head { transition: opacity 1.2s ease-out 0.5s, transform 1.2s ease-out 0.5s; }
+.reel.is-armed.is-shown .reel-strip {
+  transition: opacity 0.8s ease 0.9s, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.9s;
+}
+
+/* Con el teclado dentro del reel, la entrada es inmediata: el siguiente Tab nunca cae en algo aún invisible. */
+.reel.is-armed.is-shown:focus-within .reel-head,
+.reel.is-armed.is-shown:focus-within .reel-strip,
+.reel.is-armed.is-shown:focus-within .reel-screen::before,
+.reel.is-armed.is-shown:focus-within .reel-screen::after { transition: none; }
+
+/* ── Voz: «en el aire» ───────────────────────────────────────────────────── */
+.voz { padding-block: clamp(2rem, 6vw, 4rem); }
+
+/* Banda de monitor: la sala de control a oscuras (el mismo fondo que la sala del reel), con la onda grande
+   de la demo activa. El acento se aclara con --bc para que la onda se lea también en el azul de portada. */
+.voz-monitor {
+  --air-rest-fill: oklch(var(--bc) / 0.24);
+  --air-played-fill: color-mix(in oklab, oklch(var(--a)) 78%, oklch(var(--bc)));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  color: oklch(var(--bc));
+  background: color-mix(in oklab, oklch(var(--s)) 55%, var(--film-black));
+}
+
+.monitor-meta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+
+.monitor-demo {
+  font-family: Lato, sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+  transition: opacity 0.35s ease;
+}
+
+.voz-monitor.is-live .monitor-demo { opacity: 1; }
+
+.monitor-wave { height: 4rem; }
+
+@media (min-width: 768px) {
+  .voz-monitor {
+    grid-template-columns: 11rem minmax(0, 1fr);
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0.75rem 1.5rem;
+  }
+  .monitor-meta { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+  .monitor-wave { height: 5.25rem; }
+}
+
+/* Red de seguridad: con movimiento reducido nada transiciona; la sala se oscurece de golpe y nada se arma. */
+@media (prefers-reduced-motion: reduce) {
+  .house-lights,
+  .reel-head,
+  .reel-screen::before,
+  .reel-screen::after,
+  .reel-strip,
+  .monitor-demo { transition: none !important; }
 }
 
 .home-link {
@@ -52,17 +197,6 @@
 .home-link:hover,
 .home-link:focus-visible {
   text-decoration-thickness: 4px;
-}
-
-.scene-label {
-  text-decoration: underline transparent 2px;
-  text-underline-offset: 0.3em;
-  transition: text-decoration-color 0.2s ease;
-}
-
-.scene-link:hover .scene-label,
-.scene-link:focus-visible .scene-label {
-  text-decoration-color: oklch(var(--bc));
 }
 
 .credit-note {

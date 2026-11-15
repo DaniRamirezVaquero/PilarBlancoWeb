@@ -54,53 +54,65 @@
   </div>
 </div>
 
-<div class="bg-page w-full px-8 sm:px-16 lg:px-24 xl:px-40 py-24 lg:py-32 flex flex-col gap-24 overflow-x-hidden">
+<div class="home-house bg-page relative isolate w-full px-8 sm:px-16 lg:px-24 xl:px-40 py-24 lg:py-32 flex flex-col gap-24 overflow-x-hidden"
+  [class.lights-down]="lightsDown()">
 
-  <!-- Reel -->
-  <section id="reel" class="home-block lg:pb-6" aria-labelledby="reel-title">
-    <h2 id="reel-title" class="page-title">Reel 2026</h2>
-    <span class="page-title-dash mb-8" aria-hidden="true"></span>
-    <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 lg:gap-12">
-      <div class="shadow-md w-full self-start">
-        <app-vimeo-facade [videoId]="reel.videoId" [hash]="reel.hash" [fallbackPoster]="reel.fallbackPoster"
-          [title]="reel.title" sizes="(min-width: 1024px) 60vw, 100vw" />
-      </div>
-      <aside aria-label="Más vídeos" class="flex flex-col gap-4">
-        <h3 class="section-title">Más escenas</h3>
-        <ul class="flex flex-col gap-3">
-          @for (scene of scenes; track scene.videoId) {
-            <li>
-              <a routerLink="/video" [fragment]="sceneSlug(scene)" class="scene-link group flex items-center gap-4">
-                <img [src]="sceneThumb(scene)" (error)="onSceneThumbError(scene)" alt="" loading="lazy" decoding="async"
-                  width="160" height="90" class="w-32 sm:w-40 aspect-video object-cover shadow-md flex-shrink-0" />
-                <span class="scene-label lato-regular text-base">{{ scene.label }}</span>
-              </a>
-            </li>
-          }
-        </ul>
-        <a routerLink="/video" class="btn-line self-start mt-2">
-          Todos los vídeos <app-icon name="arrow-right"></app-icon>
-        </a>
-      </aside>
+  <!-- Luces de sala: capa del tono oscuro del tema que solo cambia de opacidad al llegar al reel. -->
+  <div class="house-lights" aria-hidden="true"></div>
+
+  <!-- Reel: «se apagan las luces» -->
+  <section id="reel" class="home-block reel" [class.is-armed]="reelArmed()" [class.is-shown]="reelShown()"
+    aria-labelledby="reel-title">
+    <!-- Rótulo alineado a la izquierda con la pantalla, en dos pesos: se lee como un título, no como una inscripción. -->
+    <div class="reel-head">
+      <h2 id="reel-title" class="page-title reel-title"><span class="reel-word">Reel</span>{{ ' ' }}<span class="reel-year">2026</span></h2>
+      <span class="page-title-dash" aria-hidden="true"></span>
     </div>
+    <!-- Las bandas panorámicas viven en el padding: su espacio está siempre reservado. -->
+    <div class="reel-screen">
+      <app-vimeo-facade [videoId]="reel.videoId" [hash]="reel.hash" [fallbackPoster]="reel.fallbackPoster"
+        [title]="reel.title"
+        sizes="(min-width: 1280px) min(70rem, calc(100vw - 20rem)), (min-width: 1024px) min(70rem, calc(100vw - 12rem)), (min-width: 640px) calc(100vw - 8rem), calc(100vw - 4rem)" />
+    </div>
+    <aside class="reel-more" aria-labelledby="more-title">
+      <h3 id="more-title" class="section-title">Más escenas</h3>
+      <!-- Mientras está oculta a la espera de su entrada, la tira no recibe el foco (inert). -->
+      <app-film-strip class="reel-strip" [scenes]="scenes" [inert]="reelHidden()" />
+      <a routerLink="/video" class="btn-line self-start">
+        Todos los vídeos <app-icon name="arrow-right"></app-icon>
+      </a>
+    </aside>
   </section>
 
-  <!-- Fotos -->
+  <!-- Fotos: hoja de contactos -->
   <section id="fotos" class="home-block" aria-labelledby="fotos-title">
     <h2 id="fotos-title" class="page-title">Fotos</h2>
     <span class="page-title-dash mb-8" aria-hidden="true"></span>
-    <app-carousel></app-carousel>
-    <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mt-10">
+    <app-contact-sheet />
+    <div class="flex flex-wrap items-center gap-x-8 gap-y-4 mt-8">
       <a routerLink="/gallery" class="home-link">Ver galería completa</a>
+      <a class="btn-line" [href]="photosZip" download="Pilar Blanco - Galeria fotos.zip">
+        <span>Descargar fotos</span>
+        <app-icon name="download" size="lg"></app-icon>
+      </a>
     </div>
   </section>
 
-  <!-- Voz -->
-  <section id="voz" class="home-block" aria-labelledby="voz-title">
+  <!-- Voz: «en el aire» -->
+  <section id="voz" class="home-block voz" aria-labelledby="voz-title">
     <h2 id="voz-title" class="page-title">Voz</h2>
     <span class="page-title-dash mb-8" aria-hidden="true"></span>
+    <!-- Banda de monitor: la onda grande de la demo activa con su avance y el piloto integrado. Es decorativa:
+         el estado real lo anuncian los botones y la barra de cada pista. -->
+    <div class="voz-monitor" [class.is-live]="airLive()" aria-hidden="true">
+      <div class="monitor-meta">
+        <app-on-air-pilot [live]="airLive()" />
+        <span class="monitor-demo">{{ airDemo().label }}</span>
+      </div>
+      <app-on-air-wave class="monitor-wave" [peaks]="airDemo().peaks" [progress]="airProgress()" [live]="airLive()" />
+    </div>
     <app-voice-strip [demos]="voice"></app-voice-strip>
-    <div class="mt-8">
+    <div class="voz-foot mt-8">
       <a routerLink="/voice" class="home-link">Demos de doblaje en vídeo</a>
     </div>
   </section>

@@ -1,0 +1,47 @@
+/* La onda llena su contenedor, que decide el tamaño y la posición: una banda de monitor en la home o un
+   fondo absoluto en otra página. El contenedor puede ajustar el color de las barras y una máscara con
+   --air-rest-fill, --air-played-fill y --air-mask. */
+:host {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: var(--air-mask, none);
+  mask-image: var(--air-mask, none);
+}
+
+.wave {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.played {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  transition: transform 0.25s linear;
+}
+
+.wave-played { transition: transform 0.25s linear; }
+
+.wave-rest rect { fill: var(--air-rest-fill, oklch(var(--a) / 0.14)); }
+.wave-played rect { fill: var(--air-played-fill, oklch(var(--a) / 0.5)); }
+
+/* Solo cuando la onda se crea en el navegador (sin HTML del servidor): aparece con un fundido tras la
+   primera medida, sin dejar ver el número de barras provisional. Lo prerenderizado no se oculta nunca. */
+svg { transition: opacity 0.3s ease; }
+:host(.is-measuring) svg { opacity: 0; }
+
+@media (scripting: none) {
+  :host(.is-measuring) svg { opacity: 1; }
+}
+
+/* Con movimiento reducido el avance se ve igual, pero a saltos. */
+@media (prefers-reduced-motion: reduce) {
+  svg,
+  .played,
+  .wave-played { transition: none; }
+}

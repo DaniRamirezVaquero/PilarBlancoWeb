@@ -1,0 +1,64 @@
+:host { display: block; }
+
+/* La tira: celdas negras contiguas (sin hueco entre ellas) con perforaciones estáticas arriba y abajo.
+   Los rótulos quedan fuera del negro, debajo de cada celda. El padding deja que el contorno de foco no se
+   recorte con overflow-x. */
+.film-strip {
+  display: flex;
+  margin: 0;
+  padding: 0.25rem 0 0.5rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+
+.film-frame {
+  flex: 0 0 auto;
+  width: clamp(11rem, 62vw, 16rem);
+  scroll-snap-align: start;
+}
+
+/* En escritorio caben los tres fotogramas sin scroll. */
+@media (min-width: 1024px) {
+  .film-frame { flex: 1 1 0; width: auto; min-width: 0; }
+}
+
+.scene-link { display: block; outline-offset: 3px; }
+.scene-link:focus-visible { outline: 2px solid oklch(var(--bc)); }
+
+.film-cell {
+  display: block;
+  padding: 1.25rem 0.375rem;
+  background-color: var(--film-black);
+  background-image:
+    linear-gradient(to right, oklch(var(--bc) / 0.8) 0 0.5rem, transparent 0.5rem),
+    linear-gradient(to right, oklch(var(--bc) / 0.8) 0 0.5rem, transparent 0.5rem);
+  background-size: 1.125rem 0.4rem;
+  background-repeat: repeat-x;
+  background-position: 0.3125rem 0.425rem, 0.3125rem calc(100% - 0.425rem);
+}
+
+.film-thumb {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.scene-label {
+  display: block;
+  margin-top: 0.6rem;
+  padding-inline: 0.375rem;
+  font-size: 0.95rem;
+  color: oklch(var(--bc));
+  text-decoration: underline transparent 2px;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.scene-link:hover .scene-label,
+.scene-link:focus-visible .scene-label {
+  text-decoration-color: oklch(var(--bc));
+}

@@ -7,6 +7,9 @@
 :root {
   --nav-h: 3.8125rem;
   --anchor-gap: 1rem;
+  /* Única excepción a «solo tokens»: el negro de pantalla de cine del Reel (bandas panorámicas, tira de
+     película y fondo de la sala a oscuras, mezclado con --s). Aprobada por el usuario; no se usa en nada más. */
+  --film-black: rgb(0 0 0);
 }
 
 @media (max-width: 1023px) {

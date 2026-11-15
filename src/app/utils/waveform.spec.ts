@@ -1,4 +1,4 @@
-import { resampleBars } from './waveform';
+import { layoutBars, resampleBars } from './waveform';
 
 describe('resampleBars', () => {
   it('reduce tomando el máximo de cada tramo', () => {
@@ -38,5 +38,42 @@ describe('resampleBars', () => {
 
   it('con 0 barras devuelve un array vacío', () => {
     expect(resampleBars([1, 2, 3], 0)).toEqual([]);
+  });
+});
+
+describe('layoutBars', () => {
+  const VOICE_LAYOUT = { pitch: 6, width: 2, minBars: 24, heightRatio: 0.9 };
+  const peaks96 = Array.from({ length: 96 }, (_, i) => i % 100);
+
+  it('pone una barra cada ~pitch px (escala 1:1)', () => {
+    expect(layoutBars(peaks96, 600, 50, VOICE_LAYOUT).length).toBe(100);
+  });
+
+  it('respeta el mínimo de barras en cajas estrechas', () => {
+    expect(layoutBars(peaks96, 60, 50, VOICE_LAYOUT).length).toBe(24);
+  });
+
+  it('centra cada barra en su hueco', () => {
+    const bars = layoutBars(peaks96, 600, 50, VOICE_LAYOUT);
+    expect(bars[0].x).toBe(2);
+    expect(bars[1].x).toBe(8);
+  });
+
+  it('aplica la altura mínima y la proporción máxima', () => {
+    const bars = layoutBars([0, 100], 12, 50, { ...VOICE_LAYOUT, minBars: 2 });
+    expect(bars[0].h).toBe(2);
+    expect(bars[1].h).toBeCloseTo(45, 6);
+  });
+
+  it('usa la altura mínima indicada', () => {
+    const bars = layoutBars([0], 48, 50, { ...VOICE_LAYOUT, minBars: 1, minHeight: 4 });
+    expect(bars[0].h).toBe(4);
+  });
+
+  it('no da NaN con ancho 0 ni sin picos', () => {
+    const finite = (bars: { x: number; h: number }[]) => bars.every((b) => Number.isFinite(b.x) && Number.isFinite(b.h));
+    expect(finite(layoutBars(peaks96, 0, 50, VOICE_LAYOUT))).toBeTrue();
+    expect(finite(layoutBars([], 600, 50, VOICE_LAYOUT))).toBeTrue();
+    expect(layoutBars([], 600, 50, VOICE_LAYOUT).length).toBe(100);
   });
 });

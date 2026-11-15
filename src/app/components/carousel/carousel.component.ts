@@ -3,25 +3,10 @@ import { ChangeDetectorRef, Component, HostListener, Inject, OnDestroy, OnInit, 
 import { IconComponent } from '../icon/icon.component';
 import { CONTACT } from '../../data/portfolio.data';
 import { prefersReducedMotion } from '../../utils/motion';
+import { BOOK_PHOTOS, BookPhoto } from '../../data/photos.data';
 
-interface CarouselImage {
-  src: string;
-  srcset: string;
-  alt: string;
-}
-
-interface CarouselSlide extends CarouselImage {
+interface CarouselSlide extends BookPhoto {
   id: string;
-}
-
-/** Construye el src y el srcset responsivo (900w/1400w) para una foto del carrusel. */
-function photo(name: string, alt: string): CarouselImage {
-  const base = `assets/images/carousel/${name}`;
-  return {
-    src: `${base}-900.webp`,
-    srcset: `${base}-900.webp 900w, ${base}-1400.webp 1400w`,
-    alt
-  };
 }
 
 const SLIDE_MS = 500;
@@ -33,21 +18,6 @@ const SLIDE_MS = 500;
     styleUrl: './carousel.component.css'
 })
 export class CarouselComponent implements OnInit, OnDestroy {
-
-  private readonly photos: CarouselImage[] = [
-    photo('Pilar Blanco WEB_1', 'Pilar Blanco, actriz, de pie con camiseta negra en book fotográfico'),
-    photo('Pilar Blanco WEB_2', 'Pilar Blanco, actriz, en retrato de book fotográfico'),
-    photo('Pilar Blanco WEB_3', 'Pilar Blanco, actriz, posando en sesión de book'),
-    photo('Pilar Blanco WEB_4', 'Pilar Blanco, actriz, sentada en un taburete con ropa negra'),
-    photo('Pilar Blanco WEB_5', 'Pilar Blanco, actriz, en retrato artístico de galería'),
-    photo('Pilar Blanco WEB_6', 'Pilar Blanco, actriz, de pie con camisa blanca y vaqueros'),
-    photo('Pilar Blanco WEB_7', 'Pilar Blanco, actriz, en fotografía de book promocional'),
-    photo('Pilar Blanco WEB_8', 'Pilar Blanco, actriz, en retrato de carácter'),
-    photo('Pilar Blanco WEB_9', 'Pilar Blanco, actriz, en sesión fotográfica de galería'),
-    photo('Pilar Blanco WEB_10', 'Pilar Blanco, actriz, en retrato de book en color'),
-    photo('Pilar Blanco WEB_11', 'Pilar Blanco, actriz, en fotografía de galería web'),
-    photo('Pilar Blanco WEB_12', 'Pilar Blanco, actriz, sentada en un baúl en book fotográfico')
-  ];
 
   /** Descarga del pack de fotos; vive en la barra de controles, bajo la foto. */
   readonly photosZip = CONTACT.photosZip;
@@ -72,8 +42,8 @@ export class CarouselComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
-    this.slides = this.buildLoopSlides(this.photos);
-    this.lastRealIndex = this.photos.length;
+    this.slides = this.buildLoopSlides(BOOK_PHOTOS);
+    this.lastRealIndex = BOOK_PHOTOS.length;
   }
 
   ngOnInit() {
@@ -189,7 +159,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
     }
   }
 
-  private buildLoopSlides(photos: CarouselImage[]): CarouselSlide[] {
+  private buildLoopSlides(photos: readonly BookPhoto[]): CarouselSlide[] {
     if (photos.length === 0) {
       return [];
     }

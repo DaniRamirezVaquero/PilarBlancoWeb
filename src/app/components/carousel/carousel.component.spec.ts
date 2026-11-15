@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CarouselComponent } from './carousel.component';
+import { BOOK_PHOTOS } from '../../data/photos.data';
 
 describe('CarouselComponent', () => {
   let fixture: ComponentFixture<CarouselComponent>;
@@ -55,5 +56,12 @@ describe('CarouselComponent', () => {
     const slides = Array.from(el.querySelectorAll('[aria-hidden]')).filter((n) => n.querySelector('img'));
     // 12 fotos + 2 clones: solo la actual queda expuesta.
     expect(slides.length).toBe(13);
+  });
+
+  it('monta las fotos de BOOK_PHOTOS en su orden, con un clon a cada lado', () => {
+    create(false);
+    expect(component.slides.length).toBe(BOOK_PHOTOS.length + 2);
+    expect(component.slides[1].alt).toBe(BOOK_PHOTOS[0].alt);
+    expect(component.slides[0].alt).toBe(BOOK_PHOTOS[BOOK_PHOTOS.length - 1].alt);
   });
 });

@@ -3,13 +3,8 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { VoiceDemo } from '../../data/portfolio.data';
-import { resampleBars } from '../../utils/waveform';
+import { Bar, layoutBars } from '../../utils/waveform';
 import { IconComponent } from '../icon/icon.component';
-
-interface Bar {
-  x: number;
-  h: number;
-}
 
 /**
  * Demos de locución con la forma de onda real de cada MP3. Una sola pista suena a
@@ -76,13 +71,8 @@ export class VoiceStripComponent implements OnChanges, OnDestroy {
   private buildBars(): void {
     const { w, h } = this.box();
     const { BAR_PITCH_PX, BAR_WIDTH_PX, MIN_BARS, HEIGHT_RATIO } = VoiceStripComponent;
-    const count = Math.max(MIN_BARS, Math.floor(w / BAR_PITCH_PX));
-    const slot = w / count;
-    this.barsOf = this.demos.map((demo) =>
-      resampleBars(demo.peaks, count).map((peak, j) => ({
-        x: j * slot + (slot - BAR_WIDTH_PX) / 2,
-        h: Math.max(2, (peak / 100) * h * HEIGHT_RATIO),
-      })));
+    const layout = { pitch: BAR_PITCH_PX, width: BAR_WIDTH_PX, minBars: MIN_BARS, heightRatio: HEIGHT_RATIO };
+    this.barsOf = this.demos.map((demo) => layoutBars(demo.peaks, w, h, layout));
   }
 
   /** Todas las pistas miden lo mismo: basta con observar la primera. */

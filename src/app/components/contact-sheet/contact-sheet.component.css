@@ -1,0 +1,110 @@
+:host { display: block; }
+
+/* La hoja: una copia de contactos impresa en papel fotográfico claro (token neutral), no la película en negro.
+   El negro alrededor de los retratos recordaba a una esquela; el papel claro mantiene la idea sin esa lectura.
+   Las cuatro marcas de recorte de las esquinas son el único adorno, en la tinta de la hoja. */
+.sheet {
+  --crop: 0.75rem;
+  --crop-in: 0.4rem;
+  /* Tinta de los rótulos: el tono oscuro del tema sobre el papel claro (AA); --nc no llegaba a 4.5. */
+  --ink: oklch(var(--s) / 0.6);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Sin hueco horizontal: los rótulos de una fila se leen como un único borde de película. */
+  gap: 1rem 0;
+  margin: 0;
+  padding: 1.25rem 0.85rem 1.5rem;
+  list-style: none;
+  color: oklch(var(--s));
+  background-color: oklch(var(--n));
+  background-image:
+    linear-gradient(var(--ink), var(--ink)), linear-gradient(var(--ink), var(--ink)),
+    linear-gradient(var(--ink), var(--ink)), linear-gradient(var(--ink), var(--ink)),
+    linear-gradient(var(--ink), var(--ink)), linear-gradient(var(--ink), var(--ink)),
+    linear-gradient(var(--ink), var(--ink)), linear-gradient(var(--ink), var(--ink));
+  background-repeat: no-repeat;
+  background-size:
+    var(--crop) 1px, 1px var(--crop), var(--crop) 1px, 1px var(--crop),
+    var(--crop) 1px, 1px var(--crop), var(--crop) 1px, 1px var(--crop);
+  background-position:
+    left var(--crop-in) top var(--crop-in), left var(--crop-in) top var(--crop-in),
+    right var(--crop-in) top var(--crop-in), right var(--crop-in) top var(--crop-in),
+    left var(--crop-in) bottom var(--crop-in), left var(--crop-in) bottom var(--crop-in),
+    right var(--crop-in) bottom var(--crop-in), right var(--crop-in) bottom var(--crop-in);
+  /* Papel apoyado sobre la mesa: sombra corta y difusa en el tono oscuro del tema. */
+  box-shadow: 0 1.25rem 2.5rem -1.25rem oklch(var(--s) / 0.55);
+}
+
+@media (min-width: 640px) {
+  .sheet { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 1.15rem; padding: 1.5rem 1.1rem 1.75rem; }
+}
+
+@media (min-width: 1024px) {
+  .sheet { --crop: 1rem; --crop-in: 0.55rem; grid-template-columns: repeat(6, minmax(0, 1fr)); row-gap: 1.35rem; padding: 1.75rem 1.5rem 2rem; }
+}
+
+.frame { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; padding-inline: 0.3rem; }
+
+@media (min-width: 640px) { .frame { padding-inline: 0.4rem; } }
+@media (min-width: 1024px) { .frame { padding-inline: 0.5rem; } }
+
+/* Rótulo del borde impreso en tinta: número a la izquierda y, en un fotograma por fila, la emulsión a la
+   derecha, justo antes del número siguiente. */
+.frame-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.frame-edge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* La marca de la emulsión es más tenue (textura, no información), pero conserva AA sobre el papel. */
+.frame-film {
+  visibility: hidden;
+  font-weight: 400;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  opacity: 0.85;
+}
+
+.frame:nth-child(3n + 2) .frame-film { visibility: visible; }
+
+@media (min-width: 640px) {
+  .frame:nth-child(3n + 2) .frame-film { visibility: hidden; }
+  .frame:nth-child(4n + 2) .frame-film { visibility: visible; }
+}
+
+@media (min-width: 1024px) {
+  .frame:nth-child(4n + 2) .frame-film { visibility: hidden; }
+  .frame:nth-child(6n + 3) .frame-film { visibility: visible; }
+}
+
+/* Triángulo de la marca hecho con bordes: no depende de que Lato tenga el glifo ▸. */
+.frame-mark {
+  width: 0;
+  height: 0;
+  border-block: 0.24rem solid transparent;
+  border-left: 0.36rem solid oklch(var(--a));
+}
+
+/* Cada positivo con un filete fino, como el borde de la copia sobre el papel. */
+.frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  outline: 1px solid oklch(var(--s) / 0.18);
+}
