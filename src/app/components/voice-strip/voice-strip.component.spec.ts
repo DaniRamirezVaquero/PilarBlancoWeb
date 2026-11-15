@@ -157,4 +157,51 @@ describe('VoiceStripComponent', () => {
     expect(component.measured()).toBeTrue();
     expect(host.classList.contains('is-measuring')).toBeFalse();
   });
+  describe('variante «carts» (cartuchos de emisión)', () => {
+    const carts = () => Array.from(host.querySelectorAll<HTMLButtonElement>('.cart'));
+
+    beforeEach(() => {
+      fixture.componentRef.setInput('variant', 'carts');
+      fixture.detectChanges();
+    });
+
+    it('pinta un cartucho por demo, numerado y con su duración, sin onda propia', () => {
+      expect(carts().map((c) => c.querySelector('.cart-title')?.textContent?.trim()))
+        .toEqual(['Demo Publicidad', 'Demo 1', 'Demo 2', 'Demo 3']);
+      expect(carts()[1].querySelector('.cart-number')?.textContent?.trim()).toBe('Nº 2');
+      expect(carts()[1].querySelector('.cart-time')?.textContent?.trim()).toBe(component.format(VOICE[1].duration));
+      expect(host.querySelector('.voice-track')).toBeNull();
+    });
+
+    it('pulsar un cartucho lo carga (sube) y lo reproduce; sonando queda pulsado', () => {
+      carts()[2].click();
+      fixture.detectChanges();
+      expect(playSpy).toHaveBeenCalledTimes(1);
+      expect(carts()[2].classList).toContain('is-active');
+      audioOf().dispatchEvent(new Event('playing'));
+      fixture.detectChanges();
+      expect(carts()[2].getAttribute('aria-pressed')).toBe('true');
+      expect(carts()[2].classList).toContain('is-live');
+      expect(carts()[2].getAttribute('aria-label')).toBe('Pausar demo de voz: Demo 2');
+    });
+
+    it('al pausar sigue cargado pero deja de estar en antena', () => {
+      carts()[0].click();
+      audioOf().dispatchEvent(new Event('playing'));
+      audioOf().dispatchEvent(new Event('pause'));
+      fixture.detectChanges();
+      expect(carts()[0].classList).toContain('is-active');
+      expect(carts()[0].classList).not.toContain('is-live');
+      expect(carts()[0].getAttribute('aria-pressed')).toBe('false');
+    });
+
+    it('un fallo de carga se muestra bajo el cartucho y se enlaza con su botón', async () => {
+      playSpy.and.returnValue(Promise.reject(new DOMException('no', 'NotAllowedError')));
+      carts()[3].click();
+      await flush();
+      fixture.detectChanges();
+      expect(host.querySelector('#voice-error-3')?.textContent?.trim()).toBe('No se pudo cargar');
+      expect(carts()[3].getAttribute('aria-describedby')).toBe('voice-error-3');
+    });
+  });
 });

@@ -60,7 +60,8 @@ describe('PrincipalComponent', () => {
   const reel = () => host.querySelector('#reel') as HTMLElement;
   const filmStrip = () => host.querySelector('app-film-strip') as HTMLElement;
   const pilot = () => host.querySelector('app-on-air-pilot') as HTMLElement;
-  const playButton = (index: number) => host.querySelectorAll<HTMLButtonElement>('.voice-play')[index];
+  const playButton = (index: number) => host.querySelectorAll<HTMLButtonElement>('.cart')[index];
+  const monitorTrack = () => host.querySelector('.monitor-track') as HTMLElement;
   /** El observador propio del reel: el que dispara su entrada al 15 % visible. */
   const reelObserver = () => FakeIntersectionObserver.instances.find((io) => io.options.threshold === 0.15);
 
@@ -210,7 +211,7 @@ describe('PrincipalComponent', () => {
   describe('Voz «en el aire»', () => {
     it('en reposo, la banda de monitor muestra la primera demo y el piloto está apagado', () => {
       create(false);
-      expect(host.querySelector('.voz-monitor .monitor-demo')?.textContent?.trim()).toBe(VOICE[0].label);
+      expect(host.querySelector('.voz-monitor .monitor-demo')?.firstChild?.textContent?.trim()).toBe(VOICE[0].label);
       expect(host.querySelector('#voz > app-on-air-wave')).toBeNull();
       expect(pilot().classList).not.toContain('is-live');
     });
@@ -220,7 +221,7 @@ describe('PrincipalComponent', () => {
       playButton(2).click();
       fixture.detectChanges();
       audioEvent('playing');
-      expect(host.querySelector('.monitor-demo')?.textContent?.trim()).toBe(VOICE[2].label);
+      expect(host.querySelector('.monitor-demo')?.firstChild?.textContent?.trim()).toBe(VOICE[2].label);
       expect(component.airDemo()).toBe(VOICE[2]);
       expect(pilot().classList).toContain('is-live');
     });
@@ -245,6 +246,44 @@ describe('PrincipalComponent', () => {
       fixture.detectChanges();
       expect(pilot().classList).not.toContain('is-live');
       expect(component.airDemo()).toBe(VOICE[1]);
+    });
+    it('las demos de la home son cartuchos: sin onda propia, la onda está solo en el monitor', () => {
+      create(false);
+      expect(host.querySelectorAll('.cart').length).toBe(VOICE.length);
+      expect(host.querySelector('.voice-track')).toBeNull();
+      expect(host.querySelectorAll('app-on-air-wave').length).toBe(1);
+    });
+
+    it('la onda del monitor es un slider con el tiempo de la demo cargada', () => {
+      create(false);
+      expect(monitorTrack().getAttribute('role')).toBe('slider');
+      expect(monitorTrack().getAttribute('aria-valuetext')).toBe(`0:00 de 0:${VOICE[0].duration}`);
+      playButton(1).click();
+      audioEvent('playing');
+      spyOnProperty(HTMLMediaElement.prototype, 'duration', 'get').and.returnValue(10);
+      spyOnProperty(HTMLMediaElement.prototype, 'currentTime', 'get').and.returnValue(5);
+      audioEvent('timeupdate');
+      expect(monitorTrack().getAttribute('aria-label')).toBe(`Posición en ${VOICE[1].label}`);
+      expect(monitorTrack().getAttribute('aria-valuenow')).toBe('50');
+      expect(host.querySelector('.monitor-time')?.textContent?.trim()).toBe('0:23 / 0:46');
+    });
+
+    it('pulsar en la onda del monitor salta dentro de la demo cargada', () => {
+      create(false);
+      playButton(1).click();
+      audioEvent('playing');
+      const strip = component['strip']()!;
+      const seek = spyOn(strip, 'seek');
+      monitorTrack().click();
+      expect(seek).toHaveBeenCalledWith(jasmine.any(MouseEvent), 1);
+    });
+
+    it('Enter sobre el monitor en reposo arranca la primera demo', () => {
+      create(false);
+      monitorTrack().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', cancelable: true }));
+      fixture.detectChanges();
+      expect(component.airDemo()).toBe(VOICE[0]);
+      expect(HTMLMediaElement.prototype.play).toHaveBeenCalled();
     });
   });
 

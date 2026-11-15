@@ -7,8 +7,15 @@
         <span class="frame-edge"><span class="frame-mark"></span>{{ frameNumber(i) }}</span>
         <span class="frame-film">400TX</span>
       </span>
-      <img [src]="photo.src" [srcset]="photo.srcset" [alt]="photo.alt" width="720" height="1280"
-        sizes="(min-width: 1024px) 14vw, (min-width: 640px) 21vw, 28vw" loading="lazy" decoding="async" />
+      <button type="button" class="frame-open" (click)="open(i, $event)"
+        [attr.aria-label]="'Ver a pantalla completa: ' + photo.alt">
+        <img [src]="photo.src" [srcset]="photo.srcset" [alt]="photo.alt" width="720" height="1280"
+          sizes="(min-width: 1024px) 14vw, (min-width: 640px) 21vw, 28vw" loading="lazy" decoding="async" />
+      </button>
     </li>
   }
 </ol>
+
+@if (openIndex() !== null) {
+  <app-photo-viewer [photos]="photos" [(index)]="viewerIndex" (closed)="onViewerClosed()" />
+}

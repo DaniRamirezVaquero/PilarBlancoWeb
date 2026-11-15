@@ -1,46 +1,75 @@
 <!-- Región viva única: anuncia «Cargando…» y los fallos sin repetir el contador de tiempo cada segundo. -->
 <p class="sr-only" role="status">{{ statusMessage() }}</p>
-<ul class="voice-list">
-  @for (demo of demos; track demo.url; let i = $index) {
-    <li class="voice" [class.is-active]="active() === i" [style.--n]="i">
-      <button type="button" class="voice-play"
-        (click)="toggle(i)" [attr.aria-pressed]="playing() === i"
-        [attr.aria-describedby]="failed() === i ? 'voice-error-' + i : null"
-        [attr.aria-label]="(playing() === i ? 'Pausar ' : 'Escuchar ') + 'demo de voz: ' + demo.label">
-        <app-icon [name]="playing() === i ? 'pause' : 'play'"></app-icon>
-      </button>
+@if (variant === 'carts') {
+  <!-- Cartuchos de emisión: cada demo es un cartucho que «entra» en el monitor al pulsarlo. El avance y el salto
+       viven en la banda de monitor del contenedor, que lee active(), playing() y progress(). -->
+  <ul class="cart-rack">
+    @for (demo of demos; track demo.url; let i = $index) {
+      <!-- Sin [style.--n]: en los cartuchos --n es el papel de la etiqueta (token neutral de DaisyUI). -->
+      <li class="cart-slot">
+        <button type="button" class="cart" [class.is-active]="active() === i" [class.is-live]="playing() === i"
+          (click)="toggle(i)" [attr.aria-pressed]="playing() === i"
+          [attr.aria-describedby]="failed() === i ? 'voice-error-' + i : null"
+          [attr.aria-label]="(playing() === i ? 'Pausar ' : 'Escuchar ') + 'demo de voz: ' + demo.label">
+          <span class="cart-label" aria-hidden="true">
+            <span class="cart-head">
+              <span class="cart-number">Nº {{ i + 1 }}</span>
+              <span class="cart-state"><app-icon [name]="playing() === i ? 'pause' : 'play'"></app-icon></span>
+            </span>
+            <span class="cart-title">{{ demo.label }}</span>
+            <span class="cart-time">{{ format(demo.duration) }}</span>
+          </span>
+          <span class="cart-window" aria-hidden="true"><span class="cart-tape"></span></span>
+        </button>
+        @if (failed() === i) {
+          <span class="cart-error" [attr.id]="'voice-error-' + i">No se pudo cargar</span>
+        }
+      </li>
+    }
+  </ul>
+} @else {
+  <ul class="voice-list">
+    @for (demo of demos; track demo.url; let i = $index) {
+      <li class="voice" [class.is-active]="active() === i" [style.--n]="i">
+        <button type="button" class="voice-play"
+          (click)="toggle(i)" [attr.aria-pressed]="playing() === i"
+          [attr.aria-describedby]="failed() === i ? 'voice-error-' + i : null"
+          [attr.aria-label]="(playing() === i ? 'Pausar ' : 'Escuchar ') + 'demo de voz: ' + demo.label">
+          <app-icon [name]="playing() === i ? 'pause' : 'play'"></app-icon>
+        </button>
 
-      <div class="voice-meta">
-        <span class="voice-label">{{ demo.label }}</span>
-        <span class="voice-time" [attr.id]="failed() === i ? 'voice-error-' + i : null">
-          @if (failed() === i) { No se pudo cargar } @else if (loading() && active() === i) { Cargando… } @else { {{ elapsed(i, demo) }} }
-        </span>
-      </div>
+        <div class="voice-meta">
+          <span class="voice-label">{{ demo.label }}</span>
+          <span class="voice-time" [attr.id]="failed() === i ? 'voice-error-' + i : null">
+            @if (failed() === i) { No se pudo cargar } @else if (loading() && active() === i) { Cargando… } @else { {{ elapsed(i, demo) }} }
+          </span>
+        </div>
 
-      <div class="voice-track" role="slider" tabindex="0"
-        [attr.aria-label]="'Posición en ' + demo.label"
-        aria-valuemin="0" aria-valuemax="100"
-        [attr.aria-valuenow]="active() === i ? percent() : 0"
-        [attr.aria-valuetext]="valueText(i, demo)"
-        (click)="seek($event, i)" (keydown)="onKeySeek($event, i)">
-        <svg [attr.viewBox]="'0 0 ' + box().w + ' ' + box().h" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <defs>
-            <clipPath [attr.id]="'played-' + i">
-              <rect x="0" y="0" [attr.height]="box().h" [attr.width]="active() === i ? progress() * box().w : 0" />
-            </clipPath>
-          </defs>
-          <g class="bars">
-            @for (bar of barsOf[i]; track bar.x) {
-              <rect [attr.x]="bar.x" [attr.y]="(box().h - bar.h) / 2" [attr.width]="barWidth" [attr.height]="bar.h" rx="1" />
-            }
-          </g>
-          <g class="bars-played" [attr.clip-path]="'url(#played-' + i + ')'">
-            @for (bar of barsOf[i]; track bar.x) {
-              <rect [attr.x]="bar.x" [attr.y]="(box().h - bar.h) / 2" [attr.width]="barWidth" [attr.height]="bar.h" rx="1" />
-            }
-          </g>
-        </svg>
-      </div>
-    </li>
-  }
-</ul>
+        <div class="voice-track" role="slider" tabindex="0"
+          [attr.aria-label]="'Posición en ' + demo.label"
+          aria-valuemin="0" aria-valuemax="100"
+          [attr.aria-valuenow]="active() === i ? percent() : 0"
+          [attr.aria-valuetext]="valueText(i, demo)"
+          (click)="seek($event, i)" (keydown)="onKeySeek($event, i)">
+          <svg [attr.viewBox]="'0 0 ' + box().w + ' ' + box().h" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <defs>
+              <clipPath [attr.id]="'played-' + i">
+                <rect x="0" y="0" [attr.height]="box().h" [attr.width]="active() === i ? progress() * box().w : 0" />
+              </clipPath>
+            </defs>
+            <g class="bars">
+              @for (bar of barsOf[i]; track bar.x) {
+                <rect [attr.x]="bar.x" [attr.y]="(box().h - bar.h) / 2" [attr.width]="barWidth" [attr.height]="bar.h" rx="1" />
+              }
+            </g>
+            <g class="bars-played" [attr.clip-path]="'url(#played-' + i + ')'">
+              @for (bar of barsOf[i]; track bar.x) {
+                <rect [attr.x]="bar.x" [attr.y]="(box().h - bar.h) / 2" [attr.width]="barWidth" [attr.height]="bar.h" rx="1" />
+              }
+            </g>
+          </svg>
+        </div>
+      </li>
+    }
+  </ul>
+}

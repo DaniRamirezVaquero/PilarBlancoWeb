@@ -99,6 +99,28 @@
   border-left: 0.36rem solid oklch(var(--a));
 }
 
+/* El positivo es el botón que lo amplía: sin estilo de botón, con un leve realce al pasar el ratón. */
+.frame-open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: zoom-in;
+}
+
+.frame-open img { transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+
+@media (hover: hover) {
+  .frame-open:hover img { transform: scale(1.03); }
+}
+
+.frame-open:focus-visible { outline: 2px solid oklch(var(--s)); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .frame-open img { transition: none; }
+}
+
 /* Cada positivo con un filete fino, como el borde de la copia sobre el papel. */
 .frame img {
   display: block;

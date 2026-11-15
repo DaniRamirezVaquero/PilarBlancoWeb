@@ -1,5 +1,20 @@
 .hero-container {
-  background-color: #5c5c5c;
+  /* Fondo mientras carga la portada: el base-100 del tema activo (--n sería casi blanco). */
+  background-color: oklch(var(--b1));
+}
+
+/* Fundido del pie del hero hacia la página. En el degradado «to top right» de .bg-page, la esquina superior
+   izquierda siempre vale --page-via y la derecha --page-to, sea cual sea el alto del bloque. Por eso el fundido
+   termina en ese mismo degradado horizontal (que la máscara hace aparecer de arriba abajo) y no en un solo color. */
+.hero-fade {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  height: clamp(6rem, 22vh, 14rem);
+  pointer-events: none;
+  background: linear-gradient(to right, var(--page-via), var(--page-to));
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black);
+  mask-image: linear-gradient(to bottom, transparent, black);
 }
 
 .hero-cover {
@@ -144,7 +159,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
   padding: 0.75rem 1rem;
   color: oklch(var(--bc));
   background: color-mix(in oklab, oklch(var(--s)) 55%, var(--film-black));
@@ -162,7 +177,12 @@
 
 .voz-monitor.is-live .monitor-demo { opacity: 1; }
 
-.monitor-wave { height: 4rem; }
+.monitor-time { margin-left: 0.4rem; font-variant-numeric: tabular-nums; opacity: 0.8; }
+
+.monitor-track { cursor: pointer; }
+.monitor-track:focus-visible { outline: 2px solid oklch(var(--bc)); outline-offset: 4px; }
+
+.monitor-wave { display: block; height: 4rem; }
 
 @media (min-width: 768px) {
   .voz-monitor {

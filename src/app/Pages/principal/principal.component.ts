@@ -93,6 +93,29 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
   });
   /** true mientras suena una demo: enciende el piloto. */
   readonly airLive = computed(() => this.strip()?.playing() != null);
+  /** Índice de la demo cargada en el monitor (en reposo, la primera). */
+  private readonly airIndex = computed(() => this.strip()?.active() ?? 0);
+  readonly airPercent = computed(() => Math.round(this.airProgress() * 100));
+  /** «0:12 / 0:46» con una demo cargada; en reposo, solo la duración. */
+  readonly airTime = computed(() => {
+    const strip = this.strip();
+    const demo = this.airDemo();
+    if (!strip || strip.active() === null) {
+      return strip ? strip.format(demo.duration) : '';
+    }
+    return `${strip.format(this.airProgress() * demo.duration)} / ${strip.format(demo.duration)}`;
+  });
+  readonly airValueText = computed(() => this.strip()?.valueText(this.airIndex(), this.airDemo()) ?? '');
+
+  /** Pulsar en la onda del monitor salta a ese punto de la demo cargada (en reposo, arranca la primera). */
+  onMonitorSeek(event: MouseEvent): void {
+    this.strip()?.seek(event, this.airIndex());
+  }
+
+  /** Teclado del monitor: Enter/Espacio reproducen o pausan; flechas e Inicio/Fin se mueven por la demo. */
+  onMonitorKey(event: KeyboardEvent): void {
+    this.strip()?.onKeySeek(event, this.airIndex());
+  }
 
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly document = inject(DOCUMENT);

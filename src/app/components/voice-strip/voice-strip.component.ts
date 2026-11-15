@@ -24,6 +24,11 @@ import { IconComponent } from '../icon/icon.component';
 })
 export class VoiceStripComponent implements OnChanges, OnDestroy {
   @Input({ required: true }) demos: VoiceDemo[] = [];
+  /**
+   * `tracks`: una fila por demo con su propia onda (/voice). `carts`: cartuchos de emisión sin onda (home);
+   * el avance y el salto los pone la banda de monitor del contenedor con `seek()` y `onKeySeek()`.
+   */
+  @Input() variant: 'tracks' | 'carts' = 'tracks';
 
   readonly playing = signal<number | null>(null);
   readonly active = signal<number | null>(null);

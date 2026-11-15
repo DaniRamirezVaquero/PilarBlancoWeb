@@ -1,0 +1,115 @@
+/* La copia ampliada sobre la mesa: papel claro (--n) y tinta de la hoja (--s), como la hoja de contactos. */
+.viewer {
+  --ink: oklch(var(--s));
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--ink);
+  background: oklch(var(--n));
+}
+
+.viewer[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  animation: viewer-in 0.3s ease-out;
+}
+
+.viewer::backdrop { background: oklch(var(--n)); }
+
+.viewer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem clamp(1rem, 3vw, 2rem);
+}
+
+.viewer-counter {
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+}
+
+.viewer-stage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr);
+  align-items: center;
+  justify-items: center;
+  gap: clamp(0.25rem, 2vw, 2rem);
+  min-height: 0;
+  padding: 0 clamp(0.5rem, 3vw, 2rem) clamp(1rem, 3vw, 2rem);
+  touch-action: pan-y;
+}
+
+.viewer-img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  object-fit: contain;
+  outline: 1px solid oklch(var(--s) / 0.18);
+  box-shadow: 0 1.25rem 2.5rem -1.25rem oklch(var(--s) / 0.55);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Botones de línea fina, centrados con flex sobre un trazo simétrico (sin falso centrado). */
+.viewer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid oklch(var(--s) / 0.45);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.viewer-btn svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) {
+  .viewer-btn:hover { color: oklch(var(--n)); background: var(--ink); }
+}
+
+.viewer-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+/* Móvil: la foto ocupa todo el ancho y las flechas bajan al pie, a los lados (deslizar también navega). */
+@media (max-width: 639px) {
+  .viewer-stage {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+    row-gap: 0.75rem;
+  }
+  .viewer-img { grid-column: 1 / -1; grid-row: 1; }
+  .viewer-prev { grid-row: 2; grid-column: 1; justify-self: start; }
+  .viewer-next { grid-row: 2; grid-column: 2; justify-self: end; }
+}
+
+@keyframes viewer-in {
+  from { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewer[open] { animation: none; }
+  .viewer-btn { transition: none; }
+}

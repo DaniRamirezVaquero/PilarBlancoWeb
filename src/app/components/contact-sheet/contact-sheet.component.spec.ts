@@ -37,7 +37,26 @@ describe('ContactSheetComponent', () => {
     expect(imgs.every((img) => img.getAttribute('loading') === 'lazy')).toBeTrue();
   });
 
-  it('no tiene nada interactivo: solo se mira', () => {
-    expect(host.querySelectorAll('a, button, [tabindex]').length).toBe(0);
+  it('cada fotograma es un botón con nombre que lo amplía', () => {
+    const buttons = Array.from(host.querySelectorAll<HTMLButtonElement>('button.frame-open'));
+    expect(buttons.length).toBe(12);
+    expect(buttons[0].getAttribute('aria-label')).toBe(`Ver a pantalla completa: ${BOOK_PHOTOS[0].alt}`);
+    expect(host.querySelector('app-photo-viewer')).toBeNull();
+  });
+
+  it('pulsar un fotograma abre el visor en esa foto y, al cerrar, el foco vuelve al fotograma visto', async () => {
+    document.body.appendChild(host);
+    const buttons = () => host.querySelectorAll<HTMLButtonElement>('button.frame-open');
+    buttons()[4].click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(host.querySelector('.viewer-counter')?.textContent?.trim()).toBe('5 / 12');
+    (host.querySelector('.viewer-next') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    (host.querySelector('.viewer-close') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    expect(host.querySelector('app-photo-viewer')).toBeNull();
+    expect(document.activeElement).toBe(buttons()[5]);
+    host.remove();
   });
 });

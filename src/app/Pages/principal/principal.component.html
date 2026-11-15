@@ -21,6 +21,8 @@
   <div class="absolute inset-0 z-[1] bg-gradient-to-r from-black/30 via-transparent to-black/20"></div>
   <!-- Velo solo en móvil: el nombre en blanco se pierde sobre la blusa clara de la portada -->
   <div class="hero-veil absolute inset-0 z-[1] md:hidden" aria-hidden="true"></div>
+  <!-- Fundido inferior: la foto se disuelve en el color de la página, que es el de su propio fondo. -->
+  <div class="hero-fade" aria-hidden="true"></div>
 
   <div class="relative z-10 grid grid-rows-3 h-full">
     <div></div>
@@ -102,16 +104,21 @@
   <section id="voz" class="home-block voz" aria-labelledby="voz-title">
     <h2 id="voz-title" class="page-title">Voz</h2>
     <span class="page-title-dash mb-8" aria-hidden="true"></span>
-    <!-- Banda de monitor: la onda grande de la demo activa con su avance y el piloto integrado. Es decorativa:
-         el estado real lo anuncian los botones y la barra de cada pista. -->
-    <div class="voz-monitor" [class.is-live]="airLive()" aria-hidden="true">
-      <div class="monitor-meta">
+    <!-- Banda de monitor: la onda grande de la demo cargada, su avance y el piloto. La onda es también la barra
+         para saltar dentro de la demo; los cartuchos de debajo eligen cuál suena. -->
+    <div class="voz-monitor" [class.is-live]="airLive()">
+      <div class="monitor-meta" aria-hidden="true">
         <app-on-air-pilot [live]="airLive()" />
-        <span class="monitor-demo">{{ airDemo().label }}</span>
+        <span class="monitor-demo">{{ airDemo().label }} <span class="monitor-time">{{ airTime() }}</span></span>
       </div>
-      <app-on-air-wave class="monitor-wave" [peaks]="airDemo().peaks" [progress]="airProgress()" [live]="airLive()" />
+      <div class="monitor-track" role="slider" tabindex="0"
+        [attr.aria-label]="'Posición en ' + airDemo().label"
+        aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="airPercent()" [attr.aria-valuetext]="airValueText()"
+        (click)="onMonitorSeek($event)" (keydown)="onMonitorKey($event)">
+        <app-on-air-wave class="monitor-wave" [peaks]="airDemo().peaks" [progress]="airProgress()" [live]="airLive()" />
+      </div>
     </div>
-    <app-voice-strip [demos]="voice"></app-voice-strip>
+    <app-voice-strip variant="carts" [demos]="voice"></app-voice-strip>
     <div class="voz-foot mt-8">
       <a routerLink="/voice" class="home-link">Demos de doblaje en vídeo</a>
     </div>
