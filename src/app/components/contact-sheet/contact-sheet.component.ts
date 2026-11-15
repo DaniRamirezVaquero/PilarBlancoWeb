@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '@angular/core';
 import { BOOK_PHOTOS } from '../../data/photos.data';
-import { PhotoViewerComponent } from '../photo-viewer/photo-viewer.component';
+import { PhotoOrigin, PhotoViewerComponent } from '../photo-viewer/photo-viewer.component';
 
 /**
  * Hoja de contactos del book: las 12 fotos del carrusel, en su orden, impresas sobre papel fotográfico
@@ -24,6 +24,11 @@ export class ContactSheetComponent {
   readonly viewerIndex = signal(0);
 
   private opener: HTMLElement | null = null;
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+
+  /** Posición del positivo de cada foto: el visor vuela desde ahí al abrir y vuelve al cerrar. */
+  readonly frameRect: PhotoOrigin = (index) =>
+    this.host.nativeElement.querySelectorAll<HTMLImageElement>('.frame-open img')[index]?.getBoundingClientRect() ?? null;
 
   /** Número de fotograma como en el borde de la película: 1, 2… */
   frameNumber(index: number): string {

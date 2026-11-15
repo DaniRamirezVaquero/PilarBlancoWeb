@@ -17,5 +17,5 @@
 </ol>
 
 @if (openIndex() !== null) {
-  <app-photo-viewer [photos]="photos" [(index)]="viewerIndex" (closed)="onViewerClosed()" />
+  <app-photo-viewer [photos]="photos" [(index)]="viewerIndex" [originOf]="frameRect" (closed)="onViewerClosed()" />
 }

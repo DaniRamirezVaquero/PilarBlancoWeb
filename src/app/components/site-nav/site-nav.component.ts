@@ -102,13 +102,13 @@ export class SiteNavComponent {
     return this.currentSection() === id;
   }
 
-  /** Abre el menú, bloquea el scroll del body y lleva el foco al botón de cerrar. */
+  /** Abre el menú, bloquea el scroll de la página (en html, para que se respete el hueco de la barra) y lleva el foco al botón de cerrar. */
   openMenu(): void {
     if (!this.isBrowser || this.menuOpen()) {
       return;
     }
     this.menuOpen.set(true);
-    this.document.body.style.overflow = 'hidden';
+    this.document.documentElement.style.overflow = 'hidden';
     afterNextRender(() => this.closeButton()?.nativeElement.focus(), { injector: this.injector });
   }
 
@@ -178,7 +178,7 @@ export class SiteNavComponent {
 
   private unlockBody(): void {
     if (this.isBrowser) {
-      this.document.body.style.overflow = '';
+      this.document.documentElement.style.overflow = '';
     }
   }
 }

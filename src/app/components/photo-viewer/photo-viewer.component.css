@@ -9,16 +9,30 @@
   padding: 0;
   border: 0;
   color: var(--ink);
-  background: oklch(var(--n));
+  /* El papel es el ::backdrop: así aparece con un fundido mientras la foto vuela desde su fotograma. */
+  background: transparent;
 }
 
 .viewer[open] {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-  animation: viewer-in 0.3s ease-out;
 }
 
-.viewer::backdrop { background: oklch(var(--n)); }
+.viewer::backdrop {
+  background: oklch(var(--n));
+  animation: viewer-fade-in 0.35s ease-out;
+}
+
+/* Los controles llegan cuando la foto ya casi ha aterrizado. */
+.viewer-bar,
+.viewer-prev,
+.viewer-next { animation: viewer-fade-in 0.3s ease-out 0.2s backwards; }
+
+/* Al cerrar, el papel y los controles se desvanecen mientras la foto vuelve a su fotograma. */
+.viewer.is-closing::backdrop,
+.viewer.is-closing .viewer-bar,
+.viewer.is-closing .viewer-prev,
+.viewer.is-closing .viewer-next { animation: viewer-fade-out 0.3s ease-in forwards; }
 
 .viewer-bar {
   display: flex;
@@ -105,11 +119,18 @@
   .viewer-next { grid-row: 2; grid-column: 2; justify-self: end; }
 }
 
-@keyframes viewer-in {
+@keyframes viewer-fade-in {
   from { opacity: 0; }
 }
 
+@keyframes viewer-fade-out {
+  to { opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .viewer[open] { animation: none; }
+  .viewer::backdrop,
+  .viewer-bar,
+  .viewer-prev,
+  .viewer-next { animation: none; }
   .viewer-btn { transition: none; }
 }

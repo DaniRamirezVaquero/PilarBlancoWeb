@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PhotoViewerComponent } from './photo-viewer.component';
+import { PhotoViewerComponent, flightFrom } from './photo-viewer.component';
 import { BOOK_PHOTOS } from '../../data/photos.data';
 
 describe('PhotoViewerComponent', () => {
@@ -32,14 +32,14 @@ describe('PhotoViewerComponent', () => {
   afterEach(() => {
     fixture.destroy();
     host.remove();
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
   });
 
   it('se abre como diálogo modal con la foto pulsada, el contador y bloquea el scroll de la página', () => {
     expect(dialog().open).toBeTrue();
     expect(img().getAttribute('alt')).toBe(BOOK_PHOTOS[2].alt);
     expect(counter()).toBe('3 / 12');
-    expect(document.body.style.overflow).toBe('hidden');
+    expect(document.documentElement.style.overflow).toBe('hidden');
   });
 
   it('los botones y las flechas del teclado recorren el book y dan la vuelta', () => {
@@ -97,6 +97,34 @@ describe('PhotoViewerComponent', () => {
 
   it('al destruirse devuelve el scroll de la página', () => {
     fixture.destroy();
-    expect(document.body.style.overflow).toBe('');
+    expect(document.documentElement.style.overflow).toBe('');
+  });
+
+  describe('vuelo desde el fotograma', () => {
+    const rect = (left: number, top: number, width: number, height: number) =>
+      ({ left, top, width, height, right: left + width, bottom: top + height } as DOMRect);
+
+    it('un fotograma más vertical que la foto: escala por el alto y recorta los lados', () => {
+      // Fotograma 9:16 de 90×160 centrado en (145, 380); foto 4:5 de 400×500 centrada en (700, 400).
+      const frame = flightFrom(rect(100, 300, 90, 160), rect(500, 150, 400, 500));
+      expect(frame['transform']).toBe('translate(-555px, -20px) scale(0.32)');
+      // Se ven 90/0.32 = 281.25 px de ancho: se recortan (400 - 281.25) / 2 por cada lado.
+      expect(frame['clipPath']).toBe('inset(0px 59.375px)');
+    });
+
+    it('un fotograma más apaisado que la foto: escala por el ancho y recorta arriba y abajo', () => {
+      const frame = flightFrom(rect(0, 0, 200, 100), rect(0, 0, 400, 400));
+      expect(frame['transform']).toBe('translate(-100px, -150px) scale(0.5)');
+      expect(frame['clipPath']).toBe('inset(100px 0px)');
+    });
+  });
+
+  it('Esc se cancela para cerrar con la animación y aun así emite closed', () => {
+    const closed = jasmine.createSpy('closed');
+    component.closed.subscribe(closed);
+    const cancel = new Event('cancel', { cancelable: true });
+    dialog().dispatchEvent(cancel);
+    expect(cancel.defaultPrevented).toBeTrue();
+    expect(closed).toHaveBeenCalledTimes(1);
   });
 });

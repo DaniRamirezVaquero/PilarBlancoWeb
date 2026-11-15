@@ -54,6 +54,8 @@ describe('ContactSheetComponent', () => {
     (host.querySelector('.viewer-next') as HTMLButtonElement).click();
     fixture.detectChanges();
     (host.querySelector('.viewer-close') as HTMLButtonElement).click();
+    // El cierre vuela de vuelta al fotograma (~0,36 s) antes de quitar el visor.
+    await new Promise((resolve) => setTimeout(resolve, 700));
     fixture.detectChanges();
     expect(host.querySelector('app-photo-viewer')).toBeNull();
     expect(document.activeElement).toBe(buttons()[5]);

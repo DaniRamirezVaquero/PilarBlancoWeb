@@ -22,6 +22,17 @@
    página, y si se interrumpía el título quedaba bajo la barra. El scroll suave de las anclas de la home lo
    pide goTo() explícitamente (y respeta prefers-reduced-motion). */
 
+/* Hueco de la barra de scroll siempre reservado: al bloquear el scroll (visor de fotos, menú móvil) la barra
+   desaparece y, sin esto, la página se ensancha y salta; al cerrar, salta de vuelta. */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Con el visor de fotos abierto, el hueco reservado de la barra enseña el lienzo: del mismo papel que el visor. */
+html:has(dialog.viewer[open]) {
+  background-color: oklch(var(--n));
+}
+
 body {
   font-family: 'Lato', sans-serif;
   overflow-x: hidden;

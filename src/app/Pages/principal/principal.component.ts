@@ -285,7 +285,7 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
 
   private setBodyScrollLocked(locked: boolean): void {
     if (this.isBrowser) {
-      this.document.body.style.overflow = locked ? 'hidden' : '';
+      this.document.documentElement.style.overflow = locked ? 'hidden' : '';
     }
   }
 

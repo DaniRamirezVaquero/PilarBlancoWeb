@@ -1,5 +1,5 @@
 <dialog #dialog class="viewer" aria-label="Book de Pilar Blanco a pantalla completa"
-  (close)="onDialogClose()" (keydown)="onKeydown($event)">
+  (cancel)="onCancel($event)" (close)="onDialogClose()" (keydown)="onKeydown($event)">
   <p class="sr-only" aria-live="polite">{{ announcement() }}</p>
 
   <div class="viewer-bar">
@@ -15,7 +15,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 4l-8 8 8 8" /></svg>
     </button>
     @if (photo(); as current) {
-      <img class="viewer-img" [src]="current.src" [srcset]="current.srcset" [alt]="current.alt" width="720" height="1280"
+      <img #image class="viewer-img" [src]="current.src" [srcset]="current.srcset" [alt]="current.alt" width="720" height="1280"
         sizes="(min-aspect-ratio: 9/16) 50vh, 100vw" decoding="async" draggable="false" />
     }
     <button type="button" class="viewer-btn viewer-next" (click)="next()" aria-label="Foto siguiente">

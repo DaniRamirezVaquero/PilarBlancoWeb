@@ -28,7 +28,7 @@ describe('SiteNavComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
   });
 
   it('abre el menú: aria-expanded, scroll del body bloqueado y foco en «Cerrar»', () => {
@@ -36,7 +36,7 @@ describe('SiteNavComponent', () => {
     settle();
     expect(menuButton().getAttribute('aria-expanded')).toBe('true');
     expect(panel()).not.toBeNull();
-    expect(document.body.style.overflow).toBe('hidden');
+    expect(document.documentElement.style.overflow).toBe('hidden');
     expect(document.activeElement).toBe(closeButton());
   });
 
@@ -47,7 +47,7 @@ describe('SiteNavComponent', () => {
     settle();
     expect(panel()).toBeNull();
     expect(menuButton().getAttribute('aria-expanded')).toBe('false');
-    expect(document.body.style.overflow).toBe('');
+    expect(document.documentElement.style.overflow).toBe('');
     expect(document.activeElement).toBe(menuButton());
   });
 
@@ -57,7 +57,7 @@ describe('SiteNavComponent', () => {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     settle();
     expect(panel()).toBeNull();
-    expect(document.body.style.overflow).toBe('');
+    expect(document.documentElement.style.overflow).toBe('');
     expect(document.activeElement).toBe(menuButton());
   });
 
@@ -88,7 +88,7 @@ describe('SiteNavComponent', () => {
     document.body.appendChild(target);
     spyOn(target, 'scrollIntoView').and.callFake(() => {
       // Al desplazar, el body ya no debe estar bloqueado o el scroll no se vería.
-      expect(document.body.style.overflow).toBe('');
+      expect(document.documentElement.style.overflow).toBe('');
     });
     // La barra considera que está en la home cuando la URL es «/» (estado inicial).
     menuButton().click();
