@@ -101,7 +101,7 @@
     <span class="page-title-dash mb-8" aria-hidden="true"></span>
     <app-voice-strip [demos]="voice"></app-voice-strip>
     <div class="mt-8">
-      <a routerLink="/voice" class="home-link">Demos de doblaje en vídeo</a>
+      <a routerLink="/voice" class="home-link lg:text-xl">Ver demos de doblaje</a>
     </div>
   </section>
 
@@ -109,7 +109,7 @@
   <section id="trayectoria" class="home-block" aria-labelledby="trayectoria-title">
     <h2 id="trayectoria-title" class="page-title">Trayectoria</h2>
     <span class="page-title-dash mb-8" aria-hidden="true"></span>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+    <div class="grid grid-cols-1 lg:grid-cols-[4fr_5fr] gap-12 lg:gap-16">
       <div>
         <ul class="flex flex-col">
           @for (credit of credits; track credit.title) {
@@ -139,16 +139,17 @@
       <article class="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-6" aria-labelledby="sobre-title">
         <img src="assets/sobre-mi-2-700.webp" srcset="assets/sobre-mi-2-700.webp 700w, assets/sobre-mi-2-1430.webp 1430w"
           sizes="(min-width: 1024px) 18rem, 60vw" width="700" height="729" loading="lazy" decoding="async"
-          class="w-48 sm:w-56 lg:w-full xl:w-56 self-start object-cover aspect-[4/5] object-top shadow-md"
+          class="w-48 sm:w-56 lg:w-full xl:w-44 self-start object-cover aspect-[4/5] object-top shadow-md"
           alt="Retrato de Pilar Blanco sonriendo" />
         <div>
           <h3 id="sobre-title" class="section-title mb-3">Sobre mí</h3>
-          <p class="lato-regular leading-relaxed">
-            Inicié mi carrera en Metronomoteatro, un laboratorio de investigación escénica, con montajes como
-            <em>Repris</em>, Premio Nacional de Teatro de Vanguardia en 1991. De ahí, a la televisión con
-            <em>Plaza alta</em> y <em>Arrayán</em>, la radio y la formación de jóvenes ante la cámara.
+          <p class="lato-regular leading-relaxed lg:text-xl">
+            Cada experiencia, cada proyecto y cada etapa del camino han dejado huella en mi forma de entender la
+            interpretación y de acercarme a los personajes desde la curiosidad, la emoción y la búsqueda de
+            autenticidad. Un recorrido que me ha llevado a la televisión, con <em>Plaza alta</em> y
+            <em>Arrayán</em>, a la radio y a la formación de jóvenes ante la cámara.
           </p>
-          <a routerLink="/bio" class="home-link mt-4 inline-block">Leer la biografía</a>
+          <a routerLink="/bio" class="home-link mt-4 inline-block lg:text-xl">Leer la biografía</a>
         </div>
       </article>
     </div>
