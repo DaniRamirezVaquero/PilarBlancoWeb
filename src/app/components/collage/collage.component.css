@@ -1,8 +1,6 @@
+/* Sin content-visibility: su altura provisional de 300 px descuadraba el equilibrio de las columnas.
+   width/height reales reservan la caja con la proporción correcta antes de que cargue cada foto. */
 .collage-img {
-  /* Evita layout/paint de las fotos fuera de pantalla. width/height reales reservan la caja; con
-     `auto` el navegador recuerda el tamaño ya medido y 300px es solo el valor inicial. */
-  content-visibility: auto;
-  contain-intrinsic-size: auto 300px;
   height: auto;
 }
 

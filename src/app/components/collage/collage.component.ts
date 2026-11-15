@@ -11,7 +11,6 @@ interface CollagePhoto {
 
 /** Todas las fotos se sirven a 900 px de ancho (versiones «-900» de los originales); la altura es la real de cada una. */
 const PHOTO_WIDTH = 900;
-const GROUP_SIZE = 9;
 
 /** Altura real (px) y proyecto de cada foto de /assets/images/collage, en orden. */
 const PHOTOS: readonly { n: number; height: number; title: string }[] = [
@@ -63,24 +62,15 @@ export function captionOf(title: string): string {
   styleUrl: './collage.component.css',
 })
 export class CollageComponent {
-  /** Fotos repartidas en columnas consecutivas de 9. */
-  readonly photoGroups: CollagePhoto[][] = this.groupPhotos();
-
-  private groupPhotos(): CollagePhoto[][] {
-    const photos = PHOTOS.map((p): CollagePhoto => {
-      const caption = captionOf(p.title);
-      return {
-        src: `assets/images/collage/FOTO (${p.n})-900.webp`,
-        alt: `Pilar Blanco, actriz, en el proyecto ${caption}`,
-        caption,
-        width: PHOTO_WIDTH,
-        height: p.height,
-      };
-    });
-    const groups: CollagePhoto[][] = [];
-    for (let i = 0; i < photos.length; i += GROUP_SIZE) {
-      groups.push(photos.slice(i, i + GROUP_SIZE));
-    }
-    return groups;
-  }
+  /** Lista plana: el reparto en columnas lo hace CSS (columns), que equilibra las alturas en cada breakpoint. */
+  readonly photos: readonly CollagePhoto[] = PHOTOS.map((p): CollagePhoto => {
+    const caption = captionOf(p.title);
+    return {
+      src: `assets/images/collage/FOTO (${p.n})-900.webp`,
+      alt: `Pilar Blanco, actriz, en el proyecto ${caption}`,
+      caption,
+      width: PHOTO_WIDTH,
+      height: p.height,
+    };
+  });
 }

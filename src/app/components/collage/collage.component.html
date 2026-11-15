@@ -1,15 +1,12 @@
-<!-- Dos columnas desde móvil y cuatro desde md. El título del proyecto va siempre visible bajo la foto. -->
-<div class="flex flex-wrap py-0 px-1">
-  @for (group of photoGroups; track $index) {
-    <div class="flex-[50%] max-w-[50%] md:flex-[25%] md:max-w-[25%] py-0 px-1">
-      @for (photo of group; track photo.src) {
-        <figure class="relative m-0 mt-2">
-          <img class="collage-img block w-full rounded" [src]="photo.src" [alt]="photo.alt"
-            [attr.width]="photo.width" [attr.height]="photo.height" loading="lazy" decoding="async">
-          <!-- aria-hidden: el alt de la foto ya dice el proyecto. -->
-          <figcaption class="collage-caption" aria-hidden="true">{{ photo.caption }}</figcaption>
-        </figure>
-      }
-    </div>
+<!-- Mampostería con columnas CSS: dos en móvil y cuatro desde md, de alturas equilibradas (antes eran 4 grupos
+     fijos de 9 fotos y en móvil, al ir de dos en dos, dejaban huecos). El título va siempre visible sobre la foto. -->
+<div class="columns-2 md:columns-4 gap-2 px-2">
+  @for (photo of photos; track photo.src) {
+    <figure class="relative m-0 mb-2 break-inside-avoid">
+      <img class="collage-img block w-full rounded" [src]="photo.src" [alt]="photo.alt"
+        [attr.width]="photo.width" [attr.height]="photo.height" loading="lazy" decoding="async">
+      <!-- aria-hidden: el alt de la foto ya dice el proyecto. -->
+      <figcaption class="collage-caption" aria-hidden="true">{{ photo.caption }}</figcaption>
+    </figure>
   }
 </div>
