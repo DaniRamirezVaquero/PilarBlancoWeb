@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, DeferBlockBehavior, DeferBlockState, TestBed } from '@angular/core/testing';
 import { ContactSheetComponent } from './contact-sheet.component';
 import { BOOK_PHOTOS } from '../../data/photos.data';
 
@@ -7,7 +7,7 @@ describe('ContactSheetComponent', () => {
   let host: HTMLElement;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [ContactSheetComponent] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [ContactSheetComponent], deferBlockBehavior: DeferBlockBehavior.Manual }).compileComponents();
     fixture = TestBed.createComponent(ContactSheetComponent);
     host = fixture.nativeElement as HTMLElement;
     fixture.detectChanges();
@@ -44,12 +44,45 @@ describe('ContactSheetComponent', () => {
     expect(host.querySelector('app-photo-viewer')).toBeNull();
   });
 
+  /** Renderiza a mano el bloque @defer del visor (el chunk se carga de verdad) y repinta. */
+  const renderViewer = async () => {
+    const [block] = await fixture.getDeferBlocks();
+    await block.render(DeferBlockState.Complete);
+    fixture.detectChanges();
+  };
+
+  it('el visor no existe hasta pulsar un fotograma: el bloque @defer espera', async () => {
+    const blocks = await fixture.getDeferBlocks();
+    expect(blocks.length).toBe(1);
+    expect(host.querySelector('app-photo-viewer')).toBeNull();
+  });
+
+  it('abre en frío (primera vez, chunk sin cargar), muestra la foto pulsada y devuelve el foco al cerrar', async () => {
+    document.body.appendChild(host);
+    const buttons = () => host.querySelectorAll<HTMLButtonElement>('button.frame-open');
+    buttons()[2].click();
+    fixture.detectChanges();
+    await renderViewer();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(host.querySelector('.viewer-counter')?.textContent?.trim()).toBe('3 / 12');
+    (host.querySelector('.viewer-close') as HTMLButtonElement).click();
+    await new Promise((resolve) => setTimeout(resolve, 700));
+    fixture.detectChanges();
+    expect(host.querySelector('app-photo-viewer')).toBeNull();
+    expect(document.activeElement).toBe(buttons()[2]);
+    host.remove();
+  });
+
   it('pulsar un fotograma abre el visor en esa foto y, al cerrar, el foco vuelve al fotograma visto', async () => {
     document.body.appendChild(host);
     const buttons = () => host.querySelectorAll<HTMLButtonElement>('button.frame-open');
     buttons()[4].click();
     fixture.detectChanges();
+    // El visor está en un @defer: se renderiza a mano (Manual) y hace falta otra pasada para pintarlo.
+    await renderViewer();
     await fixture.whenStable();
+    fixture.detectChanges();
     expect(host.querySelector('.viewer-counter')?.textContent?.trim()).toBe('5 / 12');
     (host.querySelector('.viewer-next') as HTMLButtonElement).click();
     fixture.detectChanges();

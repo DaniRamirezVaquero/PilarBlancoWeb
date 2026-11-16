@@ -1,0 +1,58 @@
+/* La caja (ancho y aspect-ratio, «Pilar» y «BLANCO») se reserva desde el prerender: vector o respaldo,
+   nada se mueve (CLS 0). «Pilar» mide lo mismo que antes de añadir «BLANCO» (×680/528). */
+:host {
+  position: relative;
+  display: block;
+  width: min(100%, clamp(20.5rem, 44vw, 38.5rem));
+  color: oklch(var(--bc));
+}
+
+/* Los estilos de los trazos viven en signature-vector.component.css (carga diferida).
+   Respaldo: la firma real recortada del lockup (alfa), pintada con la tinta del texto. */
+.sig-static {
+  position: absolute;
+  /* Caja de «Pilar» dentro de la común: SIGNATURE_PILAR_BOX (528×160) sobre SIGNATURE_BOX (680×270), mismo origen. */
+  inset: 0 auto auto 0;
+  width: 77.647%;
+  height: 59.259%;
+  background: currentColor;
+  -webkit-mask: url(../../../assets/firma-pilar.webp) center / 100% 100% no-repeat;
+  mask: url(../../../assets/firma-pilar.webp) center / 100% 100% no-repeat;
+}
+
+.sig-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* «BLANCO»: Lato Light como en el lockup, en --bc pleno (con menos opacidad no pasa AA en portada). */
+.sig-surname {
+  fill: currentColor;
+  font-family: Lato, sans-serif;
+  font-weight: 300;
+  transform-box: fill-box;
+}
+
+/* «BLANCO» entra al acabar el último trazo: fundido y un pequeño desplazamiento (transform y opacity). */
+:host(.is-armed) .sig-surname { opacity: 0; transform: translateX(-0.35em); }
+
+:host(.is-armed.is-shown) .sig-surname {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s ease var(--sig-surname-delay),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--sig-surname-delay);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sig-surname { transition: none !important; }
+}
+
+/* Alto contraste: la máscara pintada con background desaparecería; se fuerza el color del texto del sistema. */
+@media (forced-colors: active) {
+  .sig-static { forced-color-adjust: none; background: CanvasText; }
+  .sig-surname { fill: CanvasText; }
+}

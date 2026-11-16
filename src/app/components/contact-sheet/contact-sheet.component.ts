@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '@angular/core';
 import { BOOK_PHOTOS } from '../../data/photos.data';
-import { PhotoOrigin, PhotoViewerComponent } from '../photo-viewer/photo-viewer.component';
+import { PhotoViewerComponent } from '../photo-viewer/photo-viewer.component';
+import type { PhotoOrigin } from '../photo-viewer/photo-viewer.component';
 
 /**
  * Hoja de contactos del book: las 12 fotos del carrusel, en su orden, impresas sobre papel fotográfico

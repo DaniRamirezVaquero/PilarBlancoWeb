@@ -10,19 +10,18 @@ import { ContactSheetComponent } from '../../components/contact-sheet/contact-sh
 import { OnAirWaveComponent } from '../../components/on-air/on-air-wave.component';
 import { OnAirPilotComponent } from '../../components/on-air/on-air-pilot.component';
 import { IconComponent } from '../../components/icon/icon.component';
-import { CONTACT, HIGHLIGHT_CREDITS, REEL, SCENES, VOICE } from '../../data/portfolio.data';
+import { ABOUT_TEASER, CONTACT, HIGHLIGHT_CREDITS, REEL, SCENES, VOICE } from '../../data/portfolio.data';
+import { CreditsRollComponent } from '../../components/credits-roll/credits-roll.component';
+import { SignatureComponent } from '../../components/signature/signature.component';
 import { FilmStripComponent } from '../../components/film-strip/film-strip.component';
-import { prefersReducedMotion } from '../../utils/motion';
+import { SECTION_IDS } from '../../data/sections.data';
+import { REVEAL_ARM_RATIO, RevealHandle, RevealWindow, revealOnce } from '../../utils/reveal-once';
 import { NavService } from '../../services/nav.service';
 import { HeroCover, HeroThemeService } from '../../services/hero-theme.service';
 import { CommonModule } from '@angular/common';
 
-/** Ids de las secciones con scroll de la home, en orden de aparición. */
-const SECTION_IDS = ['reel', 'fotos', 'voz', 'trayectoria', 'contacto'] as const;
 /** Fracción visible a partir de la cual la última sección cuenta como «vista entera». */
 const LAST_SECTION_RATIO = 0.9;
-/** Si al hidratar el reel empieza por debajo de esta fracción del viewport, su entrada se arma (aún no se ve). */
-const REEL_ARM_RATIO = 0.45;
 /** Fracción visible del reel que dispara su entrada. */
 const REEL_SHOW_RATIO = 0.15;
 
@@ -38,7 +37,9 @@ const REEL_SHOW_RATIO = 0.15;
         FilmStripComponent,
         OnAirWaveComponent,
         OnAirPilotComponent,
-        IconComponent
+        IconComponent,
+        CreditsRollComponent,
+        SignatureComponent,
     ],
     templateUrl: './principal.component.html',
     styleUrl: './principal.component.css'
@@ -55,6 +56,7 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
   // Material de las secciones con scroll
   readonly voice = VOICE;
   readonly credits = HIGHLIGHT_CREDITS;
+  readonly aboutTeaser = ABOUT_TEASER;
   readonly reel = REEL;
   readonly scenes = SCENES;
   readonly email = CONTACT.email;
@@ -121,9 +123,7 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
   private readonly document = inject(DOCUMENT);
   private sectionObserver: IntersectionObserver | null = null;
   private lastSectionObserver: IntersectionObserver | null = null;
-  private reelObserver: IntersectionObserver | null = null;
-  private reelEl: HTMLElement | null = null;
-  private motionQuery: MediaQueryList | null = null;
+  private reelReveal: RevealHandle | null = null;
 
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly zone = inject(NgZone);
@@ -153,9 +153,7 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
     this.sectionObserver?.disconnect();
     this.lastSectionObserver?.disconnect();
     this.heroObserver?.disconnect();
-    this.reelObserver?.disconnect();
-    this.reelEl?.removeEventListener('focusin', this.revealReel);
-    this.motionQuery?.removeEventListener?.('change', this.onMotionChange);
+    this.reelReveal?.destroy();
     for (const [type, listener] of this.heroListeners) {
       this.heroEl?.removeEventListener(type, listener);
     }
@@ -187,16 +185,6 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
         this.heroEl?.addEventListener(type, listener, { passive: true });
       }
     });
-  }
-
-  /** Título sin su última palabra: la última va unida al icono de enlace para que nunca quede sola. */
-  titleHead(title: string): string {
-    const cut = title.lastIndexOf(' ');
-    return cut < 0 ? '' : title.slice(0, cut + 1);
-  }
-
-  titleTail(title: string): string {
-    return title.slice(title.lastIndexOf(' ') + 1);
   }
 
   /** Publica la sección visible para marcarla en la barra superior. */
@@ -239,49 +227,25 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
   /**
    * Arma la entrada del reel solo si aún no está a la vista (lo normal al entrar por el hero), sin movimiento
    * reducido y sin un enlace directo a una sección (`/home#fotos` deja el reel atrás, `#reel` ya lo enseña).
-   * La entrada la dispara un observador propio del reel, no la sección activa de la barra: así ocurre aunque
-   * se salte el reel con la barra y se vea solo en parte. Recibir el foco también la dispara.
+   * La entrada la dispara un observador propio del reel (revealOnce), no la sección activa de la barra: así
+   * ocurre aunque se salte el reel con la barra y se vea solo en parte. Recibir el foco también la dispara.
    */
   private armReel(): void {
-    const view = this.document.defaultView;
     const reel = this.document.getElementById('reel');
-    if (!view || !reel) {
+    if (!reel) {
       return;
     }
-    this.motionQuery = view.matchMedia?.('(prefers-reduced-motion: reduce)') ?? null;
-    this.motionQuery?.addEventListener?.('change', this.onMotionChange);
-    const hash = view.location.hash.slice(1);
-    const deepLink = (SECTION_IDS as readonly string[]).includes(hash);
-    const belowView = reel.getBoundingClientRect().top > view.innerHeight * REEL_ARM_RATIO;
-    if (prefersReducedMotion(view) || deepLink || !belowView) {
-      return;
-    }
-    this.reelArmed.set(true);
-    this.reelEl = reel;
-    reel.addEventListener('focusin', this.revealReel);
-    this.reelObserver = new IntersectionObserver(([entry]) => {
-      if (entry?.isIntersecting) {
-        this.revealReel();
-      }
-    }, { threshold: REEL_SHOW_RATIO });
-    this.reelObserver.observe(reel);
+    this.reelReveal = revealOnce(reel, this.document.defaultView as RevealWindow | null, (reason) => {
+      this.zone.run(() => {
+        // Si se activa el movimiento reducido con la entrada aún armada, se desarma: todo queda visible y quieto.
+        if (reason === 'reduced-motion') {
+          this.reelArmed.set(false);
+        }
+        this.reelShown.set(true);
+      });
+    }, { armRatio: REVEAL_ARM_RATIO, showRatio: REEL_SHOW_RATIO, deepLinkIds: SECTION_IDS });
+    this.reelArmed.set(this.reelReveal.armed);
   }
-
-  /** Entrada del reel, una sola vez: después ya no hace falta observarlo. */
-  private readonly revealReel = (): void => {
-    this.zone.run(() => this.reelShown.set(true));
-    this.reelObserver?.disconnect();
-    this.reelObserver = null;
-    this.reelEl?.removeEventListener('focusin', this.revealReel);
-  };
-
-  /** Si se activa el movimiento reducido con la entrada aún armada, se desarma: todo queda visible y quieto. */
-  private readonly onMotionChange = (event: MediaQueryListEvent): void => {
-    if (event.matches && this.reelArmed()) {
-      this.zone.run(() => this.reelArmed.set(false));
-      this.revealReel();
-    }
-  };
 
   private setBodyScrollLocked(locked: boolean): void {
     if (this.isBrowser) {

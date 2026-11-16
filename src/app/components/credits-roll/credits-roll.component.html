@@ -1,0 +1,14 @@
+<ul class="roll" role="list" aria-label="Créditos destacados">
+  @for (credit of credits(); track credit.title; let i = $index) {
+    <li class="roll-row" [style.--row]="i">
+      <span class="roll-title">
+        @if (credit.url) {
+          <a [href]="credit.url" target="_blank" rel="noopener noreferrer" class="roll-link">{{ titleHead(credit.title) }}<span class="whitespace-nowrap">{{ titleTail(credit.title) }}<app-icon name="up-right-from-square" class="roll-icon"></app-icon><span class="sr-only"> (se abre en otra pestaña)</span></span></a>
+        } @else {
+          {{ credit.title }}
+        }
+      </span>
+      <span class="roll-by">{{ credit.by }}@if (credit.note) {<span class="roll-note">{{ credit.note }}</span>}</span>
+    </li>
+  }
+</ul>

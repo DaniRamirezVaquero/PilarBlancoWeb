@@ -125,29 +125,15 @@
   </section>
 
   <!-- Trayectoria y sobre mí -->
-  <section id="trayectoria" class="home-block" aria-labelledby="trayectoria-title">
+  <section id="trayectoria" class="home-block trayectoria" aria-labelledby="trayectoria-title">
     <h2 id="trayectoria-title" class="page-title">Trayectoria</h2>
-    <span class="page-title-dash mb-8" aria-hidden="true"></span>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-      <div>
-        <ul class="flex flex-col">
-          @for (credit of credits; track credit.title) {
-            <li class="credit grid grid-cols-[6.5rem_1fr] sm:grid-cols-[8rem_1fr] gap-x-4 py-3">
-              <span class="credit-note text-sm pt-1">{{ credit.note }}</span>
-              <span>
-                @if (credit.url) {
-                  <a [href]="credit.url" target="_blank" rel="noopener noreferrer" class="credit-title home-link">
-                    {{ titleHead(credit.title) }}<span class="whitespace-nowrap">{{ titleTail(credit.title) }}<app-icon name="up-right-from-square" class="ml-2 text-sm"></app-icon><span class="sr-only"> (se abre en otra pestaña)</span></span>
-                  </a>
-                } @else {
-                  <span class="credit-title">{{ credit.title }}</span>
-                }
-                <span class="block text-sm">{{ credit.by }}</span>
-              </span>
-            </li>
-          }
-        </ul>
-        <div class="flex flex-wrap items-center gap-x-8 gap-y-4 mt-8">
+    <span class="page-title-dash mb-12" aria-hidden="true"></span>
+    <!-- Créditos y retrato lado a lado en escritorio; uno tras otro en móvil. -->
+    <div class="tray-grid">
+      <div class="tray-credits">
+        <!-- Rodillo de créditos: el título manda; quién y formato, debajo y en pequeño. -->
+        <app-credits-roll [credits]="credits" />
+        <div class="roll-actions flex flex-wrap items-center gap-x-8 gap-y-4">
           <a routerLink="/curriculum" class="btn-line">
             Currículum completo <app-icon name="arrow-right"></app-icon>
           </a>
@@ -155,20 +141,13 @@
         </div>
       </div>
 
-      <article class="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-6" aria-labelledby="sobre-title">
+      <article class="sobre" aria-labelledby="sobre-title">
         <img src="assets/sobre-mi-2-700.webp" srcset="assets/sobre-mi-2-700.webp 700w, assets/sobre-mi-2-1430.webp 1430w"
-          sizes="(min-width: 1024px) 18rem, 60vw" width="700" height="729" loading="lazy" decoding="async"
-          class="w-48 sm:w-56 lg:w-full xl:w-56 self-start object-cover aspect-[4/5] object-top shadow-md"
-          alt="Retrato de Pilar Blanco sonriendo" />
-        <div>
-          <h3 id="sobre-title" class="section-title mb-3">Sobre mí</h3>
-          <p class="lato-regular leading-relaxed">
-            Inicié mi carrera en Metronomoteatro, un laboratorio de investigación escénica, con montajes como
-            <em>Repris</em>, Premio Nacional de Teatro de Vanguardia en 1991. De ahí, a la televisión con
-            <em>Plaza alta</em> y <em>Arrayán</em>, la radio y la formación de jóvenes ante la cámara.
-          </p>
-          <a routerLink="/bio" class="home-link mt-4 inline-block">Leer la biografía</a>
-        </div>
+          sizes="(min-width: 1024px) 28rem, 16rem" width="700" height="729" loading="lazy" decoding="async"
+          class="sobre-photo" alt="Retrato de Pilar Blanco sonriendo" />
+        <h3 id="sobre-title" class="sobre-title">Sobre mí</h3>
+        <p class="sobre-text">{{ aboutTeaser }}</p>
+        <a routerLink="/bio" class="home-link sobre-link">Leer la biografía</a>
       </article>
     </div>
   </section>
@@ -177,6 +156,8 @@
   <section id="contacto" class="home-block lg:pt-2" aria-labelledby="contacto-title">
     <h2 id="contacto-title" class="page-title">Contacto</h2>
     <span class="page-title-dash mb-8" aria-hidden="true"></span>
+    <!-- La firma: se escribe trazo a trazo al llegar (si está validada); el correo, siempre visible debajo. -->
+    <app-signature class="contact-signature" />
     <a [href]="mailtoUrl" class="contact-email playfair-display-medium block text-3xl sm:text-4xl lg:text-5xl leading-tight break-words">{{ emailUser }}<wbr />{{ emailDomain }}</a>
     <div class="flex flex-wrap items-center gap-x-8 gap-y-4 mt-8">
       <a [href]="gmailUrl" target="_blank" rel="noopener noreferrer" class="btn-line">

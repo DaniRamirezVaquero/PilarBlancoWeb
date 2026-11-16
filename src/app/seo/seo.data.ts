@@ -15,7 +15,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     path: '/home',
     title: 'Pilar Blanco | Actriz',
     description:
-      'Pilar Blanco, actriz de cine, televisión, teatro y doblaje. Reel, galería, currículum y contacto para castings y agencias.',
+      'Pilar Blanco, actriz de cine, televisión, teatro y doblaje. Reel, fotos, demos de locución, trayectoria y contacto para castings y agencias.',
     breadcrumb: 'Inicio',
     ogType: 'profile',
   },
@@ -71,4 +71,4 @@ export const PERSON_SAME_AS = [
 ];
 
 export const PERSON_DESCRIPTION =
-  'Pilar Blanco es actriz de cine, televisión, teatro y doblaje. Inició su carrera en Metronomoteatro y ha trabajado en largometrajes, series, cortometrajes, publicidad, locución y formación ante la cámara.';
+  'Pilar Blanco es actriz de cine, televisión, teatro y doblaje, nacida en Madrid y criada en Andalucía. Ha participado en más de treinta proyectos, como Rey gitano, de Juanma Bajo Ulloa, y Por las nubes, de Fernando Colomo, y trabaja también en locución.';

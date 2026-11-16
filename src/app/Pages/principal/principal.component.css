@@ -219,20 +219,32 @@
   text-decoration-thickness: 4px;
 }
 
-.credit-note {
-  letter-spacing: 0.02em;
-}
+/* ── #trayectoria · propuesta B, «rodillo con retrato» ──────────────────────
+   Escritorio: créditos (7/12) y «Sobre mí» con el retrato (5/12), alineados arriba; los botones cierran
+   la columna de créditos en su borde izquierdo. Móvil: créditos, botones y «Sobre mí», uno tras otro. */
+.tray-grid { display: grid; gap: clamp(4rem, 9vw, 5rem); }
+.roll-actions { margin-top: clamp(2.5rem, 4vw, 3.25rem); }
 
-.credit + .credit {
-  border-top: 1px solid oklch(var(--bc) / 0.2);
-}
-
-.credit-title {
+.sobre { display: grid; justify-items: start; align-content: start; }
+.sobre-photo { width: min(16rem, 75%); aspect-ratio: 4 / 5; object-fit: cover; object-position: top; }
+.sobre-title {
+  margin-top: 1.75rem;
   font-family: "Playfair Display", serif;
   font-weight: 500;
-  font-size: 1.25rem;
-  line-height: 1.3;
+  font-size: clamp(1.6rem, 2.4vw, 2.25rem);
+  line-height: 1.15;
+  color: oklch(var(--bc));
 }
+.sobre-text { margin-top: 0.85rem; font-family: Lato, sans-serif; font-size: clamp(1rem, 1.25vw, 1.15rem); line-height: 1.65; max-width: 34rem; }
+.sobre-link { margin-top: 1.25rem; }
+
+@media (min-width: 1024px) {
+  .tray-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(3rem, 6vw, 6rem); }
+  .sobre { position: sticky; top: calc(var(--nav-h) + 2rem); align-self: start; }
+  .sobre-photo { width: 100%; max-width: 28rem; }
+}
+
+.contact-signature { margin-bottom: clamp(1.75rem, 5vw, 3rem); }
 
 .contact-email {
   color: oklch(var(--bc));

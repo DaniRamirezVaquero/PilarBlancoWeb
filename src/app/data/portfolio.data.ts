@@ -114,6 +114,10 @@ export const HIGHLIGHT_CREDITS: Credit[] = [
   { title: 'Repris', by: 'Cía. Metronomoteatro', note: 'Teatro' },
 ];
 
+/** Adelanto de «Sobre mí» en la home (texto propio de la home; la biografía completa vive en /bio). */
+export const ABOUT_TEASER =
+  'Cada experiencia, cada proyecto y cada etapa del camino han dejado una huella en mi forma de entender la interpretación y de acercarme a los personajes desde la curiosidad, la emoción y la búsqueda de autenticidad.';
+
 export const CONTACT = {
   email: 'pilarblanco.actriz@gmail.com',
   instagram: 'https://www.instagram.com/pilarblanco.actriz/',

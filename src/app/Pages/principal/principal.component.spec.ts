@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { PrincipalComponent } from './principal.component';
 import { NavService } from '../../services/nav.service';
-import { VOICE } from '../../data/portfolio.data';
+import { ABOUT_TEASER, HIGHLIGHT_CREDITS, VOICE } from '../../data/portfolio.data';
 
 /** IntersectionObserver de mentira: guarda cada instancia para disparar sus entradas a mano. */
 class FakeIntersectionObserver {
@@ -199,6 +199,28 @@ describe('PrincipalComponent', () => {
       fixture.detectChanges();
       expect(reel().classList).not.toContain('is-armed');
       expect(filmStrip().inert).toBeFalse();
+    });
+  });
+
+  describe('Trayectoria y contacto', () => {
+    it('«Sobre mí» muestra el adelanto propio de la home, no el texto antiguo', () => {
+      create(false);
+      const text = host.querySelector('#trayectoria')?.textContent ?? '';
+      expect(text).toContain(ABOUT_TEASER);
+      expect(text).not.toContain('Inicié mi carrera');
+    });
+
+    it('los créditos destacados van como títulos de crédito', () => {
+      create(false);
+      expect(host.querySelectorAll('#trayectoria app-credits-roll li').length).toBe(HIGHLIGHT_CREDITS.length);
+    });
+
+    it('la firma va en contacto, antes del correo', () => {
+      create(false);
+      const signature = host.querySelector('#contacto app-signature') as HTMLElement;
+      const email = host.querySelector('#contacto .contact-email') as HTMLElement;
+      expect(signature).not.toBeNull();
+      expect(signature.compareDocumentPosition(email) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     });
   });
 

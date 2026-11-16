@@ -116,7 +116,8 @@ body {
   width: 3rem;
   height: 2px;
   margin-top: 0.85rem;
-  background: oklch(var(--bc));
+  /* Acento del tema (naranja o azul según la portada): decorativa, cambia con la transición del tema. */
+  background: oklch(var(--a));
   transition: background-color 1.2s ease;
 }
 

@@ -16,6 +16,9 @@
   }
 </ol>
 
-@if (openIndex() !== null) {
-  <app-photo-viewer [photos]="photos" [(index)]="viewerIndex" [originOf]="frameRect" (closed)="onViewerClosed()" />
+<!-- El visor solo existe al abrir una foto: su código se descarga en reposo y no pesa en la carga inicial. -->
+@defer (when openIndex() !== null; prefetch on idle) {
+  @if (openIndex() !== null) {
+    <app-photo-viewer [photos]="photos" [(index)]="viewerIndex" [originOf]="frameRect" (closed)="onViewerClosed()" />
+  }
 }

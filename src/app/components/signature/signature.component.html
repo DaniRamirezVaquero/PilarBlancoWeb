@@ -1,0 +1,13 @@
+<!-- Respaldo: se ve hasta que el vector está dibujado (también en el prerender), sin hueco ni parpadeo. -->
+@if (!vectorDrawn()) {
+  <span class="sig-static"></span>
+}
+<!-- El nombre accesible lo da el host («Pilar Blanco»); el dibujo no se lee. -->
+<svg class="sig-svg" [attr.viewBox]="viewBox" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+  <!-- Los trazos se descargan aparte (@defer): sin aprobar y sin ?firma=trazo, ese código ni se pide. -->
+  @defer (when vector()) {
+    <g app-signature-vector [strokeWidth]="strokeWidth" (drawn)="onVectorDrawn($event)"></g>
+  }
+  <text class="sig-surname" [attr.x]="surname.x" [attr.y]="surname.y" [attr.font-size]="surname.fontSize"
+    [attr.textLength]="surname.textLength" lengthAdjust="spacing">{{ surname.text }}</text>
+</svg>

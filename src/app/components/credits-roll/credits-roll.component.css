@@ -1,0 +1,70 @@
+/* Propuesta B, «rodillo con retrato»: créditos apilados, el título grande en Playfair y debajo, en Lato
+   pequeña, quién y formato. Sin años ni mayúsculas espaciadas. */
+:host { display: block; }
+
+.roll { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(1.5rem, 2.6vw, 2.1rem); }
+
+.roll-row { display: grid; gap: 0.4rem; }
+
+.roll-title {
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+  font-size: clamp(1.4rem, 2.3vw, 2rem);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  color: oklch(var(--bc));
+  text-wrap: balance;
+}
+
+.roll-by {
+  font-family: Lato, sans-serif;
+  font-size: clamp(0.875rem, 1.1vw, 0.95rem);
+  line-height: 1.4;
+  color: oklch(var(--bc));
+}
+
+.roll-note { font-weight: 300; }
+.roll-note::before { content: "·" / ""; margin-inline: 0.5em; }
+
+.roll-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: oklch(var(--bc) / 0.5);
+  transition: text-decoration-color 0.2s ease;
+}
+.roll-link:hover,
+.roll-link:focus-visible { text-decoration-color: oklch(var(--bc)); }
+.roll-link:focus-visible { outline: 2px solid oklch(var(--bc)); outline-offset: 3px; }
+
+.roll-icon { margin-left: 0.3em; font-size: 0.45em; vertical-align: 0.6em; }
+
+/* Entrada (solo JS en el navegador, sin movimiento reducido ni hash), fila a fila y una sola vez: el título
+   se descubre de izquierda a derecha como una cortinilla (clip-path) mientras se desliza, y el crédito
+   secundario le sigue. */
+:host(.is-armed) .roll-title { clip-path: inset(0 100% 0 0); transform: translateX(-2.5rem); }
+:host(.is-armed) .roll-by { opacity: 0; transform: translateX(-1.5rem); }
+
+:host(.is-armed.is-shown) .roll-title {
+  clip-path: inset(-0.4em -1em -0.4em -0.4em);
+  transform: none;
+  transition:
+    clip-path 1.1s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--row, 0) * 170ms),
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--row, 0) * 170ms);
+}
+:host(.is-armed.is-shown) .roll-by {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.8s ease calc(var(--row, 0) * 170ms + 450ms),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--row, 0) * 170ms + 450ms);
+}
+
+/* Con el teclado dentro, la entrada es inmediata: el foco nunca cae en algo invisible. */
+:host(.is-armed.is-shown:focus-within) .roll-title,
+:host(.is-armed.is-shown:focus-within) .roll-by { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .roll-title, .roll-by { transition: none !important; }
+}
