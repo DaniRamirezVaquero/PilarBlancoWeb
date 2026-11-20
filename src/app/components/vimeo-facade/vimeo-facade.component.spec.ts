@@ -61,4 +61,51 @@ describe('VimeoFacadeComponent', () => {
     expect(iframe.getAttribute('tabindex')).toBe('-1');
     expect(document.activeElement).toBe(iframe);
   });
+
+  it('pone el foco en el iframe sin desplazar la página', () => {
+    // Arrange
+    const focus = spyOn(HTMLIFrameElement.prototype, 'focus');
+    // Act
+    fixture.componentInstance.load();
+    fixture.detectChanges();
+    TestBed.inject(ApplicationRef).tick();
+    // Assert
+    expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+  });
+
+  it('el encuadre del póster lo pone el contenedor con --poster-pos y --poster-zoom', () => {
+    // Arrange
+    const el: HTMLElement = fixture.nativeElement;
+    document.body.appendChild(el);
+    // Act
+    el.style.setProperty('--poster-pos', '10% 20%');
+    el.style.setProperty('--poster-zoom', '1.5');
+    // Assert
+    const img = el.querySelector('img') as HTMLImageElement;
+    const style = getComputedStyle(img);
+    expect(style.objectPosition).toBe('10% 20%');
+    expect(style.transform).toBe('matrix(1.5, 0, 0, 1.5, 0, 0)');
+    el.remove();
+  });
+});
+
+describe('VimeoFacadeComponent con startLoaded', () => {
+  it('crea el reproductor al nacer, sin botón de póster', async () => {
+    // Arrange
+    await TestBed.configureTestingModule({ imports: [VimeoFacadeComponent] }).compileComponents();
+    const fixture = TestBed.createComponent(VimeoFacadeComponent);
+    fixture.componentRef.setInput('videoId', '989002249');
+    fixture.componentRef.setInput('hash', '87574a8f82');
+    fixture.componentRef.setInput('title', 'Escena');
+    fixture.componentRef.setInput('fallbackPoster', 'https://i.vimeocdn.com/video/1-d_1920?region=us');
+    fixture.componentRef.setInput('startLoaded', true);
+    // Act
+    fixture.detectChanges();
+    // Assert
+    const el: HTMLElement = fixture.nativeElement;
+    expect(el.querySelector('button')).toBeNull();
+    expect(el.querySelector('iframe')?.getAttribute('src')).toBe('https://player.vimeo.com/video/989002249?h=87574a8f82&autoplay=1');
+    expect(fixture.componentInstance.frame()?.nativeElement).toBe(el.querySelector('iframe') as HTMLIFrameElement);
+    fixture.destroy();
+  });
 });

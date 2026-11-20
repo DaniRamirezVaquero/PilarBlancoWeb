@@ -2,7 +2,11 @@
 module.exports = {
   content: [
     "./src/**/*.{html,ts}",
+    // Los tests no pintan nada: una variable `tab` o un texto de prueba metían componentes DaisyUI en el CSS global.
+    "!./src/**/*.spec.ts",
   ],
+  // `role="alert"` (aviso del modal del reel) colaba el componente `.alert` de DaisyUI, que la web no usa.
+  blocklist: ["alert"],
   daisyui: {
     themes: [
       {

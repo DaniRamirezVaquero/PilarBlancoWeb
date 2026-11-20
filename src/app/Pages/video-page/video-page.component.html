@@ -1,34 +1,33 @@
-<div class="bg-page w-full page-top pb-24 lg:pb-36 px-8 sm:px-16 lg:px-32 xl:px-64">
-  <div class="w-full flex flex-col gap-12 lg:gap-16">
+<div class="house bg-page relative isolate w-full page-top pb-24 lg:pb-36 px-8 sm:px-16 lg:px-32 xl:px-64"
+  [class.lights-down]="lightsDown()">
+  <!-- Sala: la misma capa que el reel de la home. Solo cambia de opacidad mientras suena la pantalla y se ve. -->
+  <div class="house-lights" aria-hidden="true"></div>
 
+  <div class="house-content">
     <div>
       <h1 class="page-title">Vídeo</h1>
       <span class="page-title-dash" aria-hidden="true"></span>
     </div>
 
-    <section class="w-full" aria-labelledby="reel-title">
-      <h2 id="reel-title" class="section-title mb-3">{{ reel.label }}</h2>
-      <div class="shadow-md w-full">
-        <app-vimeo-facade [videoId]="reel.videoId" [hash]="reel.hash" [fallbackPoster]="reel.fallbackPoster"
-          [title]="reel.title" [priority]="true" sizes="100vw" />
+    <section class="screen" aria-labelledby="screen-title">
+      <!-- Las bandas panorámicas viven en el padding: su espacio está siempre reservado. -->
+      <div #screen class="screen-bands">
+        <!-- Un reproductor por vídeo: al cambiar de cartel se destruye el anterior y nace el nuevo. -->
+        @for (video of [current()]; track video.videoId) {
+          <app-vimeo-facade [videoId]="video.videoId" [hash]="video.hash" [fallbackPoster]="video.fallbackPoster"
+            [title]="video.title" [priority]="true" [startLoaded]="autoplay()"
+            sizes="(min-width: 1280px) min(58rem, 100vw), (min-width: 1024px) calc(100vw - 16rem), (min-width: 640px) calc(100vw - 8rem), calc(100vw - 4rem)" />
+        }
       </div>
+      <p id="screen-title" class="screen-caption">
+        <span class="screen-kicker">Ahora en pantalla</span>{{ ' ' }}<span class="screen-name">{{ current().label }}</span>
+      </p>
     </section>
 
-    <section class="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-x-20 lg:gap-y-16"
-      aria-label="Videobook Express, reel y escena de Pilar Blanco">
-
-      @for (scene of scenes; track scene.videoId) {
-        <!-- Con un número impar de escenas, la última ocupa las dos columnas. -->
-        <div class="w-full max-w-[1280px] scene-anchor lg:[&:last-child:nth-child(odd)]:col-span-2"
-          [attr.id]="sceneSlug(scene)">
-          <h2 class="section-title mb-3">{{ scene.label }}</h2>
-          <div class="shadow-md w-full">
-            <app-vimeo-facade [videoId]="scene.videoId" [hash]="scene.hash" [fallbackPoster]="scene.fallbackPoster"
-              [title]="scene.title" />
-          </div>
-        </div>
-      }
-
+    <section class="cartel" aria-labelledby="cartel-title">
+      <h2 id="cartel-title" class="page-title cartel-title">En cartel</h2>
+      <span class="page-title-dash mb-8" aria-hidden="true"></span>
+      <app-poster-wall [videos]="billboard" [current]="current().videoId" (choose)="show($event)" />
     </section>
   </div>
 </div>

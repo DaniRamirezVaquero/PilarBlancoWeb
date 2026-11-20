@@ -1,5 +1,59 @@
+/* Todo el contenido por encima de la capa de la sala (.house-lights, en styles.css). */
+.house-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 7vw, 5rem);
+}
 
-/* El salto a una escena (desde la home) no queda bajo la barra superior. */
-.scene-anchor {
+/* Como en una sala: rótulo y pantalla caben a la vez en la ventana. Alineada a la izquierda con el título. */
+.screen {
+  --screen-w: min(58rem, max(20rem, calc((100svh - var(--nav-h) - 12rem) * 16 / 9)));
   scroll-margin-top: calc(var(--nav-h) + var(--anchor-gap));
+}
+
+.screen-bands { max-width: var(--screen-w); }
+
+/* «Ahora en pantalla Reel 2026»: a la izquierda, en mayúscula y minúscula; el nombre manda. */
+.screen-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  max-width: var(--screen-w);
+  margin: 1rem 0 0;
+  color: oklch(var(--bc));
+}
+
+.screen-kicker {
+  font-family: Lato, sans-serif;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  letter-spacing: 0.04em;
+  /* Sin bajar la opacidad: con 0.75 no llegaba a AA en mytheme-portada. Lo distingue la tipografía. */
+}
+
+.screen-name {
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+.cartel-title { font-size: clamp(1.6rem, 3vw, 2.25rem); }
+
+/* Con la sala a oscuras, la pared desaparece: solo quedan la pantalla y la sala, y ningún retrato atenuado
+   sobre el negro. El hueco se mantiene (sin salto) y `visibility: hidden` la saca del orden de tabulación.
+   `visibility` no se anima: solo se aplica de golpe, al acabar el fundido (o al empezarlo, al volver). */
+.cartel {
+  transition: opacity 0.4s ease, visibility 0s linear 0s;
+}
+.lights-down .cartel {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cartel,
+  .lights-down .cartel { transition: none; }
 }

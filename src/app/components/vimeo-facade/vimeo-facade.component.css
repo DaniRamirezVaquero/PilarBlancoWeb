@@ -2,3 +2,10 @@
   display: block;
   width: 100%;
 }
+
+/* Encuadre opcional que pone el contenedor (p. ej. ocultar un subtítulo quemado). Estático: nunca se anima. */
+.poster {
+  object-position: var(--poster-pos, 50% 50%);
+  transform: scale(var(--poster-zoom, 1));
+  transform-origin: var(--poster-pos, 50% 50%);
+}

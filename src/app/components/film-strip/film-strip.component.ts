@@ -5,7 +5,7 @@ import { posterUrl } from '../../utils/vimeo-thumbnail';
 import { slugify } from '../../utils/slug';
 
 /**
- * Tira de película horizontal con las escenas: cada fotograma enlaza a su ancla en /video. Negro con
+ * Tira de película horizontal con las escenas: cada fotograma abre su escena en /video (?escena=slug). Negro con
  * perforaciones estáticas; en pantallas estrechas se desplaza con scroll-snap.
  */
 @Component({
@@ -22,7 +22,7 @@ export class FilmStripComponent {
   /** Miniaturas cuyo póster vivo falló: usan el guardado. */
   private readonly failedThumbs = signal<ReadonlySet<string>>(new Set());
 
-  /** Ancla de la escena en /video. */
+  /** Slug de la escena: /video?escena=slug la pone en la pantalla. */
   sceneSlug(scene: Video): string {
     return slugify(scene.label);
   }

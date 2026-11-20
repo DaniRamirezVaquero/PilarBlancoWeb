@@ -1,0 +1,4 @@
+/* El modal es `fixed`: el host no ocupa sitio en la página. */
+:host {
+  display: contents;
+}

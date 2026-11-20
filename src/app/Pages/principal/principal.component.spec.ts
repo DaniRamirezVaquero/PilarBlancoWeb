@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ApplicationRef } from '@angular/core';
+import { ComponentFixture, DeferBlockBehavior, DeferBlockState, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { PrincipalComponent } from './principal.component';
 import { NavService } from '../../services/nav.service';
@@ -314,5 +315,76 @@ describe('PrincipalComponent', () => {
     for (const id of ['reel', 'fotos', 'voz', 'trayectoria', 'contacto']) {
       expect(host.querySelector(`#${id}`)).withContext(id).not.toBeNull();
     }
+  });
+});
+
+describe('PrincipalComponent, reel del hero', () => {
+  let fixture: ComponentFixture<PrincipalComponent>;
+  let host: HTMLElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [PrincipalComponent],
+      providers: [provideRouter([])],
+      deferBlockBehavior: DeferBlockBehavior.Manual,
+    }).compileComponents();
+    fixture = TestBed.createComponent(PrincipalComponent);
+    host = fixture.nativeElement as HTMLElement;
+    document.body.appendChild(host);
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    host.remove();
+    document.documentElement.style.overflow = '';
+  });
+
+  it('▶ es un botón real, alcanzable con Tab: Enter y Espacio lo activan', () => {
+    const play = host.querySelector('app-play-btn button') as HTMLButtonElement;
+    expect(play.tagName).toBe('BUTTON');
+    expect(play.type).toBe('button');
+    // El navegador convierte Enter y Espacio de un <button> en un click: aquí se emula ese click.
+    play.click();
+    expect(fixture.componentInstance.showReel).toBeTrue();
+  });
+
+  it('si el chunk del modal falla (@error), showReel vuelve a false y el foco a ▶', async () => {
+    const before = (await fixture.getDeferBlocks()).length;
+    fixture.componentInstance.toggleShowReel();
+    fixture.detectChanges();
+    const blocks = await fixture.getDeferBlocks();
+    expect(blocks.length).toBe(before + 1);
+    await blocks[blocks.length - 1].render(DeferBlockState.Error);
+    await Promise.resolve();
+    fixture.detectChanges();
+    TestBed.inject(ApplicationRef).tick();
+    expect(fixture.componentInstance.showReel).toBeFalse();
+    expect(host.querySelector('app-reel-modal')).toBeNull();
+    expect(document.activeElement).toBe(host.querySelector('app-play-btn button'));
+  });
+
+  it('▶ abre el modal diferido y al cerrarlo desaparece y el foco vuelve a ▶', async () => {
+    // Arrange
+    const before = (await fixture.getDeferBlocks()).length;
+    const play = host.querySelector('app-play-btn button') as HTMLElement;
+    // Act: abrir y cargar el bloque diferido
+    fixture.componentInstance.toggleShowReel();
+    fixture.detectChanges();
+    const blocks = await fixture.getDeferBlocks();
+    expect(blocks.length).toBe(before + 1);
+    await blocks[blocks.length - 1].render(DeferBlockState.Complete);
+    TestBed.inject(ApplicationRef).tick();
+    // Assert: abierto
+    expect(host.querySelector('app-reel-modal [role="dialog"]')).not.toBeNull();
+    expect(document.documentElement.style.overflow).toBe('hidden');
+    // Act: cerrar con la X
+    (host.querySelector('app-reel-modal button') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    TestBed.inject(ApplicationRef).tick();
+    // Assert: cerrado, scroll libre y foco en ▶
+    expect(host.querySelector('app-reel-modal')).toBeNull();
+    expect(document.documentElement.style.overflow).toBe('');
+    expect(document.activeElement).toBe(play);
   });
 });

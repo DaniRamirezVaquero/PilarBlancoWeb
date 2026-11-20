@@ -1,7 +1,7 @@
 <ul class="film-strip">
   @for (scene of scenes(); track scene.videoId) {
     <li class="film-frame">
-      <a routerLink="/video" [fragment]="sceneSlug(scene)" class="scene-link">
+      <a routerLink="/video" [queryParams]="{ escena: sceneSlug(scene) }" class="scene-link">
         <!-- Solo el fotograma va sobre el negro de la película; el rótulo queda debajo, sobre la sala. -->
         <span class="film-cell">
           <img [src]="sceneThumb(scene)" (error)="onSceneThumbError(scene)" alt="" loading="lazy" decoding="async"

@@ -1,5 +1,6 @@
 import {
-  Component, inject, OnDestroy, AfterViewInit, ElementRef, NgZone, PLATFORM_ID, computed, signal, viewChild,
+  Component, inject, OnDestroy, AfterViewInit, ElementRef, Injector, NgZone, PLATFORM_ID, afterNextRender, computed,
+  signal, viewChild,
 } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -13,12 +14,13 @@ import { IconComponent } from '../../components/icon/icon.component';
 import { ABOUT_TEASER, CONTACT, HIGHLIGHT_CREDITS, REEL, SCENES, VOICE } from '../../data/portfolio.data';
 import { CreditsRollComponent } from '../../components/credits-roll/credits-roll.component';
 import { SignatureComponent } from '../../components/signature/signature.component';
+import { ReelModalComponent } from '../../components/reel-modal/reel-modal.component';
 import { FilmStripComponent } from '../../components/film-strip/film-strip.component';
 import { SECTION_IDS } from '../../data/sections.data';
+import { OnInitDirective } from '../../utils/on-init.directive';
 import { REVEAL_ARM_RATIO, RevealHandle, RevealWindow, revealOnce } from '../../utils/reveal-once';
 import { NavService } from '../../services/nav.service';
 import { HeroCover, HeroThemeService } from '../../services/hero-theme.service';
-import { CommonModule } from '@angular/common';
 
 /** Fracción visible a partir de la cual la última sección cuenta como «vista entera». */
 const LAST_SECTION_RATIO = 0.9;
@@ -29,7 +31,6 @@ const REEL_SHOW_RATIO = 0.15;
     selector: 'app-principal',
     imports: [
         PlayBtnComponent,
-        CommonModule,
         RouterLink,
         VimeoFacadeComponent,
         VoiceStripComponent,
@@ -40,6 +41,8 @@ const REEL_SHOW_RATIO = 0.15;
         IconComponent,
         CreditsRollComponent,
         SignatureComponent,
+        ReelModalComponent,
+        OnInitDirective,
     ],
     templateUrl: './principal.component.html',
     styleUrl: './principal.component.css'
@@ -127,6 +130,7 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
 
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly zone = inject(NgZone);
+  private readonly injector = inject(Injector);
   private readonly navService = inject(NavService);
   private heroObserver: IntersectionObserver | null = null;
   private heroEl: HTMLElement | null = null;
@@ -159,8 +163,6 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
     }
     this.navService.activeSection.set(null);
     this.navService.heroPassed.set(false);
-    this.setBodyScrollLocked(false);
-    this.document.removeEventListener('keydown', this.onEscape);
   }
 
   /** La barra superior pasa de transparente a cristal cuando el hero sale de la pantalla. */
@@ -247,12 +249,6 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
     this.reelArmed.set(this.reelReveal.armed);
   }
 
-  private setBodyScrollLocked(locked: boolean): void {
-    if (this.isBrowser) {
-      this.document.documentElement.style.overflow = locked ? 'hidden' : '';
-    }
-  }
-
   onCoverLoad(cover: HeroCover): void {
     if (cover === this.heroTheme.currentCover()) {
       this.readyCover.set(cover);
@@ -280,22 +276,25 @@ export class PrincipalComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  toggleShowReel() {
+  /**
+   * Abre o cierra el reel del hero. El modal (diferido) bloquea el scroll y escucha Esc él mismo; al cerrarse,
+   * el foco vuelve al botón ▶ que lo abrió.
+   */
+  toggleShowReel(): void {
     this.showReel = !this.showReel;
-    this.setBodyScrollLocked(this.showReel);
-    if (this.showReel) {
-      this.document.addEventListener('keydown', this.onEscape);
-    } else {
-      this.document.removeEventListener('keydown', this.onEscape);
+    if (!this.showReel && this.isBrowser) {
+      afterNextRender(() => {
+        this.elementRef.nativeElement.querySelector<HTMLElement>('app-play-btn button')?.focus();
+      }, { injector: this.injector });
     }
   }
 
-  /** Escape cierra el reel del hero mientras está abierto. */
-  private readonly onEscape = (event: KeyboardEvent): void => {
-    if (event.key === 'Escape' && this.showReel) {
-      this.zone.run(() => this.toggleShowReel());
+  /** El chunk del modal no llegó (`@error`): se cierra para no dejar un modal invisible y el foco vuelve a ▶. */
+  reelLoadFailed(): void {
+    if (this.showReel) {
+      this.toggleShowReel();
     }
-  };
+  }
 
   private onMouseMove(event: MouseEvent): void {
     const container = this.heroEl;

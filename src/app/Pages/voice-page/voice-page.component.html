@@ -1,5 +1,5 @@
 <div class="bg-page w-full page-top pb-24 lg:pb-36 px-8 sm:px-16 lg:px-32 xl:px-64 overflow-x-hidden">
-  <div class="flex flex-col gap-12">
+  <div class="flex flex-col gap-16 lg:gap-24">
     <div>
       <h1 class="page-title">Doblaje y locución</h1>
       <span class="page-title-dash" aria-hidden="true"></span>
@@ -7,21 +7,29 @@
 
     <section aria-labelledby="doblaje-title">
       <h2 id="doblaje-title" class="section-title voice-heading mb-6">Doblaje</h2>
-      <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20">
-
+      <div class="dubs">
         @for (v of dubbing; track v.videoId) {
-          <div class="w-full">
+          <!-- La pantalla se recorta para ocultar el subtítulo quemado; la frase, en grande, va debajo. -->
+          <figure #dub class="dub" [class.is-armed]="armed()" [class.is-shown]="shown()[$index]">
+            <h3 class="section-title mb-3">{{ v.label }}</h3>
             <app-vimeo-facade [videoId]="v.videoId" [hash]="v.hash" [fallbackPoster]="v.fallbackPoster"
-              [title]="v.title" [priority]="$index === 0" />
-          </div>
+              [title]="v.title" [priority]="$index === 0"
+              sizes="(min-width: 1024px) 1400px, 165vw"
+              [style.--poster-pos]="framing(v).position" [style.--poster-zoom]="framing(v).zoom ?? 1" />
+            <figcaption class="dub-line">{{ line(v) }}</figcaption>
+          </figure>
         }
-
       </div>
     </section>
 
-    <section aria-labelledby="locucion-title">
-      <h2 id="locucion-title" class="section-title voice-heading mb-6">Locución</h2>
-      <app-voice-strip class="draw" [demos]="voice"></app-voice-strip>
+    <section class="loc" aria-labelledby="locucion-title">
+      <div class="loc-head">
+        <h2 id="locucion-title" class="section-title voice-heading">Locución</h2>
+        <app-on-air-pilot [live]="airLive()" />
+      </div>
+      <!-- La onda de la demo cargada llena el fondo de la sección y avanza con ella; es decorativa. -->
+      <app-on-air-wave class="loc-air" [peaks]="airDemo().peaks" [progress]="airProgress()" [live]="airLive()" />
+      <app-voice-strip class="draw loc-tracks" [demos]="voice"></app-voice-strip>
     </section>
   </div>
 </div>

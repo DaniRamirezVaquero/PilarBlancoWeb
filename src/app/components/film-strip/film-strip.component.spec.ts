@@ -26,9 +26,9 @@ describe('FilmStripComponent', () => {
     expect(labels).toEqual(SCENES.map((scene) => scene.label));
   });
 
-  it('cada fotograma enlaza al ancla de su escena en /video', () => {
+  it('cada fotograma abre su escena en la pantalla de /video (?escena=)', () => {
     const hrefs = Array.from(host.querySelectorAll('a')).map((a) => a.getAttribute('href'));
-    expect(hrefs).toEqual(SCENES.map((scene) => `/video#${slugify(scene.label)}`));
+    expect(hrefs).toEqual(SCENES.map((scene) => `/video?escena=${slugify(scene.label)}`));
   });
 
   it('si falla la miniatura viva, usa el póster guardado', () => {

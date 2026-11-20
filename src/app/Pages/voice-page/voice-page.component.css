@@ -1,5 +1,67 @@
-
 .voice-heading {
   font-size: clamp(1.4rem, 2.2vw, 1.75rem);
   letter-spacing: 0.04em;
+}
+
+/* ── Doblaje: «subtítulo protagonista» ─────────────────────────────────────── */
+/* Una demo debajo de otra, a ancho de lectura. */
+.dubs {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3.5rem, 8vw, 6rem);
+  max-width: 52rem;
+}
+
+.dub { margin: 0; }
+
+/* La frase doblada, como un subtítulo de cine: Lato, centrada, en mayúscula y minúscula. */
+.dub-line {
+  margin-top: clamp(1rem, 2.5vw, 1.75rem);
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+  line-height: 1.3;
+  text-align: center;
+  text-wrap: balance;
+  color: oklch(var(--bc));
+}
+
+/* Entrada de corte, una vez: estado oculto solo con JS y sin movimiento reducido (revealOnce). */
+.dub.is-armed:not(.is-shown) .dub-line { opacity: 0; }
+.dub.is-armed.is-shown .dub-line { transition: opacity 0.25s linear 0.15s; }
+
+/* ── Locución: «en el aire» ───────────────────────────────────────────────── */
+.loc {
+  position: relative;
+  isolation: isolate;
+}
+
+.loc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* La onda, de fondo detrás de las pistas. En la máscara, `black` solo da el alfa (opaco): no pinta ningún color. */
+.loc-air {
+  position: absolute;
+  inset: 3.5rem 0 0;
+  z-index: -1;
+  --air-rest-fill: oklch(var(--a) / 0.14);
+  --air-played-fill: oklch(var(--a) / 0.3);
+  --air-mask: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.loc-tracks {
+  position: relative;
+  /* Velo de las filas más claro y sin desenfoque: la onda de fondo se ve a través de las pistas. */
+  --voice-row-bg: oklch(var(--b1) / 0.14);
+  --voice-row-bg-even: oklch(var(--b1) / 0.22);
+  --voice-row-blur: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dub-line { transition: none !important; }
 }

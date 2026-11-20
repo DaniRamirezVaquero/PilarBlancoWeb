@@ -1,0 +1,18 @@
+<ul class="wall">
+  @for (video of videos(); track video.videoId) {
+    <li class="wall-slot" [id]="slug(video)">
+      <button type="button" class="poster" (click)="choose.emit(video)"
+        [attr.aria-current]="current() === video.videoId ? 'true' : null"
+        [attr.aria-label]="'Ver en pantalla: ' + video.label">
+        <!-- Fondo de reserva del tono de la página, nunca negro; el título va fuera de la foto. -->
+        <span class="poster-frame">
+          <img class="poster-img" [src]="src(video)" [attr.srcset]="srcset(video)" [attr.sizes]="sizes" alt=""
+            loading="lazy" decoding="async" fetchpriority="low"
+            [style.object-position]="framing(video).position" (error)="onError(video)" />
+          <span class="poster-play" aria-hidden="true"><app-icon name="play"></app-icon></span>
+        </span>
+        <span class="poster-title">{{ video.label }}</span>
+      </button>
+    </li>
+  }
+</ul>

@@ -137,6 +137,55 @@ body {
   text-wrap: balance;
 }
 
+/* ── Sala: «se apagan las luces» (home #reel y /video) ──────────────────────
+   Capa del tono oscuro del tema (--s) llevado casi a negro (L≈0.18–0.22, azul-negro o marrón-negro);
+   solo cambia su opacidad. Con movimiento reducido se oscurece igual, pero de golpe.
+   El padre necesita `position: relative; isolation: isolate` y sus demás hijos, `position: relative;
+   z-index: 1`, para quedar por encima de la capa (en la home lo da .home-block; en /video, .house-content). */
+.house-lights {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: color-mix(in oklab, oklch(var(--s)) 55%, var(--film-black));
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.lights-down > .house-lights {
+  opacity: 0.95;
+  transition-duration: 0.9s;
+}
+
+/* Pantalla con bandas panorámicas negras en el padding: el espacio está siempre reservado (CLS 0).
+   Quien la usa decide su ancho; las entradas animan las bandas con transform desde su transform-origin. */
+.screen-bands {
+  --band: clamp(0.75rem, 2.6vw, 2.25rem);
+  position: relative;
+  padding-block: var(--band);
+}
+
+.screen-bands::before,
+.screen-bands::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--band);
+  background: var(--film-black);
+}
+
+.screen-bands::before { top: 0; transform-origin: bottom; }
+.screen-bands::after { bottom: 0; transform-origin: top; }
+
+@media (prefers-reduced-motion: reduce) {
+  .house-lights { transition: none !important; }
+  /* Sin movimiento: el hero, el modal del reel y demás entradas se ven en su estado final. */
+  .float-animation,
+  .animate-fade-in,
+  .animate-scale-in { animation: none; }
+}
+
 /* Animaciones personalizadas */
 @keyframes fade-in-up {
   from {

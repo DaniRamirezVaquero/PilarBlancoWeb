@@ -79,7 +79,10 @@ describe('CreditsRollComponent', () => {
   it('el título manda: es más grande que quién y el formato', () => {
     create();
     const size = (sel: string) => parseFloat(getComputedStyle(host.querySelector(sel) as HTMLElement).fontSize);
-    expect(size('.roll-title')).toBeGreaterThan(size('.roll-by') * 1.6);
+    // Al mínimo de los dos clamp (ventana estrecha) la proporción es 1.6 justa: se compara en céntimos de px,
+    // sin tolerancia (el ancho del host no cuenta: los clamp dependen del viewport, no del contenedor).
+    const cents = (px: number) => Math.round(px * 100);
+    expect(cents(size('.roll-title'))).toBeGreaterThanOrEqual(Math.round(cents(size('.roll-by')) * 1.6));
   });
 
   it('nada de esquela: sin mayúsculas forzadas ni años', () => {

@@ -5,10 +5,11 @@
 .voice {
   display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 0.6rem 1.1rem;
   padding: 1rem 1.25rem; color: oklch(var(--bc));
-  background: oklch(var(--b1) / 0.3);
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  /* El contenedor puede aclarar el velo de las filas (p. ej. para dejar ver una onda de fondo). */
+  background: var(--voice-row-bg, oklch(var(--b1) / 0.3));
+  -webkit-backdrop-filter: var(--voice-row-blur, blur(6px)); backdrop-filter: var(--voice-row-blur, blur(6px));
 }
-.voice:nth-child(even) { background: oklch(var(--b1) / 0.42); }
+.voice:nth-child(even) { background: var(--voice-row-bg-even, oklch(var(--b1) / 0.42)); }
 @media (min-width: 768px) {
   .voice { grid-template-columns: auto 12rem minmax(0, 1fr); }
 }

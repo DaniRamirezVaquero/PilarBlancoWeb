@@ -71,7 +71,7 @@
       <span class="page-title-dash" aria-hidden="true"></span>
     </div>
     <!-- Las bandas panorámicas viven en el padding: su espacio está siempre reservado. -->
-    <div class="reel-screen">
+    <div class="reel-screen screen-bands">
       <app-vimeo-facade [videoId]="reel.videoId" [hash]="reel.hash" [fallbackPoster]="reel.fallbackPoster"
         [title]="reel.title"
         sizes="(min-width: 1280px) min(70rem, calc(100vw - 20rem)), (min-width: 1024px) min(70rem, calc(100vw - 12rem)), (min-width: 640px) calc(100vw - 8rem), calc(100vw - 4rem)" />
@@ -179,33 +179,13 @@
 </div>
 
 @if (showReel) {
-  <div role="dialog" aria-modal="true" aria-label="Reel de Pilar Blanco"
-       class="fixed top-0 left-0 z-[100] w-screen h-dvh
-              bg-gradient-to-br from-black/90 via-black/80 to-black/90
-              backdrop-filter backdrop-blur-xl
-              flex items-center justify-center animate-fade-in">
-
-    <!-- Botón de cerrar simplificado -->
-    <button type="button" (click)="toggleShowReel()" aria-label="Cerrar el reel"
-            class="absolute top-4 right-4 sm:top-8 sm:right-8 z-20 flex h-12 w-12 items-center justify-center rounded-full
-                   text-primary hover:text-info focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
-                   focus-visible:outline-white transition-all duration-300 hover:scale-110">
-      <svg width="30" height="30" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M2.24536 32.3148L32.2454 2.3148" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
-        <path d="M32.2454 32.3148L2.24537 2.3148" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
-      </svg>
-    </button>
-
-    <!-- Contenedor del video simplificado -->
-    <div class="w-full max-w-[80%] lg:max-w-[70%]">
-      <div class="relative pb-[56.25%] h-0 overflow-hidden animate-scale-in">
-        <iframe id="player" title="Reel de actuación de Pilar Blanco"
-          src="https://player.vimeo.com/video/1208363473?h=3205afba43"
-          class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-          allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
+  <!-- El modal del reel vive en su propio chunk: se precarga en reposo y se crea al pulsar ▶. -->
+  @defer (prefetch on idle) {
+    <app-reel-modal (closed)="toggleShowReel()" />
+  } @loading {
+    <p role="status" class="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 text-white drop-shadow-lg">Cargando el reel…</p>
+  } @error {
+    <!-- Si el chunk no llega, no queda un modal invisible abierto: se cierra y el foco vuelve a ▶. -->
+    <span role="alert" class="sr-only" appOnInit (appOnInit)="reelLoadFailed()">No se ha podido cargar el reel.</span>
+  }
 }

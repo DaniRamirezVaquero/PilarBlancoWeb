@@ -1,4 +1,4 @@
-import { Component, ElementRef, Injector, Input, afterNextRender, inject, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, Injector, Input, OnInit, afterNextRender, inject, signal, viewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { IconComponent } from '../icon/icon.component';
 import { posterSrcset, posterUrl } from '../../utils/vimeo-thumbnail';
@@ -20,7 +20,7 @@ import { posterSrcset, posterUrl } from '../../utils/vimeo-thumbnail';
   templateUrl: './vimeo-facade.component.html',
   styleUrl: './vimeo-facade.component.css'
 })
-export class VimeoFacadeComponent {
+export class VimeoFacadeComponent implements OnInit {
   @Input({ required: true }) videoId!: string;
   @Input({ required: true }) hash!: string;
   @Input({ required: true }) title!: string;
@@ -30,10 +30,13 @@ export class VimeoFacadeComponent {
   @Input() priority = false;
   /** Ancho que ocupa el póster, para que el navegador elija el candidato del srcset. */
   @Input() sizes = '(min-width: 1024px) 50vw, 100vw';
+  /** Crea el reproductor al nacer: solo cuando lo pide un clic (un cartel de /video). */
+  @Input() startLoaded = false;
 
   private readonly sanitizer = inject(DomSanitizer);
   private readonly injector = inject(Injector);
-  private readonly frame = viewChild<ElementRef<HTMLIFrameElement>>('frame');
+  /** El iframe del reproductor, una vez creado (la página lo usa para escuchar sus eventos). */
+  readonly frame = viewChild<ElementRef<HTMLIFrameElement>>('frame');
 
   readonly loaded = signal(false);
   readonly posterFailed = signal(false);
@@ -47,6 +50,12 @@ export class VimeoFacadeComponent {
     return this.posterFailed() ? null : posterSrcset(this.videoId, this.hash);
   }
 
+  ngOnInit(): void {
+    if (this.startLoaded) {
+      this.load();
+    }
+  }
+
   load(): void {
     if (this.loaded()) {
       return;
@@ -54,7 +63,7 @@ export class VimeoFacadeComponent {
     const url = `https://player.vimeo.com/video/${this.videoId}?h=${this.hash}&autoplay=1`;
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     this.loaded.set(true);
-    // El botón se destruye al cargar: sin esto el foco caería en <body>.
-    afterNextRender(() => this.frame()?.nativeElement.focus(), { injector: this.injector });
+    // El botón se destruye al cargar: sin esto el foco caería en <body>. Sin scroll: lo decide la página.
+    afterNextRender(() => this.frame()?.nativeElement.focus({ preventScroll: true }), { injector: this.injector });
   }
 }

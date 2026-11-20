@@ -57,23 +57,7 @@
   color: oklch(var(--bc));
 }
 
-/* ── Sala: «se apagan las luces» ─────────────────────────────────────────────
-   Capa del tono oscuro del tema (--s) llevado casi a negro (L≈0.18–0.22, azul-negro o marrón-negro);
-   solo cambia su opacidad. Con movimiento reducido se oscurece igual, pero de golpe. */
-.house-lights {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: color-mix(in oklab, oklch(var(--s)) 55%, var(--film-black));
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-
-.lights-down > .house-lights {
-  opacity: 0.95;
-  transition-duration: 0.9s;
-}
+/* La sala (.house-lights, .lights-down) y las bandas (.screen-bands) viven en styles.css: las comparte /video. */
 
 /* Como en una sala: rótulo, bandas y pantalla caben a la vez en la ventana; la tira se alinea con ellas. */
 .reel { --screen-w: min(70rem, max(24rem, calc((100svh - var(--nav-h) - 13rem) * 16 / 9))); }
@@ -94,27 +78,11 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Pantalla con bandas panorámicas negras en el padding: el espacio está siempre reservado (CLS 0). */
+/* Pantalla del reel: las bandas son .screen-bands (styles.css); aquí solo su ancho y su centrado. */
 .reel-screen {
-  --band: clamp(0.75rem, 2.6vw, 2.25rem);
-  position: relative;
   max-width: var(--screen-w);
   margin-inline: auto;
-  padding-block: var(--band);
 }
-
-.reel-screen::before,
-.reel-screen::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: var(--band);
-  background: var(--film-black);
-}
-
-.reel-screen::before { top: 0; transform-origin: bottom; }
-.reel-screen::after { bottom: 0; transform-origin: top; }
 
 .reel-more {
   display: flex;
@@ -197,7 +165,6 @@
 
 /* Red de seguridad: con movimiento reducido nada transiciona; la sala se oscurece de golpe y nada se arma. */
 @media (prefers-reduced-motion: reduce) {
-  .house-lights,
   .reel-head,
   .reel-screen::before,
   .reel-screen::after,

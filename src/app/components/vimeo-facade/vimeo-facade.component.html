@@ -6,7 +6,7 @@
              focus-visible:outline-offset-[-6px] focus-visible:outline-base-content"
       [attr.aria-label]="'Reproducir ' + title" (click)="load()">
       <img [src]="src" [attr.srcset]="srcset" [attr.sizes]="sizes" (error)="posterFailed.set(true)"
-        alt="" class="absolute inset-0 h-full w-full object-cover"
+        alt="" class="poster absolute inset-0 h-full w-full object-cover"
         [attr.loading]="priority ? 'eager' : 'lazy'"
         [attr.fetchpriority]="priority ? 'high' : 'low'"
         decoding="async" />

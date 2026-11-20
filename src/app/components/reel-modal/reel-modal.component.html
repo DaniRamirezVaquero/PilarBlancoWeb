@@ -1,0 +1,28 @@
+<!-- La misma sala que la home y /video: `lights-down` + `.house-lights` (--s mezclado con --film-black), sin desenfoque. -->
+<div #dialog role="dialog" aria-modal="true" aria-label="Reel de Pilar Blanco"
+     class="lights-down fixed top-0 left-0 z-[100] w-screen h-dvh isolate
+            flex items-center justify-center animate-fade-in">
+  <div class="house-lights" aria-hidden="true"></div>
+
+  <!-- Botón de cerrar simplificado -->
+  <button #close type="button" (click)="closed.emit()" aria-label="Cerrar el reel"
+          class="absolute top-4 right-4 sm:top-8 sm:right-8 z-20 flex h-12 w-12 items-center justify-center rounded-full
+                 text-primary hover:text-info focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+                 focus-visible:outline-white transition-transform motion-reduce:transition-none duration-300 hover:scale-110">
+    <svg width="30" height="30" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2.24536 32.3148L32.2454 2.3148" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
+      <path d="M32.2454 32.3148L2.24537 2.3148" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" />
+    </svg>
+  </button>
+
+  <!-- Contenedor del video simplificado -->
+  <div class="relative z-10 w-full max-w-[80%] lg:max-w-[70%]">
+    <div class="relative pb-[56.25%] h-0 overflow-hidden animate-scale-in">
+      <iframe id="player" [title]="title" [src]="src"
+        class="absolute top-0 left-0 z-10 w-full h-full" frameborder="0"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
